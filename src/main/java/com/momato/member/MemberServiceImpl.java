@@ -1,10 +1,9 @@
-package com.momato.service;
+package com.momato.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.momato.dto.Member;
-import com.momato.mapper.MemberMapper;
+import com.momato.member.dto.Member;
 
 @Service	
 public class MemberServiceImpl implements MemberService{

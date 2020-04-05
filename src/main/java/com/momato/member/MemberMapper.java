@@ -1,8 +1,8 @@
-package com.momato.mapper;
+package com.momato.member;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.momato.dto.Member;
+import com.momato.member.dto.Member;
 
 @Mapper
 public interface MemberMapper {
