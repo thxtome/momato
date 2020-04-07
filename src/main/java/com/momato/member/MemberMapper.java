@@ -6,5 +6,5 @@ import com.momato.member.dto.Member;
 
 @Mapper
 public interface MemberMapper {
-	Member selectMember();
+	Member selectMember(Member loginMem);
 }

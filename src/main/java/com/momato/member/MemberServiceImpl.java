@@ -12,8 +12,8 @@ public class MemberServiceImpl implements MemberService{
 	MemberMapper mapper;
 
 	@Override
-	public Member retrieveMember() {
-		return mapper.selectMember();
+	public Member retrieveMember(Member loginMem) {
+		return mapper.selectMember(loginMem);
 	}
 	
 }

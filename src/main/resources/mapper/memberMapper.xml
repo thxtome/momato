@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.momato.member.MemberMapper">
-	<select id="selectMember" resultType="Member">
-		select *
+	<select id="selectMember" resultType="Member" parameterType="member">
+		select member_id,
+		       member_name
 		  from member
+		 where member_id = #{memberId}
+		   and member_pass = #{memberPass}  
 	</select>
 </mapper>
