@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.momato.tomato.TomatoMapper">
+	<!-- 특정 토마토 조회 -->
+	<select id="selectTomato" parameterType="Tomato" resultType="Tomato">
+		select *
+		  from tomato
+		 where tomato_date = #{tomatoDate}
+		   and tomato_idx = #{tomatoIdx}
+	</select>
+	
+	<!-- 토마토 추가 -->
+	<insert id="insertTomato" parameterType="Tomato">
+		insert into tomato (tomato_name, tomato_full_regular, tomato_full_break, member_id
+		) values (#{tomatoName}, #{tomatoFullRegular}, #{tomatoFullBreak}, #{memberId})
+	</insert>
+	
+	<!-- 토마토 삭제 -->
+	<delete id="deleteTomato" parameterType="int">
+		delete from tomato
+		 where tomato_idx = #{tomatoIdx}
+	</delete>
 </mapper>
