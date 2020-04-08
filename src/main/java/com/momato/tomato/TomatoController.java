@@ -20,8 +20,7 @@ public class TomatoController {
 	@Autowired
 	TomatoService service;
 	
-	@RequestMapping("tomatos/{tomatoDate}/{tomatoIdx}")
-	@GetMapping
+	@GetMapping("tomatos/{tomatoDate}/{tomatoIdx}")
 	public Tomato retrieveTomato(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date tomatoDate, @PathVariable int tomatoIdx) {
 		Tomato tomato = new Tomato();
 		tomato.setTomatoDate(tomatoDate);
@@ -29,8 +28,7 @@ public class TomatoController {
 		return service.retrieveTomato(tomato);
 	}
 	
-	@RequestMapping("tomatos")
-	@PostMapping
+	@PostMapping("tomatos")
 	public void addTomato(@RequestBody Tomato tomato) {
 		service.addTomato(tomato);
 	}

@@ -19,9 +19,10 @@ public class SecurityConf extends WebSecurityConfigurerAdapter{
 	    	.csrf().disable() // csrf 제거
 	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 제거
 	        .and()
-	            .authorizeRequests() // 다음 리퀘스트에 대한 사용권한 체크
-	                .antMatchers("/members/signin","/members/signup").permitAll() //회원가입 로그인 접근 
-	            .anyRequest().hasRole("USER"); //나머지 페이지
+	            .authorizeRequests()
+	            	.antMatchers("/**").permitAll(); // 모든 페이지 허용
+//	                .antMatchers("/members/signin","/members/signup").permitAll() //회원가입 로그인 접근 
+//	            .anyRequest().hasRole("USER"); //나머지 페이지
 	}
 	
 }

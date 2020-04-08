@@ -10,7 +10,8 @@ import com.momato.interceptor.JwtInterceptor;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     private static final String[] EXCLUDE_PATHS = {
-            "/members/**",
+    		"/**",
+            "/members/**"
     };
 
     @Autowired
