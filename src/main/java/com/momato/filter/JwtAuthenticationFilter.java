@@ -31,11 +31,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 	}
+	
+	@Override
+	public void setFilterProcessesUrl(String filterProcessesUrl) {
+		filterProcessesUrl = "/members/signin";
+		super.setFilterProcessesUrl(filterProcessesUrl);
+	}
 
 
-    /* Trigger when we issue POST request to /login
-    We also need to pass in {"username":"minho", "password":"minho123"} in the request body
-    * */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         // json형태로 보낸 아이디와 비밀번호로 Member클래스를 만든다.
@@ -79,8 +82,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         OutputStream out = response.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(out, result);
-        
-        
     }
-    
+
 }

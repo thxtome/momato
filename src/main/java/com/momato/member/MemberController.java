@@ -15,7 +15,7 @@ public class MemberController {
 	@Autowired
 	MemberService service;
 	
-	@PostMapping()
+	@PostMapping("/signup")
 	public void signup (@RequestBody Member member) {
 		service.createMember(member);
 	}
