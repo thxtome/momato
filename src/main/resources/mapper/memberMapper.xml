@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.momato.member.MemberMapper">
-	<select id="selectMember" resultType="Member" parameterType="member">
+	<select id="selectMember" resultType="Member" parameterType="Member">
 		select member_id,
 		       member_name
 		  from member
 		 where member_id = #{memberId}
 		   and member_pass = #{memberPass}  
 	</select>
+	
+	<select id="selectMemberById" resultType="Member" parameterType="Member">
+		select *
+		  from member
+		 where member_id = #{memberId}
+	</select>
+	
+	<insert id="insertMember" parameterType="Member">
+		insert into member (member_id, member_pass, member_name)
+		values (#{memberId},#{memberPass},#{memberName})
+	</insert>
 </mapper>
