@@ -16,7 +16,18 @@ public class TomatoServiceImpl implements TomatoService{
 		return mapper.selectTomato(tomato);
 	}
 	
+	@Override
 	public void addTomato(Tomato tomato) {
 		mapper.insertTomato(tomato);
+	}
+
+	@Override
+	public void removeTomato(int tomatoIdx) {
+		mapper.deleteTomato(tomatoIdx);
+	}
+
+	@Override
+	public void editTomato(Tomato tomato) {
+		mapper.updateTomato(tomato);
 	}
 }

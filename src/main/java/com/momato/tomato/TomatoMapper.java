@@ -8,4 +8,6 @@ import com.momato.tomato.dto.Tomato;
 public interface TomatoMapper {
 	Tomato selectTomato(Tomato tomato);
 	void insertTomato(Tomato tomato);
+	void deleteTomato(int tomatoIdx);
+	void updateTomato(Tomato tomato);
 }

@@ -5,7 +5,7 @@
 	<select id="selectTomato" parameterType="Tomato" resultType="Tomato">
 		select *
 		  from tomato
-		 where tomato_date = #{tomatoDate}
+		 where date(tomato_date) = #{tomatoDate}
 		   and tomato_idx = #{tomatoIdx}
 	</select>
 	
@@ -20,4 +20,13 @@
 		delete from tomato
 		 where tomato_idx = #{tomatoIdx}
 	</delete>
+	
+	<!-- 토마토 수정 -->
+	<update id="updateTomato" parameterType="Tomato">
+		update tomato
+		   set tomato_name = #{tomatoName},
+		       tomato_full_regular = #{tomatoFullRegular},
+		       tomato_full_break = #{tomatoFullBreak}
+		 where tomato_idx = #{tomatoIdx}
+	</update>
 </mapper>
