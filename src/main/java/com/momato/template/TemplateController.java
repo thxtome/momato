@@ -1,21 +1,50 @@
 package com.momato.template;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.momato.common.dto.ResponseResult;
+import com.momato.template.dto.Template;
+
 @RestController
-@RequestMapping("/template")
+@RequestMapping("/templates")
 public class TemplateController {
 	
 	@Autowired
 	TemplateService service;
 	
-	@GetMapping("/hello")
-	public String helloWorld() {
-		System.out.println("asdsadsadas");
-		return "helloaaaaaaaaaaaaaaaaaaaaaa";
+//	@GetMapping("/{memberId}")
+//	public ResponseResult retrieveTemplate(@PathVariable String memberId) {
+//		return new ResponseResult(HttpStatus.OK, service.retrieveTemplate(memberId));
+//	}
+	
+	@GetMapping("/{templateIdx}")
+	public ResponseResult retrieveOneTemplate(@PathVariable int templateIdx) {
+		return new ResponseResult(HttpStatus.OK,service.retrieveOneTemplate(templateIdx));
 	}
-
+	
+	@PostMapping()
+	public ResponseResult addTemplate(@PathVariable Template template) {
+		service.addTemplate(template);
+		return new ResponseResult(HttpStatus.OK);
+	}
+	
+	@PutMapping()
+	public ResponseResult editTemplate(@PathVariable Template template) {
+		service.editTemplate(template);
+		return new ResponseResult(HttpStatus.OK);
+	}
+	
+	@DeleteMapping()
+	public ResponseResult removeTemplate(@PathVariable int templateIdx) {
+		service.removeTemplate(templateIdx);
+		return new ResponseResult(HttpStatus.OK);
+	}
 }

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.momato.tomato.TomatoMapper">
+	<!-- 토마토 전체 조회 -->
+	<select id="selectTomato" resultType="Tomato">
+		select *
+		  from tomato
+	</select>
+
 	<!-- 특정 토마토 조회 -->
-	<select id="selectTomato" parameterType="Tomato" resultType="Tomato">
+	<select id="selectOneTomato" parameterType="Tomato" resultType="Tomato">
 		select *
 		  from tomato
 		 where date(tomato_date) = #{tomatoDate}

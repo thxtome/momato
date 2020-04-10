@@ -1,4 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.momato.template.TemplateMapper">
+	<!-- 템플릿 조회 -->
+	<select id="selectTemplate" parameterType="String" resultType="Template">
+		select *
+		  from template
+		 where member_id = #{memberId}
+	</select>
+	
+	<!-- 특정 템플릿 조회 -->
+	<select id="selectOneTemplate" parameterType="int" resultType="Template">
+		select *
+		  from template
+		 where template_idx = #{templateIdx}
+	</select>
+	
+	<!-- 템플릿 등록 -->
+	<insert id="insertTemplate" parameterType="Template">
+		insert into template (template_name, template_comment, member_id
+		) values (
+		#{templateName}, #{templateComment}, #{memberId})
+	</insert>
+	
+	<!-- 템플릿 수정 -->
+	<update id="updateTemplate" parameterType="Template">
+		update template
+		   set template_name = #{templateName},
+		       template_comment = #{templateComment}
+		 where template_idx = #{templateIdx}
+	</update>
+	
+	<!-- 템플릿 삭제 -->
+	<delete id="deleteTemplate" parameterType="int">
+		delete from template
+		 where template_idx = #{templateIdx}
+	</delete>
 </mapper>

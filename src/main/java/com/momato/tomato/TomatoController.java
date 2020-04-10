@@ -18,34 +18,40 @@ import com.momato.common.dto.ResponseResult;
 import com.momato.tomato.dto.Tomato;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/tomatos")
 public class TomatoController {
 	
 	@Autowired
 	TomatoService service;
 	
-	@GetMapping("tomatos/{tomatoDate}/{tomatoIdx}")
-	public ResponseResult retrieveTomato(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date tomatoDate, @PathVariable int tomatoIdx) {
+	@GetMapping()
+	public ResponseResult retrieveTomato() {
+		return new ResponseResult(HttpStatus.OK, service.retrieveTomato());
+	}
+	
+	@GetMapping("/{tomatoDate}/{tomatoIdx}")
+	public ResponseResult retrieveOneTomato(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date tomatoDate, @PathVariable int tomatoIdx) {
 		Tomato tomato = new Tomato();
 		tomato.setTomatoDate(tomatoDate);
 		tomato.setTomatoIdx(tomatoIdx);
-		System.out.println(0/0);
-		return new ResponseResult(HttpStatus.OK,service.retrieveTomato(tomato));
-		
+		return new ResponseResult(HttpStatus.OK,service.retrieveOneTomato(tomato));
 	}
 	
-	@PostMapping("tomatos")
-	public void addTomato(@RequestBody Tomato tomato) {
+	@PostMapping()
+	public ResponseResult addTomato(@RequestBody Tomato tomato) {
 		service.addTomato(tomato);
+		return new ResponseResult(HttpStatus.OK);
 	}
 	
-	@DeleteMapping("tomatos/{tomatoIdx}")
-	public void removeTomato(@PathVariable int tomatoIdx) {
+	@DeleteMapping("/{tomatoIdx}")
+	public ResponseResult removeTomato(@PathVariable int tomatoIdx) {
 		service.removeTomato(tomatoIdx);
+		return new ResponseResult(HttpStatus.OK);
 	}
 	
-	@PutMapping("tomatos")
-	public void editTomato(@RequestBody Tomato tomato) {
+	@PutMapping()
+	public ResponseResult editTomato(@RequestBody Tomato tomato) {
 		service.editTomato(tomato);
+		return new ResponseResult(HttpStatus.OK);
 	}
 }

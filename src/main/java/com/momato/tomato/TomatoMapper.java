@@ -1,12 +1,15 @@
 package com.momato.tomato;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.momato.tomato.dto.Tomato;
 
 @Mapper
 public interface TomatoMapper {
-	Tomato selectTomato(Tomato tomato);
+	List<Tomato> selectTomato();
+	Tomato selectOneTomato(Tomato tomato);
 	void insertTomato(Tomato tomato);
 	void deleteTomato(int tomatoIdx);
 	void updateTomato(Tomato tomato);

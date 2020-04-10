@@ -1,5 +1,7 @@
 package com.momato.tomato;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,13 @@ public class TomatoServiceImpl implements TomatoService{
 	TomatoMapper mapper;
 	
 	@Override
-	public Tomato retrieveTomato(Tomato tomato) {
-		return mapper.selectTomato(tomato);
+	public List<Tomato> retrieveTomato() {
+		return mapper.selectTomato();
+	}
+	
+	@Override
+	public Tomato retrieveOneTomato(Tomato tomato) {
+		return mapper.selectOneTomato(tomato);
 	}
 	
 	@Override

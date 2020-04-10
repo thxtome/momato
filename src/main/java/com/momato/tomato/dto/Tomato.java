@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class Tomato {
+	private String createType;
 	private int tomatoIdx;
 	private String tomatoName;
 	private int tomatoFullRegular;
