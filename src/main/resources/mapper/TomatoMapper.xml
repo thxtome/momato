@@ -8,12 +8,20 @@
 	</select>
 
 	<!-- 특정 토마토 조회 -->
-	<select id="selectOneTomato" parameterType="Tomato" resultType="Tomato">
+	<select id="selectOneTomato" parameterType="int" resultType="Tomato">
 		select *
 		  from tomato
-		 where date(tomato_date) = #{tomatoDate}
-		   and tomato_idx = #{tomatoIdx}
+		<choose>
+			<when test="templateIdx != null">
+				where template_idx = #{templateIdx}
+			</when>
+			<when test='tomatoIdx != null'>
+				where tomato_idx = #{tomatoIdx}
+			</when>
+		</choose>
 	</select>
+
+	
 	
 	<!-- 토마토 추가 -->
 	<insert id="insertTomato" parameterType="Tomato">

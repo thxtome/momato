@@ -48,6 +48,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/members/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/members").permitAll()
+                .antMatchers("/tomatos/**").permitAll()
+                .antMatchers("/templates/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint())

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.momato.common.dto.ResponseResult;
+import com.momato.tomato.dto.Param;
 import com.momato.tomato.dto.Tomato;
 
 @RestController
@@ -29,17 +30,22 @@ public class TomatoController {
 		return new ResponseResult(HttpStatus.OK, service.retrieveTomato());
 	}
 	
-	@GetMapping("/{tomatoDate}/{tomatoIdx}")
+	@GetMapping("/{tomatoIdx}")
 	public ResponseResult retrieveOneTomato(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date tomatoDate, @PathVariable int tomatoIdx) {
-		Tomato tomato = new Tomato();
-		tomato.setTomatoDate(tomatoDate);
-		tomato.setTomatoIdx(tomatoIdx);
-		return new ResponseResult(HttpStatus.OK,service.retrieveOneTomato(tomato));
+		return new ResponseResult(HttpStatus.OK,service.retrieveOneTomato(tomatoIdx));
 	}
 	
 	@PostMapping()
-	public ResponseResult addTomato(@RequestBody Tomato tomato) {
-		service.addTomato(tomato);
+	public ResponseResult addTomato(@RequestBody Param param) {
+		String createType = param.getCreateType();
+		// 단순 토마토 등록
+		if (createType.equals("simple")) {
+			service.addTomato(param.getData());
+		// 템플릿 복사 후 토마토 등록	
+		} else if(createType.equals("copy")) {
+			service.addTomato(service.retrieveOneTomato(param.getTemplateIdx()));
+		}
+		System.out.println(param);
 		return new ResponseResult(HttpStatus.OK);
 	}
 	

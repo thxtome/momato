@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,18 +32,18 @@ public class TemplateController {
 	}
 	
 	@PostMapping()
-	public ResponseResult addTemplate(@PathVariable Template template) {
+	public ResponseResult addTemplate(@RequestBody Template template) {
 		service.addTemplate(template);
 		return new ResponseResult(HttpStatus.OK);
 	}
 	
 	@PutMapping()
-	public ResponseResult editTemplate(@PathVariable Template template) {
+	public ResponseResult editTemplate(@RequestBody Template template) {
 		service.editTemplate(template);
 		return new ResponseResult(HttpStatus.OK);
 	}
 	
-	@DeleteMapping()
+	@DeleteMapping("/{templateIdx}")
 	public ResponseResult removeTemplate(@PathVariable int templateIdx) {
 		service.removeTemplate(templateIdx);
 		return new ResponseResult(HttpStatus.OK);

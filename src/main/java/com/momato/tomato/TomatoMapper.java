@@ -9,7 +9,7 @@ import com.momato.tomato.dto.Tomato;
 @Mapper
 public interface TomatoMapper {
 	List<Tomato> selectTomato();
-	Tomato selectOneTomato(Tomato tomato);
+	Tomato selectOneTomato(int tomatoIdx);
 	void insertTomato(Tomato tomato);
 	void deleteTomato(int tomatoIdx);
 	void updateTomato(Tomato tomato);
