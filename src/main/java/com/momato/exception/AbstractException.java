@@ -2,7 +2,7 @@ package com.momato.exception;
 
 import org.springframework.http.HttpStatus;
 
-public abstract class AbstractException extends RuntimeException {
+public abstract class AbstractException extends Exception {
     private static final long serialVersionUID = 1L;
     
     public AbstractException() {

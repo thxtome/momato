@@ -2,26 +2,26 @@ package com.momato.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class TestException extends AbstractException	{
+public class DefaultException extends AbstractException	{
     private static final long serialVersionUID = 1L;
     
-    public TestException() {
+    public DefaultException() {
         super();
     }
  
-    public TestException(String msg) {
+    public DefaultException(String msg) {
         super(msg);
     }
  
-    public TestException(Throwable e) {
+    public DefaultException(Throwable e) {
         super(e);
     }
  
-    public TestException(String errorMessge, Throwable e) {
+    public DefaultException(String errorMessge, Throwable e) {
         super(errorMessge, e);
     }
  
     public HttpStatus getHttpStatus() {
-    	return HttpStatus.BAD_REQUEST; 
+    	return HttpStatus.INTERNAL_SERVER_ERROR; 
     };
 }

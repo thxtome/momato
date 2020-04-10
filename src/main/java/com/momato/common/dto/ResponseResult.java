@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 
 import com.momato.exception.AbstractException;
 
+import lombok.Data;
+
+@Data
 public class ResponseResult {
 	private static final long serialVersionUID = 1L;
 	private static final String DEFAULT_KEY = "result";

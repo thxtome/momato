@@ -72,8 +72,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
 
         
-    	ResponseResult rr = new ResponseResult(HttpStatus.OK );
-        
+//    	ResponseResult rr = new ResponseResult(HttpStatus.OK );
+//        
 //        //바디를 채워준다.
 //        OutputStream out = response.getOutputStream();
 //        ObjectMapper mapper = new ObjectMapper();

@@ -29,6 +29,7 @@ public class TomatoController {
 		Tomato tomato = new Tomato();
 		tomato.setTomatoDate(tomatoDate);
 		tomato.setTomatoIdx(tomatoIdx);
+		System.out.println(0/0);
 		return new ResponseResult(HttpStatus.OK,service.retrieveTomato(tomato));
 		
 	}
