@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.momato.exception.dto.ExceptionResponse;
+import com.momato.common.dto.ResponseResult;
 import com.momato.member.dto.Member;
 import com.momato.member.dto.UserPrincipal;
 import com.momato.util.JwtProperties;
@@ -31,13 +32,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 	}
-	
-	@Override
-	public void setFilterProcessesUrl(String filterProcessesUrl) {
-		filterProcessesUrl = "/members/signin";
-		super.setFilterProcessesUrl(filterProcessesUrl);
-	}
-
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -77,11 +71,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 토큰을 뿌린다
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
 
-        //바디를 채워준다.
-        ExceptionResponse result = new ExceptionResponse(200 , "success", "token issued success");
-        OutputStream out = response.getOutputStream();
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(out, result);
+        
+    	ResponseResult rr = new ResponseResult(HttpStatus.OK );
+        
+//        //바디를 채워준다.
+//        OutputStream out = response.getOutputStream();
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.writeValue(out, rr);
     }
 
 }
