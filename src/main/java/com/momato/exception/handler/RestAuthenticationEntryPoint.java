@@ -15,17 +15,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.momato.common.dto.ResponseResult;
 import com.momato.exception.JwtAuthenticationException;
 
-//시큐리티 필터에서 예외 발생시 처리
+//토큰없이 접근했을 떄
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
     	httpServletResponse.setContentType("application/json");
-    	JwtAuthenticationException jwtException = new JwtAuthenticationException("member's Information is insufficient",e);    		
-    	if(org.springframework.security.authentication.InsufficientAuthenticationException.class == e.getClass()) {
-    		jwtException = new JwtAuthenticationException("member's Information is insufficient",e);    		
-    	}
+    	JwtAuthenticationException jwtException = new JwtAuthenticationException("Jwt is reqired",e);    		
     	ResponseResult rr = new ResponseResult(jwtException,httpServletRequest.getRequestURI().toString()); 
         OutputStream out = httpServletResponse.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();

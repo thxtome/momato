@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.momato.exception.handler.RestAuthenticationEntryPoint;
 import com.momato.filter.JwtAuthenticationFilter;
 import com.momato.filter.JwtAuthorizationFilter;
+import com.momato.filter.JwtExceptionFilter;
 import com.momato.member.MemberService;
 import com.momato.member.MemberServiceImpl;
 
@@ -54,6 +54,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter{
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
                 .addFilter(getJWTAuthenticationFilter())
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), service));
     }
