@@ -5,7 +5,7 @@ import java.util.List;
 import com.momato.tomato.dto.Tomato;
 
 public interface TomatoService {
-	public List<Tomato> retrieveTomato();
+	public List<Tomato> retrieveTomato(Tomato tomato);
 	public Tomato retrieveOneTomato(int tomatoIdx);
 	public void addTomato(Tomato tomato);
 	public void removeTomato(int tomatoIdx);

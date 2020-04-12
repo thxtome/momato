@@ -2,26 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.momato.tomato.TomatoMapper">
 	<!-- 토마토 전체 조회 -->
-	<select id="selectTomato" resultType="Tomato">
+	<select id="selectTomato" parameterType="Tomato" resultType="Tomato">
 		select *
 		  from tomato
+		<choose>
+			<when test="templateIdx != 0">
+				where template_idx = #{templateIdx}
+			</when>
+			<when test='tomatoDate != null'>
+				where date(tomato_date) = #{tomatoDate}
+			</when>
+		</choose>
 	</select>
 
 	<!-- 특정 토마토 조회 -->
 	<select id="selectOneTomato" parameterType="int" resultType="Tomato">
 		select *
 		  from tomato
-		<choose>
-			<when test="templateIdx != null">
-				where template_idx = #{templateIdx}
-			</when>
-			<when test='tomatoIdx != null'>
-				where tomato_idx = #{tomatoIdx}
-			</when>
-		</choose>
+		 where tomato_idx = #{tomatoIdx}
 	</select>
-
-	
 	
 	<!-- 토마토 추가 -->
 	<insert id="insertTomato" parameterType="Tomato">

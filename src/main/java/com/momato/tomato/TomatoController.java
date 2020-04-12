@@ -1,6 +1,8 @@
 package com.momato.tomato;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.momato.common.dto.ResponseResult;
 import com.momato.tomato.dto.Param;
@@ -25,13 +30,18 @@ public class TomatoController {
 	@Autowired
 	TomatoService service;
 	
+	// 토마토등록일 또는 템플릿인덱스로 조회
 	@GetMapping()
-	public ResponseResult retrieveTomato() {
-		return new ResponseResult(HttpStatus.OK, service.retrieveTomato());
+	public ResponseResult retrieveTomato(@RequestParam(defaultValue = "0") int templateIdx, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date tomatoDate) {
+		Tomato tomato = new Tomato();
+		tomato.setTemplateIdx(templateIdx);
+		tomato.setTomatoDate(tomatoDate);
+		return new ResponseResult(HttpStatus.OK, service.retrieveTomato(tomato));
 	}
 	
+	// 토마토인덱스로 조회
 	@GetMapping("/{tomatoIdx}")
-	public ResponseResult retrieveOneTomato(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date tomatoDate, @PathVariable int tomatoIdx) {
+	public ResponseResult retrieveOneTomato(@PathVariable int tomatoIdx) {
 		return new ResponseResult(HttpStatus.OK,service.retrieveOneTomato(tomatoIdx));
 	}
 	
@@ -43,21 +53,30 @@ public class TomatoController {
 			service.addTomato(param.getData());
 		// 템플릿 복사 후 토마토 등록	
 		} else if(createType.equals("copy")) {
-			service.addTomato(service.retrieveOneTomato(param.getTemplateIdx()));
+			Tomato tomato = new Tomato();
+			tomato.setTemplateIdx(param.getTemplateIdx());
+			List<Tomato> list = new ArrayList<>();
+			list = service.retrieveTomato(tomato);
+			for (Tomato t : list) {
+			service.addTomato(t);
+			}
 		}
 		System.out.println(param);
 		return new ResponseResult(HttpStatus.OK);
 	}
 	
+	// 토마토 삭제
 	@DeleteMapping("/{tomatoIdx}")
 	public ResponseResult removeTomato(@PathVariable int tomatoIdx) {
 		service.removeTomato(tomatoIdx);
 		return new ResponseResult(HttpStatus.OK);
 	}
 	
+	// 토마토 수정
 	@PutMapping()
 	public ResponseResult editTomato(@RequestBody Tomato tomato) {
 		service.editTomato(tomato);
 		return new ResponseResult(HttpStatus.OK);
 	}
+	
 }

@@ -16,5 +16,6 @@ public class Tomato {
 	private int tomatoCanStart;
 	private long tomatoStartTime;
 	private long tomatoEndTime;
+	private int templateIdx;
 	private String memberId;
 }

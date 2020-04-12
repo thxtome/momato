@@ -14,8 +14,8 @@ public class TomatoServiceImpl implements TomatoService{
 	TomatoMapper mapper;
 	
 	@Override
-	public List<Tomato> retrieveTomato() {
-		return mapper.selectTomato();
+	public List<Tomato> retrieveTomato(Tomato tomato) {
+		return mapper.selectTomato(tomato);
 	}
 	
 	@Override
