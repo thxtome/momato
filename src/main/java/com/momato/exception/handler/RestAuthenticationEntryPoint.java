@@ -22,7 +22,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
     	httpServletResponse.setContentType("application/json");
-    	JwtAuthenticationException jwtException = new JwtAuthenticationException("Jwt is reqired",e);    		
+    	JwtAuthenticationException jwtException = new JwtAuthenticationException("Jwt is reqired or invalid",e);    		
     	ResponseResult rr = new ResponseResult(jwtException,httpServletRequest.getRequestURI().toString()); 
         OutputStream out = httpServletResponse.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();

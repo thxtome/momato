@@ -15,8 +15,45 @@
 		 where member_id = #{memberId}
 	</select>
 	
+	<select id="selectMemberByIdExcludePass" resultType="Member" parameterType="Member">
+		select member_id, 
+			   member_name
+		  from member
+		 where member_id = #{memberId}
+	</select>
+	
 	<insert id="insertMember" parameterType="Member">
 		insert into member (member_id, member_pass, member_name)
 		values (#{memberId},#{memberPass},#{memberName})
 	</insert>
+	
+	<select id="selectIsTokenContainedOfBlackList" parameterType="string" resultType="boolean">
+		select if(count(*) > 0, true, false) 
+		  from jwt_blacklist
+		 where jwt_blacklist_token = #{token}
+	</select>
+	
+	<insert id="insertJwtBlacklist" parameterType="string">
+		insert into jwt_blacklist(jwt_blacklist_token)
+		values (#{token})
+	</insert>
+	
+	<update id="updateMember" parameterType="Member">
+		update `member`
+		<set>
+			<if test="memberName != null">
+				member_name = #{memberName}, 
+			</if>
+			<if test="memberPass != null">
+		    	member_pass = #{memberPass},  
+			</if>
+		</set>
+		 where member_id = #{memberId}
+	</update>
+	
+	<delete id="deleteMember" parameterType="string">
+		delete 
+		  from member
+		 where member_id = #{memberId}
+	</delete>
 </mapper>

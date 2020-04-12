@@ -1,22 +1,17 @@
 package com.momato.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 
-public class JwtAuthenticationException extends AbstractException	{
+public class JwtAuthenticationException extends AuthenticationException	{
     private static final long serialVersionUID = 1L;
     
-    public JwtAuthenticationException() {
-        super();
-    }
- 
+
     public JwtAuthenticationException(String msg) {
         super(msg);
     }
  
-    public JwtAuthenticationException(Throwable e) {
-        super(e);
-    }
- 
+
     public JwtAuthenticationException(String errorMessge, Throwable e) {
         super(errorMessge, e);
     }

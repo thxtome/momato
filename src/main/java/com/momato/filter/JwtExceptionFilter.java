@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.momato.common.dto.ResponseResult;
 import com.momato.exception.InvalidRequestException;
+import com.momato.exception.JwtAuthenticationException;
 
 public class JwtExceptionFilter extends OncePerRequestFilter {
 
@@ -22,9 +23,14 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		try {
 			filterChain.doFilter(request, response);
-		} catch (RuntimeException e) {
+		} catch (NullPointerException e) {
 			InvalidRequestException ie = new InvalidRequestException("Member parameters are invalid", e);
 			ResponseResult errorResponse = new ResponseResult(ie, request.getRequestURI());
+			response.setContentType("application/json");
+			response.setStatus(HttpStatus.BAD_REQUEST.value());
+			response.getWriter().write(convertObjectToJson(errorResponse));
+		} catch (JwtAuthenticationException e) {
+			ResponseResult errorResponse = new ResponseResult(e, request.getRequestURI());
 			response.setContentType("application/json");
 			response.setStatus(HttpStatus.BAD_REQUEST.value());
 			response.getWriter().write(convertObjectToJson(errorResponse));

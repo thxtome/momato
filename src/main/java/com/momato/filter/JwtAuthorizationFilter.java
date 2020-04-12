@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.momato.exception.JwtAuthenticationException;
 import com.momato.member.MemberService;
 import com.momato.member.dto.Member;
 import com.momato.member.dto.UserPrincipal;
@@ -28,42 +30,45 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		this.service = service;
 	}
 
-
-
-    // endpoint every request hit with authorization
+    //토큰 검증
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        // Read the Authorization header, where the JWT Token should be
+        //헤더추출
         String header = request.getHeader(JwtProperties.HEADER_STRING);
 
-        // If header does not contain BEARER or is null delegate to Spring impl and exit
+        // jwt인지 확인
         if(header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)){
-            // rest of the spring pipeline
             chain.doFilter(request, response);
             return;
         }
 
-        // If header is present, try grab user principal from database and perform authorization
+        // 헤더가 있고 jwt가 맞으면 유저의 정보를 가져옴
         Authentication authentication = getUsernamePasswordAuthentication(request);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Continue filter execution
         chain.doFilter(request, response);
     }
 
-    private Authentication getUsernamePasswordAuthentication(HttpServletRequest request) {
+    private Authentication getUsernamePasswordAuthentication(HttpServletRequest request) throws AuthenticationException{
         String token = request.getHeader(JwtProperties.HEADER_STRING);
         if(token != null){
-            // parse the token and validate it (decode)
+            // 토큰의 유효성체크
             String memberId = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET.getBytes()))
                     .build()
                     .verify(token.replace(JwtProperties.TOKEN_PREFIX, ""))
                     .getSubject();
 
-            // Search in the DB if we find the user by token subject (username)
-            // If so, then grab user details and create spring auth token using username, pass, authorities/roles
+            //db에서 로그아웃하거나 탈퇴한 회원인지 확인
+            if(service.jwtIsInvalid(token)) {
+            	throw new JwtAuthenticationException("token is expired");
+            }
+            
+            //db에서 유저의 정보와 권한을 가져옴
             if(memberId != null){
             	Member member = service.retrieveMemberById(memberId);
+            	if(member == null) {
+            		throw new JwtAuthenticationException("member in this token is not found");
+            	}
                 UserPrincipal principal = new UserPrincipal(member);
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(memberId, null, principal.getAuthorities());
                 return auth;
@@ -72,4 +77,5 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         return null;
     }
+    
 }

@@ -7,11 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserPrincipal implements UserDetails {
 	
+	private static final long serialVersionUID = 295874931921099560L;
 	private String memberId;
 	private String memberPass;
 	private String memberName;
-	
-	
 	
 	public UserPrincipal(Member member) {
 		super();
@@ -65,5 +64,7 @@ public class UserPrincipal implements UserDetails {
 	public static UserPrincipal create(Member member) {
 		return new UserPrincipal(member);
 	}
+	
+	
 	
 }

@@ -3,6 +3,7 @@ package com.momato.exception;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,11 +18,27 @@ public class ExceptionController {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
-	public ResponseResult invalidRequestException(HttpServletRequest req, Exception e) {
+	public ResponseResult filterInvalidRequestException(HttpServletRequest req, Exception e) {
     	InvalidRequestException InvalidException = new InvalidRequestException(e.getMessage(),e);
 		ResponseResult rr = new ResponseResult(InvalidException,req.getRequestURI().toString()); 
 		return rr;
-	}	
+	}
+    
+    @ExceptionHandler(InvalidRequestException.class)
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST)
+    public ResponseResult invalidRequestException(HttpServletRequest req, Exception e) {
+    	InvalidRequestException InvalidException = new InvalidRequestException(e.getMessage(),e);
+    	ResponseResult rr = new ResponseResult(InvalidException,req.getRequestURI().toString()); 
+    	return rr;
+    }	
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST)
+    public ResponseResult emptyRequestBodyException(HttpServletRequest req, Exception e) {
+    	InvalidRequestException defaultException = new InvalidRequestException ("request body is missing",e);
+    	ResponseResult rr = new ResponseResult(defaultException,req.getRequestURI().toString()); 
+    	return rr;
+    }
     
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
@@ -30,6 +47,7 @@ public class ExceptionController {
     	ResponseResult rr = new ResponseResult(defaultException,req.getRequestURI().toString()); 
     	return rr;
     }
+    
     
 }
  

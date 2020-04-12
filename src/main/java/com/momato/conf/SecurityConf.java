@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.momato.exception.handler.RestAuthenticationEntryPoint;
+import com.momato.filter.CustomLogoutFilter;
 import com.momato.filter.JwtAuthenticationFilter;
 import com.momato.filter.JwtAuthorizationFilter;
 import com.momato.filter.JwtExceptionFilter;
@@ -46,8 +47,9 @@ public class SecurityConf extends WebSecurityConfigurerAdapter{
         http.httpBasic().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/members/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/members").permitAll()
+                .antMatchers(HttpMethod.POST, "/members/signin").permitAll()
+                .antMatchers(HttpMethod.POST, "/members/signup").permitAll()
+                .antMatchers(HttpMethod.GET, "/members/tempPass").permitAll()
                 .antMatchers("/tomatos/**").permitAll()
                 .antMatchers("/templates/**").permitAll()
                 .anyRequest().authenticated()
@@ -58,7 +60,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter{
                 .and()
                 .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
                 .addFilter(getJWTAuthenticationFilter())
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), service));
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), service))
+                .addFilter(new CustomLogoutFilter(service));
     }
     
     public JwtAuthenticationFilter getJWTAuthenticationFilter() throws Exception {

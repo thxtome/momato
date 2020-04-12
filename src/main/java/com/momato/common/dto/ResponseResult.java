@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 
 import com.momato.exception.AbstractException;
+import com.momato.exception.JwtAuthenticationException;
 
 import lombok.Data;
 
@@ -36,6 +37,16 @@ public class ResponseResult {
 
 
 	public ResponseResult(AbstractException ex, String referedUrl) {
+		HttpStatus httpStatus = ex.getHttpStatus();
+		this.data = new HashMap<>();
+		this.code = httpStatus.value();
+		this.status = (httpStatus.isError()) ? false : true;
+		this.message = httpStatus.getReasonPhrase();
+		this.error = new ErrorResult(code, ex.getMessage(), referedUrl);
+		this.timestamp = new Date();
+	}
+	
+	public ResponseResult(JwtAuthenticationException ex, String referedUrl) {
 		HttpStatus httpStatus = ex.getHttpStatus();
 		this.data = new HashMap<>();
 		this.code = httpStatus.value();
