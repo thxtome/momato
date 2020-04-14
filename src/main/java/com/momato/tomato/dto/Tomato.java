@@ -18,4 +18,13 @@ public class Tomato {
 	private long tomatoEndTime;
 	private int templateIdx;
 	private String memberId;
+	
+	public long startTimer() {
+		this.tomatoStartTime = System.currentTimeMillis();
+		return tomatoStartTime;
+	}
+	public long endTimer() {
+		this.tomatoEndTime = System.currentTimeMillis();
+		return tomatoEndTime;
+	}
 }

@@ -12,7 +12,9 @@
 	 <div>
         <h2>입력창</h2>
         <input type="text" name="message" id="message">
-        <button id="sendBtn">입력</button>
+        <button id="startBtn">시작</button>
+        <button id="stopBtn">정지</button>
+        <button id="resetBtn">리셋</button>
     </div>
     <h2>채팅창</h2>
     <div id="chatSection" style="border: 1px solid black; width:300px; height:500px;">
@@ -24,23 +26,44 @@
 	
 	<script>   
 		const sock = new SockJS("http://localhost:8080/tomatoTimer");
-
+        let data = {
+            "action":"load",
+            "target": "regularTime",
+            "tomatoIdx": 5
+        }
         // onopen : 연결이 됐을 때 콜백
-        sock.onopen = function () {}
-		
-		$("#sendBtn").click(()=>{
-			let msg = $("#message").val();
-			sock.send(msg);
+        sock.onopen = function () {
+			sock.send(JSON.stringify(data));
+			$("#message").val("");
+        }
+		// 타이머 첫 시작
+		$("#startBtn").click(()=>{
+            data.action = "start";
+			sock.send(JSON.stringify(data));
+			$("#message").val("");
+		})
+
+        // 타이머 일시정지
+		$("#stopBtn").click(()=>{
+            data.action = "stop";
+			sock.send(JSON.stringify(data));
+			$("#message").val("");
+		})
+
+        // 타이머 리셋
+		$("#resetBtn").click(()=>{
+            data.action = "reset";
+			sock.send(JSON.stringify(data));
 			$("#message").val("");
 		})
 		
-        // onopen : api에서 데이터를 받았을 때의 콜백
+        // onmessage : api에서 데이터를 받았을 때의 콜백
 		sock.onmessage = (evt) => {
 			console.log(evt.data)
 			$("#chatSection").append(`<h4>${evt.data}</h4>`)
 		}
 		
-        // onopen : 연결이 끊어질때 콜백
+        // onoclose : 연결이 끊어질때 콜백
 		sock.onclose = () => {
 			$("#chatSection").append(`<h4>CLOSE</h4>`)			
 		}

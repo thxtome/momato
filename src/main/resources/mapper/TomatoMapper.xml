@@ -39,7 +39,9 @@
 		update tomato
 		   set tomato_name = #{tomatoName},
 		       tomato_full_regular = #{tomatoFullRegular},
-		       tomato_full_break = #{tomatoFullBreak}
+		       tomato_full_break = #{tomatoFullBreak},
+		       tomato_left_regular = #{tomatoLeftRegular},
+		       tomato_left_break = #{tomatoLeftBreak}
 		 where tomato_idx = #{tomatoIdx}
 	</update>
 </mapper>
