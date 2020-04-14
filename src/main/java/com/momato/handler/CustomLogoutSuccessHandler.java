@@ -30,9 +30,9 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler{
 			throws IOException, ServletException {
 			
 			String token = request.getHeader(JwtProperties.HEADER_STRING);
-
+			
 			service.logout(token);
-
+			
 	        //바디를 채워준다.
 	        ResponseResult rr = new ResponseResult(HttpStatus.OK );
 	        OutputStream out = response.getOutputStream();

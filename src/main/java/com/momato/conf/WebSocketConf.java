@@ -17,7 +17,7 @@ public class WebSocketConf implements WebSocketConfigurer {
 	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(tomatoSocketHandler, "/socket");
+		registry.addHandler(tomatoSocketHandler, "/tomatoTimer").setAllowedOrigins("*").withSockJS();
 	}
 
 

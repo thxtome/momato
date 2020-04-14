@@ -16,6 +16,7 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 		@Override
 		public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 			super.afterConnectionEstablished(session);
+			session.sendMessage(new TextMessage("CONNECT".getBytes()));
 			sessionMap.put(session.getId(), session);
 		}
 
@@ -25,7 +26,7 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 			for(String key : sessionMap.keySet()) {
 				WebSocketSession wss = sessionMap.get(key);
 				try {
-					wss.sendMessage(new TextMessage(msg));
+					wss.sendMessage(new TextMessage("echo : " + msg));
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -34,10 +35,8 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 
 		@Override
 		public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-			sessionMap.remove(session.getId());
 			super.afterConnectionClosed(session, status);
+			sessionMap.remove(session.getId());
 		}
 		
-		
 }
-

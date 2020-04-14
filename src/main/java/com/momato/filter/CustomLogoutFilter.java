@@ -19,7 +19,5 @@ public class CustomLogoutFilter extends LogoutFilter{
 		// TODO Auto-generated method stub
 		super.setFilterProcessesUrl(filterProcessesUrl);
 	}
-
-	
 	
 }

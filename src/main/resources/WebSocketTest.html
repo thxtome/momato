@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div class="socket">
+		<h2>소켓연결</h2>
+	</div>
+	 <div>
+        <h2>입력창</h2>
+        <input type="text" name="message" id="message">
+        <button id="sendBtn">입력</button>
+    </div>
+    <h2>채팅창</h2>
+    <div id="chatSection" style="border: 1px solid black; width:300px; height:500px;">
+    </div>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"
+		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+	
+	<script>   
+		const sock = new SockJS("http://localhost:8080/tomatoTimer");
+
+        // onopen : 연결이 됐을 때 콜백
+        sock.onopen = function () {}
+		
+		$("#sendBtn").click(()=>{
+			let msg = $("#message").val();
+			sock.send(msg);
+			$("#message").val("");
+		})
+		
+        // onopen : api에서 데이터를 받았을 때의 콜백
+		sock.onmessage = (evt) => {
+			console.log(evt.data)
+			$("#chatSection").append(`<h4>${evt.data}</h4>`)
+		}
+		
+        // onopen : 연결이 끊어질때 콜백
+		sock.onclose = () => {
+			$("#chatSection").append(`<h4>CLOSE</h4>`)			
+		}
+		
+    </script>
+</body>
+</html>
