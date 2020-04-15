@@ -19,12 +19,11 @@ import com.momato.websocket.dto.WebsocketResponse;
 public class TomatoSocketHandler extends TextWebSocketHandler {
 
 	HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
-	Gson gson = new Gson();
-	Tomato tomato = new Tomato();
-	long startTime = 0;
-	long endTime = 0;
-	int runTime = 0;
-
+	HashMap<WebSocketSession,Tomato> tomatoMap = new HashMap<>();
+	
+	@Autowired
+	Gson gson;
+	
 	@Autowired
 	private TomatoService service;
 
@@ -39,29 +38,30 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 		WebsocketReqeust wr = gson.fromJson(message.getPayload(), WebsocketReqeust.class);
 		String action = wr.getAction();
 		String target = wr.getTarget();
-		System.out.println(wr);
+		Tomato tomato = tomatoMap.get(session);
+		
 		switch (action) {
 		// 타이머 첫 시작
 		case "load":
 			tomato = service.retrieveOneTomato(wr.getTomatoIdx());
-			startTime = tomato.startTimer();
+			tomatoMap.put(session, tomato);
 			break;
 
 		// 타이머 정지 후 시작
 		case "start":
-			startTime = tomato.startTimer();
+			tomato.startTimer();
 			break;
 
 		// 타이머 일시 정지
 		case "stop":
-			endTime = tomato.endTimer();
-			runTime = (int) (endTime - startTime) / 60000;
+			tomato.endTimer();
 
 			if (target.equals("regularTime")) {
-				tomato.setTomatoLeftRegular(tomato.getTomatoLeftRegular() - runTime);
+				tomato.calRegularTime();
 			} else if (target.equals("breakTime")) {
-				tomato.setTomatoLeftBreak(tomato.getTomatoLeftBreak() - runTime);
+				tomato.calBreakTime();
 			}
+			
 			service.editTomato(tomato);
 			break;
 
@@ -74,21 +74,27 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 			}
 			service.editTomato(tomato);
 			break;
+		
+		// 타이머 리셋
+		case "end":
+			if (target.equals("regularTime")) {
+				tomato.setTomatoLeftRegular(tomato.getTomatoFullRegular());
+			} else if (target.equals("breakTime")) {
+				tomato.setTomatoLeftBreak(tomato.getTomatoFullBreak());
+			}
+			tomato.setTomatoCanStart(0);
+			
+			service.editTomato(tomato);
+			break;
 		}
 
-		for (String key : sessionMap.keySet()) {
-			WebSocketSession wss = sessionMap.get(key);
-			try {
-				wss.sendMessage(new TextMessage(gson.toJson(new WebsocketResponse(action))));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		session.sendMessage(new TextMessage(gson.toJson(new WebsocketResponse(action))));
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessionMap.remove(session.getId());
+		tomatoMap.remove(session);
 	}
 
 }

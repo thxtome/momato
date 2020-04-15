@@ -19,12 +19,29 @@ public class Tomato {
 	private int templateIdx;
 	private String memberId;
 	
-	public long startTimer() {
+	public void startTimer() {
 		this.tomatoStartTime = System.currentTimeMillis();
-		return tomatoStartTime;
 	}
-	public long endTimer() {
+	
+	public void endTimer() {
 		this.tomatoEndTime = System.currentTimeMillis();
-		return tomatoEndTime;
+	}
+	
+	public void calRegularTime() {
+		if(tomatoStartTime == 0) {
+			tomatoStartTime = tomatoEndTime;
+		}
+		this.tomatoLeftRegular -= (int) ((tomatoEndTime - tomatoStartTime)/1000); 
+		this.tomatoStartTime = 0;
+		this.tomatoEndTime = 0;
+	}
+	
+	public void calBreakTime() {
+		if(tomatoStartTime == 0) {
+			tomatoStartTime = tomatoEndTime;
+		}
+		this.tomatoLeftBreak -= (int) ((tomatoEndTime - tomatoStartTime)/1000); 
+		this.tomatoStartTime = 0;
+		this.tomatoEndTime = 0;
 	}
 }
