@@ -13,7 +13,6 @@ import lombok.Data;
 
 @Data
 public class ResponseResult {
-	private static final long serialVersionUID = 1L;
 	private static final String DEFAULT_KEY = "result";
 	private int code;
 	private boolean status;
@@ -21,6 +20,8 @@ public class ResponseResult {
 	private Date timestamp;
 	private Map<String, Object> data;
 	private ErrorResult error;
+	
+	public ResponseResult() {}
 
 	public ResponseResult(HttpStatus httpStatus) {
 		this.data = new HashMap<>();
@@ -29,12 +30,6 @@ public class ResponseResult {
 		this.message = httpStatus.getReasonPhrase();
 		this.timestamp = new Date();
 	}
-
-
-	public ResponseResult() {
-
-	}
-
 
 	public ResponseResult(AbstractException ex, String referedUrl) {
 		HttpStatus httpStatus = ex.getHttpStatus();
