@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import calendar from "../../routes/Calendar";
 import tomatos from "../../routes/Tomatos";
-import template from "../../routes/Template";
+import template from "../../routes/Templates";
 import css from "./ContentWrapper.css";
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
