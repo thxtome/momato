@@ -4,7 +4,9 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from "@material-ui/core/Button";
-import Input from '@material-ui/core/Input';
+import TemplateModal from '../template/TemplateModal';
+import TomatoModal from '../tomato/TomatoModal';
+import LoginModal from '../login/LoginModal';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius:5,
     outline: "none"
   },
-  button: {
+  templateBtn: {
     fontSize: 30,
   },
   edit: {
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function TransitionsModal({template}) {
+export default function TransitionsModal({type, template, name}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -46,12 +48,22 @@ export default function TransitionsModal({template}) {
   const handleClose = () => {
     setOpen(false);
   };
-
   return (
     <div>
-      <Button className={classes.button} type="button" onClick={handleOpen}>
+      {type === "template" ? 
+      <Button className={classes.templateBtn} type="button" onClick={handleOpen}>
         {template.templateName}
       </Button>
+        : type === "tomato" ? 
+      <Button className={classes.tomatoBtn} type="button" onClick={handleOpen}>
+        {name}
+      </Button>
+        : type === "login" ?
+      <Button className={classes.loginBtn} type="button" onClick={handleOpen}>
+        로그인
+      </Button>
+        : <></>
+      }
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -66,18 +78,12 @@ export default function TransitionsModal({template}) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">
-                텃밭 고치기
-            </h2>
-            <p id="transition-modal-description">
-            <form noValidate autoComplete="off">
-                <Input className={classes.edit} defaultValue={template.templateName} inputProps={{ 'aria-label': 'description' }} />
-                <Input className={classes.edit}  defaultValue={template.templateContent} inputProps={{ 'aria-label': 'description' }} />
-                <div className={classes.editbtn}>
-                    <Button variant="contained" color="secondary">수정</Button>
-                </div>
-            </form>
-            </p>
+            {type === "template" ? 
+              <TemplateModal template={template}/>
+              : type === "tomato" ?
+              <TomatoModal name={name} />
+              : <LoginModal />
+            }
           </div>
         </Fade>
       </Modal>

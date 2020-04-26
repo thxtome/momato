@@ -8,6 +8,7 @@ import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite"
 import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
+import Modals from "../common/Modal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +47,7 @@ const Tomato = ({ name }) => {
                 </IconButton>
             </Box>
             <Typography className={classes.name} variant="h6">
-              {name}
+            <Modals type="tomato" name={name}>{name}</Modals>
             </Typography>
             <Typography variant="caption"> 남은시간 : 18분</Typography>
             <Box component={"div"}>

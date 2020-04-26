@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
+import Modals from "../common/Modal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +38,8 @@ const Header = () => {
         <Typography variant="h6" edge="start" className={classes.title}>
           MOMATO
         </Typography>
-        <Typography variant="caption" className={classes.login}>로그인 / 회원가입</Typography>
+        <Modals type="login">로그인</Modals>
+        <Typography variant="caption" className={classes.login}> / 회원가입</Typography>
       </Toolbar>
     </AppBar>
   );

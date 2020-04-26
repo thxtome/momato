@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Paper, Box, Modal } from "@material-ui/core";
+import { Typography, Paper, Box, Button } from "@material-ui/core";
 import Modals from "../common/Modal";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,19 +21,18 @@ const useStyles = makeStyles((theme) => ({
 
   const Template = ({template}) => {
       const classes = useStyles();
-      console.log({template})
       return (
-          <div classname={classes.root}>
+          <div className={classes.root}>
             <Paper elevation={0} className={classes.paper}>
               <Box className={classes.name} flexGrow={1}>
                 <Typography flexGrow={1} className={classes.name} variant="h4">
-                  <Modals template={template}>{template.templateName}</Modals>
+                  <Modals type="template" template={template}>{template.templateName}</Modals>
                 </Typography>
                 <Typography variant="h6">
                   {template.templateContent}
                 </Typography>
               </Box>
-              <Typography className={classes.delete} variant="h6">삭제</Typography>
+              <Button type="button">삭제</Button>
             </Paper>
           </div>
       );

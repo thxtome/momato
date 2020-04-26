@@ -16,7 +16,7 @@ const Templates = () => {
 
   return (
     <div className={classes.root}>
-      <Template template={template} key={template.templateInx}></Template>
+      <Template template={template} key={template.templateInx} />
       {tomatos.map((tomato,index) => <Tomato name={tomato} key={index}/>)}
     </div>
   );
