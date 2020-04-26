@@ -1,5 +1,7 @@
 package com.momato.conf;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +50,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().disable()
-        		.cors().disable()
+        		.cors().configurationSource(corsConfigurationSource())
+        		.and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/**").permitAll()
@@ -84,12 +87,13 @@ public class SecurityConf extends WebSecurityConfigurerAdapter{
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.addAllowedOrigin("http://localhost:8080");
-        configuration.addAllowedOrigin("http://127.0.0.1:5500");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(Arrays.asList("X-Requested-With","Origin","Content-Type","Accept","Authorization"));
+
+        configuration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Headers", "Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, " +
+                "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

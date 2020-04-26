@@ -19,26 +19,25 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     boxShadow: "none",
   },
-  
 }));
 
-const YearAndMonth = () => {
+const YearAndMonth = ({ year, month, prevMonth, nextMonth }) => {
   const classes = useStyles();
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={6}>
         <Box className={classes.root} component={"div"}>
-          <IconButton aria-label="left">
+          <IconButton onClick={()=>{prevMonth()}} aria-label="left">
             <KeyboardArrowLeftIcon />
           </IconButton>
           <Box component={"div"}>
-            <Typography variant={"h4"}>2020</Typography>
+            <Typography variant={"h4"}>{year}</Typography>
           </Box>
           <Box component={"div"}>
-            <Typography variant={"h2"}>04</Typography>
+            <Typography variant={"h2"}>{month}</Typography>
           </Box>
-          <IconButton aria-label="right">
+          <IconButton onClick={()=>{nextMonth()}} aria-label="right">
             <KeyboardArrowRightIcon />
           </IconButton>
         </Box>

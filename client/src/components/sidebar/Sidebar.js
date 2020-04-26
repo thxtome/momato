@@ -7,7 +7,6 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
-  Divider,
 } from "@material-ui/core";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";

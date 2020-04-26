@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
-import Modals from "../common/Modal";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +30,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = () => {
+const Header = (props) => {
+  console.log(props)
+  const { login, loginCheck, loginInfo, logout } = props;
+  const {
+    loginReducer: { isLogin },
+  } = loginInfo;
   const classes = useStyles();
   return (
     <AppBar className={classes.root}>
@@ -38,10 +43,24 @@ const Header = () => {
         <Typography variant="h6" edge="start" className={classes.title}>
           MOMATO
         </Typography>
-        <Modals type="login">로그인</Modals>
         <Typography variant="caption" className={classes.login}>
-          {" "}
-          / 회원가입
+          {isLogin ? (
+            <Button
+              onClick={() => {
+                logout();
+              }}
+            >
+              로그아웃
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                login();
+              }}
+            >
+              로그인
+            </Button>
+          )}
         </Typography>
       </Toolbar>
     </AppBar>

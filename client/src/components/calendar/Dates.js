@@ -1,6 +1,5 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import Table from "@material-ui/core/Table";
@@ -42,15 +41,6 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-const rows = [
-  ["", "", "", 1, 2, 3, 4],
-  [5, 6, 7, 8, 9, 10, 11],
-  [12, 13, 14, 15, 16, 17, 18],
-  [19, 20, 21, 22, 23, 24, 25],
-  [26, 27, 28, 29, 30, 31],
-  ["", "", "", "", "", "", ""],
-];
-
 const useStyles = makeStyles((theme) => ({
   date: {
     width: "100%",
@@ -76,8 +66,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dates = () => {
+//날짜를 삽입
+const fillDate = (year, month) => {
+  const dates = [];
+
+  const firstDay = new Date(year, month - 1, 1).getDay();
+  const lastDate = new Date(year, month, 0).getDate() - 1;
+
+  for (let i = firstDay; i <= lastDate + firstDay; i++) {
+    dates[i] = i - firstDay + 1;
+  }
+
+  return dates;
+};
+
+//채운 날짜를 row형식에 맞게 삽입
+const createRows = (dates) => {
+  const rows = [];
+
+  for (let i = 0; i < 6; i++) {
+    rows[i] = [
+      dates[7 * i],
+      dates[7 * i + 1],
+      dates[7 * i + 2],
+      dates[7 * i + 3],
+      dates[7 * i + 4],
+      dates[7 * i + 5],
+      dates[7 * i + 6],
+    ];
+  }
+
+  return rows;
+};
+
+const Dates = ({ year, month }) => {
   const classes = useStyles();
+
+  const dates = fillDate(year, month);
+
+  const rows = createRows(dates);
 
   return (
     <TableContainer component={Paper}>
@@ -95,12 +122,12 @@ const Dates = () => {
         </TableHead>
 
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              {row.map((date) => (
-                <StyledTableCell component="td" scope="row">
+          {rows.map((row, index) => (
+            <StyledTableRow key={index}>
+              {row.map((date, index) => (
+                <StyledTableCell key={index} component="td" scope="row">
                   <Box className={classes.date} component={"div"}>
-                    {date}
+                    {date && date}
                     {date == 5 || date == 14 ? (
                       <Box className={classes.innerDate}>
                         <Avatar

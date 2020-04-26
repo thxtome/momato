@@ -97,6 +97,7 @@ const Counter = (props) => {
 
   const restore = () => {
     setTime(0);
+    setIsGoing(false);
   };
 
   //뒤로가기
@@ -162,7 +163,11 @@ const Counter = (props) => {
         </Box>
 
         <Box component={"div"}>
-          <IconButton onClick={()=>{restore()}}>
+          <IconButton
+            onClick={() => {
+              restore();
+            }}
+          >
             <RestoreIcon className={classes.btnDetail}></RestoreIcon>
           </IconButton>
         </Box>

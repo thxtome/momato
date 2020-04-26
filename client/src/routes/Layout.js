@@ -1,12 +1,12 @@
 import React from "react";
-import Header from "../components/header/Header";
+import HeaderContainer from "../containers/header/HeaderContainer";
 import Sidebar from "../components/sidebar/Sidebar";
 import ContentWrapper from "../components/common/ContentWrapper";
 
 const Layout = () => {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <Sidebar />
       <ContentWrapper />
     </>
