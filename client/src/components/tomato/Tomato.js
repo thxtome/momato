@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     textAlign: "center",
   },
+  link: {
+    color: "inherit",
+    textDecoration: "none",
+  },
 }));
 
 const Tomato = ({ name }) => {
@@ -34,9 +39,11 @@ const Tomato = ({ name }) => {
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <Box component={"div"}>
-              <IconButton aria-label="start">
-                <PlayCircleFilledWhiteIcon />
-              </IconButton>
+                <IconButton aria-label="start">
+                  <Link className={classes.link} to={'counter'}>
+                  <PlayCircleFilledWhiteIcon />
+                  </Link>
+                </IconButton>
             </Box>
             <Typography className={classes.name} variant="h6">
               {name}

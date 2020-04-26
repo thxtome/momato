@@ -1,16 +1,15 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import calendar from "../../routes/Calendar";
-import tomatos from "../../routes/Tomatos";
-import template from "../../routes/Templates";
-import css from "./ContentWrapper.css";
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
+import Calendar from "../../routes/Calendar";
+import Tomatos from "../../routes/Tomatos";
+import Template from "../../routes/Templates";
+import Counter from "../../components/counter/Counter";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    display: "flex",
   },
   content: {
     flexGrow: 1,
@@ -22,12 +21,13 @@ const ContentWrapper = () => {
   const classes = useStyles();
   return (
     <main className={classes.content}>
-      <Toolbar/>
+      <Toolbar />
       <Switch>
-        <Route exact path="/" component={tomatos} />
-        <Route path="/tomato" component={tomatos} />
-        <Route path="/calendar" component={calendar} />
-        <Route path="/template" component={template} />
+        <Route exact path="/" component={Tomatos} />
+        <Route path="/tomato" component={Tomatos} />
+        <Route path="/calendar" component={Calendar} />
+        <Route path="/template" component={Template} />
+        <Route path="/counter" component={Counter} />
       </Switch>
     </main>
   );
