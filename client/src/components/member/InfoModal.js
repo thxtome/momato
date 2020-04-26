@@ -1,6 +1,5 @@
 import React from "react";
-import { makeStyles, TextField, Typography, Button, Avatar, Modal } from "@material-ui/core";
-import Modals from "../common/Modal";
+import { Avatar, makeStyles, Typography, TextField, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     div: {
@@ -10,12 +9,16 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2)
     },
     
-    titleId: {
-        marginRight: theme.spacing(5)
+    name: {
+        marginRight: theme.spacing(10)
     },
     
-    titlePass: {
-        marginRight: theme.spacing(3)
+    pass: {
+        marginRight: theme.spacing(8)
+    },
+
+    confirm: {
+        marginRight: theme.spacing(3.5)
     },
     
     button: {
@@ -34,14 +37,10 @@ const useStyles = makeStyles((theme) => ({
         display: "block",
         width: theme.spacing(15),
         margin: theme.spacing(3, "auto"),
-    },
-
-    mButton: {
-        fontSize: 15,
     }
-
 }));
-const LoginModal = () => {
+
+const InfoModal = () => {
     const classes = useStyles();
 
     return (
@@ -53,16 +52,17 @@ const LoginModal = () => {
             <Typography className={classes.tomatoText} variant="h5">TOMATO</Typography>
             <form className={classes.root} noValidate autoComplete="off">
                 <div className={classes.div}>
-                    <Typography className={classes.titleId}>아이디</Typography>
+                    <Typography className={classes.name}>닉네임</Typography>
                     <TextField
                     id="standard-textarea"
                     label=""
-                    placeholder="example@tomato.com"
+                    placeholder="nickname"
                     multiline
                     />
                 </div>
+
                 <div className={classes.div}>
-                    <Typography className={classes.titlePass}>비밀번호</Typography>
+                    <Typography className={classes.pass}>비밀번호</Typography>
                     <TextField
                     id="standard-textarea"
                     label=""
@@ -70,16 +70,22 @@ const LoginModal = () => {
                     multiline
                     />
                 </div>
-                {/* <div className={classes.mButton}>
-                    <Modals type="signin" />
-                    <Modals type="pass" />
-                </div> */}
+
+                <div className={classes.div}>
+                    <Typography className={classes.confirm}>비밀번호 확인</Typography>
+                    <TextField
+                    id="standard-textarea"
+                    label=""
+                    placeholder="password"
+                    multiline
+                    />
+                </div>
                 <div className={classes.button}>
-                    <Button variant="contained" color="secondary">로그인</Button>
+                    <Button variant="contained" color="secondary">수정</Button>
                 </div>
             </form>
         </>
     );
 };
 
-export default LoginModal;
+export default InfoModal;

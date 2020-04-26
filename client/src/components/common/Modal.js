@@ -7,12 +7,17 @@ import Button from "@material-ui/core/Button";
 import TemplateModal from '../template/TemplateModal';
 import TomatoModal from '../tomato/TomatoModal';
 import LoginModal from '../login/LoginModal';
+import Signin from '../member/SigninModal';
+import SigninModal from '../member/SigninModal';
+import PassModal from '../member/PassModal';
+import InfoModal from '../member/InfoModal';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 1900,
 },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -34,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
   editbtn: {
       margin: theme.spacing("auto"),
       textAlign: "center"
+  },
+  passbtn: {
+    fontSize: 5,
   }
 }));
 
@@ -50,7 +58,7 @@ export default function TransitionsModal({type, template, name}) {
   };
   return (
     <div>
-      {type === "template" ? 
+    {type === "template" ? 
       <Button className={classes.templateBtn} type="button" onClick={handleOpen}>
         {template.templateName}
       </Button>
@@ -62,7 +70,20 @@ export default function TransitionsModal({type, template, name}) {
       <Button className={classes.loginBtn} type="button" onClick={handleOpen}>
         로그인
       </Button>
-        : <></>
+        : type === "signin" ?
+      <Button className={classes.sigininBtn} type="button" onClick={handleOpen}>
+        회원가입
+      </Button>
+        : type === "pass" ?
+      <Button className={classes.passBtn} type="button" onClick={handleOpen}>
+        비밀번호 찾기
+      </Button>
+       : type === "info" ?
+      <Button className={classes.infoBtn} type="button" onClick={handleOpen}>
+        회원정보 수정
+      </Button>
+       : <></>
+
       }
       <Modal
         aria-labelledby="transition-modal-title"
@@ -82,7 +103,15 @@ export default function TransitionsModal({type, template, name}) {
               <TemplateModal template={template}/>
               : type === "tomato" ?
               <TomatoModal name={name} />
-              : <LoginModal />
+              : type === "login" ?
+              <LoginModal />
+              : type === "signin" ?
+              <SigninModal />
+              : type === "pass" ?
+              <PassModal />
+              : type === "info" ?
+              <InfoModal />
+              : <></>
             }
           </div>
         </Fade>

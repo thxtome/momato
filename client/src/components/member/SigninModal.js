@@ -1,6 +1,5 @@
 import React from "react";
-import { makeStyles, TextField, Typography, Button, Avatar, Modal } from "@material-ui/core";
-import Modals from "../common/Modal";
+import { Avatar, makeStyles, Typography, TextField, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     div: {
@@ -34,14 +33,10 @@ const useStyles = makeStyles((theme) => ({
         display: "block",
         width: theme.spacing(15),
         margin: theme.spacing(3, "auto"),
-    },
-
-    mButton: {
-        fontSize: 15,
     }
-
 }));
-const LoginModal = () => {
+
+const SigninModal = () => {
     const classes = useStyles();
 
     return (
@@ -61,6 +56,17 @@ const LoginModal = () => {
                     multiline
                     />
                 </div>
+
+                <div className={classes.div}>
+                    <Typography className={classes.titleId}>닉네임</Typography>
+                    <TextField
+                    id="standard-textarea"
+                    label=""
+                    placeholder="nickname"
+                    multiline
+                    />
+                </div>
+
                 <div className={classes.div}>
                     <Typography className={classes.titlePass}>비밀번호</Typography>
                     <TextField
@@ -70,16 +76,12 @@ const LoginModal = () => {
                     multiline
                     />
                 </div>
-                {/* <div className={classes.mButton}>
-                    <Modals type="signin" />
-                    <Modals type="pass" />
-                </div> */}
                 <div className={classes.button}>
-                    <Button variant="contained" color="secondary">로그인</Button>
+                    <Button variant="contained" color="secondary">회원가입</Button>
                 </div>
             </form>
         </>
     );
 };
 
-export default LoginModal;
+export default SigninModal;

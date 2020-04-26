@@ -38,11 +38,8 @@ const Header = () => {
         <Typography variant="h6" edge="start" className={classes.title}>
           MOMATO
         </Typography>
-        <Modals type="login">로그인</Modals>
-        <Typography variant="caption" className={classes.login}>
-          {" "}
-          / 회원가입
-        </Typography>
+        <Modals type="login" />
+        <Modals type="signin" />
       </Toolbar>
     </AppBar>
   );
