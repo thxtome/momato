@@ -26,7 +26,11 @@ public class MemberController {
 	MemberService service;
 	
 	@PostMapping()
-	public ResponseResult signup (@RequestBody Member member) {
+	public ResponseResult signup (@RequestBody Member member) throws InvalidRequestException {
+		System.out.println(member.hasAllData());
+		if(!member.hasAllData()) {
+			throw new InvalidRequestException("member parameter is empty");
+		}		
 		return service.createMember(member);
 	}
 	

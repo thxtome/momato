@@ -16,9 +16,11 @@ const reducer = createReducer(initialState, {
   [LOGIN]: (state, action) => {
     return { isLogin: true };
   },
+  
   [LOGOUT]: (state, action) => {
     return { isLogin: false };
   },
+
   [LOGIN_SUCCEEDED]: (state, action) => {
     console.log(action);
     return { userInfo: action.data };

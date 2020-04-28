@@ -13,7 +13,8 @@ const initialState = {
 
 const reducer = createReducer(initialState, {
   [SIGNUP_REQUEST]: (state, action) => {
-    return state;
+    console.log(action);
+    return { ...state };
   },
   [SIGNUP_SUCCEED]: (state, action) => {
     console.log(action);
@@ -21,7 +22,7 @@ const reducer = createReducer(initialState, {
   },
   [SIGNUP_FAILED]: (state, action) => {
     console.log(action);
-    return { state };
+    return { ...state, isSignupSucceed: false };
   },
 });
 
