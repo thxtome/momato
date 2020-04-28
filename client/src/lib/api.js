@@ -9,3 +9,14 @@ export const login = (id, pass) =>
       memberPass: "1111",
     },
   });
+
+export const signup = ({ memberId, memberPass, memberName }) =>
+  axios({
+    method: "post",
+    url: "http://localhost:8080/members",
+    data: {
+      memberId,
+      memberPass,
+      memberName,
+    },
+  });

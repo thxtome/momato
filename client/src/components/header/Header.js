@@ -39,7 +39,7 @@ const Header = () => {
           MOMATO
         </Typography>
         <Modals type="login" />
-        <Modals type="signin" />
+        <Modals type="signup" />
       </Toolbar>
     </AppBar>
   );
