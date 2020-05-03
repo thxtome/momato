@@ -4,26 +4,26 @@
 	<select id="selectMember" resultType="Member" parameterType="Member">
 		select member_id,
 		       member_name
-		  from member
+		  from `member`
 		 where member_id = #{memberId}
 		   and member_pass = #{memberPass}  
 	</select>
 	
 	<select id="selectMemberById" resultType="Member" parameterType="Member">
 		select *
-		  from member
+		  from `member`
 		 where member_id = #{memberId}
 	</select>
 	
 	<select id="selectMemberByIdExcludePass" resultType="Member" parameterType="Member">
 		select member_id, 
 			   member_name
-		  from member
+		  from `member`
 		 where member_id = #{memberId}
 	</select>
 	
 	<insert id="insertMember" parameterType="Member">
-		insert into member (member_id, member_pass, member_name)
+		insert into `member` (member_id, member_pass, member_name)
 		values (#{memberId},#{memberPass},#{memberName})
 	</insert>
 	

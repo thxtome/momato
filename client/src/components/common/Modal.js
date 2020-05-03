@@ -5,12 +5,13 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
 import TemplateModal from "../template/TemplateModal";
-import TomatoModal from "../tomato/TomatoModal";
-import LoginModal from "../login/LoginModal";
-import SignupModal from "../member/SignupModal";
+import TomatoEditModal from "../tomato/TomatoEditModal";
 import PassModal from "../member/PassModal";
 import InfoModal from "../member/InfoModal";
-import SignupModalContainer from "../../containers/member/SigninModalContainer";
+import SignupModalContainer from "../../containers/member/SignupModalContainer";
+import LoginModalContainer from "../../containers/login/LoginModalContainer";
+import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
+import TomatoAddModalContainer from "../../containers/tomato/TomatoAddModalContainer";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -43,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
   passbtn: {
     fontSize: 5,
   },
+  addBtn: {
+    margin: theme.spacing(1, "auto"),
+    textAlign: "center"
+  }
 }));
 
 export default function TransitionsModal({ type, template, name }) {
@@ -66,7 +71,7 @@ export default function TransitionsModal({ type, template, name }) {
         >
           {template.templateName}
         </Button>
-      ) : type === "tomato" ? (
+      ) : type === "tomatoEdit" ? (
         <Button
           className={classes.tomatoBtn}
           type="button"
@@ -94,6 +99,13 @@ export default function TransitionsModal({ type, template, name }) {
         <Button className={classes.infoBtn} type="button" onClick={handleOpen}>
           회원정보 수정
         </Button>
+      ) : type === "tomatoAdd" ? (
+        <div className={classes.addBtn}>
+          <Button className={classes.addBtn} type="button" onClick={handleOpen}>
+            <AddCircleRoundedIcon />
+            토마토 추가
+          </Button>
+        </div>
       ) : (
         <></>
       )}
@@ -113,16 +125,18 @@ export default function TransitionsModal({ type, template, name }) {
           <div className={classes.paper}>
             {type === "template" ? (
               <TemplateModal template={template} />
-            ) : type === "tomato" ? (
-              <TomatoModal name={name} />
+            ) : type === "tomatoEdit" ? (
+              <TomatoEditModal name={name} />
             ) : type === "login" ? (
-              <LoginModal />
+              <LoginModalContainer onClose={handleClose} />
             ) : type === "signup" ? (
               <SignupModalContainer />
             ) : type === "pass" ? (
               <PassModal />
             ) : type === "info" ? (
-              <InfoModal />
+              <InfoModal /> 
+            ) : type === "tomatoAdd" ? (
+              <TomatoAddModalContainer />
             ) : (
               <></>
             )}

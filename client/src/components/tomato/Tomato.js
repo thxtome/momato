@@ -47,7 +47,7 @@ const Tomato = ({ name }) => {
                 </IconButton>
             </Box>
             <Typography className={classes.name} variant="h6">
-            <Modals type="tomato" name={name}>{name}</Modals>
+            <Modals type="tomatoEdit" name="{name}">{name}</Modals>
             </Typography>
             <Typography variant="caption"> 남은시간 : 18분</Typography>
             <Box component={"div"}>

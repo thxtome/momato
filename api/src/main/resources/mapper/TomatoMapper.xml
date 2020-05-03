@@ -24,8 +24,8 @@
 	
 	<!-- 토마토 추가 -->
 	<insert id="insertTomato" parameterType="Tomato">
-		insert into tomato (tomato_name, tomato_full_regular, tomato_full_break, member_id
-		) values (#{tomatoName}, #{tomatoFullRegular}, #{tomatoFullBreak}, #{memberId})
+		insert into tomato (tomato_name, member_id
+		) values (#{tomatoName}, #{memberId})
 	</insert>
 	
 	<!-- 토마토 삭제 -->

@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Modals from "../common/Modal";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,17 +29,29 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     minHeight: "100%",
   },
+  logout: {
+    color: "black",
+  }
 }));
 
 const Header = () => {
   const classes = useStyles();
+  const logout = () => {
+    sessionStorage.removeItem("auth");
+    window.location.reload(true);
+  }
+
   return (
     <AppBar className={classes.root}>
       <Toolbar className={classes.toolbar}>
         <Typography variant="h6" edge="start" className={classes.title}>
           MOMATO
         </Typography>
-        <Modals type="login" />
+        {sessionStorage.getItem("auth") === null ? (
+          <Modals type="login" />
+        ) : (
+          <Button classeName={classes.logout} onClick={logout()}>로그아웃</Button>
+        )}
         <Modals type="signup" />
       </Toolbar>
     </AppBar>

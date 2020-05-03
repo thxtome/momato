@@ -1,6 +1,5 @@
 import React from "react";
-import { makeStyles, Input, Button, TextField, FormControl, InputLabel, Select, Typography } from "@material-ui/core";
-import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles, Button, FormControl, InputLabel, Select, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -20,11 +19,15 @@ const useStyles = makeStyles((theme) => ({
     editbtn: {
         margin: theme.spacing("auto"),
         textAlign: "center"
+    },
+    
+    select: {
+        width: "40%",
     }
 }));
 
 
-const TomatoModal = ({ name }) => {
+const TomatoEditModal = ({ name }) => {
     const classes = useStyles();
     
     const [state, setState] = React.useState({
@@ -49,7 +52,7 @@ const TomatoModal = ({ name }) => {
                 <FormControl className={classes.formControl}>
                 <div className={classes.div}>
                 <InputLabel htmlFor="age-native-simple"></InputLabel>
-                    <Typography className={classes.title} flexGrow={1}>재배 시간</Typography>
+                    <Typography className={classes.title} >재배 시간</Typography>
                     <Select
                     native
                     value={state.age}
@@ -63,6 +66,8 @@ const TomatoModal = ({ name }) => {
                     <option value={5}>5</option>
                     <option value={10}>10</option>
                     <option value={15}>15</option>
+                    <option value={20}>20</option>
+                    <option selected value={25}>25</option>
                     </Select>
                 </div>
                 <div className={classes.div}>
@@ -92,4 +97,4 @@ const TomatoModal = ({ name }) => {
     );
 };
 
-export default TomatoModal;
+export default TomatoEditModal;

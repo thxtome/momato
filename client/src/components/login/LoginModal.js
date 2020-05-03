@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, TextField, Typography, Button, Avatar, Modal } from "@material-ui/core";
-import Modals from "../common/Modal";
 
 const useStyles = makeStyles((theme) => ({
     div: {
@@ -41,9 +40,29 @@ const useStyles = makeStyles((theme) => ({
     }
 
 }));
-const LoginModal = () => {
-    const classes = useStyles();
 
+const useInput = (initVal) => {
+    const [value, setValue] = useState(initVal);
+    const onChange = (e) => {
+        setValue(e.target.value);
+    };
+    return { value, onChange };
+};
+
+const LoginModal = (props) => {
+    const classes = useStyles();
+    const email = useInput("");
+    const pass = useInput("");
+    
+    const loginRequest = () => {
+        const member = {
+            memberId: email.value,
+            memberPass: pass.value,
+        };
+        props.onClose();
+        props.login(member);
+    }
+    
     return (
         <>
             <Avatar
@@ -59,23 +78,29 @@ const LoginModal = () => {
                     label=""
                     placeholder="example@tomato.com"
                     multiline
+                    {...email}
                     />
                 </div>
                 <div className={classes.div}>
                     <Typography className={classes.titlePass}>비밀번호</Typography>
                     <TextField
-                    id="standard-textarea"
+                    id="standard-password-input"
                     label=""
+                    type="password"
+                    autoComplete="current-password"
                     placeholder="password"
                     multiline
+                    {...pass}
                     />
                 </div>
                 {/* <div className={classes.mButton}>
-                    <Modals type="signin" />
+                    <Modals type="signup" />
                     <Modals type="pass" />
                 </div> */}
                 <div className={classes.button}>
-                    <Button variant="contained" color="secondary">로그인</Button>
+                    <Button variant="contained" color="secondary" onClick={() => { loginRequest(); }}>
+                        로그인
+                    </Button>
                 </div>
             </form>
         </>

@@ -9,12 +9,13 @@ export const loginActions = { LOGIN_CHK, LOGIN, LOGOUT, LOGIN_SUCCEEDED };
 
 const initialState = {
   isLogin: false,
+  member: null
 };
 
 const reducer = createReducer(initialState, {
   [LOGIN_CHK]: (state, action) => state,
   [LOGIN]: (state, action) => {
-    return { isLogin: true };
+    return { ...state, isLogin: true };
   },
   
   [LOGOUT]: (state, action) => {
@@ -22,8 +23,9 @@ const reducer = createReducer(initialState, {
   },
 
   [LOGIN_SUCCEEDED]: (state, action) => {
-    console.log(action);
-    return { userInfo: action.data };
+    const auth = JSON.stringify(action.payload.response.headers.authorization).substring(7);
+    sessionStorage.setItem("auth", auth);
+    window.location.reload(true);
   },
 });
 
