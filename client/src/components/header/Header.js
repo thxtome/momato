@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
@@ -34,23 +34,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = () => {
-  const classes = useStyles();
-  const logout = () => {
-    sessionStorage.removeItem("auth");
-    window.location.reload(true);
-  }
-
+const Header = (props) => {
+  console.log(props);
+  const classes = useStyles();  
+  
   return (
     <AppBar className={classes.root}>
       <Toolbar className={classes.toolbar}>
         <Typography variant="h6" edge="start" className={classes.title}>
           MOMATO
         </Typography>
-        {sessionStorage.getItem("auth") === null ? (
+        {localStorage.getItem("auth") === null ? (
           <Modals type="login" />
         ) : (
-          <Button classeName={classes.logout} onClick={logout()}>로그아웃</Button>
+          <Button classeName={classes.logout} onClick={() => {}}>로그아웃</Button>
         )}
         <Modals type="signup" />
       </Toolbar>

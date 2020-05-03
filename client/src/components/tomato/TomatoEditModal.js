@@ -1,10 +1,20 @@
-import React from "react";
-import { makeStyles, Button, FormControl, InputLabel, Select, Typography } from "@material-ui/core";
+import React, {useState} from "react";
+import {
+    makeStyles,
+    Button,
+    FormControl,
+    InputLabel,
+    Select,
+    Typography,
+    TextField,
+    NativeSelect
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    formControl: {
+    formControl: {},
+    name: {
+        width: "30%"
     },
-
     div: {
         width: "100%",
         display: "flex",
@@ -20,78 +30,78 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing("auto"),
         textAlign: "center"
     },
-    
+
     select: {
-        width: "40%",
+        width: "40%"
     }
 }));
 
+const useInput = (initVal) => {
+    const [value, setValue] = useState(initVal);
+    const onChange = (e) => {
+        setValue(e.target.value);
+    };
+    return {value, onChange};
+};
 
-const TomatoEditModal = ({ name }) => {
+const TomatoEditModal = ({name, fullRegular, fullBreak}) => {
     const classes = useStyles();
-    
-    const [state, setState] = React.useState({
-        age: '',
-        name: 'hai',
-      });
-    
-      const handleChange = (event) => {
-        const name = event.target.name;
-        setState({
-          ...state,
-          [name]: event.target.value,
-        });
-      };
+    const tomatoName = useInput("");
+    const tomatoFullRegular = useInput("");
+    const tomatoFullBreak = useInput("");
+
+    // const handleChange = (event) => {     const name = event.target.name;
+    // setState({       ...state,       [name]: event.target.value,     });   };
 
     return (
-        <>
-            <h2 id="transition-modal-title">
-                {name}
-            </h2>
-            <p id="transition-modal-description">
-                <FormControl className={classes.formControl}>
-                <div className={classes.div}>
-                <InputLabel htmlFor="age-native-simple"></InputLabel>
-                    <Typography className={classes.title} >재배 시간</Typography>
-                    <Select
-                    native
-                    value={state.age}
-                    onChange={handleChange}
-                    inputProps={{
-                        name: 'age',
-                        id: 'age-native-simple',
-                    }}
-                    >
-                    <option aria-label="None" value="" />
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                    <option value={15}>15</option>
-                    <option value={20}>20</option>
-                    <option selected value={25}>25</option>
-                    </Select>
-                </div>
+        <> < TextField className = {
+            classes.name
+        }
+        id = "standard-textarea" label = "" placeholder = {
+            name
+        }
+        multiline {
+            ...name
+        } /> <p id="transition-modal-description">
+            <FormControl className={classes.formControl}>
                 <div className={classes.div}>
                     <InputLabel htmlFor="age-native-simple"></InputLabel>
-                    <Typography className={classes.title}>휴식 시간</Typography>
-                    <Select
-                    native
-                    value={state.age}
-                    onChange={handleChange}
-                    inputProps={{
-                        name: 'age',
-                        id: 'age-native-simple',
-                    }}
-                    >
-                    <option aria-label="None" value="" />
-                    <option value={10}>5</option>
-                    <option value={20}>10</option>
-                    <option value={30}>15</option>
-                    </Select>
-                </div>
-                <div className={classes.editbtn}>
-                    <Button variant="contained" color="secondary">수정</Button>
-                </div>
-            </FormControl>
+                    <Typography className={classes.title}>재배 시간</Typography>
+                    <NativeSelect
+                        defaultValue={fullRegular / 60}
+                        inputProps={{
+                            name: 'tomatoFullRegular',
+                            id: 'uncontrolled-native'
+                        }}>
+                        <option value={5}>5분</option>
+                        <option value={10}>10분</option>
+                        <option value={15}>15분</option>
+                        <option value={20}>20분</option>
+                        <option value={25}>25분</option>
+                        <option value={30}>30분</option>
+                    </NativeSelect>
+                    </div>
+                    <div className={classes.div}>
+                        <InputLabel htmlFor="age-native-simple"></InputLabel>
+                        <Typography className={classes.title}>휴식 시간</Typography>
+                        <NativeSelect
+                        defaultValue={fullBreak / 60}
+                        inputProps={{
+                            name: 'tomatoFullBreak',
+                            id: 'uncontrolled-native'
+                        }}>
+                        <option value={5}>5분</option>
+                        <option value={10}>10분</option>
+                        <option value={15}>15분</option>
+                        <option value={20}>20분</option>
+                        <option value={25}>25분</option>
+                        <option value={30}>30분</option>
+                    </NativeSelect>
+                    </div>
+                    <div className={classes.editbtn}>
+                        <Button variant="contained" color="secondary">수정</Button>
+                    </div>
+                </FormControl>
             </p>
         </>
     );

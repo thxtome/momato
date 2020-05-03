@@ -65,6 +65,7 @@ const SignupModal = (props) => {
       memberName: name.value,
     };
     props.signup(member);
+    props.onClose();
   };
   return (
     <>
@@ -103,12 +104,19 @@ const SignupModal = (props) => {
             placeholder="password"
             multiline
             {...name}
+            onKeyPress={(e) => {
+              if(e.key === "Enter"){
+                e.preventDefault();
+                document.getElementById("signinButton").click();
+              };
+            }}
           />
         </div>
         <div className={classes.button}>
           <Button
             variant="contained"
             color="secondary"
+            id="signinButton"
             onClick={() => {
               singupRequest();
             }}

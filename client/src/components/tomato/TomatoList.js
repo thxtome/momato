@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TomatoList = (props) => {
   useEffect(() => {
-    props.getTomatoList(new Date());
+    props.getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
   }, []);
   const classes = useStyles();
   const tomatos = props.tomatoReducer.tomatos;

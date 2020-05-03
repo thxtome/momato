@@ -58,13 +58,7 @@ const TomatoAddModal = (props) => {
       tomatoName: tomatoName.value,
     };
     props.tomatoAdd(data);
-  };
-
-  const onKeyPress = (e) => {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-      document.querySelector("button").click();
-    }
+    props.onClose();
   };
 
   return (
@@ -75,21 +69,26 @@ const TomatoAddModal = (props) => {
           <div className={classes.div}>
             <TextField
               id="standard-textarea"
+              className={classes.textField}
               label=""
               placeholder="토마토 이름"
               multiline
               {...tomatoName}
+              onKeyPress={(e) => {
+                if(e.key === "Enter"){
+                  e.preventDefault();
+                  document.getElementById("addButton").click();
+                };
+              }}
             />
           </div>
           <div className={classes.button}>
             <Button
               variant="contained"
               color="secondary"
+              id="addButton"
               onClick={() => {
                 tomatoAddRequest();
-              }}
-              onKeyUp={() => {
-                onKeyPress();
               }}
             >
               추가

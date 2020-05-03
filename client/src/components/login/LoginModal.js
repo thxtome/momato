@@ -1,11 +1,10 @@
 import React, { useState } from "react";
+import TextField from "@material-ui/core/TextField";
 import {
   makeStyles,
-  TextField,
   Typography,
   Button,
   Avatar,
-  Modal,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -101,6 +100,12 @@ const LoginModal = (props) => {
             placeholder="password"
             multiline
             {...pass}
+            onKeyPress={(e) => {
+              if(e.key === "Enter"){
+                e.preventDefault();
+                document.getElementById("loginButton").click();
+              };
+            }}
           />
         </div>
         {/* <div className={classes.mButton}>
@@ -111,6 +116,7 @@ const LoginModal = (props) => {
           <Button
             variant="contained"
             color="secondary"
+            id="loginButton"
             onClick={() => {
               loginRequest();
             }}
