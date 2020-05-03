@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.momato.common.dto.ResponseResult;
 import com.momato.tomato.dto.Param;
@@ -32,10 +31,11 @@ public class TomatoController {
 	
 	// 토마토등록일 또는 템플릿인덱스로 조회
 	@GetMapping()
-	public ResponseResult retrieveTomato(@RequestParam(defaultValue = "0") int templateIdx, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date tomatoDate) {
+	public ResponseResult retrieveTomato(@RequestParam(defaultValue = "0") int templateIdx, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date tomatoDate, @AuthenticationPrincipal String memberId) {
 		Tomato tomato = new Tomato();
 		tomato.setTemplateIdx(templateIdx);
 		tomato.setTomatoDate(tomatoDate);
+		tomato.setMemberId(memberId);
 		return new ResponseResult(HttpStatus.OK, service.retrieveTomato(tomato));
 	}
 	
@@ -46,13 +46,15 @@ public class TomatoController {
 	}
 	
 	@PostMapping()
-	public ResponseResult addTomato(@RequestBody Param param) {
+	public ResponseResult addTomato(@RequestBody Param param, @AuthenticationPrincipal String memberId) {
 		System.out.println("도착");
 		System.out.println(param);
 		String createType = param.getCreateType();
 		// 단순 토마토 등록
 		if (createType.equals("simple")) {
-			service.addTomato(param.getData());
+			Tomato tomato = param.getData();
+			tomato.setMemberId(memberId);
+			service.addTomato(tomato);
 		// 템플릿 복사 후 토마토 등록	
 		} else if(createType.equals("copy")) {
 			Tomato tomato = new Tomato();

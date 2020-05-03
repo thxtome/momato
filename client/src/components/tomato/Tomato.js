@@ -31,25 +31,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Tomato = ({ name }) => {
+const Tomato = ({ tomatoName, tomatoLeftRegular, tomatoIdx }) => {
   const classes = useStyles();
-
+  
+  
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <Box component={"div"}>
-                <IconButton aria-label="start">
-                  <Link className={classes.link} to={'counter'}>
+              <IconButton aria-label="start">
+                <Link className={classes.link} to={"counter"}>
                   <PlayCircleFilledWhiteIcon />
-                  </Link>
-                </IconButton>
+                </Link>
+              </IconButton>
             </Box>
             <Typography className={classes.name} variant="h6">
-            <Modals type="tomatoEdit" name="{name}">{name}</Modals>
+              <Modals type="tomatoEdit" name={tomatoName}></Modals>
             </Typography>
-            <Typography variant="caption"> 남은시간 : 18분</Typography>
+            <Typography variant="caption">
+              남은시간 : {tomatoLeftRegular / 60}분
+            </Typography>
             <Box component={"div"}>
               <IconButton aria-label="start">
                 <DeleteIcon />

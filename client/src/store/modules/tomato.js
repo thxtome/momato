@@ -7,26 +7,28 @@ const TOMATO_FAILED = createAction("TOMATO_FAILED");
 export const tomatoActions = { TOMATO_REQUEST, TOMATO_SUCCEED, TOMATO_FAILED };
 
 const initialState = {
-    isTomatoSucceed: false,
-    data: null,
+  isTomatoSucceed: false,
+  tomatos: [],
+  date: null,
 };
 
 const reducer = createReducer(initialState, {
-    [TOMATO_REQUEST]: (state, action) => {
-      return { ...state };
-    },
-    [TOMATO_SUCCEED]: (state, action) => {
-      const tomatos = action.payload.response.data.data.result;
-      return { 
-        ...state,
-        tomatos,
-      };
-    },
-    [TOMATO_FAILED]: (state, action) => {
-      console.log(action);
-      return { ...state, isTomatoSucceed: false };
-    },
-  });
-  
-  export default reducer;
-  
+  [TOMATO_REQUEST]: (state, action) => {
+    return { ...state, date: action.payload.date };
+  },
+
+  [TOMATO_SUCCEED]: (state, action) => {
+    const tomatos = action.payload.tomatos;
+    return {
+      ...state,
+      tomatos: tomatos,
+    };
+  },
+
+  [TOMATO_FAILED]: (state, action) => {
+    console.log(action);
+    return { ...state, isTomatoSucceed: false };
+  },
+});
+
+export default reducer;

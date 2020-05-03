@@ -1,5 +1,4 @@
 import axios from "axios";
-import qs from 'query-string';
 
 export const login = ({ memberId, memberPass }) =>
   axios({
@@ -22,22 +21,31 @@ export const signup = ({ memberId, memberPass, memberName }) =>
     },
   });
 
-export const tomato = ({ date }) =>
-  axios({
+export const tomato = (date) => {
+  let dateString = date.toISOString().substr(0, 10);
+  return axios({
     method: "get",
-    url: "http://localhost:8080/tomatos?tomatoDate=2020-05-02",
-    // params: qs.stringify({data.date}),
+    headers: { Authorization: localStorage.getItem("auth") },
+    url: `http://localhost:8080/tomatos?tomatoDate=${dateString}`,
   });
+};
 
-export const tomatoAdd = ({ createType, tomatoName, memberId }) =>
+export const tomatoAdd = ({ createType, tomatoName }) =>
   axios({
     method: "post",
     url: "http://localhost:8080/tomatos",
+    headers: { Authorization: localStorage.getItem("auth") },
     data: {
       createType,
       data: {
         tomatoName,
-        memberId,
       },
     },
+  });
+
+export const tomatoDelete = (tomatoIdx) =>
+  axios({
+    method: "delete",
+    url: `http://localhost:8080/tomatos/${tomatoIdx}`,
+    headers: { Authorization: localStorage.getItem("auth") },
   });

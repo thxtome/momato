@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { tomatoActions } from "../../store/modules/tomato.js";
-import Sidebar from "../../components/sidebar/Sidebar.js";
+import TomatoList from "../../components/tomato/TomatoList.js";
 
 const mapStateToProps = (state) => {
   return state;
@@ -8,10 +8,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    tomato: (data) => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ data }));
+    getTomatoList: (date) => {
+      dispatch(tomatoActions.TOMATO_REQUEST({ date }));
     },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(TomatoList);

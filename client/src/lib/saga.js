@@ -14,11 +14,21 @@ function* tomatoAddSaga(action) {
   }
 }
 
+function* tomatoDeleteSaga(action) {
+  try {
+    const response = yield call(api.tomatoDelete, action.payload.data);
+    yield put(tomatoAddActions.TOMATO_ADD_SUCCEED({ response }));
+  } catch (e) {
+    yield put({ type: "TOMATO_ADD_FAILED", message: e.message });
+  }
+}
+
 function* tomatoSaga(action) {
   try {
-    const response = yield call(api.tomato, action.payload.data);
-    yield put(tomatoActions.TOMATO_SUCCEED({ response }));
-    
+    const response = yield call(api.tomato, action.payload.date);
+    yield put(
+      tomatoActions.TOMATO_SUCCEED({ tomatos: response.data.data.result })
+    );
   } catch (e) {
     yield put({ type: "TOMATO_FAILED", message: e.message });
   }
@@ -28,9 +38,8 @@ function* loginSaga(action) {
   try {
     const response = yield call(api.login, action.payload.member);
     yield put(loginActions.LOGIN_SUCCEEDED({ response }));
-    // yield put({ type: "LOGIN_SUCCEEDED", data: response });
   } catch (e) {
-    yield put({ type: "LOGIN_FAILED", message: e.message });
+    yield put(loginActions.LOGIN_FAILED({ e }));
   }
 }
 

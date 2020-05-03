@@ -60,17 +60,14 @@ const useStyles = makeStyles((theme) => ({
 const useInput = (initVal) => {
   const [value, setValue] = useState(initVal);
   return { value };
-}
+};
 
 const Sidebar = (props) => {
   const classes = useStyles();
   const [clieckedIndex, setClieckedIndex] = useState(0);
-  const date = JSON.stringify(useInput(new Date().toISOString().substr(0, 10).replace('T', ' ')));
-  
-  const tomatoRequest = () => {
-    props.tomato(date);
-  };
-
+  const date = JSON.stringify(
+    useInput(new Date().toISOString().substr(0, 10).replace("T", " "))
+  );
 
   return (
     <Drawer
@@ -103,9 +100,6 @@ const Sidebar = (props) => {
                 key={text}
                 to={
                   index === 0 ? "tomato" : index === 1 ? "calendar" : "template"
-                }
-                onClick={
-                  index === 0 ? () => {const data = tomatoRequest();} : () => {console.log("");}
                 }
               >
                 <ListItem

@@ -1,13 +1,13 @@
 import React from "react";
 import Header from "../components/header/Header";
 import ContentWrapper from "../components/common/ContentWrapper";
-import TomatoContainer from "../containers/tomato/TomatoContainer";
+import Sidebar from "../components/sidebar/Sidebar";
 
 const Layout = () => {
   return (
     <>
       <Header />
-      <TomatoContainer />
+      <Sidebar />
       <ContentWrapper />
     </>
   );

@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { tomatoAddActions } from "../../store/modules/tomatoAdd.js";
+import { tomatoActions } from "../../store/modules/tomato.js";
 import TomatoAddModal from "../../components/tomato/TomatoAddModal.js";
 
 const mapStateToProps = (state) => {
@@ -10,6 +11,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     tomatoAdd: (data) => {
       dispatch(tomatoAddActions.TOMATO_ADD_REQUEST({ data }));
+    },
+
+    getTomatos: (date) => {
+      dispatch(tomatoActions.TOMATO_REQUEST({ date }));
+    },
+
+    clearAddResult: () => {
+      dispatch(tomatoAddActions.TOMATO_ADD_CLEAR());
     },
   };
 };
