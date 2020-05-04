@@ -20,7 +20,7 @@ public class ExceptionController {
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
 	public ResponseResult filterInvalidRequestException(HttpServletRequest req, Exception e) {
     	InvalidRequestException InvalidException = new InvalidRequestException(e.getMessage(),e);
-		ResponseResult rr = new ResponseResult(InvalidException,req.getRequestURI().toString()); 
+		ResponseResult rr = new ResponseResult(InvalidException, "0001", req.getRequestURI().toString()); 
 		return rr;
 	}
     
@@ -28,7 +28,7 @@ public class ExceptionController {
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     public ResponseResult invalidRequestException(HttpServletRequest req, Exception e) {
     	InvalidRequestException InvalidException = new InvalidRequestException(e.getMessage(),e);
-    	ResponseResult rr = new ResponseResult(InvalidException,req.getRequestURI().toString()); 
+    	ResponseResult rr = new ResponseResult(InvalidException, "0002", req.getRequestURI().toString()); 
     	return rr;
     }	
 
@@ -36,7 +36,7 @@ public class ExceptionController {
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     public ResponseResult emptyRequestBodyException(HttpServletRequest req, Exception e) {
     	InvalidRequestException defaultException = new InvalidRequestException ("request body is missing",e);
-    	ResponseResult rr = new ResponseResult(defaultException,req.getRequestURI().toString()); 
+    	ResponseResult rr = new ResponseResult(defaultException, "0003", req.getRequestURI().toString()); 
     	return rr;
     }
     
@@ -44,7 +44,7 @@ public class ExceptionController {
     @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseResult defaultException(HttpServletRequest req, Exception e) {
     	DefaultException defaultException = new DefaultException(e.getMessage(),e);
-    	ResponseResult rr = new ResponseResult(defaultException,req.getRequestURI().toString()); 
+    	ResponseResult rr = new ResponseResult(defaultException, "0004", req.getRequestURI().toString()); 
     	return rr;
     }
     

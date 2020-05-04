@@ -25,12 +25,12 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 		} catch (NullPointerException e) {
 			InvalidRequestException ie = new InvalidRequestException("Member parameters are invalid", e);
-			ResponseResult errorResponse = new ResponseResult(ie, request.getRequestURI());
+			ResponseResult errorResponse = new ResponseResult(ie, "Login", "0003", request.getRequestURI());
 			response.setContentType("application/json");
 			response.setStatus(HttpStatus.BAD_REQUEST.value());
 			response.getWriter().write(convertObjectToJson(errorResponse));
 		} catch (JwtAuthenticationException e) {
-			ResponseResult errorResponse = new ResponseResult(e, request.getRequestURI());
+			ResponseResult errorResponse = new ResponseResult(e, "Login", "0003", request.getRequestURI());
 			response.setContentType("application/json");
 			response.setStatus(HttpStatus.BAD_REQUEST.value());
 			response.getWriter().write(convertObjectToJson(errorResponse));

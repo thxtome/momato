@@ -91,21 +91,25 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
     	response.setContentType("application/json");
     	JwtAuthenticationException jwtException = null;
+    	String code = "0";
     	
     	switch (failed.getClass().getName()) {
 		//아이디가 아예 없을때
     	case "org.springframework.security.authentication.InternalAuthenticationServiceException":
-			jwtException = new JwtAuthenticationException("There is no matching ID",failed);    		
+			jwtException = new JwtAuthenticationException("There is no matching ID",failed);
+			code = "0001";
 			break;
+			
 		//아이디는 있으나 비밀번호가 일치하지 않을때
 		case "org.springframework.security.authentication.BadCredentialsException":
 			jwtException = new JwtAuthenticationException("Password do not match",failed);    		
+			code = "0002";
 			break;
 		}
     	
     	//응답코드 변경
     	response.setStatus(401);
-    	ResponseResult rr = new ResponseResult(jwtException,request.getRequestURI().toString()); 
+    	ResponseResult rr = new ResponseResult(jwtException, "Login", code, request.getRequestURI().toString()); 
         OutputStream out = response.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(out, rr);

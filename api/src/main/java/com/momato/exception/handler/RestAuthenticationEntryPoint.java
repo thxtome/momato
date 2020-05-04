@@ -24,7 +24,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     	httpServletResponse.setContentType("application/json");
     	httpServletResponse.setStatus(401);
     	JwtAuthenticationException jwtException = new JwtAuthenticationException("Jwt is reqired or invalid",e);	
-    	ResponseResult rr = new ResponseResult(jwtException,httpServletRequest.getRequestURI().toString()); 
+    	ResponseResult rr = new ResponseResult(jwtException, "Authorization", "0001", httpServletRequest.getRequestURI().toString()); 
         OutputStream out = httpServletResponse.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(out, rr);

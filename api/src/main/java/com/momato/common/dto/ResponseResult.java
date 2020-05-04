@@ -31,29 +31,42 @@ public class ResponseResult {
 		this.timestamp = new Date();
 	}
 
-	public ResponseResult(AbstractException ex, String referedUrl) {
+	public ResponseResult(AbstractException ex, String code, String referedUrl) {
 		HttpStatus httpStatus = ex.getHttpStatus();
 		this.data = new HashMap<>();
-		this.code = httpStatus.value();
 		this.status = (httpStatus.isError()) ? false : true;
 		this.message = httpStatus.getReasonPhrase();
-		this.error = new ErrorResult(code, ex.getMessage(), referedUrl);
+		this.error = new ErrorResult(code, "Common", ex.getMessage(), referedUrl);
 		this.timestamp = new Date();
 	}
 	
-	public ResponseResult(JwtAuthenticationException ex, String referedUrl) {
+	public ResponseResult(AbstractException ex, String category, String code, String referedUrl) {
 		HttpStatus httpStatus = ex.getHttpStatus();
 		this.data = new HashMap<>();
-		this.code = httpStatus.value();
 		this.status = (httpStatus.isError()) ? false : true;
 		this.message = httpStatus.getReasonPhrase();
-		this.error = new ErrorResult(code, ex.getMessage(), referedUrl);
+		this.error = new ErrorResult(code, "Common", ex.getMessage(), referedUrl);
 		this.timestamp = new Date();
 	}
+	
+	public ResponseResult(JwtAuthenticationException ex, String category, String code, String referedUrl) {
+		HttpStatus httpStatus = ex.getHttpStatus();
+		this.data = new HashMap<>();
+		this.status = (httpStatus.isError()) ? false : true;
+		this.message = httpStatus.getReasonPhrase();
+		this.error = new ErrorResult(code, category, ex.getMessage(), referedUrl);
+		this.timestamp = new Date();
+	}
+	
 
 	public ResponseResult(HttpStatus status, Object result) {
 		this(status);
 		this.data.put(DEFAULT_KEY, result);
+	}
+	
+	public ResponseResult(HttpStatus status, Object result, String key) {
+		this(status);
+		this.data.put(key, result);
 	}
 
 	public void add(String key, Object result) {
