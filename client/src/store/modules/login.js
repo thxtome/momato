@@ -10,13 +10,10 @@ export const loginActions = {
   LOGIN,
   LOGOUT,
   LOGIN_SUCCEEDED,
-  LOGIN_FAILED,
-  LOGIN_FAILED_CLEAR,
 };
 
 const initialState = {
   isLogin: false,
-  isLoginFailed: false,
   member: null,
 };
 
@@ -33,14 +30,6 @@ const reducer = createReducer(initialState, {
     const auth = action.payload.response.headers.authorization;
     localStorage.setItem("auth", auth);
     return { ...state, isLogin: true };
-  },
-
-  [LOGIN_FAILED]: (state, action) => {
-    return { ...state, isLoginFailed: true };
-  },
-
-  [LOGIN_FAILED_CLEAR]: (state, action) => {
-    return { ...state, isLoginFailed: false };
   },
 });
 

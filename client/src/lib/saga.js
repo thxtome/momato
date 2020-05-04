@@ -4,6 +4,7 @@ import { signupActions } from "../store/modules/signup.js";
 import { tomatoAddActions } from "../store/modules/tomatoAdd";
 import { tomatoActions } from "../store/modules/tomato.js";
 import { loginActions } from "../store/modules/login.js";
+import errorDispacher from "../error/errorDispacher";
 
 function* tomatoAddSaga(action) {
   try {
@@ -39,7 +40,7 @@ function* loginSaga(action) {
     const response = yield call(api.login, action.payload.member);
     yield put(loginActions.LOGIN_SUCCEEDED({ response }));
   } catch (e) {
-    yield put(loginActions.LOGIN_FAILED({ e }));
+    errorDispacher(e.response.data.error);
   }
 }
 

@@ -68,10 +68,6 @@ const LoginModal = (props) => {
     props.login(member);
   };
 
-  if (props.loginReducer.isLoginFailed) {
-    alert("로그인에 실패하였습니다.");
-    props.loginFailedClear();
-  }
 
   return (
     <>
