@@ -1,4 +1,4 @@
-import LoginErrorHandler from "./handler/loginHandler";
+import LoginErrorHandler from "./handler/LoginErrorHandler";
 
 const dispachError = (errorDetail) => {
   switch (errorDetail.category) {

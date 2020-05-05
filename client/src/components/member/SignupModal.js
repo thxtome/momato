@@ -92,23 +92,23 @@ const SignupModal = (props) => {
             label=""
             placeholder="nickname"
             multiline
-            {...pass}
+            {...name}
           />
         </div>
 
         <div className={classes.div}>
           <Typography className={classes.titlePass}>비밀번호</Typography>
           <TextField
-            id="standard-textarea"
+            id="standard-password-input"
             label=""
+            type="password"
             placeholder="password"
-            multiline
-            {...name}
+            {...pass}
             onKeyPress={(e) => {
-              if(e.key === "Enter"){
+              if (e.key === "Enter") {
                 e.preventDefault();
                 document.getElementById("signinButton").click();
-              };
+              }
             }}
           />
         </div>

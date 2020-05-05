@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
 
 const LoginErrorHandler = (errorDetail) => {
-  switch (errorDetail.code) {
+  console.log(errorDetail);
+  switch (errorDetail.errorCode) {
     case "0001":
       toast.error("아이디를 찾을 수 없습니다.", {
         position: toast.POSITION.TOP_CENTER,

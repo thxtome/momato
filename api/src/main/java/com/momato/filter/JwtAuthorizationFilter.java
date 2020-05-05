@@ -58,7 +58,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     .verify(token.replace(JwtProperties.TOKEN_PREFIX, ""))
                     .getSubject();
 
-            //db에서 로그아웃하거나 탈퇴한 회원인지 확인
+            //db에서 로그아웃한 회원인지 확인
             if(service.jwtIsInvalid(token)) {
             	throw new JwtAuthenticationException("token is expired");
             }
@@ -66,6 +66,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             //db에서 유저의 정보와 권한을 가져옴
             if(memberId != null){
             	Member member = service.retrieveMemberById(memberId);
+            	
+            	 //db에서 로그아웃하거나 탈퇴한 회원인지 확인
             	if(member == null) {
             		throw new JwtAuthenticationException("member in this token is not found");
             	}

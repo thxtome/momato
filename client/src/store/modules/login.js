@@ -23,6 +23,7 @@ const reducer = createReducer(initialState, {
   },
 
   [LOGOUT]: (state, action) => {
+    localStorage.removeItem("auth");
     return { isLogin: false };
   },
 

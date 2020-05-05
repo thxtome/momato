@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import {
-  makeStyles,
-  Typography,
-  Button,
-  Avatar,
-} from "@material-ui/core";
+import { makeStyles, Typography, Button, Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -68,7 +63,6 @@ const LoginModal = (props) => {
     props.login(member);
   };
 
-
   return (
     <>
       <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
@@ -94,13 +88,12 @@ const LoginModal = (props) => {
             type="password"
             autoComplete="current-password"
             placeholder="password"
-            multiline
             {...pass}
             onKeyPress={(e) => {
-              if(e.key === "Enter"){
+              if (e.key === "Enter") {
                 e.preventDefault();
                 document.getElementById("loginButton").click();
-              };
+              }
             }}
           />
         </div>
