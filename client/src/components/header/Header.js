@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
@@ -9,7 +9,7 @@ import { Button } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    zIndex: 1500,
+    zIndex: 1299,
     display: "flex",
     borderRadius: 0,
     backgroundColor: "white",
@@ -47,7 +47,7 @@ const Header = (props) => {
         {localStorage.getItem("auth") === null ? (
           <Modals type="login" />
         ) : (
-          <Button classeName={classes.logout} onClick={() => {}}>로그아웃</Button>
+          <Button className={classes.logout} onClick={() => {}}>로그아웃</Button>
         )}
         <Modals type="signup" />
       </Toolbar>

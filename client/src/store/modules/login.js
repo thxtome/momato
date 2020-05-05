@@ -31,6 +31,9 @@ const reducer = createReducer(initialState, {
     localStorage.setItem("auth", auth);
     return { ...state, isLogin: true };
   },
+  [LOGIN_FAILED]: (state, action) => {
+    return { ...state, isLogin: false };
+  },
 });
 
 export default reducer;

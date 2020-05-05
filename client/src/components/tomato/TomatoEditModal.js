@@ -1,19 +1,21 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {
     makeStyles,
     Button,
     FormControl,
     InputLabel,
-    Select,
     Typography,
     TextField,
-    NativeSelect
+    NativeSelect,
+    Select
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    formControl: {},
+    formControl: {
+        display: "block",
+    },
     name: {
-        width: "30%"
+        width: "100%"
     },
     div: {
         width: "100%",
@@ -23,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
     },
 
     title: {
-        marginRight: theme.spacing(20)
+        marginRight: theme.spacing(20),
     },
 
     editbtn: {
-        margin: theme.spacing("auto"),
+        m: "auto",
         textAlign: "center"
     },
 
@@ -44,11 +46,28 @@ const useInput = (initVal) => {
     return {value, onChange};
 };
 
-const TomatoEditModal = ({name, fullRegular, fullBreak}) => {
+const TomatoEditModal = (props) => {
+    useEffect(() => {
+        if (props.tomatoEditReducer.isTomatoEditSucceed) {
+          props.getTomatos(new Date());
+          props.clearEditResult();
+        }
+      });
     const classes = useStyles();
-    const tomatoName = useInput("");
-    const tomatoFullRegular = useInput("");
-    const tomatoFullBreak = useInput("");
+    const tomatoName = useInput(props.name);
+    const tomatoFullRegular = useInput(props.fullRegular);
+    const tomatoFullBreak = useInput(props.fullBreak);
+
+    const tomatoEditRequest = () => {
+        const data = {
+            tomatoIdx: props.index,
+            tomatoName: tomatoName.value,
+            tomatoFullRegular: tomatoFullRegular.value,
+            tomatoFullBreak: tomatoFullBreak.value,
+        }
+        props.tomatoEdit(data);
+        props.onClose();
+    }
 
     // const handleChange = (event) => {     const name = event.target.name;
     // setState({       ...state,       [name]: event.target.value,     });   };
@@ -58,51 +77,57 @@ const TomatoEditModal = ({name, fullRegular, fullBreak}) => {
             classes.name
         }
         id = "standard-textarea" label = "" placeholder = {
-            name
+            props.name
         }
-        multiline {
-            ...name
-        } /> <p id="transition-modal-description">
+        multiline 
+            {...tomatoName}
+        /> <p id="transition-modal-description"/>
             <FormControl className={classes.formControl}>
                 <div className={classes.div}>
-                    <InputLabel htmlFor="age-native-simple"></InputLabel>
+                    <InputLabel htmlFor="fullRegular"></InputLabel>
                     <Typography className={classes.title}>재배 시간</Typography>
-                    <NativeSelect
-                        defaultValue={fullRegular / 60}
+                    <Select
+                        defaultValue={props.fullRegular / 60}
                         inputProps={{
                             name: 'tomatoFullRegular',
                             id: 'uncontrolled-native'
-                        }}>
-                        <option value={5}>5분</option>
-                        <option value={10}>10분</option>
-                        <option value={15}>15분</option>
-                        <option value={20}>20분</option>
-                        <option value={25}>25분</option>
-                        <option value={30}>30분</option>
-                    </NativeSelect>
+                        }}
+                        {...tomatoFullRegular}
+                        >
+                        <option value={300}>5분</option>
+                        <option value={600}>10분</option>
+                        <option value={900}>15분</option>
+                        <option value={1200}>20분</option>
+                        <option value={1500}>25분</option>
+                        <option value={1800}>30분</option>
+                    </Select>
                     </div>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                        
                     <div className={classes.div}>
-                        <InputLabel htmlFor="age-native-simple"></InputLabel>
+                        <InputLabel htmlFor="fullBreak"></InputLabel>
                         <Typography className={classes.title}>휴식 시간</Typography>
-                        <NativeSelect
-                        defaultValue={fullBreak / 60}
+                        <Select
+                        defaultValue={props.fullBreak / 60}
                         inputProps={{
                             name: 'tomatoFullBreak',
                             id: 'uncontrolled-native'
-                        }}>
-                        <option value={5}>5분</option>
-                        <option value={10}>10분</option>
-                        <option value={15}>15분</option>
-                        <option value={20}>20분</option>
-                        <option value={25}>25분</option>
-                        <option value={30}>30분</option>
-                    </NativeSelect>
+                        }}
+                        {...tomatoFullBreak}
+                        >
+                        <option value={300}>5분</option>
+                        <option value={600}>10분</option>
+                        <option value={900}>15분</option>
+                        <option value={1200}>20분</option>
+                        <option value={1500}>25분</option>
+                        <option value={1800}>30분</option>
+                    </Select>
                     </div>
                     <div className={classes.editbtn}>
-                        <Button variant="contained" color="secondary">수정</Button>
+                        <Button variant="contained" color="secondary" onClick={tomatoEditRequest}>수정</Button>
                     </div>
                 </FormControl>
-            </p>
         </>
     );
 };
