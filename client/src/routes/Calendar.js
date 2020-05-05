@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 const Calendar = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
+
   const prevMonth = () => {
     if (month === 1) {
       setYear(year - 1);
