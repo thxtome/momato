@@ -27,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     width: theme.spacing(15),
     height: theme.spacing(15),
-    margin: theme.spacing(0, "auto"),
+    margin: theme.spacing(0, 'auto'),
   },
 
   tomatoText: {
     display: "block",
     width: theme.spacing(15),
-    margin: theme.spacing(3, "auto"),
+    margin: theme.spacing(3, 'auto'),
   },
 
   mButton: {

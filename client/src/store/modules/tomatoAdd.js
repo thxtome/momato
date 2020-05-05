@@ -23,12 +23,10 @@ const reducer = createReducer(initialState, {
   },
 
   [TOMATO_ADD_SUCCEED]: (state, action) => {
-    console.log(action);
     return { ...state, isTomatoAddSucceed: true };
   },
 
   [TOMATO_ADD_FAILED]: (state, action) => {
-    console.log(action);
     return { ...state, isTomatoAddSucceed: false };
   },
 

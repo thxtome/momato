@@ -47,8 +47,6 @@ public class TomatoController {
 	
 	@PostMapping()
 	public ResponseResult addTomato(@RequestBody Param param, @AuthenticationPrincipal String memberId) {
-		System.out.println("도착");
-		System.out.println(param);
 		String createType = param.getCreateType();
 		// 단순 토마토 등록
 		if (createType.equals("simple")) {
@@ -78,7 +76,8 @@ public class TomatoController {
 	
 	// 토마토 수정
 	@PutMapping()
-	public ResponseResult editTomato(@RequestBody Tomato tomato) {
+	public ResponseResult editTomato(@RequestBody Tomato tomato, @AuthenticationPrincipal String memberId) {
+		tomato.setMemberId(memberId);
 		service.editTomato(tomato);
 		return new ResponseResult(HttpStatus.OK);
 	}

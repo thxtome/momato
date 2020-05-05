@@ -1,6 +1,5 @@
 import React from "react";
-import Modals from "../common/Modal";
-import { Input, Button, makeStyles, Typography } from "@material-ui/core";
+import { Input, Button, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     button: {

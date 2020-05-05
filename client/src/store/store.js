@@ -1,8 +1,9 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
-import { configureStore } from "@reduxjs/toolkit";
 import loginReducer from "./modules/login";
 import signupReducer from "./modules/signup";
 import tomatoAddReducer from "./modules/tomatoAdd";
+import tomatoEditReducer from "./modules/tomatoEdit";
+import tomatoDeleteReducer from "./modules/tomatoDelete";
 import tomatoReducer from "./modules/tomato";
 import createSagaMiddleware from "redux-saga";
 import saga from "../lib/saga";
@@ -14,6 +15,8 @@ const rootReducer = combineReducers({
   signupReducer,
   tomatoAddReducer,
   tomatoReducer,
+  tomatoEditReducer,
+  tomatoDeleteReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));

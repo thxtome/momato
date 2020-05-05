@@ -1,6 +1,5 @@
 import React from "react";
-import { makeStyles, TextField, Typography, Button, Avatar, Modal } from "@material-ui/core";
-import Modals from "../common/Modal";
+import { makeStyles, TextField, Typography, Button, Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     div: {

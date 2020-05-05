@@ -26,7 +26,6 @@ const reducer = createReducer(initialState, {
   },
 
   [TOMATO_FAILED]: (state, action) => {
-    console.log(action);
     return { ...state, isTomatoSucceed: false };
   },
 });

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
@@ -47,7 +47,7 @@ const Header = (props) => {
         {localStorage.getItem("auth") === null ? (
           <Modals type="login" />
         ) : (
-          <Button classeName={classes.logout} onClick={() => {}}>
+          <Button className={classes.logout} onClick={() => {}}>
             로그아웃
           </Button>
         )}

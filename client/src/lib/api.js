@@ -22,6 +22,7 @@ export const signup = ({ memberId, memberPass, memberName }) =>
   });
 
 export const tomato = (date) => {
+  // let dateString = date.toISOString().substr(0, 10);
   let dateString = date.toISOString().substr(0, 10);
   return axios({
     method: "get",
@@ -42,6 +43,20 @@ export const tomatoAdd = ({ createType, tomatoName }) =>
       },
     },
   });
+
+export const tomatoEdit = ({ tomatoIdx, tomatoName, tomatoFullRegular, tomatoFullBreak }) =>
+  axios({
+    method: "put",
+    url: "http://localhost:8080/tomatos",
+    headers: { Authorization: localStorage.getItem("auth") },
+    data: {
+      tomatoIdx,
+      tomatoName,
+      tomatoFullRegular,
+      tomatoFullBreak,
+      },
+    },
+  );
 
 export const tomatoDelete = (tomatoIdx) =>
   axios({

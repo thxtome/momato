@@ -128,7 +128,7 @@ const Dates = ({ year, month }) => {
                 <StyledTableCell key={index} component="td" scope="row">
                   <Box className={classes.date} component={"div"}>
                     {date && date}
-                    {date == 5 || date == 14 ? (
+                    {date === 5 || date === 14 ? (
                       <Box className={classes.innerDate}>
                         <Avatar
                           className={classes.tomatoImg}

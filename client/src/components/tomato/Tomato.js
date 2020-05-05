@@ -28,11 +28,14 @@ const useStyles = makeStyles((theme) => ({
     link: {
         color: "inherit",
         textDecoration: "none"
-    }
+    },
 }));
 
-const Tomato = ({tomatoName, tomatoLeftRegular, tomatoIdx, tomatoFullRegular, tomatoFullBreak}) => {
+const Tomato = ({tomatoDelete, tomatoName, tomatoLeftRegular, tomatoIdx, tomatoFullRegular, tomatoFullBreak}) => {
     const classes = useStyles();
+    const tomatoDeleteRequest = () => {
+        tomatoDelete(tomatoIdx);
+    }
     return (
         <div className={classes.root}>
             <Grid container="container" spacing={3}>
@@ -46,14 +49,14 @@ const Tomato = ({tomatoName, tomatoLeftRegular, tomatoIdx, tomatoFullRegular, to
                             </IconButton>
                         </Box>
                         <Typography className={classes.name} variant="h6">
-                            <Modals type="tomatoEdit" name={tomatoName}  fullRegular={tomatoFullRegular}  fullBreak={tomatoFullBreak}/>
+                            <Modals type="tomatoEdit" index={tomatoIdx} name={tomatoName}  fullRegular={tomatoFullRegular}  fullBreak={tomatoFullBreak}/>
                         </Typography>
                         <Typography variant="caption">
                             남은시간 : {tomatoLeftRegular / 60}분
                         </Typography>
                         <Box component={"div"}>
-                            <IconButton aria-label="start">
-                                <DeleteIcon/>
+                            <IconButton aria-label="start" onClick={tomatoDeleteRequest}>
+                                    <DeleteIcon />
                             </IconButton>
                         </Box>
                     </Paper>

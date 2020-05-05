@@ -1,10 +1,11 @@
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import * as api from "./api";
 import { signupActions } from "../store/modules/signup.js";
 import { tomatoAddActions } from "../store/modules/tomatoAdd";
+import { tomatoEditActions } from "../store/modules/tomatoEdit";
+import { tomatoDeleteActions } from "../store/modules/tomatoDelete";
 import { tomatoActions } from "../store/modules/tomato.js";
 import { loginActions } from "../store/modules/login.js";
-import errorDispacher from "../error/errorDispacher";
 
 function* tomatoAddSaga(action) {
   try {
@@ -15,12 +16,21 @@ function* tomatoAddSaga(action) {
   }
 }
 
+function* tomatoEditSaga(action) {
+  try {
+    const response = yield call(api.tomatoEdit, action.payload.data);
+    yield put(tomatoEditActions.TOMATO_EDIT_SUCCEED({ response }));
+  } catch (e) {
+    yield put({ type: "TOMATO_EDIT_FAILED", message: e.message });
+  }
+}
+
 function* tomatoDeleteSaga(action) {
   try {
     const response = yield call(api.tomatoDelete, action.payload.data);
-    yield put(tomatoAddActions.TOMATO_ADD_SUCCEED({ response }));
+    yield put(tomatoDeleteActions.TOMATO_DELETE_SUCCEED({ response }));
   } catch (e) {
-    yield put({ type: "TOMATO_ADD_FAILED", message: e.message });
+    yield put({ type: "TOMATO_DELETE_FAILED", message: e.message });
   }
 }
 
@@ -40,7 +50,7 @@ function* loginSaga(action) {
     const response = yield call(api.login, action.payload.member);
     yield put(loginActions.LOGIN_SUCCEEDED({ response }));
   } catch (e) {
-    errorDispacher(e.response.data.error);
+    yield put(loginActions.LOGIN_FAILED({ e }));
   }
 }
 
@@ -57,6 +67,8 @@ function* baseSaga() {
   yield takeEvery(loginActions.LOGIN, loginSaga);
   yield takeEvery(signupActions.SIGNUP_REQUEST, signupSaga);
   yield takeEvery(tomatoAddActions.TOMATO_ADD_REQUEST, tomatoAddSaga);
+  yield takeEvery(tomatoEditActions.TOMATO_EDIT_REQUEST, tomatoEditSaga);
+  yield takeEvery(tomatoDeleteActions.TOMATO_DELETE_REQUEST, tomatoDeleteSaga);
   yield takeEvery(tomatoActions.TOMATO_REQUEST, tomatoSaga);
 }
 

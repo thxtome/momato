@@ -1,17 +1,17 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
 import TemplateModal from "../template/TemplateModal";
-import TomatoEditModal from "../tomato/TomatoEditModal";
 import PassModal from "../member/PassModal";
 import InfoModal from "../member/InfoModal";
 import SignupModalContainer from "../../containers/member/SignupModalContainer";
 import LoginModalContainer from "../../containers/login/LoginModalContainer";
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import TomatoAddModalContainer from "../../containers/tomato/TomatoAddModalContainer";
+import TomatoEditModalContainer from "../../containers/tomato/TomatoEditModalContainer";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -37,10 +37,6 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(60),
         marginBottom: theme.spacing(3)
     },
-    editbtn: {
-        margin: theme.spacing("auto"),
-        textAlign: "center"
-    },
     passbtn: {
         fontSize: 5
     },
@@ -50,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function TransitionsModal({ type, template, name, fullRegular, fullBreak }) {
+export default function TransitionsModal({ type, template, index, name, fullRegular, fullBreak }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -104,7 +100,7 @@ export default function TransitionsModal({ type, template, name, fullRegular, fu
                                             ? (
                                                 <div className={classes.addBtn}>
                                                     <Button className={classes.addBtn} type="button" onClick={handleOpen}>
-                                                        <AddCircleRoundedIcon/>
+                                                        <AddCircleRoundedIcon />
                                                         토마토 추가
                                                     </Button>
                                                 </div>
@@ -119,26 +115,24 @@ export default function TransitionsModal({ type, template, name, fullRegular, fu
                 onClose={handleClose}
                 closeAfterTransition="closeAfterTransition"
                 BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500
-                }}>
+                >
                 <Fade in={open}>
                     <div className={classes.paper}>
                         {
                             type === "template"
-                                ? (<TemplateModal template={template} onClose={handleClose}/>)
+                                ? (<TemplateModal template={template} onClose={handleClose} />)
                                 : type === "tomatoEdit"
-                                    ? (<TomatoEditModal name={name} fullRegular={fullRegular} fullBreak={fullBreak} onClose={handleClose}/>)
+                                    ? (<TomatoEditModalContainer index={index} name={name} fullRegular={fullRegular} fullBreak={fullBreak} onClose={handleClose} />)
                                     : type === "login"
-                                        ? (<LoginModalContainer onClose={handleClose}/>)
+                                        ? (<LoginModalContainer onClose={handleClose} />)
                                         : type === "signup"
-                                            ? (<SignupModalContainer onClose={handleClose}/>)
+                                            ? (<SignupModalContainer onClose={handleClose} />)
                                             : type === "pass"
-                                                ? (<PassModal onClose={handleClose}/>)
+                                                ? (<PassModal onClose={handleClose} />)
                                                 : type === "info"
-                                                    ? (<InfoModal onClose={handleClose}/>)
+                                                    ? (<InfoModal onClose={handleClose} />)
                                                     : type === "tomatoAdd"
-                                                        ? (<TomatoAddModalContainer onClose={handleClose}/>)
+                                                        ? (<TomatoAddModalContainer onClose={handleClose} />)
                                                         : (<></>)
                         }
                     </div>

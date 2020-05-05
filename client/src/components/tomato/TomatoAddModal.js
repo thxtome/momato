@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
   makeStyles,
-  Input,
   Button,
   TextField,
-  FormControl,
-  InputLabel,
-  Select,
   Typography,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  div: {
+  textField: {
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -23,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   button: {
-    margin: theme.spacing(1, "auto"),
+    display: "block",
+    margin: theme.spacing(2, "auto"),
     textAlign: "center",
   },
 
@@ -43,7 +40,7 @@ const useInput = (initVal) => {
 const TomatoAddModal = (props) => {
   useEffect(() => {
     if (props.tomatoAddReducer.isTomatoAddSucceed) {
-      props.getTomatos(new Date());
+      props.getTomatos(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
       props.clearAddResult();
     }
   });
@@ -64,9 +61,7 @@ const TomatoAddModal = (props) => {
   return (
     <>
       <h2 id="transition-modal-title">토마토 추가</h2>
-      <p id="transition-modal-description">
-        <form className={classes.root} noValidate autoComplete="off">
-          <div className={classes.div}>
+      <Typography id="transition-modal-description"/>
             <TextField
               id="standard-textarea"
               className={classes.textField}
@@ -81,8 +76,7 @@ const TomatoAddModal = (props) => {
                 };
               }}
             />
-          </div>
-          <div className={classes.button}>
+          <span className={classes.button}>
             <Button
               variant="contained"
               color="secondary"
@@ -93,9 +87,7 @@ const TomatoAddModal = (props) => {
             >
               추가
             </Button>
-          </div>
-        </form>
-      </p>
+          </span>
     </>
   );
 };
