@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -31,8 +31,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Tomato = () => {
+const calTomatoCnt = (tomatos) => {
+  let canStart = 0; 
+  let canNotStart = 0;
+  tomatos.map((tomato) => {
+    console.log(tomato);
+    if (tomato.tomatoCanStart) {
+      canStart++;
+    } else {
+      canNotStart++;
+    }
+  });
+  return {canStart,canNotStart}; 
+}
+
+
+const Tomato = (props) => {
   const classes = useStyles();
+  const tomatoCnt = calTomatoCnt(props.tomatos);
 
   return (
     <div className={classes.root}>
@@ -47,7 +63,9 @@ const Tomato = () => {
                     className={classes.tomatoImg}
                     src="/images/homeMade.png"
                   />
-                  <Typography variant={"body1"}>7</Typography>
+                  <Typography variant={"body1"}>
+                    {tomatoCnt.canStart + tomatoCnt.canNotStart}
+                  </Typography>
                 </Paper>
               </Grid>
               <Grid item xs={4}>
@@ -57,7 +75,9 @@ const Tomato = () => {
                     className={classes.tomatoImg}
                     src="/images/homeMade.png"
                   />
-                  <Typography variant={"body1"}>3</Typography>
+                  <Typography variant={"body1"}>
+                    {tomatoCnt.canStart}
+                  </Typography>
                 </Paper>
               </Grid>
               <Grid item xs={4}>
@@ -67,7 +87,9 @@ const Tomato = () => {
                     className={classes.tomatoImg}
                     src="/images/homeMade.png"
                   />
-                  <Typography variant={"body1"}>4</Typography>
+                  <Typography variant={"body1"}>
+                    {tomatoCnt.canNotStart}
+                  </Typography>
                 </Paper>
               </Grid>
             </Grid>
