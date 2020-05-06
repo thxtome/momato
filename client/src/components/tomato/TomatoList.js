@@ -15,7 +15,9 @@ const TomatoList = (props) => {
     if (localStorage.getItem("auth")){
       props.getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
       if (props.tomatoDeleteReducer.isTomatoDeleteSucceed) {
-        props.getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
+        props.getTomatoList(
+          new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        );
         props.clearDeleteResult();
       }
     } else {

@@ -1,28 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import YearAndMonth from "../components/calendar/YearAndMonth";
 import Dates from "../components/calendar/Dates";
-import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
+import Container from "@material-ui/core/Container";
 
-const Calendar = () => {
+const calMonth = (year, month) => {
+  let nextYear = year;
+  let nextMonth = month;
+  if (month === 0) {
+    nextYear = year - 1;
+    nextMonth = 12;
+  } else if (month === 13) {
+    nextYear = year + 1;
+    nextMonth = 1;
+  }
+  return { nextYear, nextMonth };
+};
+
+const Calendar = (props) => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [tomatoOfDates, setTomatoOfDates] = useState([]);
 
   const prevMonth = () => {
-    if (month === 1) {
-      setYear(year - 1);
-      setMonth(12);
-    } else setMonth(month - 1);
+    const { nextYear, nextMonth } = calMonth(year, month - 1);
+    setYear(nextYear);
+    setMonth(nextMonth);
+    setTomatoOfDates([]);
+    props.getTomatoCntOfDate({ year: nextYear, month: nextMonth });
   };
 
   const nextMonth = () => {
-    if (month === 12) {
-      setYear(year + 1);
-      setMonth(1);
-    } else setMonth(month + 1);
+    const { nextYear, nextMonth } = calMonth(year, month + 1);
+    setYear(nextYear);
+    setMonth(nextMonth);
+    setTomatoOfDates([]);
+    props.getTomatoCntOfDate({ year: nextYear, month: nextMonth });
   };
 
-  const yearAndMonth = { year, month, prevMonth, nextMonth };
+  useEffect(() => {
+    if (props.calendarReducer.isUpdated) {
+      setTomatoOfDates(props.calendarReducer.tomatoOfDates);
+      props.clearUpdated();
+    }
+  },[props]);
+
+  useEffect(() => {
+    props.getTomatoCntOfDate({ year, month });
+  }, []);
+
+  const yearAndMonth = { year, month, prevMonth, nextMonth, tomatoOfDates };
 
   return (
     <div>

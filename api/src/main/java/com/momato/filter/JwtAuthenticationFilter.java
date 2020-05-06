@@ -69,6 +69,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 토큰생성
         String token = JWT.create()
         		.withSubject(principal.getUsername())
+        		.withClaim("memberId", principal.getUsername())
+        		.withClaim("memberName", principal.getUserNickName())
         		.withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
         		.sign(Algorithm.HMAC512(JwtProperties.SECRET.getBytes()));
         

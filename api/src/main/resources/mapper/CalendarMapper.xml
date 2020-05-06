@@ -3,12 +3,12 @@
 <mapper namespace="com.momato.calendar.CalendarMapper">
 	<select id="selectTomatosForCalendar" parameterType="CalendarSearch" resultType="TomatoCount">
 		select right(date(tomato_date),2) as date,
-		       count(*) as count
+		       count(*) as tomatoCnt
 		  from tomato
 		 where year(tomato_date) = #{year}
 		   and month(tomato_date) = #{month}
 		   and member_id = #{memberId}
-		   and tomato_canStart = 1
+		   and tomato_canStart = 2
    		   and template_idx is null 
 		 group by date(tomato_date)
 	</select>

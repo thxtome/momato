@@ -8,7 +8,6 @@ export const signupActions = { SIGNUP_REQUEST, SIGNUP_SUCCEED, SIGNUP_FAILED };
 
 const initialState = {
   isSignupSucceed: false,
-  member: null,
 };
 
 const reducer = createReducer(initialState, {

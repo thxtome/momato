@@ -1,5 +1,5 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -7,28 +7,28 @@ import IconButton from "@material-ui/core/IconButton";
 import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Modals from "../common/Modal";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1
-    },
-    paper: {
-        maxHeight: "20px",
-        display: "flex",
-        padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
-        alignItems: "center"
-    },
-    name: {
-        flexGrow: 1,
-        textAlign: "center"
-    },
-    link: {
-        color: "inherit",
-        textDecoration: "none"
-    },
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    maxHeight: "20px",
+    display: "flex",
+    padding: theme.spacing(2),
+    color: theme.palette.text.secondary,
+    alignItems: "center",
+  },
+  name: {
+    flexGrow: 1,
+    textAlign: "center",
+  },
+  link: {
+    color: "inherit",
+    textDecoration: "none",
+  },
 }));
 
 const Tomato = ({
