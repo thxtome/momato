@@ -44,7 +44,12 @@ export const tomatoAdd = ({ createType, tomatoName }) =>
     },
   });
 
-export const tomatoEdit = ({ tomatoIdx, tomatoName, tomatoFullRegular, tomatoFullBreak }) =>
+export const tomatoEdit = ({
+  tomatoIdx,
+  tomatoName,
+  tomatoFullRegular,
+  tomatoFullBreak,
+}) =>
   axios({
     method: "put",
     url: "http://localhost:8080/tomatos",
@@ -54,13 +59,19 @@ export const tomatoEdit = ({ tomatoIdx, tomatoName, tomatoFullRegular, tomatoFul
       tomatoName,
       tomatoFullRegular,
       tomatoFullBreak,
-      },
     },
-  );
+  });
 
 export const tomatoDelete = (tomatoIdx) =>
   axios({
     method: "delete",
     url: `http://localhost:8080/tomatos/${tomatoIdx}`,
+    headers: { Authorization: localStorage.getItem("auth") },
+  });
+
+export const getCalendar = ({ year, month }) =>
+  axios({
+    method: "get",
+    url: `http://localhost:8080/calendar?year=${year}&month=${month}`,
     headers: { Authorization: localStorage.getItem("auth") },
   });

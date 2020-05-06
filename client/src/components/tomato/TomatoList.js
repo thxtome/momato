@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
 const TomatoList = (props) => {
   console.log(props);
   let tomatos = [];
+
   const makeTempTomatos = () => {
     let tempTomatos = [];
     let tempTomato = {};
@@ -35,11 +36,13 @@ const TomatoList = (props) => {
       makeTempTomatos();
     }
   }, []);
+  
   if(localStorage.getItem("auth")){
     tomatos = props.tomatoReducer.tomatos;
   } else {
     makeTempTomatos();
   }
+
   const classes = useStyles();
   console.log(tomatos);
   return (

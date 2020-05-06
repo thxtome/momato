@@ -14,6 +14,7 @@ import GrainIcon from "@material-ui/icons/Grain";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import { Link } from "react-router-dom";
+import Modals from "../common/Modal";
 
 const drawerWidth = 300;
 
@@ -80,9 +81,7 @@ const Sidebar = (props) => {
       <Toolbar />
       <Toolbar />
       <Avatar className={classes.userGrade} src="" />
-      <Typography className={classes.userId} variant="h6" gutterBottom>
-        채채채채채채
-      </Typography>
+      <Modals type="info" name={"채채채채채채"}/>
       <Typography
         className={classes.gradeComment}
         variant="caption"
@@ -91,6 +90,7 @@ const Sidebar = (props) => {
       >
         씨를 뿌린 초보 농사꾼
       </Typography>
+
       <div className={classes.drawerContainer}>
         <List>
           {["오늘의 토마토", "토마토 달력", "토마토 텃밭"].map(

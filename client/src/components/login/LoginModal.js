@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   button: {
-    margin: theme.spacing("auto"),
+    margin: 'auto',
     textAlign: "center",
   },
 

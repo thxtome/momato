@@ -21,14 +21,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const YearAndMonth = ({ year, month, prevMonth, nextMonth }) => {
+const YearAndMonth = ({ year, month, prevMonth, nextMonth, tomatoOfDates }) => {
   const classes = useStyles();
+  let cnt = 0;
+  
+  tomatoOfDates.forEach((element) => {
+    cnt += parseInt(element.tomatoCnt);
+  });
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={6}>
         <Box className={classes.root} component={"div"}>
-          <IconButton onClick={()=>{prevMonth()}} aria-label="left">
+          <IconButton
+            onClick={() => {
+              prevMonth();
+            }}
+            aria-label="left"
+          >
             <KeyboardArrowLeftIcon />
           </IconButton>
           <Box component={"div"}>
@@ -37,7 +47,12 @@ const YearAndMonth = ({ year, month, prevMonth, nextMonth }) => {
           <Box component={"div"}>
             <Typography variant={"h2"}>{month}</Typography>
           </Box>
-          <IconButton onClick={()=>{nextMonth()}} aria-label="right">
+          <IconButton
+            onClick={() => {
+              nextMonth();
+            }}
+            aria-label="right"
+          >
             <KeyboardArrowRightIcon />
           </IconButton>
         </Box>
@@ -49,7 +64,7 @@ const YearAndMonth = ({ year, month, prevMonth, nextMonth }) => {
         <Box className={classes.root} component={"div"}>
           <Typography variant={"h4"}>이달의 토마토</Typography>
           <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
-          <Typography variant={"h4"}>10</Typography>
+          <Typography variant={"h4"}>{cnt}</Typography>
         </Box>
       </Grid>
     </Grid>

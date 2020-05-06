@@ -67,15 +67,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //날짜를 삽입
-const fillDate = (year, month) => {
+const fillDate = (year, month, tomatoOfDates = []) => {
   const dates = [];
 
   const firstDay = new Date(year, month - 1, 1).getDay();
   const lastDate = new Date(year, month, 0).getDate() - 1;
 
+  //날짜를 채움
   for (let i = firstDay; i <= lastDate + firstDay; i++) {
-    dates[i] = i - firstDay + 1;
+    let dateInfo = { date: i - firstDay + 1 };
+    dates[i] = dateInfo;
   }
+
+  //토마토를 채움
+  tomatoOfDates.forEach((ele) => {
+    dates[parseInt(ele.date) + firstDay] = {
+      date: parseInt(ele.date),
+      tomatoCnt: ele.tomatoCnt,
+    };
+  });
 
   return dates;
 };
@@ -99,11 +109,9 @@ const createRows = (dates) => {
   return rows;
 };
 
-const Dates = ({ year, month }) => {
+const Dates = (props) => {
   const classes = useStyles();
-
-  const dates = fillDate(year, month);
-
+  const dates = fillDate(props.year, props.month, props.tomatoOfDates);
   const rows = createRows(dates);
 
   return (
@@ -124,17 +132,17 @@ const Dates = ({ year, month }) => {
         <TableBody>
           {rows.map((row, index) => (
             <StyledTableRow key={index}>
-              {row.map((date, index) => (
+              {row.map((dateInfo, index) => (
                 <StyledTableCell key={index} component="td" scope="row">
                   <Box className={classes.date} component={"div"}>
-                    {date && date}
-                    {date === 5 || date === 14 ? (
+                    {dateInfo ? dateInfo.date : ""}
+                    {dateInfo && dateInfo.tomatoCnt ? (
                       <Box className={classes.innerDate}>
                         <Avatar
                           className={classes.tomatoImg}
                           src="/images/homeMade.png"
                         />
-                        5
+                        {dateInfo.tomatoCnt}
                       </Box>
                     ) : (
                       ""

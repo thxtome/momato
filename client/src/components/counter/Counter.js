@@ -33,13 +33,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
 
-  countDetail: {
-    width: "30%",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-
   tomatoImg: {
     width: "215px",
     height: "215px",

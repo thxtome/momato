@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const calTomatoCnt = (tomatos) => {
-  let canStart = 0; 
+  let canStart = 0;
   let canNotStart = 0;
-  tomatos.map((tomato) => {
+  tomatos.forEach((tomato) => {
     console.log(tomato);
     if (tomato.tomatoCanStart) {
       canStart++;
@@ -42,9 +42,8 @@ const calTomatoCnt = (tomatos) => {
       canNotStart++;
     }
   });
-  return {canStart,canNotStart}; 
-}
-
+  return { canStart, canNotStart };
+};
 
 const Tomato = (props) => {
   const classes = useStyles();
