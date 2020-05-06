@@ -10,6 +10,13 @@ export const login = ({ memberId, memberPass }) =>
     },
   });
 
+export const logout = ({ auth }) =>
+  axios({
+    method: "get",
+    url: "http://localhost:8080/members/logout",
+    headers: { Authorization: localStorage.getItem("auth") },
+  });
+
 export const signup = ({ memberId, memberPass, memberName }) =>
   axios({
     method: "post",

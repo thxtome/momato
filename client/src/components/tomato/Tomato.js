@@ -31,10 +31,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Tomato = ({tomatoDelete, tomatoName, tomatoLeftRegular, tomatoIdx, tomatoFullRegular, tomatoFullBreak}) => {
+const Tomato = ({
+    tomatoDelete,
+    getTomatoList,
+    getTempTomatoList, 
+    tomatoName, 
+    tomatoLeftRegular, 
+    tomatoIdx, 
+    tomatoFullRegular, 
+    tomatoFullBreak}) => {
     const classes = useStyles();
     const tomatoDeleteRequest = () => {
-        tomatoDelete(tomatoIdx);
+        if(localStorage.getItem("auth")){
+            tomatoDelete(tomatoIdx);
+            getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
+        } else {
+            sessionStorage.removeItem(tomatoIdx);
+            getTempTomatoList();
+        }
     }
     return (
         <div className={classes.root}>

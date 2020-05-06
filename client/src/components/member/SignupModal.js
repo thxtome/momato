@@ -53,7 +53,6 @@ const useInput = (initVal) => {
 const SignupModal = (props) => {
   const classes = useStyles();
 
-  console.log(props);
   const email = useInput("");
   const pass = useInput("");
   const name = useInput("");

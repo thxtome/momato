@@ -11,37 +11,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TomatoList = (props) => {
-  console.log(props);
-  let tomatos = [];
-  const makeTempTomatos = () => {
-    let tempTomatos = [];
-    let tempTomato = {};
-    for (let i = 0; i < sessionStorage.length; i++){
-      tempTomato = JSON.parse(sessionStorage.getItem(String(i)));
-        tempTomatos.push(tempTomato);
-      }
-      tomatos = tempTomatos;
-      console.log(tomatos);
-  };
-
   useEffect(() => {
-    if(localStorage.getItem("auth")){
+    if (localStorage.getItem("auth")){
       props.getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
       if (props.tomatoDeleteReducer.isTomatoDeleteSucceed) {
         props.getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
         props.clearDeleteResult();
       }
     } else {
-      makeTempTomatos();
+      props.getTempTomatoList();
     }
   }, []);
-  if(localStorage.getItem("auth")){
-    tomatos = props.tomatoReducer.tomatos;
-  } else {
-    makeTempTomatos();
-  }
+    const tomatos = props.tomatoReducer.tomatos;
   const classes = useStyles();
-  console.log(tomatos);
   return (
     <div className={classes.root}>
       <TomatoCnt tomatos={tomatos}></TomatoCnt>
@@ -49,6 +31,8 @@ const TomatoList = (props) => {
         tomatos.map((tomato) => (
           <Tomato
             tomatoDelete={props.tomatoDelete}
+            getTomatos={props.getTomatoList}
+            getTempTomatoList={props.getTempTomatoList}
             {...tomato}
             key={tomato.tomatoIdx}
           />

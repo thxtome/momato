@@ -8,19 +8,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
 }));
-  const auth =  localStorage.getItem("auth");
-  console.log(localStorage.getItem("auth"))
 const Tomatos = () => {
-  return(
-    <>
-    {/* {
-      localStorage.getItem("auth") == null
-      ? <TomatoList /> 
-      : <TomatoListContainer />
-  } */}
-    <TomatoListContainer />
-  </>
-  ) 
+  return <TomatoListContainer /> 
 };
 
 export default Tomatos;

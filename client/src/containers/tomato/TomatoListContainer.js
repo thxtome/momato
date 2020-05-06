@@ -12,6 +12,9 @@ const mapDispatchToProps = (dispatch) => {
     getTomatoList: (date) => {
       dispatch(tomatoActions.TOMATO_REQUEST({ date }));
     },
+    getTempTomatoList: () => {
+      dispatch(tomatoActions.TOMATO_TEMP_REQUEST());
+    },
     tomatoDelete: (data) => {
       dispatch(tomatoDeleteActions.TOMATO_DELETE_REQUEST({ data }));
     },

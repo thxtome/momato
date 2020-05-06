@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles, Typography, Button, Avatar } from "@material-ui/core";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -50,13 +51,11 @@ const useInput = (initVal) => {
 };
 
 const LoginModal = (props) => {
-  console.log(props);
   useEffect(() => {
-    if (props.loginReducer.isLogin){
+    if (props.loginReducer.isLogin === undefined){
       props.getTomatos(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
     };
   });
-
   const classes = useStyles();
   const email = useInput("");
   const pass = useInput("");
@@ -65,9 +64,9 @@ const LoginModal = (props) => {
       memberId: email.value,
       memberPass: pass.value,
     };
-    props.onClose();
-    props.login(member);
+    props.login(member)
     props.getTomatos(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
+    props.onClose();
   };
 
   return (

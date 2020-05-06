@@ -35,7 +35,6 @@ const calTomatoCnt = (tomatos) => {
   let canStart = 0; 
   let canNotStart = 0;
   tomatos.map((tomato) => {
-    console.log(tomato);
     if (tomato.tomatoCanStart) {
       canStart++;
     } else {

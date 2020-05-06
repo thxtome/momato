@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   const classes = useStyles();
+  const logoutRequest = () => {
+    props.logout();
+    props.getTempTomatoList();
+  }
 
   return (
     <AppBar className={classes.root}>
@@ -43,10 +47,10 @@ const Header = (props) => {
         <Typography variant="h6" edge="start" className={classes.title}>
           MOMATO
         </Typography>
-        {localStorage.getItem("auth") === null ? (
+        { localStorage.getItem("auth") === null ? (
           <Modals type="login" />
         ) : (
-          <Button className={classes.logout} >
+          <Button className={classes.logout} onClick={() => {logoutRequest();}} >
             로그아웃
           </Button>
         )}

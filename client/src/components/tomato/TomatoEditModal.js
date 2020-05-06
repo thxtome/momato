@@ -64,13 +64,31 @@ const TomatoEditModal = (props) => {
     const tomatoFullBreak = useInput(props.fullBreak);
 
     const tomatoEditRequest = () => {
-        const data = {
-            tomatoIdx: props.index,
-            tomatoName: tomatoName.value,
-            tomatoFullRegular: tomatoFullRegular.value,
-            tomatoFullBreak: tomatoFullBreak.value,
+        if (localStorage.getItem("auth")){
+            const data = {
+                tomatoIdx: props.index,
+                tomatoName: tomatoName.value,
+                tomatoFullRegular: tomatoFullRegular.value,
+                tomatoFullBreak: tomatoFullBreak.value,
+            }
+            props.tomatoEdit(data);
+        } else {
+            const tempTomato = {
+                "tomatoIdx": props.index,
+                "tomatoName": tomatoName.value,
+                "template": 0,
+                "tomatoCanStart": 0,
+                "tomatoDate": new Date(),
+                "tomatoEndTime": 0,
+                "tomatoStartTime": 0,
+                "tomatoFullRegular": tomatoFullRegular.value,
+                "tomatoLeftRegular": tomatoFullRegular.value,
+                "tomatoFullBreak": tomatoFullBreak.value,
+                "tomatoLeftBreak": tomatoFullBreak.value,
+              };
+            sessionStorage.setItem(props.index, JSON.stringify(tempTomato));
+            props.getTempTomatoList();
         }
-        props.tomatoEdit(data);
         props.onClose();
     }
 

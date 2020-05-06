@@ -79,6 +79,7 @@ const TomatoAddModal = (props) => {
       props.tomatoAdd(data);
     } else {
       addTempTomato();
+      props.getTempTomatoList();
     }
     props.onClose();
   };
