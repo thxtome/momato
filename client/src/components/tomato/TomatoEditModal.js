@@ -7,7 +7,8 @@ import {
     Typography,
     TextField,
     NativeSelect,
-    Select
+    Select,
+    MenuItem
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +35,11 @@ const useStyles = makeStyles((theme) => ({
     },
 
     select: {
-        width: "40%"
+        width: "40%",
+        cursor: "pointer",
+    },
+    option: {
+        cursor: "pointer",
     }
 }));
 
@@ -48,7 +53,7 @@ const useInput = (initVal) => {
 
 const TomatoEditModal = (props) => {
     useEffect(() => {
-        if (props.tomatoEditReducer.isTomatoEditSucceed) {
+        if (props.tomatoEdit.isTomatoEditSucceed) {
           props.getTomatos(new Date());
           props.clearEditResult();
         }
@@ -94,12 +99,12 @@ const TomatoEditModal = (props) => {
                         }}
                         {...tomatoFullRegular}
                         >
-                        <option value={300}>5분</option>
-                        <option value={600}>10분</option>
-                        <option value={900}>15분</option>
-                        <option value={1200}>20분</option>
-                        <option value={1500}>25분</option>
-                        <option value={1800}>30분</option>
+                        <MenuItem value={300}>5분</MenuItem>
+                        <MenuItem value={600}>10분</MenuItem>
+                        <MenuItem value={900}>15분</MenuItem>
+                        <MenuItem value={1200}>20분</MenuItem>
+                        <MenuItem value={1500}>25분</MenuItem>
+                        <MenuItem value={1800}>30분</MenuItem>
                     </Select>
                     </div>
                     </FormControl>
@@ -116,12 +121,12 @@ const TomatoEditModal = (props) => {
                         }}
                         {...tomatoFullBreak}
                         >
-                        <option value={300}>5분</option>
-                        <option value={600}>10분</option>
-                        <option value={900}>15분</option>
-                        <option value={1200}>20분</option>
-                        <option value={1500}>25분</option>
-                        <option value={1800}>30분</option>
+                        <MenuItem value={300}>5분</MenuItem>
+                        <MenuItem value={600}>10분</MenuItem>
+                        <MenuItem value={900}>15분</MenuItem>
+                        <MenuItem value={1200}>20분</MenuItem>
+                        <MenuItem value={1500}>25분</MenuItem>
+                        <MenuItem value={1800}>30분</MenuItem>
                     </Select>
                     </div>
                     <div className={classes.editbtn}>

@@ -38,23 +38,48 @@ const useInput = (initVal) => {
 };
 
 const TomatoAddModal = (props) => {
+  const addTempTomato = () => {
+    const tempTomato = {
+      "template": 0,
+      "tomatoCanStart": 0,
+      "tomatoDate": new Date(),
+      "tomatoEndTime": 0,
+      "tomatoStartTime": 0,
+      "tomatoFullRegular": 1500,
+      "tomatoLeftRegular": 1500,
+      "tomatoFullBreak": 300,
+      "tomatoLeftBreak": 300,
+    };
+    if (localStorage.getItem("key")){
+      localStorage.setItem("key", Number(localStorage.getItem("key")) + 1);
+    } else {
+      localStorage.setItem("key", 0);
+    };
+    tempTomato.tomatoIdx = Number(localStorage.getItem("key"));
+    tempTomato.tomatoName = tomatoName.value;
+    sessionStorage.setItem(tempTomato.tomatoIdx, JSON.stringify(tempTomato));
+  };
+
   useEffect(() => {
-    if (props.tomatoAddReducer.isTomatoAddSucceed) {
+    if (props.tomatoAdd.isTomatoAddSucceed) {
       props.getTomatos(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
       props.clearAddResult();
-    }
+    };
   });
 
   const classes = useStyles();
   const createType = useInput("simple");
   const tomatoName = useInput("");
-
   const tomatoAddRequest = () => {
-    const data = {
-      createType: createType.value,
-      tomatoName: tomatoName.value,
-    };
-    props.tomatoAdd(data);
+    if (localStorage.getItem("auth")){
+      const data = {
+        createType: createType.value,
+        tomatoName: tomatoName.value,
+      };
+      props.tomatoAdd(data);
+    } else {
+      addTempTomato();
+    }
     props.onClose();
   };
 

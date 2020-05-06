@@ -8,9 +8,11 @@
 		<choose>
 			<when test="templateIdx != 0">
 				where template_idx = #{templateIdx}
+				  and member_id = #{memberId}
 			</when>
 			<when test='tomatoDate != null'>
 				where date(tomato_date) = #{tomatoDate}
+				  and member_id = #{memberId}
 			</when>
 		</choose>
 	</select>

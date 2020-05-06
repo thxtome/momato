@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles, Typography, Button, Avatar } from "@material-ui/core";
 
@@ -50,10 +50,16 @@ const useInput = (initVal) => {
 };
 
 const LoginModal = (props) => {
+  console.log(props);
+  useEffect(() => {
+    if (props.loginReducer.isLogin){
+      props.getTomatos(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
+    };
+  });
+
   const classes = useStyles();
   const email = useInput("");
   const pass = useInput("");
-
   const loginRequest = () => {
     const member = {
       memberId: email.value,
@@ -61,6 +67,7 @@ const LoginModal = (props) => {
     };
     props.onClose();
     props.login(member);
+    props.getTomatos(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
   };
 
   return (

@@ -11,22 +11,37 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TomatoList = (props) => {
-  useEffect(() => {
-    props.getTomatoList(
-      new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-    );
-  }, []);
-  useEffect(() => {
-    if (props.tomatoDeleteReducer.isTomatoDeleteSucceed) {
-      props.getTomatos(
-        new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-      );
-      props.clearDeleteResult();
-    }
-  });
-  const classes = useStyles();
-  const tomatos = props.tomatoReducer.tomatos;
+  console.log(props);
+  let tomatos = [];
+  const makeTempTomatos = () => {
+    let tempTomatos = [];
+    let tempTomato = {};
+    for (let i = 0; i < sessionStorage.length; i++){
+      tempTomato = JSON.parse(sessionStorage.getItem(String(i)));
+        tempTomatos.push(tempTomato);
+      }
+      tomatos = tempTomatos;
+      console.log(tomatos);
+  };
 
+  useEffect(() => {
+    if(localStorage.getItem("auth")){
+      props.getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
+      if (props.tomatoDeleteReducer.isTomatoDeleteSucceed) {
+        props.getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
+        props.clearDeleteResult();
+      }
+    } else {
+      makeTempTomatos();
+    }
+  }, []);
+  if(localStorage.getItem("auth")){
+    tomatos = props.tomatoReducer.tomatos;
+  } else {
+    makeTempTomatos();
+  }
+  const classes = useStyles();
+  console.log(tomatos);
   return (
     <div className={classes.root}>
       <TomatoCnt tomatos={tomatos}></TomatoCnt>

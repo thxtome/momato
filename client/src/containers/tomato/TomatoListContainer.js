@@ -15,11 +15,6 @@ const mapDispatchToProps = (dispatch) => {
     tomatoDelete: (data) => {
       dispatch(tomatoDeleteActions.TOMATO_DELETE_REQUEST({ data }));
     },
-
-    getTomatos: (date) => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ date }));
-    },
-
     clearDeleteResult: () => {
       dispatch(tomatoDeleteActions.TOMATO_DELETE_CLEAR());
     },
