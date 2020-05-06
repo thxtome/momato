@@ -7,6 +7,7 @@ import { tomatoDeleteActions } from "../store/modules/tomatoDelete";
 import { tomatoActions } from "../store/modules/tomato.js";
 import { loginActions } from "../store/modules/login.js";
 import { calendarActions } from "../store/modules/calendar";
+import { memberUpdateActions } from "../store/modules/memberUpdate";
 import errorDispacher from "../error/errorDispacher";
 
 function* tomatoAddSaga(action) {
@@ -65,6 +66,16 @@ function* signupSaga(action) {
   }
 }
 
+function* memberUpdateSaga(action) {
+  try {
+    const response = yield call(api.updateMember, action.payload.member);
+    yield put(memberUpdateActions.MEMBER_UPDATE_SUCCEED({ response }));
+  } catch (e) {
+    console.dir(e);
+    errorDispacher(e.response.data.error);
+  }
+}
+
 function* getCalendarSaga(action) {
   try {
     const response = yield call(api.getCalendar, action.payload.yearAndMonth);
@@ -86,6 +97,7 @@ function* baseSaga() {
   yield takeEvery(tomatoDeleteActions.TOMATO_DELETE_REQUEST, tomatoDeleteSaga);
   yield takeEvery(tomatoActions.TOMATO_REQUEST, tomatoSaga);
   yield takeEvery(calendarActions.CALENDAR_REQUEST, getCalendarSaga);
+  yield takeEvery(memberUpdateActions.MEMBER_UPDATE_REQUEST, memberUpdateSaga);
 }
 
 export default baseSaga;

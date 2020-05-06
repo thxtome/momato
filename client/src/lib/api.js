@@ -21,6 +21,17 @@ export const signup = ({ memberId, memberPass, memberName }) =>
     },
   });
 
+export const updateMember = ({ memberPass, memberName }) =>
+  axios({
+    method: "put",
+    url: "http://localhost:8080/members",
+    headers: { Authorization: localStorage.getItem("auth") },
+    data: {
+      memberPass,
+      memberName,
+    },
+  });
+
 export const tomato = (date) => {
   // let dateString = date.toISOString().substr(0, 10);
   let dateString = date.toISOString().substr(0, 10);

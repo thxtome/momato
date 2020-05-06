@@ -6,7 +6,7 @@ import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
 import TemplateModal from "../template/TemplateModal";
 import PassModal from "../member/PassModal";
-import InfoModal from "../member/InfoModal";
+import InfoModalContainer from "../../containers/member/InfoModalContainer";
 import SignupModalContainer from "../../containers/member/SignupModalContainer";
 import LoginModalContainer from "../../containers/login/LoginModalContainer";
 import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
@@ -145,7 +145,7 @@ export default function TransitionsModal({
             ) : type === "pass" ? (
               <PassModal onClose={handleClose} />
             ) : type === "info" ? (
-              <InfoModal onClose={handleClose} />
+              <InfoModalContainer onClose={handleClose} />
             ) : type === "tomatoAdd" ? (
               <TomatoAddModalContainer onClose={handleClose} />
             ) : (

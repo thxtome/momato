@@ -37,6 +37,10 @@ public class UserPrincipal implements UserDetails {
 		return this.memberId;
 	}
 	
+	public String getUserNickName() {
+		return this.memberName;
+	}
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
