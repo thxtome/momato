@@ -102,6 +102,7 @@ const InfoModal = (props) => {
             label=""
             placeholder="nickname"
             multiline
+            autoFocus
             onChange={inputMemberName.onChange}
           />
         </div>

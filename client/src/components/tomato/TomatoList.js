@@ -11,19 +11,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TomatoList = (props) => {
+  console.log(props.loginReducer)
   useEffect(() => {
-    if (localStorage.getItem("auth")){
-      props.getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
-      if (props.tomatoDeleteReducer.isTomatoDeleteSucceed) {
-        props.getTomatoList(
-          new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        );
+      if (localStorage.getItem("auth")){
+        props.getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
         props.clearDeleteResult();
-      }
     } else {
       props.getTempTomatoList();
     }
-  }, []);
+  }, [props.tomatoDeleteReducer.isTomatoDeleteSucceed]);
     const tomatos = props.tomatoReducer.tomatos;
   const classes = useStyles();
   return (
@@ -33,7 +29,7 @@ const TomatoList = (props) => {
         tomatos.map((tomato) => (
           <Tomato
             tomatoDelete={props.tomatoDelete}
-            getTomatos={props.getTomatoList}
+            getTomatoList={props.getTomatoList}
             getTempTomatoList={props.getTempTomatoList}
             {...tomato}
             key={tomato.tomatoIdx}

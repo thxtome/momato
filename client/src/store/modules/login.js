@@ -29,6 +29,8 @@ const reducer = createReducer(initialState, {
   [LOGIN_SUCCEEDED]: (state, action) => {
     const auth = action.payload.response.headers.authorization;
     localStorage.setItem("auth", auth);
+    localStorage.removeItem("key");
+    sessionStorage.clear();
     return { ...state, isLogin: true };
   },
 
@@ -42,8 +44,6 @@ const reducer = createReducer(initialState, {
 
   [LOGOUT_SUCCEEDED]: (state, action) => {
     localStorage.removeItem("auth");
-    localStorage.removeItem("key");
-    sessionStorage.clear();
     return { ...state, isLogin: false };
   },
 

@@ -61,11 +61,13 @@ const TomatoAddModal = (props) => {
   };
 
   useEffect(() => {
-    if (props.tomatoAdd.isTomatoAddSucceed) {
+    if (localStorage.getItem("auth")){
       props.getTomatos(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
       props.clearAddResult();
-    };
-  });
+    } else {
+      props.getTempTomatoList();
+    }
+  },[props.tomatoAddReducer.isTomatoAddSucceed]);
 
   const classes = useStyles();
   const createType = useInput("simple");
@@ -94,6 +96,7 @@ const TomatoAddModal = (props) => {
               label=""
               placeholder="토마토 이름"
               multiline
+              autoFocus 
               {...tomatoName}
               onKeyPress={(e) => {
                 if(e.key === "Enter"){

@@ -54,6 +54,7 @@ const PassModal = () => {
                     label=""
                     placeholder="example@tomato.com"
                     multiline
+                    autoFocus 
                     />
                 </div>
                 <div className={classes.button}>

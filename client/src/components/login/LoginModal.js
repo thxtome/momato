@@ -82,6 +82,7 @@ const LoginModal = (props) => {
             label=""
             placeholder="example@tomato.com"
             multiline
+            autoFocus
             {...email}
           />
         </div>

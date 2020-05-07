@@ -53,18 +53,21 @@ const useInput = (initVal) => {
 
 const TomatoEditModal = (props) => {
     useEffect(() => {
-        if (props.tomatoEdit.isTomatoEditSucceed) {
-          props.getTomatos(new Date());
-          props.clearEditResult();
+        if (localStorage.getItem("auth")){
+            props.getTomatos(new Date());
+            props.clearEditResult();
+        } else {
+            props.getTempTomatoList();
         }
-      });
+      },[props.tomatoEditReducer.isTomatoEditSucceed]);
+
     const classes = useStyles();
     const tomatoName = useInput(props.name);
     const tomatoFullRegular = useInput(props.fullRegular);
     const tomatoFullBreak = useInput(props.fullBreak);
 
     const tomatoEditRequest = () => {
-        if (localStorage.getItem("auth")){
+        if (!localStorage.getItem("auth")){
             const data = {
                 tomatoIdx: props.index,
                 tomatoName: tomatoName.value,
@@ -72,7 +75,6 @@ const TomatoEditModal = (props) => {
                 tomatoFullBreak: tomatoFullBreak.value,
             }
             props.tomatoEdit(data);
-        } else {
             const tempTomato = {
                 "tomatoIdx": props.index,
                 "tomatoName": tomatoName.value,
@@ -103,6 +105,13 @@ const TomatoEditModal = (props) => {
             props.name
         }
         multiline 
+        autoFocus
+        // onKeyPress={(e) => {
+        //     if(e.key === "Enter"){
+        //       e.preventDefault();
+        //       document.getElementById("editButton").click();
+        //     };
+        // }}
             {...tomatoName}
         /> <p id="transition-modal-description"/>
             <FormControl className={classes.formControl}>
@@ -148,7 +157,12 @@ const TomatoEditModal = (props) => {
                     </Select>
                     </div>
                     <div className={classes.editbtn}>
-                        <Button variant="contained" color="secondary" onClick={tomatoEditRequest}>수정</Button>
+                        <Button 
+                        variant="contained" 
+                        color="secondary" 
+                        onClick={tomatoEditRequest}
+                        id="editButton"
+                        >수정</Button>
                     </div>
                 </FormControl>
         </>
