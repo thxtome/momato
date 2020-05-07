@@ -70,6 +70,10 @@ const Counter = (props) => {
   const [isGoing, setIsGoing] = useState(false);
 
   useEffect(() => {
+    if (time === fullTime) {
+      setIsGoing(false);
+    }
+
     if (isGoing === true) {
       const key = setTimeout(() => {
         setTime(time + 1);
@@ -118,10 +122,10 @@ const Counter = (props) => {
             ${
               (fullTime - time) / 60 > 10
                 ? Math.floor((fullTime - time) / 60)
-                : `0${(fullTime - time) / 60}`
+                : `0${Math.floor((fullTime - time) / 60)}`
             }:
             ${
-              (fullTime - time) % 60 > 10
+              (fullTime - time) % 60 >= 10
                 ? (fullTime - time) % 60
                 : `0${(fullTime - time) % 60}`
             }
