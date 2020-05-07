@@ -5,7 +5,7 @@ import Modals from "../common/Modal";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      flexgrow: 1,
     },
     paper: {
       display: "flex",
@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
       return (
           <div className={classes.root}>
             <Paper elevation={0} className={classes.paper}>
-              <Box className={classes.name} flexGrow={1}>
-                <Typography flexGrow={1} className={classes.name} variant="h4">
+              <Box className={classes.name} flexgrow={1}>
+                <Typography flexgrow={1} className={classes.name} variant="h4">
                   <Modals type="template" template={template}>{template.templateName}</Modals>
                 </Typography>
                 <Typography variant="h6">

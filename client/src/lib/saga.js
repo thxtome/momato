@@ -40,7 +40,9 @@ function* tomatoDeleteSaga(action) {
 function* tomatoSaga(action) {
   try {
     const response = yield call(api.tomato, action.payload.date);
-    yield put(tomatoActions.TOMATO_SUCCEED({ tomatos: response.data.data.result }));
+    yield put(
+      tomatoActions.TOMATO_SUCCEED({ tomatos: response.data.data.result })
+    );
   } catch (e) {
     yield put({ type: "TOMATO_FAILED", message: e.message });
   }
@@ -70,6 +72,19 @@ function* signupSaga(action) {
     yield put(signupActions.SIGNUP_SUCCEED({ response }));
   } catch (e) {
     yield put(signupActions.SIGNUP_FAILED({ message: e.message }));
+  }
+}
+
+function* memberInfoSaga(action) {
+  try {
+    const response = yield call(api.getMemberInfo);
+    console.log(response)
+    yield put(
+      loginActions.MEMBERINFO_SUCCEED({ memberInfo: response.data.data.result })
+    );
+  } catch (e) {
+    console.dir(e);
+    errorDispacher(e.response.data.error);
   }
 }
 
@@ -106,6 +121,7 @@ function* baseSaga() {
   yield takeEvery(tomatoActions.TOMATO_REQUEST, tomatoSaga);
   yield takeEvery(calendarActions.CALENDAR_REQUEST, getCalendarSaga);
   yield takeEvery(memberUpdateActions.MEMBER_UPDATE_REQUEST, memberUpdateSaga);
+  yield takeEvery(loginActions.MEMBERINFO_REQUEST, memberInfoSaga);
 }
 
 export default baseSaga;

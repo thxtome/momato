@@ -28,6 +28,13 @@ export const signup = ({ memberId, memberPass, memberName }) =>
     },
   });
 
+export const getMemberInfo = () =>
+  axios({
+    method: "get",
+    url: "http://localhost:8080/members",
+    headers: { Authorization: localStorage.getItem("auth") },
+  });
+
 export const updateMember = ({ memberPass, memberName }) =>
   axios({
     method: "put",
