@@ -43,7 +43,7 @@ const reducer = createReducer(initialState, {
   },
 
   [LOGOUT]: (state, action) => {
-    return { state };
+    return { state, auth: action.payload.auth };
   },
 
   [LOGOUT_SUCCEEDED]: (state, action) => {

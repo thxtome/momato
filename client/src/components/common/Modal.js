@@ -4,7 +4,7 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
-import TemplateModal from "../template/TemplateModal";
+import TemplateModalContainer from "../../containers/template/TemplateModalContainer";
 import PassModal from "../member/PassModal";
 import InfoModalContainer from "../../containers/member/InfoModalContainer";
 import SignupModalContainer from "../../containers/member/SignupModalContainer";
@@ -48,7 +48,16 @@ const useStyles = makeStyles((theme) => ({
     width:'100%',
     textAlign: "center",
     fontSize: 20,
-  }
+  },
+  tomatoBtn: {
+    textTransform: "none",
+  },
+  templateBtn: {
+    fontWeight: "bold",
+    fontSize: "30px",
+    textTransform: "none",
+  },
+
 }));
 
 export default function TransitionsModal({
@@ -58,6 +67,7 @@ export default function TransitionsModal({
   name,
   fullRegular,
   fullBreak,
+  templateIdx,
 }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -70,7 +80,7 @@ export default function TransitionsModal({
     setOpen(false);
   };
   return (
-    <div>
+    <div className={classes.root}>
       {type === "template" ? (
         <Button
           className={classes.templateBtn}
@@ -129,9 +139,10 @@ export default function TransitionsModal({
         <Fade in={open}>
           <div className={classes.paper}>
             {type === "template" ? (
-              <TemplateModal template={template} onClose={handleClose} />
+              <TemplateModalContainer template={template} onClose={handleClose} />
             ) : type === "tomatoEdit" ? (
               <TomatoEditModalContainer
+                templateIdx={templateIdx}
                 index={index}
                 name={name}
                 fullRegular={fullRegular}
@@ -147,7 +158,7 @@ export default function TransitionsModal({
             ) : type === "info" ? (
               <InfoModalContainer onClose={handleClose} />
             ) : type === "tomatoAdd" ? (
-              <TomatoAddModalContainer onClose={handleClose} />
+              <TomatoAddModalContainer templateIdx={templateIdx} onClose={handleClose} />
             ) : (
               <></>
             )}

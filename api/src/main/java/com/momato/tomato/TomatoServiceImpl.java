@@ -24,8 +24,18 @@ public class TomatoServiceImpl implements TomatoService{
 	}
 	
 	@Override
+	public List<Tomato> retrieveTomatoByTemplateIdx(int templateIdx) {
+		return mapper.selectTomatoByTemplateIdx(templateIdx);
+	}
+	
+	@Override
 	public void addTomato(Tomato tomato) {
 		mapper.insertTomato(tomato);
+	}
+	
+	@Override
+	public void addTemplateTomato(Tomato tomato) {
+		mapper.insertTemplateTomato(tomato);
 	}
 
 	@Override

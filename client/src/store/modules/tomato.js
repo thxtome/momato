@@ -33,7 +33,8 @@ const tempTomatos = () => {
 
 const reducer = createReducer(initialState, {
   [TOMATO_REQUEST]: (state, action) => {
-    return { ...state, date: action.payload.date };
+    console.log(action.payload.data);
+    return { ...state, data: action.payload.data };
   },
 
   [TOMATO_TEMP_REQUEST]: (state, action) => {
@@ -44,7 +45,7 @@ const reducer = createReducer(initialState, {
   [TOMATO_SUCCEED]: (state, action) => {
     const tomatos = action.payload.tomatos;
     return {
-      ...state, tomatos: tomatos};
+      ...state, tomatos: tomatos, isTomatoSucceed: true};
   },
 
   [TOMATO_FAILED]: (state, action) => {

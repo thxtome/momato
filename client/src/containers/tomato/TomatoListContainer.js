@@ -9,8 +9,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getTomatoList: (date) => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ date }));
+    getTomatoList: (data) => {
+      dispatch(tomatoActions.TOMATO_REQUEST({ data }));
     },
     getTempTomatoList: () => {
       dispatch(tomatoActions.TOMATO_TEMP_REQUEST());

@@ -11,10 +11,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TomatoList = (props) => {
-  console.log(props.loginReducer)
+  let templateIdx = props.templateIdx;
+  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10);
+  if (!templateIdx){
+    templateIdx = 0;
+  } else {
+    date = "";
+  }
+  const data = {
+    date,
+    templateIdx,
+  };
   useEffect(() => {
-      if (localStorage.getItem("auth")){
-        props.getTomatoList(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
+    if (localStorage.getItem("auth")){
+        props.getTomatoList(data);
         props.clearDeleteResult();
     } else {
       props.getTempTomatoList();
@@ -24,10 +34,14 @@ const TomatoList = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <TomatoCnt tomatos={tomatos}></TomatoCnt>
+      {
+        templateIdx ? <></> :
+        <TomatoCnt tomatos={tomatos}></TomatoCnt>
+      }
       {tomatos &&
         tomatos.map((tomato) => (
           <Tomato
+            isLogin={props.loginReducer.isLogin}
             tomatoDelete={props.tomatoDelete}
             getTomatoList={props.getTomatoList}
             getTempTomatoList={props.getTempTomatoList}
@@ -35,7 +49,7 @@ const TomatoList = (props) => {
             key={tomato.tomatoIdx}
           />
         ))}
-      <Modals type="tomatoAdd"></Modals>
+      <Modals templateIdx={props.templateIdx} type="tomatoAdd"></Modals>
     </div>
   );
 };

@@ -9,8 +9,8 @@ const mapStateToProps = (state) => {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-      logout: () => {
-        dispatch(loginActions.LOGOUT());
+      logout: (auth) => {
+        dispatch(loginActions.LOGOUT({ auth }));
       },
       getTomatos: (date) => {
         dispatch(tomatoActions.TOMATO_REQUEST({ date }));

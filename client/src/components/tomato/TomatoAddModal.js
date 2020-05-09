@@ -38,6 +38,13 @@ const useInput = (initVal) => {
 };
 
 const TomatoAddModal = (props) => {
+  let templateIdx = props.templateIdx;
+  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10);
+  if (!templateIdx){
+    templateIdx = 0;
+  } else {
+    date = "";
+  }
   const addTempTomato = () => {
     const tempTomato = {
       "template": 0,
@@ -62,10 +69,12 @@ const TomatoAddModal = (props) => {
 
   useEffect(() => {
     if (localStorage.getItem("auth")){
-      props.getTomatos(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
+      const data = {
+        date,
+        templateIdx,
+      };
+      props.getTomatos(data);
       props.clearAddResult();
-    } else {
-      props.getTempTomatoList();
     }
   },[props.tomatoAddReducer.isTomatoAddSucceed]);
 
@@ -77,8 +86,10 @@ const TomatoAddModal = (props) => {
       const data = {
         createType: createType.value,
         tomatoName: tomatoName.value,
+        templateIdx: props.templateIdx,
       };
       props.tomatoAdd(data);
+
     } else {
       addTempTomato();
       props.getTempTomatoList();
@@ -91,9 +102,9 @@ const TomatoAddModal = (props) => {
       <h2 id="transition-modal-title">토마토 추가</h2>
       <Typography id="transition-modal-description"/>
             <TextField
+              className={classes.textField}
               id="standard-textarea"
               className={classes.textField}
-              label=""
               placeholder="토마토 이름"
               multiline
               autoFocus 

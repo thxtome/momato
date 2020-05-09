@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import { Link } from "react-router-dom";
 import Modals from "../common/Modal";
+import TemplateListContainer from "../../containers/template/TemplateListContainer";
 
 const drawerWidth = 300;
 
@@ -66,9 +67,6 @@ const useInput = (initVal) => {
 const Sidebar = (props) => {
   const classes = useStyles();
   const [clieckedIndex, setClieckedIndex] = useState(0);
-  const date = JSON.stringify(
-    useInput(new Date().toISOString().substr(0, 10).replace("T", " "))
-  );
 
   return (
     <Drawer
@@ -99,7 +97,7 @@ const Sidebar = (props) => {
                 className={classes.link}
                 key={text}
                 to={
-                  index === 0 ? "tomato" : index === 1 ? "calendar" : "template"
+                  index === 0 ? "tomato" : index === 1 ? "calendar" : ""
                 }
               >
                 <ListItem
@@ -118,11 +116,15 @@ const Sidebar = (props) => {
                       <GrainIcon />
                     )}
                   </ListItemIcon>
-                  <ListItemText primary={text} />
+                  {
+                    index === 2 ? <ListItemText primary={<TemplateListContainer />} />: 
+                  <ListItemText primary={
+                    text} />
+                  }
                 </ListItem>
               </Link>
             )
-          )}
+            )}
         </List>
       </div>
     </Drawer>

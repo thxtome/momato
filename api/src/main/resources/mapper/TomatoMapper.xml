@@ -5,29 +5,42 @@
 	<select id="selectTomato" parameterType="Tomato" resultType="Tomato">
 		select *
 		  from tomato
+		 where member_id = #{memberId}
 		<choose>
-			<when test="templateIdx != 0">
-				where template_idx = #{templateIdx}
-				  and member_id = #{memberId}
-			</when>
 			<when test='tomatoDate != null'>
-				where date(tomato_date) = #{tomatoDate}
-				  and member_id = #{memberId}
+				  and date(tomato_date) = #{tomatoDate}
+				  and template_idx is null
 			</when>
+			<otherwise>
+				  and template_idx = #{templateIdx}
+			</otherwise>
 		</choose>
 	</select>
 
-	<!-- 특정 토마토 조회 -->
+	<!-- 토마토번호로 토마토 한개 조회 -->
 	<select id="selectOneTomato" parameterType="int" resultType="Tomato">
 		select *
 		  from tomato
 		 where tomato_idx = #{tomatoIdx}
 	</select>
 	
+	<!-- 인덱스번호로 토마토 조회 -->
+	<select id="selectTomatoByTemplateIdx" parameterType="int" resultType="Tomato">
+		select *
+		  from tomato
+		 where template_idx = #{templateIdx}
+	</select>
+	
 	<!-- 토마토 추가 -->
 	<insert id="insertTomato" parameterType="Tomato">
 		insert into tomato (tomato_name, member_id
 		) values (#{tomatoName}, #{memberId})
+	</insert>
+	
+	<!-- 템플릿 토마토 추가 -->
+	<insert id="insertTemplateTomato" parameterType="Tomato">
+		insert into tomato (tomato_name, member_id, template_idx
+		) values (#{tomatoName}, #{memberId}, #{templateIdx})
 	</insert>
 	
 	<!-- 토마토 삭제 -->

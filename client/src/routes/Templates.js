@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Template from "../components/template/Template";
 import Tomato from "../components/tomato/Tomato";
+import Modals from "../components/common/Modal";
+import TomatoListContainer from "../containers/tomato/TomatoListContainer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,15 +11,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-let template = {templateInx: 1, templateName: "텃밭1", templateContent: "이 밭은 대대로 물려받은 텃밭입니다."}
-let tomatos = ['1번 토마토','2번 토마토','3번 토마토','4번 토마토','5번 토마토'];
-const Templates = () => {
+const Templates = (props) => {
+  const template = props.location.state.template;
+  console.log(template.templateIdx);
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Template template={template} key={template.templateInx} />
-      {tomatos.map((tomato,index) => <Tomato name={tomato} key={index}/>)}
+      <Template template={template} key={template.templateIdx} />
+      <TomatoListContainer templateIdx={template.templateIdx}/>
     </div>
   );
 };

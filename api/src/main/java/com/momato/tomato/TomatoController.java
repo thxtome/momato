@@ -31,18 +31,14 @@ public class TomatoController {
 	
 	// 토마토등록일 또는 템플릿인덱스로 조회
 	@GetMapping()
-	public ResponseResult retrieveTomato(@RequestParam(defaultValue = "0") int templateIdx, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date tomatoDate, @AuthenticationPrincipal String memberId) {
+	public ResponseResult retrieveTomato(@RequestParam(defaultValue = "0") int templateIdx, @RequestParam(defaultValue = "") @DateTimeFormat(pattern = "yyyy-MM-dd") Date tomatoDate, @AuthenticationPrincipal String memberId) {
+		System.out.println("도착");
 		Tomato tomato = new Tomato();
 		tomato.setTemplateIdx(templateIdx);
 		tomato.setTomatoDate(tomatoDate);
 		tomato.setMemberId(memberId);
+		System.out.println("토마토" + tomato);
 		return new ResponseResult(HttpStatus.OK, service.retrieveTomato(tomato));
-	}
-	
-	// 토마토인덱스로 조회
-	@GetMapping("/{tomatoIdx}")
-	public ResponseResult retrieveOneTomato(@PathVariable int tomatoIdx) {
-		return new ResponseResult(HttpStatus.OK,service.retrieveOneTomato(tomatoIdx));
 	}
 	
 	@PostMapping()
@@ -52,7 +48,12 @@ public class TomatoController {
 		if (createType.equals("simple")) {
 			Tomato tomato = param.getData();
 			tomato.setMemberId(memberId);
-			service.addTomato(tomato);
+			System.out.println(tomato);
+			if (tomato.getTemplateIdx() == 0) {
+				service.addTomato(tomato);
+			} else {
+				service.addTemplateTomato(tomato);
+			}
 		// 템플릿 복사 후 토마토 등록	
 		} else if(createType.equals("copy")) {
 			Tomato tomato = new Tomato();

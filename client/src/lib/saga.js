@@ -8,6 +8,8 @@ import { tomatoActions } from "../store/modules/tomato.js";
 import { loginActions } from "../store/modules/login.js";
 import { calendarActions } from "../store/modules/calendar";
 import { memberUpdateActions } from "../store/modules/memberUpdate";
+import { templateActions } from "../store/modules/template";
+import { templateEditActions } from "../store/modules/templateEdit";
 import errorDispacher from "../error/errorDispacher";
 
 function* tomatoAddSaga(action) {
@@ -39,12 +41,28 @@ function* tomatoDeleteSaga(action) {
 
 function* tomatoSaga(action) {
   try {
-    const response = yield call(api.tomato, action.payload.date);
-    yield put(
-      tomatoActions.TOMATO_SUCCEED({ tomatos: response.data.data.result })
-    );
+    const response = yield call(api.getTomato, action.payload.data);
+    yield put(tomatoActions.TOMATO_SUCCEED({ tomatos: response.data.data.result }));
   } catch (e) {
     yield put({ type: "TOMATO_FAILED", message: e.message });
+  }
+}
+
+function* templateSaga(action) {
+  try {
+    const response = yield call(api.template, action);
+    yield put(templateActions.TEMPLATE_SUCCEED({ templates: response.data.data.result }));
+  } catch (e) {
+    yield put({ type: "TEMPLATE_FAILED", message: e.message });
+  }
+}
+
+function* templateEditSaga(action) {
+  try {
+    const response = yield call(api.templateEdit, action.payload.data);
+    yield put(templateEditActions.TEMPLATE_EDIT_SUCCEED({ response }));
+  } catch (e) {
+    yield put({ type: "TEMPLATE_EDIT_FAILED", message: e.message });
   }
 }
 
@@ -59,7 +77,7 @@ function* loginSaga(action) {
 
 function* logoutSaga(action) {
   try {
-    const response = yield call(api.logout, localStorage.getItem("auth"));
+    const response = yield call(api.logout, action.payload.auth);
     yield put(loginActions.LOGOUT_SUCCEEDED({ response }));
   } catch (e) {
     yield put(loginActions.LOGOUT_FAILED({ e }));
@@ -72,19 +90,6 @@ function* signupSaga(action) {
     yield put(signupActions.SIGNUP_SUCCEED({ response }));
   } catch (e) {
     yield put(signupActions.SIGNUP_FAILED({ message: e.message }));
-  }
-}
-
-function* memberInfoSaga(action) {
-  try {
-    const response = yield call(api.getMemberInfo);
-    console.log(response)
-    yield put(
-      loginActions.MEMBERINFO_SUCCEED({ memberInfo: response.data.data.result })
-    );
-  } catch (e) {
-    console.dir(e);
-    errorDispacher(e.response.data.error);
   }
 }
 
@@ -121,7 +126,8 @@ function* baseSaga() {
   yield takeEvery(tomatoActions.TOMATO_REQUEST, tomatoSaga);
   yield takeEvery(calendarActions.CALENDAR_REQUEST, getCalendarSaga);
   yield takeEvery(memberUpdateActions.MEMBER_UPDATE_REQUEST, memberUpdateSaga);
-  yield takeEvery(loginActions.MEMBERINFO_REQUEST, memberInfoSaga);
+  yield takeEvery(templateActions.TEMPLATE_REQUEST, templateSaga);
+  yield takeEvery(templateEditActions.TEMPLATE_EDIT_REQUEST, templateEditSaga);
 }
 
 export default baseSaga;

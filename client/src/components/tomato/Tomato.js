@@ -29,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Tomato = ({
+isLogin,
+  templateIdx,
   tomatoDelete,
   getTomatoList,
   getTempTomatoList,
@@ -39,11 +41,21 @@ const Tomato = ({
   tomatoFullBreak,
 }) => {
   const classes = useStyles();
+  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10);
+  if (!templateIdx){
+    templateIdx = 0;
+  } else {
+    date = "";
+  }
+  const data = {
+    date,
+    templateIdx,
+  };
   const tomatoDeleteRequest = () => {
     if (localStorage.getItem("auth")) {
       tomatoDelete(tomatoIdx);
       getTomatoList(
-        new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        data
       );
     } else {
       sessionStorage.removeItem(tomatoIdx);
@@ -65,6 +77,7 @@ const Tomato = ({
             <Typography className={classes.name} variant="h6">
               <Modals
                 type="tomatoEdit"
+                templateIdx={templateIdx}
                 index={tomatoIdx}
                 name={tomatoName}
                 fullRegular={tomatoFullRegular}

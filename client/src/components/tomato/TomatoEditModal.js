@@ -6,7 +6,6 @@ import {
     InputLabel,
     Typography,
     TextField,
-    NativeSelect,
     Select,
     MenuItem
 } from "@material-ui/core";
@@ -52,9 +51,20 @@ const useInput = (initVal) => {
 };
 
 const TomatoEditModal = (props) => {
+    let templateIdx = props.templateIdx;
+    let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10);
+    if (!templateIdx){
+      templateIdx = 0;
+    } else {
+      date = "";
+    }
+    const data = {
+        date,
+        templateIdx,
+      };
     useEffect(() => {
         if (localStorage.getItem("auth")){
-            props.getTomatos(new Date());
+            props.getTomatos(data);
             props.clearEditResult();
         } else {
             props.getTempTomatoList();
@@ -68,13 +78,6 @@ const TomatoEditModal = (props) => {
 
     const tomatoEditRequest = () => {
         if (!localStorage.getItem("auth")){
-            const data = {
-                tomatoIdx: props.index,
-                tomatoName: tomatoName.value,
-                tomatoFullRegular: tomatoFullRegular.value,
-                tomatoFullBreak: tomatoFullBreak.value,
-            }
-            props.tomatoEdit(data);
             const tempTomato = {
                 "tomatoIdx": props.index,
                 "tomatoName": tomatoName.value,
@@ -90,13 +93,17 @@ const TomatoEditModal = (props) => {
               };
             sessionStorage.setItem(props.index, JSON.stringify(tempTomato));
             props.getTempTomatoList();
+        } else {
+            const tdata = {
+                tomatoIdx: props.index,
+                tomatoName: tomatoName.value,
+                tomatoFullRegular: tomatoFullRegular.value,
+                tomatoFullBreak: tomatoFullBreak.value,
+            }
+            props.tomatoEdit(tdata);
         }
         props.onClose();
     }
-
-    // const handleChange = (event) => {     const name = event.target.name;
-    // setState({       ...state,       [name]: event.target.value,     });   };
-
     return (
         <> < TextField className = {
             classes.name
@@ -106,12 +113,12 @@ const TomatoEditModal = (props) => {
         }
         multiline 
         autoFocus
-        // onKeyPress={(e) => {
-        //     if(e.key === "Enter"){
-        //       e.preventDefault();
-        //       document.getElementById("editButton").click();
-        //     };
-        // }}
+        onKeyPress={(e) => {
+            if(e.key === "Enter"){
+              e.preventDefault();
+              document.getElementById("editButton").click();
+            };
+        }}
             {...tomatoName}
         /> <p id="transition-modal-description"/>
             <FormControl className={classes.formControl}>

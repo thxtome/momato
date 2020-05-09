@@ -13,8 +13,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(tomatoAddActions.TOMATO_ADD_REQUEST({ data }));
     },
 
-    getTomatos: (date) => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ date }));
+    getTomatos: (data) => {
+      dispatch(tomatoActions.TOMATO_REQUEST({ data }));
     },
 
     getTempTomatoList: () => {

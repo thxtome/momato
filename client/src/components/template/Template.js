@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
                   <Modals type="template" template={template}>{template.templateName}</Modals>
                 </Typography>
                 <Typography variant="h6">
-                  {template.templateContent}
+                  {template.templateComment}
                 </Typography>
               </Box>
               <Button type="button">삭제</Button>
