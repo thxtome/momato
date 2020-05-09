@@ -5,6 +5,7 @@ import calendarReducer from "./modules/calendar";
 import tomatoAddReducer from "./modules/tomatoAdd";
 import tomatoEditReducer from "./modules/tomatoEdit";
 import tomatoDeleteReducer from "./modules/tomatoDelete";
+import counterReducer from "./modules/counter";
 import tomatoReducer from "./modules/tomato";
 import memberUpdateReducer from "./modules/memberUpdate";
 import createSagaMiddleware from "redux-saga";
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   tomatoDeleteReducer,
   calendarReducer,
   memberUpdateReducer,
+  counterReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
