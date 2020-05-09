@@ -30,7 +30,8 @@ const TomatoList = (props) => {
       props.getTempTomatoList();
     }
   }, [props.tomatoDeleteReducer.isTomatoDeleteSucceed]);
-    const tomatos = props.tomatoReducer.tomatos;
+  
+  const tomatos = props.tomatoReducer.tomatos;
   const classes = useStyles();
   return (
     <div className={classes.root}>

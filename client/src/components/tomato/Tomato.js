@@ -9,6 +9,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Modals from "../common/Modal";
+import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,6 +37,7 @@ isLogin,
   getTempTomatoList,
   tomatoName,
   tomatoLeftRegular,
+  tomatoLeftBreak,
   tomatoIdx,
   tomatoFullRegular,
   tomatoFullBreak,
@@ -62,6 +64,7 @@ isLogin,
       getTempTomatoList();
     }
   };
+
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -69,7 +72,15 @@ isLogin,
           <Paper className={classes.paper}>
             <Box component={"div"}>
               <IconButton aria-label="start">
-                <Link className={classes.link} to={"counter"}>
+                <Link
+                  className={classes.link}
+                  to={{
+                    pathname: `counter`,
+                    state: {
+                      tomato: { tomatoIdx, tomatoLeftRegular, tomatoLeftBreak },
+                    },
+                  }}
+                >
                   <PlayCircleFilledWhiteIcon />
                 </Link>
               </IconButton>

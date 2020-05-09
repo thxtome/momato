@@ -29,7 +29,11 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		session.sendMessage(new TextMessage(gson.toJson(new WebsocketResponse("connection"))));
+		System.out.println("enter==============================================================================");
+		WebsocketResponse socketRspn = new WebsocketResponse();
+		socketRspn.setAction("connection");			
+		System.out.println((socketRspn));
+		session.sendMessage(new TextMessage(gson.toJson(socketRspn)));
 		sessionMap.put(session.getId(), session);
 	}
 
@@ -39,30 +43,41 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 		String action = wr.getAction();
 		String target = wr.getTarget();
 		Tomato tomato = tomatoMap.get(session);
+		WebsocketResponse socketRspn = new WebsocketResponse();
 		
 		switch (action) {
 		// 타이머 첫 시작
 		case "load":
+			System.out.println("load====================================================================================================");
 			tomato = service.retrieveOneTomato(wr.getTomatoIdx());
 			tomatoMap.put(session, tomato);
+			socketRspn.setData(tomato);
+			socketRspn.setAction("load");			
+			session.sendMessage(new TextMessage(gson.toJson(socketRspn)));
 			break;
 
 		// 타이머 정지 후 시작
 		case "start":
 			tomato.startTimer();
+			
+			socketRspn.setAction("start");			
+			session.sendMessage(new TextMessage(gson.toJson(socketRspn)));
 			break;
 
 		// 타이머 일시 정지
 		case "stop":
 			tomato.endTimer();
-
+			
 			if (target.equals("regularTime")) {
 				tomato.calRegularTime();
 			} else if (target.equals("breakTime")) {
 				tomato.calBreakTime();
 			}
 			
-			service.editTomato(tomato);
+
+			socketRspn.setAction("stop");			
+			session.sendMessage(new TextMessage(gson.toJson(socketRspn)));
+//			service.editTomato(tomato);
 			break;
 
 		// 타이머 리셋
@@ -72,27 +87,23 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 			} else if (target.equals("breakTime")) {
 				tomato.setTomatoLeftBreak(tomato.getTomatoFullBreak());
 			}
-			service.editTomato(tomato);
+			socketRspn.setAction("reset");			
+			session.sendMessage(new TextMessage(gson.toJson(socketRspn)));
+//			service.editTomato(tomato);
 			break;
-		
-		// 타이머 리셋
-		case "end":
-			if (target.equals("regularTime")) {
-				tomato.setTomatoLeftRegular(tomato.getTomatoFullRegular());
-			} else if (target.equals("breakTime")) {
-				tomato.setTomatoLeftBreak(tomato.getTomatoFullBreak());
-			}
-			tomato.setTomatoCanStart(0);
-			
-			service.editTomato(tomato);
-			break;
+
 		}
 
-		session.sendMessage(new TextMessage(gson.toJson(new WebsocketResponse(action))));
+//		session.sendMessage(new TextMessage(gson.toJson(new WebsocketResponse(action))));
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		System.out.println("close=====================================================================");
+		Tomato tomato = tomatoMap.get(session);
+		service.editTomato(tomato);
+		System.out.println("end");
+		System.out.println(tomato);
 		sessionMap.remove(session.getId());
 		tomatoMap.remove(session);
 	}
