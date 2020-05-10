@@ -19,7 +19,7 @@ const initialState = {
 
 const reducer = createReducer(initialState, {
   [TOMATO_EDIT_REQUEST]: (state, action) => {
-    return { ...state };
+    return { ...state, action };
   },
 
   [TOMATO_EDIT_SUCCEED]: (state, action) => {

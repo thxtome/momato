@@ -15,14 +15,13 @@ const initialState = {
 
 const reducer = createReducer(initialState, {
     [TEMPLATE_EDIT_REQUEST]: (state, action) => {
-        return { ...state };
+        return { ...state, action };
     },
 
     [TEMPLATE_EDIT_SUCCEED]: (state, action) => {
-        const templates = action.payload.templates;
         return { ...state, isTemplateEditSucceed: true };
     },
-
+    
     [TEMPLATE_EDIT_FAILED]: (state, action) => {
         return { ...state, isTemplateEditSucceed: false };
     },

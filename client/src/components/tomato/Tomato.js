@@ -96,7 +96,7 @@ isLogin,
               />
             </Typography>
             <Typography variant="caption">
-              남은시간 : {tomatoLeftRegular / 60}분
+              남은시간 : {Math.floor(tomatoLeftRegular / 60)}분
             </Typography>
             <Box component={"div"}>
               <IconButton aria-label="start" onClick={tomatoDeleteRequest}>

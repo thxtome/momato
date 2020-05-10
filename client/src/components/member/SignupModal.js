@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import {
-  Avatar,
-  makeStyles,
-  Typography,
-  TextField,
-  Button,
-} from "@material-ui/core";
+import React, { useState } from "react"
+import { Avatar, makeStyles, Typography, TextField, Button } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -40,32 +34,32 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(15),
     margin: theme.spacing(3, "auto"),
   },
-}));
+}))
 
 const useInput = (initVal) => {
-  const [value, setValue] = useState(initVal);
+  const [value, setValue] = useState(initVal)
   const onChange = (e) => {
-    setValue(e.target.value);
-  };
-  return { value, onChange };
-};
+    setValue(e.target.value)
+  }
+  return { value, onChange }
+}
 
 const SignupModal = (props) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const email = useInput("");
-  const pass = useInput("");
-  const name = useInput("");
+  const email = useInput("")
+  const pass = useInput("")
+  const name = useInput("")
 
   const singupRequest = () => {
     const member = {
       memberId: email.value,
       memberPass: pass.value,
       memberName: name.value,
-    };
-    props.signup(member);
-    props.onClose();
-  };
+    }
+    props.signup(member)
+    props.onClose()
+  }
   return (
     <>
       <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
@@ -75,25 +69,12 @@ const SignupModal = (props) => {
       <form className={classes.root} noValidate autoComplete="off">
         <div className={classes.div}>
           <Typography className={classes.titleId}>아이디</Typography>
-          <TextField
-            id="standard-textarea"
-            label=""
-            placeholder="example@tomato.com"
-            multiline
-            autoFocus 
-            {...email}
-          />
+          <TextField label="" placeholder="example@tomato.com" multiline autoFocus {...email} />
         </div>
 
         <div className={classes.div}>
           <Typography className={classes.titleId}>닉네임</Typography>
-          <TextField
-            id="standard-textarea"
-            label=""
-            placeholder="nickname"
-            multiline
-            {...name}
-          />
+          <TextField label="" placeholder="nickname" multiline {...name} />
         </div>
 
         <div className={classes.div}>
@@ -106,8 +87,8 @@ const SignupModal = (props) => {
             {...pass}
             onKeyPress={(e) => {
               if (e.key === "Enter") {
-                e.preventDefault();
-                document.getElementById("signinButton").click();
+                e.preventDefault()
+                document.getElementById("signinButton").click()
               }
             }}
           />
@@ -118,7 +99,7 @@ const SignupModal = (props) => {
             color="secondary"
             id="signinButton"
             onClick={() => {
-              singupRequest();
+              singupRequest()
             }}
           >
             회원가입
@@ -126,7 +107,7 @@ const SignupModal = (props) => {
         </div>
       </form>
     </>
-  );
-};
+  )
+}
 
-export default SignupModal;
+export default SignupModal

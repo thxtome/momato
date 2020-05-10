@@ -40,13 +40,15 @@ public class TemplateController {
 	}
 	
 	@PostMapping()
-	public ResponseResult addTemplate(@RequestBody Template template) {
+	public ResponseResult addTemplate(@RequestBody Template template, @AuthenticationPrincipal String memberId) {
+		template.setMemberId(memberId);
 		service.addTemplate(template);
 		return new ResponseResult(HttpStatus.OK);
 	}
 	
 	@PutMapping()
-	public ResponseResult editTemplate(@RequestBody Template template) {
+	public ResponseResult editTemplate(@RequestBody Template template, @AuthenticationPrincipal String memberId) {
+		template.setMemberId(memberId);
 		service.editTemplate(template);
 		return new ResponseResult(HttpStatus.OK);
 	}
