@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Tomato = ({
-isLogin,
+  isLogin,
   templateIdx,
   tomatoDelete,
   getTomatoList,
@@ -41,10 +41,13 @@ isLogin,
   tomatoIdx,
   tomatoFullRegular,
   tomatoFullBreak,
+  tomatoCanStart,
 }) => {
   const classes = useStyles();
-  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10);
-  if (!templateIdx){
+  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+    .toISOString()
+    .substr(0, 10);
+  if (!templateIdx) {
     templateIdx = 0;
   } else {
     date = "";
@@ -56,9 +59,7 @@ isLogin,
   const tomatoDeleteRequest = () => {
     if (localStorage.getItem("auth")) {
       tomatoDelete(tomatoIdx);
-      getTomatoList(
-        data
-      );
+      getTomatoList(data);
     } else {
       sessionStorage.removeItem(tomatoIdx);
       getTempTomatoList();
@@ -71,19 +72,23 @@ isLogin,
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <Box component={"div"}>
-              <IconButton aria-label="start">
-                <Link
-                  className={classes.link}
-                  to={{
-                    pathname: `counter`,
-                    state: {
-                      tomato: { tomatoIdx, tomatoLeftRegular, tomatoLeftBreak },
-                    },
-                  }}
-                >
-                  <PlayCircleFilledWhiteIcon />
-                </Link>
-              </IconButton>
+              {tomatoCanStart ? (
+                <IconButton aria-label="start">
+                  <Link
+                    className={classes.link}
+                    to={{
+                      pathname: `counter`,
+                      state: {
+                        tomatoIdx,
+                      },
+                    }}
+                  >
+                    <PlayCircleFilledWhiteIcon />
+                  </Link>
+                </IconButton>
+              ) : (
+                "완료"
+              )}
             </Box>
             <Typography className={classes.name} variant="h6">
               <Modals

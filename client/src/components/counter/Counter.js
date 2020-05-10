@@ -67,17 +67,20 @@ const useStyles = makeStyles((theme) => ({
 const Counter = (props) => {
   const {
     timePassed,
-    fullTime,
+    leftTime,
     isGoing,
+    target,
     startTimer,
     stopTimer,
     resetTimer,
+    finishTimer,
     addTime,
     loadTomato,
     openConnection,
     closeConnection,
     isConnected,
     isLoaded,
+    isFinished,
   } = props;
 
   //처음 페이지 생성시
@@ -95,8 +98,9 @@ const Counter = (props) => {
     //타이머가 작동상태이면
     if (isGoing === true) {
       //시간이 다 됐는지 확인하고
-      if (timePassed === fullTime) {
-        stopTimer();
+      if (timePassed === leftTime) {
+        stopTimer(target);
+        finishTimer(target);
       }
 
       //1초마다 시간을 더하는 액션을 보냄
@@ -111,9 +115,10 @@ const Counter = (props) => {
 
   //매번 렌더시
   useEffect(() => {
+    //연결은 됐는데 로드가 안 됐으면
+    //토마토를 로드함
     if (isConnected && !isLoaded) {
-      console.log("load");
-      loadTomato(props.location.state.tomato.tomatoIdx);
+      loadTomato(props.location.state.tomatoIdx);
     }
   });
 
@@ -140,55 +145,58 @@ const Counter = (props) => {
           <Typography className={classes.time} variant={"body1"}>
             {`
             ${
-              (fullTime - timePassed) / 60 > 10
-                ? Math.floor((fullTime - timePassed) / 60)
-                : `0${Math.floor((fullTime - timePassed) / 60)}`
+              (leftTime - timePassed) / 60 > 10
+                ? Math.floor((leftTime - timePassed) / 60)
+                : `0${Math.floor((leftTime - timePassed) / 60)}`
             }:
             ${
-              (fullTime - timePassed) % 60 >= 10
-                ? (fullTime - timePassed) % 60
-                : `0${(fullTime - timePassed) % 60}`
+              (leftTime - timePassed) % 60 >= 10
+                ? (leftTime - timePassed) % 60
+                : `0${(leftTime - timePassed) % 60}`
             }
             `}
           </Typography>
         </Box>
       </Box>
+      {isFinished ? (
+        "재배완료"
+      ) : (
+        <Box className={classes.btnDetailBox} component={"div"}>
+          <Box component={"div"}>
+            {isGoing ? (
+              <IconButton
+                onClick={() => {
+                  stopTimer(target);
+                }}
+              >
+                <PauseCircleFilledIcon
+                  className={classes.btnDetail}
+                ></PauseCircleFilledIcon>
+              </IconButton>
+            ) : (
+              <IconButton
+                onClick={() => {
+                  startTimer(target);
+                }}
+              >
+                <PlayCircleFilledWhiteIcon
+                  className={classes.btnDetail}
+                ></PlayCircleFilledWhiteIcon>
+              </IconButton>
+            )}
+          </Box>
 
-      <Box className={classes.btnDetailBox} component={"div"}>
-        <Box component={"div"}>
-          {isGoing ? (
+          <Box component={"div"}>
             <IconButton
               onClick={() => {
-                stopTimer();
+                resetTimer(target);
               }}
             >
-              <PauseCircleFilledIcon
-                className={classes.btnDetail}
-              ></PauseCircleFilledIcon>
+              <RestoreIcon className={classes.btnDetail}></RestoreIcon>
             </IconButton>
-          ) : (
-            <IconButton
-              onClick={() => {
-                startTimer();
-              }}
-            >
-              <PlayCircleFilledWhiteIcon
-                className={classes.btnDetail}
-              ></PlayCircleFilledWhiteIcon>
-            </IconButton>
-          )}
+          </Box>
         </Box>
-
-        <Box component={"div"}>
-          <IconButton
-            onClick={() => {
-              resetTimer();
-            }}
-          >
-            <RestoreIcon className={classes.btnDetail}></RestoreIcon>
-          </IconButton>
-        </Box>
-      </Box>
+      )}
     </Paper>
   );
 };

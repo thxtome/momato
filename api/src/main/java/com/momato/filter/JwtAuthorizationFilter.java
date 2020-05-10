@@ -1,4 +1,5 @@
 package com.momato.filter;
+
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -30,54 +31,61 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		this.service = service;
 	}
 
-    //토큰 검증
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        //헤더추출
-        String header = request.getHeader(JwtProperties.HEADER_STRING);
+	// 토큰 검증
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		// 헤더추출
+		String header = request.getHeader(JwtProperties.HEADER_STRING);
 
-        // jwt인지 확인
-        if(header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)){
-            chain.doFilter(request, response);
-            return;
-        }
+		// jwt인지 확인
+		if (header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)) {
+			chain.doFilter(request, response);
+			return;
+		}
 
-        // 헤더가 있고 jwt가 맞으면 유저의 정보를 가져옴
-        Authentication authentication = getUsernamePasswordAuthentication(request);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+		// 헤더가 있고 jwt가 맞으면 유저의 정보를 가져옴
+		Authentication authentication = getUsernamePasswordAuthentication(request);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        chain.doFilter(request, response);
-    }
+		chain.doFilter(request, response);
+	}
 
-    private Authentication getUsernamePasswordAuthentication(HttpServletRequest request) throws AuthenticationException{
-        String token = request.getHeader(JwtProperties.HEADER_STRING);
-        if(token != null){
-            // 토큰의 유효성체크
-            String memberId = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET.getBytes()))
-                    .build()
-                    .verify(token.replace(JwtProperties.TOKEN_PREFIX, ""))
-                    .getSubject();
+	private Authentication getUsernamePasswordAuthentication(HttpServletRequest request)
+			throws AuthenticationException {
+		String token = request.getHeader(JwtProperties.HEADER_STRING);
+		
+//        try {
+		if (token != null) {
+			// 토큰의 유효성체크
+			String memberId = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET.getBytes())).build()
+					.verify(token.replace(JwtProperties.TOKEN_PREFIX, "")).getSubject();
 
-            //db에서 로그아웃한 회원인지 확인
-            if(service.jwtIsInvalid(token)) {
-            	throw new JwtAuthenticationException("token is expired");
-            }
-            
-            //db에서 유저의 정보와 권한을 가져옴
-            if(memberId != null){
-            	Member member = service.retrieveMemberById(memberId);
-            	
-            	 //db에서 로그아웃하거나 탈퇴한 회원인지 확인
-            	if(member == null) {
-            		throw new JwtAuthenticationException("member in this token is not found");
-            	}
-                UserPrincipal principal = new UserPrincipal(member);
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(memberId, null, principal.getAuthorities());
-                return auth;
-            }
-            return null;
-        }
-        return null;
-    }
-    
+			// db에서 로그아웃한 회원인지 확인
+			if (service.jwtIsInvalid(token)) {
+				throw new JwtAuthenticationException("token is expired");
+			}
+
+			// db에서 유저의 정보와 권한을 가져옴
+			if (memberId != null) {
+				Member member = service.retrieveMemberById(memberId);
+
+				// db에서 로그아웃하거나 탈퇴한 회원인지 확인
+				if (member == null) {
+					throw new JwtAuthenticationException("member in this token is not found");
+				}
+				UserPrincipal principal = new UserPrincipal(member);
+				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(memberId, null,
+						principal.getAuthorities());
+				return auth;
+			}
+			return null;
+		}
+		return null;
+//		} catch (com.auth0.jwt.exceptions.TokenExpiredException e) {
+//
+//		}
+
+	}
+
 }
