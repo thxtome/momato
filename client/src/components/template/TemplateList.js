@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { makeStyles } from '@material-ui/core';
+import React, { useEffect } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     fontSize: "16px",
     "&:hover": {
-      backgroundColor: "#f5f5f5"
+      backgroundColor: "#f5f5f5",
     },
     width: "100%",
     textAlign: "left",
@@ -22,19 +22,19 @@ const useStyles = makeStyles((theme) => ({
 
 const StyledMenu = withStyles({
   paper: {
-    border: '1px solid #d3d4d5',
+    border: "1px solid #d3d4d5",
   },
 })((props) => (
   <Menu
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
+      vertical: "bottom",
+      horizontal: "center",
     }}
     transformOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
+      vertical: "top",
+      horizontal: "center",
     }}
     {...props}
   />
@@ -42,10 +42,9 @@ const StyledMenu = withStyles({
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
-    '&:focus': {
+    "&:focus": {
       backgroundColor: "#f5f5f5",
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-      },
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {},
     },
   },
 }))(MenuItem);
@@ -54,9 +53,9 @@ export default function CustomizedMenus(props) {
   const classes = useStyles();
   useEffect(() => {
     props.getTemplateList();
-  },[props.loginReducer.isLogin]);
+  }, [props.loginReducer.isLogin]);
   const templates = props.templateReducer.templates;
-  console.log(templates)
+  console.log(templates);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -66,6 +65,10 @@ export default function CustomizedMenus(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const deleteTemplate = ()=>{
+    console.log("aa")
+  }
 
   return (
     <div>
@@ -88,19 +91,20 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {
-        templates.map((template, index) => (
-          <Link 
-          key={index} 
-          to={{
-            pathname: "template",
-            state: {
-              template
-            }
-          }}>
-        <StyledMenuItem onClick={handleClose}>
-          <ListItemText primary={template.templateName} />
-        </StyledMenuItem>
+        {templates.map((template, index) => (
+          <Link
+            key={index}
+            to={{
+              pathname: "template",
+              state: {
+                template,
+                deleteTemplate,
+              },
+            }}
+          >
+            <StyledMenuItem onClick={handleClose}>
+              <ListItemText primary={template.templateName} />
+            </StyledMenuItem>
           </Link>
         ))}
       </StyledMenu>
