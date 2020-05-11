@@ -10,7 +10,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Modals from "../common/Modal";
-import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,6 +36,7 @@ const Tomato = ({
   isLogin,
   templateIdx,
   tomatoDelete,
+  tomatoTempDelete,
   getTomatoList,
   getTempTomatoList,
   tomatoName,
@@ -60,12 +60,16 @@ const Tomato = ({
     date,
     templateIdx,
   };
+
   const tomatoDeleteRequest = () => {
-    if (localStorage.getItem("auth")) {
+    //로그인이면 서버에 요청
+    if (isLogin) {
       tomatoDelete(tomatoIdx);
       getTomatoList(data);
+
+      //아니면 리듀서에 요청
     } else {
-      sessionStorage.removeItem(tomatoIdx);
+      tomatoTempDelete(tomatoIdx);
       getTempTomatoList();
     }
   };
@@ -84,6 +88,17 @@ const Tomato = ({
                       pathname: `counter`,
                       state: {
                         tomatoIdx,
+                        isLogin,
+                        tempTomato: isLogin ? null :{
+                          templateIdx,
+                          tomatoName,
+                          tomatoLeftRegular,
+                          tomatoLeftBreak,
+                          tomatoIdx,
+                          tomatoFullRegular,
+                          tomatoFullBreak,
+                          tomatoCanStart,
+                        },
                       },
                     }}
                   >
@@ -102,6 +117,7 @@ const Tomato = ({
                 name={tomatoName}
                 fullRegular={tomatoFullRegular}
                 fullBreak={tomatoFullBreak}
+                tomatoCanStart={tomatoCanStart}
               />
             </Typography>
             <Typography variant="caption">

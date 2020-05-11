@@ -16,6 +16,12 @@ const OPEN_SOCKET_SUCCEED = createAction("OPEN_SOCKET_SUCCEED");
 const CLOSE_SOCKET = createAction("CLOSE_SOCKET");
 const ADD_TIME = createAction("ADD_TIME");
 
+const TEMP_TOMATO_LOAD = createAction("TEMP_TOMATO_LOAD");
+const TEMP_TOMATO_START = createAction("TEMP_TOMATO_START");
+const TEMP_TOMATO_STOP = createAction("TEMP_TOMATO_STOP");
+const TEMP_TOMATO_FINISH = createAction("TEMP_TOMATO_FINISH");
+const TEMP_TOMATO_RESET = createAction("TEMP_TOMATO_RESET");
+
 export const counterActions = {
   TOMATO_LOAD_SUCCED,
   TOMATO_LOAD_FAILD,
@@ -28,6 +34,11 @@ export const counterActions = {
   OPEN_SOCKET_SUCCEED,
   CLOSE_SOCKET,
   ADD_TIME,
+  TEMP_TOMATO_LOAD,
+  TEMP_TOMATO_START,
+  TEMP_TOMATO_STOP,
+  TEMP_TOMATO_FINISH,
+  TEMP_TOMATO_RESET,
 };
 
 const initialState = {

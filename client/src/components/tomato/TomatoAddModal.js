@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { makeStyles, Button, TextField, Typography } from "@material-ui/core"
+import React, { useState, useEffect } from "react";
+import { makeStyles, Button, TextField, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -22,44 +22,27 @@ const useStyles = makeStyles((theme) => ({
   select: {
     width: "40%",
   },
-}))
+}));
 
 const useInput = (initVal) => {
-  const [value, setValue] = useState(initVal)
+  const [value, setValue] = useState(initVal);
   const onChange = (e) => {
-    setValue(e.target.value)
-  }
-  return { value, onChange }
-}
+    setValue(e.target.value);
+  };
+  return { value, onChange };
+};
 
 const TomatoAddModal = (props) => {
-  let templateIdx = props.templateIdx
-  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
+  const { isTomatoAddSucceed, isLogin } = props;
+
+  let templateIdx = props.templateIdx;
+  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+    .toISOString()
+    .substr(0, 10);
   if (!templateIdx) {
-    templateIdx = 0
+    templateIdx = 0;
   } else {
-    date = ""
-  }
-  const addTempTomato = () => {
-    const tempTomato = {
-      template: 0,
-      tomatoCanStart: 0,
-      tomatoDate: new Date(),
-      tomatoEndTime: 0,
-      tomatoStartTime: 0,
-      tomatoFullRegular: 1500,
-      tomatoLeftRegular: 1500,
-      tomatoFullBreak: 300,
-      tomatoLeftBreak: 300,
-    }
-    if (localStorage.getItem("key")) {
-      localStorage.setItem("key", Number(localStorage.getItem("key")) + 1)
-    } else {
-      localStorage.setItem("key", 0)
-    }
-    tempTomato.tomatoIdx = Number(localStorage.getItem("key"))
-    tempTomato.tomatoName = tomatoName.value
-    sessionStorage.setItem(tempTomato.tomatoIdx, JSON.stringify(tempTomato))
+    date = "";
   }
 
   useEffect(() => {
@@ -67,29 +50,43 @@ const TomatoAddModal = (props) => {
       const data = {
         date,
         templateIdx,
-      }
-      props.getTomatos(data)
-      props.clearAddResult()
+      };
+      props.getTomatos(data);
+      props.clearAddResult();
     }
-  }, [props.tomatoAddReducer.isTomatoAddSucceed])
+  }, [isTomatoAddSucceed]);
 
-  const classes = useStyles()
-  const createType = useInput("simple")
-  const tomatoName = useInput("")
+  const classes = useStyles();
+  const createType = useInput("simple");
+  const tomatoName = useInput("");
   const tomatoAddRequest = () => {
-    if (localStorage.getItem("auth")) {
+    //로그인이면 서버로 요청을 보냄
+    if (isLogin) {
       const data = {
         createType: createType.value,
         tomatoName: tomatoName.value,
         templateIdx: props.templateIdx,
-      }
-      props.tomatoAdd(data)
+      };
+      props.tomatoAdd(data);
     } else {
-      addTempTomato()
-      props.getTempTomatoList()
+      //아니면 임시 토마토를 액션에 넣어서 스토어에 요청을 보냄
+      const tempTomato = {
+        tomatoName: tomatoName.value,
+        template: 0,
+        tomatoCanStart: 1,
+        tomatoDate: new Date(),
+        tomatoEndTime: 0,
+        tomatoStartTime: 0,
+        tomatoFullRegular: 1500,
+        tomatoLeftRegular: 1500,
+        tomatoFullBreak: 300,
+        tomatoLeftBreak: 300,
+      };
+      props.addTempTomato(tempTomato);
+      props.getTempTomatoList();
     }
-    props.onClose()
-  }
+    props.onClose();
+  };
 
   return (
     <>
@@ -105,8 +102,8 @@ const TomatoAddModal = (props) => {
         {...tomatoName}
         onKeyPress={(e) => {
           if (e.key === "Enter") {
-            e.preventDefault()
-            document.getElementById("addButton").click()
+            e.preventDefault();
+            document.getElementById("addButton").click();
           }
         }}
       />
@@ -116,14 +113,14 @@ const TomatoAddModal = (props) => {
           color="secondary"
           id="addButton"
           onClick={() => {
-            tomatoAddRequest()
+            tomatoAddRequest();
           }}
         >
           추가
         </Button>
       </span>
     </>
-  )
-}
+  );
+};
 
-export default TomatoAddModal
+export default TomatoAddModal;
