@@ -1,10 +1,10 @@
-import MemberInfo from "../../components/common/MemberInfo";
+import Member from "../../components/member/Member";
 import { loginActions } from "../../store/modules/login";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
-  const { isLogin, memberInfo } = state.loginReducer;
-  return { isLogin, memberInfo };
+  const { memberInfo, isLogin } = state.loginReducer;
+  return { memberInfo, isLogin };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -15,4 +15,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MemberInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(Member);

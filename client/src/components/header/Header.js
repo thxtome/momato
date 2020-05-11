@@ -39,7 +39,7 @@ const Header = (props) => {
   const logoutRequest = () => {
     props.logout(localStorage.getItem("auth"));
     props.getTempTomatoList();
-  }
+  };
 
   return (
     <AppBar className={classes.root}>
@@ -47,14 +47,19 @@ const Header = (props) => {
         <Typography variant="h6" edge="start" className={classes.title}>
           MOMATO
         </Typography>
-        { !localStorage.getItem("auth") ? (
+        {!localStorage.getItem("auth") ? (
           <Modals type="login" />
         ) : (
-          <Button className={classes.logout} onClick={() => {logoutRequest()}} >
-            로그아웃
+          <Button
+            className={classes.logout}
+            onClick={() => {
+              logoutRequest();
+            }}
+          >
+            LOGOUT
           </Button>
         )}
-        <Modals type="signup" />
+        {!localStorage.getItem("auth") ? <Modals type="signup" /> : null}
       </Toolbar>
     </AppBar>
   );

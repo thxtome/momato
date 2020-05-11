@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (member) => {
-      dispatch(loginActions.LOGIN({ member }));
+      dispatch(loginActions.LOGIN_REQUEST({ member }));
     },
     getTomatos: (date) => {
       dispatch(tomatoActions.TOMATO_REQUEST({ date }));

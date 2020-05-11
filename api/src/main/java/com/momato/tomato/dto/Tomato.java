@@ -21,10 +21,12 @@ public class Tomato {
 	
 	public void startTimer() {
 		this.tomatoStartTime = System.currentTimeMillis();
+		System.out.println("시작시간 : " + new Date(tomatoStartTime));
 	}
 	
 	public void endTimer() {
 		this.tomatoEndTime = System.currentTimeMillis();
+		System.out.println("종료시간 : " + new Date(tomatoEndTime));
 	}
 	
 	public void calRegularTime() {
@@ -32,6 +34,8 @@ public class Tomato {
 			tomatoStartTime = tomatoEndTime;
 		}
 		this.tomatoLeftRegular -= (int) ((tomatoEndTime - tomatoStartTime)/1000); 
+		System.out.println("시작시간 : " + new Date(tomatoStartTime));
+		System.out.println("종료시간 : " +new Date(tomatoEndTime));
 		this.tomatoStartTime = 0;
 		this.tomatoEndTime = 0;
 	}

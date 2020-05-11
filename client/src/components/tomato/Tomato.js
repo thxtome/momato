@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
@@ -26,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: "inherit",
     textDecoration: "none",
+  },
+  finishIcon: {
+    color: "seagreen",
   },
 }));
 
@@ -87,7 +91,7 @@ const Tomato = ({
                   </Link>
                 </IconButton>
               ) : (
-                "완료"
+                <CheckCircleOutlineIcon className={classes.finishIcon} />
               )}
             </Box>
             <Typography className={classes.name} variant="h6">
