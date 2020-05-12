@@ -18,15 +18,21 @@ const useStyles = makeStyles((theme) => ({
 const Member = ({ memberInfo, isLogin }) => {
   console.log(memberInfo);
   memberInfo = memberInfo
-    ? { ...memberInfo, memberGrade: "이제 막 씨를 뿌린 초보 농사꾼" }
-    : { memberName: "비회원", memberGrade: "씨를 뿌리기 시작한 초보 농사꾼" };
+    ? memberInfo
+    : {
+        memberName: "비회원",
+        memberGrade: { gradeComment: "씨를 뿌리기 시작한 초보 농사꾼" },
+      };
 
   const classes = useStyles();
   return (
     <>
       <Toolbar />
       <Toolbar />
-      <Avatar className={classes.userGrade} src="" />
+      <Avatar
+        className={classes.userGrade}
+        src={memberInfo.memberGrade.gradeImageUrl}
+      />
       {isLogin ? (
         <Modals type="info" name={memberInfo.memberName} />
       ) : (
@@ -38,7 +44,7 @@ const Member = ({ memberInfo, isLogin }) => {
         display="block"
         gutterBottom
       >
-        {memberInfo.memberGrade}
+        {memberInfo.memberGrade.gradeComment}
       </Typography>
     </>
   );

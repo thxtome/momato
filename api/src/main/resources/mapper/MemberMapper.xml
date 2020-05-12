@@ -15,12 +15,33 @@
 		 where member_id = #{memberId}
 	</select>
 	
-	<select id="selectMemberByIdExcludePass" resultType="Member" parameterType="Member">
-		select member_id, 
-			   member_name
-		  from `member`
-		 where member_id = #{memberId}
+	<resultMap id="MemberMap" type="Member">
+	    <result property="memberId" column="member_id" />
+	    <result property="memberName" column="member_name" />
+	    <association property="memberGrade" javaType="Grade">
+	         <id property="memberId" column="member_id" />
+	         <result property="gradeName" column="grade_name" />
+	         <result property="gradeImageUrl" column="grade_image_url" />
+	         <result property="gradeComment" column="grade_comment" />
+	    </association>
+	</resultMap>
+	
+	<select id="selectMemberByIdExcludePass" resultMap="MemberMap" parameterType="Member">
+		SELECT m.member_id,
+			   m.member_name, 
+		       mg.grade_name, 
+		       mg.grade_image_url, 
+		       mg.grade_comment
+		  from `member` m
+		 inner join (select grade.*, gv.member_id
+					   from grade_view gv
+		              inner join grade 
+		                 on gv.member_grade = grade.grade_name) mg
+		   on m.member_id = mg.member_id
+		where m.member_id = #{memberId}   
 	</select>
+	
+	
 	
 	<insert id="insertMember" parameterType="Member">
 		insert into `member` (member_id, member_pass, member_name)

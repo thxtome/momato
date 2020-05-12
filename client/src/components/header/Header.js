@@ -5,6 +5,13 @@ import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Modals from "../common/Modal";
 import { Button } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import { Link } from "react-router-dom";
+import AppMenu from "./AppMenu";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,10 +39,12 @@ const useStyles = makeStyles((theme) => ({
   logout: {
     color: "black",
   },
+  appMenu: {},
 }));
 
 const Header = (props) => {
   const classes = useStyles();
+  const matches = useMediaQuery("(min-width:700px)");
   const logoutRequest = () => {
     props.logout(localStorage.getItem("auth"));
     props.getTempTomatoList();
@@ -44,6 +53,8 @@ const Header = (props) => {
   return (
     <AppBar className={classes.root}>
       <Toolbar className={classes.toolbar}>
+        {matches ? "" : <AppMenu className={classes.appMenu} />}
+
         <Typography variant="h6" edge="start" className={classes.title}>
           MOMATO
         </Typography>

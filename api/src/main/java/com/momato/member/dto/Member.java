@@ -11,6 +11,8 @@ public class Member{
 	private String memberId;
 	private String memberPass;
 	private String memberName;
+    private Grade memberGrade;
+	
 	
 	public boolean hasAnyData() {
 		return (memberId != null || memberPass != null || memberName != null);

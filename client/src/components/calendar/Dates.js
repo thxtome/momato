@@ -81,7 +81,7 @@ const fillDate = (year, month, tomatoOfDates = []) => {
 
   //토마토를 채움
   tomatoOfDates.forEach((ele) => {
-    dates[parseInt(ele.date) + firstDay] = {
+    dates[parseInt(ele.date) + firstDay - 1] = {
       date: parseInt(ele.date),
       tomatoCnt: ele.tomatoCnt,
     };
