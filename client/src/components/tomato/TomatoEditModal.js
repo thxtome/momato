@@ -51,19 +51,16 @@ const useInput = (initVal) => {
 };
 
 const TomatoEditModal = (props) => {
-  let templateIdx = props.templateIdx;
-  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+  const templateIdx = props.templateIdx ? props.templateIdx : 0;
+  const date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
     .toISOString()
     .substr(0, 10);
-  if (!templateIdx) {
-    templateIdx = 0;
-  } else {
-    date = "";
-  }
+
   const data = {
     date,
     templateIdx,
   };
+
   useEffect(() => {
     if (localStorage.getItem("auth")) {
       props.getTomatos(data);
@@ -78,7 +75,8 @@ const TomatoEditModal = (props) => {
   const tomatoFullRegular = useInput(props.fullRegular);
   const tomatoFullBreak = useInput(props.fullBreak);
   const tomatoCanStart = props.tomatoCanStart;
-
+  console.log(props);
+  
   const tomatoEditRequest = () => {
     //현재 로그인상태면 서버로 요청전송
     if (props.isLogin) {
@@ -157,7 +155,6 @@ const TomatoEditModal = (props) => {
           <InputLabel htmlFor="fullBreak"></InputLabel>
           <Typography className={classes.title}>휴식 시간</Typography>
           <Select
-            defaultValue={props.fullBreak / 60}
             inputProps={{
               name: "tomatoFullBreak",
               id: "uncontrolled-native",

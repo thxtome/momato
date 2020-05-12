@@ -113,16 +113,40 @@ const Counter = (props) => {
     isConnected,
     isLoaded,
     isFinished,
+    loadTempTomato,
+    tempTomatoSave,
+    finishTempTimer,
   } = props;
+
+  const isLogin = props.location.state.isLogin;
+  const tomatoIdx = props.location.state.tomatoIdx;
 
   //처음 페이지 생성시
   useEffect(() => {
-    //토마토의 정보를 로드함
-    openConnection();
-    //페이지를 나가거나 이동시 연결을 종료한다.
-    return () => {
-      closeConnection();
+    //로그인이 되어있으면 소켓을 연다
+    if (isLogin) {
+      openConnection();
+    }
+
+    //페이지를 새로고침시 유지가 안 되기때문에 비회원은 따로 처리
+    const handleRefresh = (e) => {
+      if (e.keyCode == 116 && !isLogin) {
+        tempTomatoSave(tomatoIdx);
+      }
     };
+    document.addEventListener("keydown", handleRefresh);
+
+    //페이지를 나가거나 이동시 처리
+    //로그인이 되어있으면 연결을 종료하고 로그인이 안되어있으면 임시토마토에 저장
+    return isLogin
+      ? () => {
+          document.removeEventListener("keydown", handleRefresh);
+          closeConnection();
+        }
+      : () => {
+          document.removeEventListener("keydown", handleRefresh);
+          tempTomatoSave(tomatoIdx);
+        };
   }, []);
 
   //매번 렌더시
@@ -130,10 +154,17 @@ const Counter = (props) => {
     //타이머가 작동상태이면
     if (isGoing === true) {
       //시간이 다 됐는지 확인하고
-      if (timePassed === leftTime) {
+      if (timePassed > leftTime) {
         finishNotify(target);
         stopTimer(target);
-        finishTimer(target);
+
+        //로그인이 되어있으면
+        if (isLogin) {
+          finishTimer(target);
+          //로그인이 안 되어있으면
+        } else {
+          finishTempTimer(tomatoIdx);
+        }
       }
 
       //1초마다 시간을 더하는 액션을 보냄
@@ -146,14 +177,21 @@ const Counter = (props) => {
     }
   });
 
-  //매번 렌더시
+  //연결상태와 토마토 로드상태 따라 렌더
   useEffect(() => {
     //연결은 됐는데 로드가 안 됐으면
     //토마토를 로드함
-    if (isConnected && !isLoaded) {
-      loadTomato(props.location.state.tomatoIdx);
+    if (isLogin) {
+      if (isConnected && !isLoaded) {
+        loadTomato(tomatoIdx);
+      }
+      //로그인이 안됐으면서 로드가 안 됐으면 임시 토마토를 로드한다.
+    } else {
+      if (!isLoaded) {
+        loadTempTomato(tomatoIdx);
+      }
     }
-  });
+  }, [isConnected, isLoaded]);
 
   //뒤로가기
   const goBack = () => {
@@ -173,7 +211,11 @@ const Counter = (props) => {
         <Box className={classes.countDetail} component={"div"}>
           <Avatar
             className={classes.tomatoImg}
-            src="/images/homeMade.png"
+            src={
+              target === "regularTime"
+                ? "/images/homeMade.png"
+                : "/images/rest.gif"
+            }
           ></Avatar>
           <Typography className={classes.time} variant={"body1"}>
             {`
@@ -181,11 +223,10 @@ const Counter = (props) => {
               (leftTime - timePassed) / 60 > 10
                 ? Math.floor((leftTime - timePassed) / 60)
                 : `0${Math.floor((leftTime - timePassed) / 60)}`
-            }:
-            ${
+            }:${
               (leftTime - timePassed) % 60 >= 10
-                ? (leftTime - timePassed) % 60
-                : `0${(leftTime - timePassed) % 60}`
+                ? Math.round(leftTime - timePassed) % 60
+                : `0${Math.round(leftTime - timePassed) % 60}`
             }
             `}
           </Typography>
