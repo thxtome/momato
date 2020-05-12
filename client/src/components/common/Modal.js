@@ -69,6 +69,7 @@ export default function TransitionsModal({
   fullRegular,
   fullBreak,
   templateIdx,
+  tomatoCanStart,
 }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -155,6 +156,7 @@ export default function TransitionsModal({
                 fullRegular={fullRegular}
                 fullBreak={fullBreak}
                 onClose={handleClose}
+                tomatoCanStart={tomatoCanStart}
               />
             ) : type === "login" ? (
               <LoginModalContainer onClose={handleClose} />

@@ -24,8 +24,8 @@ const reducer = createReducer(initialState, {
   },
 
   [TOMATO_TEMP_REQUEST]: (state, action) => {
-    const tomatos = JSON.parse(sessionStorage.getItem("tomatos"));
-    console.log(tomatos);
+    let tomatos = JSON.parse(sessionStorage.getItem("tomatos"));
+    tomatos = tomatos ? tomatos : [];
     return { ...state, tomatos };
   },
 

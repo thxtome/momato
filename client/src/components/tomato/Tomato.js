@@ -89,16 +89,6 @@ const Tomato = ({
                       state: {
                         tomatoIdx,
                         isLogin,
-                        tempTomato: isLogin ? null :{
-                          templateIdx,
-                          tomatoName,
-                          tomatoLeftRegular,
-                          tomatoLeftBreak,
-                          tomatoIdx,
-                          tomatoFullRegular,
-                          tomatoFullBreak,
-                          tomatoCanStart,
-                        },
                       },
                     }}
                   >

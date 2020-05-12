@@ -14,7 +14,6 @@ const mapStateToProps = (state) => {
     isLoaded,
     isFinished,
   } = state.counterReducer;
-
   return {
     fullTime,
     leftTime,
@@ -28,9 +27,14 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  const isLogin = ownProps.location.state.isLogin;
   return {
     addTime: () => {
       dispatch(counterActions.ADD_TIME());
+    },
+
+    loadTempTomato: (tomatoIdx) => {
+      dispatch(counterActions.TEMP_TOMATO_LOAD({ tomatoIdx }));
     },
 
     loadTomato: (tomatoIdx) => {
@@ -39,23 +43,35 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       });
     },
 
-    startTimer: (target) => {
-      socketApi.request({ target, action: "start" }, () => {
-        dispatch(counterActions.TOMATO_START_FAILD());
-      });
-    },
+    startTimer: isLogin
+      ? (target) => {
+          socketApi.request({ target, action: "start" }, () => {
+            dispatch(counterActions.TOMATO_START_FAILD());
+          });
+        }
+      : () => {
+          dispatch(counterActions.TOMATO_START_SUCCED());
+        },
 
-    stopTimer: (target) => {
-      socketApi.request({ target, action: "stop" }, () => {
-        dispatch(counterActions.TOMATO_STOP_FAILD());
-      });
-    },
+    stopTimer: isLogin
+      ? (target) => {
+          socketApi.request({ target, action: "stop" }, () => {
+            dispatch(counterActions.TOMATO_STOP_FAILD());
+          });
+        }
+      : () => {
+          dispatch(counterActions.TOMATO_STOP_SUCCED());
+        },
 
-    resetTimer: (target) => {
-      socketApi.request({ target, action: "reset" }, () => {
-        dispatch(counterActions.TOMATO_STOP_FAILD());
-      });
-    },
+    resetTimer: isLogin
+      ? (target) => {
+          socketApi.request({ target, action: "reset" }, () => {
+            dispatch(counterActions.TOMATO_RESET_FAILD());
+          });
+        }
+      : () => {
+          dispatch(counterActions.TOMATO_RESET_SUCCED());
+        },
 
     finishTimer: (target) => {
       socketApi.request({ target, action: "finish" }, () => {
@@ -63,15 +79,28 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       });
     },
 
-    //소켓을 열고 구독신청함
-    openConnection: () => {
-      socketApi.openSocket(dispatch);
+    finishTempTimer: (tomatoIdx) => {
+      dispatch(counterActions.TEMP_TOMATO_FINISH({ tomatoIdx }));
     },
 
+    //소켓을 열고 구독신청함
+    openConnection: isLogin
+      ? () => {
+          socketApi.openSocket(dispatch);
+        }
+      : () => {},
+
     //소켓을 닫음
-    closeConnection: () => {
-      socketApi.closeSocket();
-      dispatch(counterActions.CLOSE_SOCKET());
+    closeConnection: isLogin
+      ? () => {
+          socketApi.closeSocket();
+          dispatch(counterActions.CLOSE_SOCKET());
+        }
+      : () => {},
+
+    //임시토마토 저장
+    tempTomatoSave: (tomatoIdx) => {
+      dispatch(counterActions.TEMP_TOMATO_SAVE({ tomatoIdx }));
     },
   };
 };

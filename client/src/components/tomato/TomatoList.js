@@ -12,35 +12,30 @@ const useStyles = makeStyles((theme) => ({
 
 const TomatoList = (props) => {
   const { isLogin, isTomatoDeleteSucceed, tomatos } = props;
-  console.log(props);
-  let templateIdx = props.templateIdx;
-  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+  const templateIdx = props.templateIdx ? props.templateIdx : 0;
+  const date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
     .toISOString()
     .substr(0, 10);
-  if (!templateIdx) {
-    templateIdx = 0;
-  } else {
-    date = "";
-  }
+
   const data = {
     date,
     templateIdx,
   };
-
+  console.log(data);
   useEffect(() => {
     if (isLogin) {
       props.getTomatoList(data);
     }
-  }, [props.templateIdx]);
+  }, [templateIdx]);
 
   useEffect(() => {
     if (isLogin) {
       props.getTomatoList(data);
-      // props.clearDeleteResult();
+      props.clearDeleteResult();
     } else {
       props.getTempTomatoList();
     }
-  }, []);
+  }, [isLogin, isTomatoDeleteSucceed]);
 
   const classes = useStyles();
   return (
