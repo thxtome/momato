@@ -5,14 +5,12 @@ import { tomatoAddActions } from "../../store/modules/tomatoAdd.js"
 import TomatoList from "../../components/tomato/TomatoList.js"
 
 const mapStateToProps = (state) => {
-  console.log(state)
   const isTomatoDeleteSucceed = state.tomatoDeleteReducer.isTomatoDeleteSucceed
+  const isTomatoAddSucceed = state.tomatoAddReducer.isTomatoAddSucceed
   const tomatos = state.tomatoReducer.tomatos
   const templates = state.templateReducer.templates
   const isLogin = state.loginReducer.isLogin
-  console.log(tomatos)
-  console.log(templates)
-  return { isTomatoDeleteSucceed, isLogin, tomatos, templates }
+  return { isTomatoDeleteSucceed, isTomatoAddSucceed, isLogin, tomatos, templates }
 }
 
 const mapDispatchToProps = (dispatch) => {

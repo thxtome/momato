@@ -18,10 +18,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LoadTemplateModal = (props) => {
-  // useEffect(() => {}, [])
+  useEffect(() => {}, [])
   const classes = useStyles()
   const templates = props.templates
-  // console.log(document.getElementById("tempalteKey").value)
   const data = {
     createType: "copy",
     templateIdx: null,
@@ -41,7 +40,6 @@ const LoadTemplateModal = (props) => {
             className={classes.name}
             onClick={(e) => {
               data.templateIdx = e.currentTarget.dataset.idx
-              console.log(data)
               tomatoAddRequest(data)
             }}
           >

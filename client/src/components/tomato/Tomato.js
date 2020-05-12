@@ -48,12 +48,7 @@ const Tomato = ({
   tomatoCanStart,
 }) => {
   const classes = useStyles()
-  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
-  if (!templateIdx) {
-    templateIdx = 0
-  } else {
-    date = ""
-  }
+  let date = templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
   const data = {
     date,
     templateIdx,
@@ -78,35 +73,39 @@ const Tomato = ({
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <Box component={"div"}>
-              {tomatoCanStart ? (
-                <IconButton aria-label="start">
-                  <Link
-                    className={classes.link}
-                    to={{
-                      pathname: `counter`,
-                      state: {
-                        tomatoIdx,
-                        isLogin,
-                        tempTomato: isLogin
-                          ? null
-                          : {
-                              templateIdx,
-                              tomatoName,
-                              tomatoLeftRegular,
-                              tomatoLeftBreak,
-                              tomatoIdx,
-                              tomatoFullRegular,
-                              tomatoFullBreak,
-                              tomatoCanStart,
-                            },
-                      },
-                    }}
-                  >
-                    <PlayCircleFilledWhiteIcon />
-                  </Link>
-                </IconButton>
+              {!templateIdx ? (
+                tomatoCanStart ? (
+                  <IconButton aria-label="start">
+                    <Link
+                      className={classes.link}
+                      to={{
+                        pathname: `counter`,
+                        state: {
+                          tomatoIdx,
+                          isLogin,
+                          tempTomato: isLogin
+                            ? null
+                            : {
+                                templateIdx,
+                                tomatoName,
+                                tomatoLeftRegular,
+                                tomatoLeftBreak,
+                                tomatoIdx,
+                                tomatoFullRegular,
+                                tomatoFullBreak,
+                                tomatoCanStart,
+                              },
+                        },
+                      }}
+                    >
+                      <PlayCircleFilledWhiteIcon />
+                    </Link>
+                  </IconButton>
+                ) : (
+                  <CheckCircleOutlineIcon className={classes.finishIcon} />
+                )
               ) : (
-                <CheckCircleOutlineIcon className={classes.finishIcon} />
+                <></>
               )}
             </Box>
             <Typography className={classes.name} variant="h6">

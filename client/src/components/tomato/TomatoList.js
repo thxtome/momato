@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const TomatoList = (props) => {
-  const { isLogin, isTomatoDeleteSucceed, tomatos, templates } = props
+  const { isLogin, isTomatoDeleteSucceed, isTomatoAddSucceed, tomatos, templates } = props
   const templateIdx = props.templateIdx ? props.templateIdx : 0
   const date = props.templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
 
@@ -19,7 +19,6 @@ const TomatoList = (props) => {
     date,
     templateIdx,
   }
-  console.log(data)
   useEffect(() => {
     if (isLogin) {
       props.getTomatoList(data)
@@ -33,7 +32,7 @@ const TomatoList = (props) => {
     } else {
       props.getTempTomatoList()
     }
-  }, [isLogin, isTomatoDeleteSucceed])
+  }, [isLogin, isTomatoDeleteSucceed, isTomatoAddSucceed])
 
   const classes = useStyles()
   return (
@@ -43,7 +42,7 @@ const TomatoList = (props) => {
       ) : (
         <>
           <TomatoCnt tomatos={tomatos}></TomatoCnt>
-          <Modals addTomatos={props.addTomatos} templates={templates} type="loadTemplate" />
+          {isLogin ? <Modals addTomatos={props.addTomatos} templates={templates} type="loadTemplate" /> : <></>}
         </>
       )}
       {tomatos &&

@@ -12,6 +12,7 @@ import templateReducer from "./modules/template"
 import templateAddReducer from "./modules/templateAdd"
 import templateEditReducer from "./modules/templateEdit"
 import templateDeleteReducer from "./modules/templateDelete"
+import findPassReducer from "./modules/findPass"
 import createSagaMiddleware from "redux-saga"
 import saga from "../lib/saga"
 
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   templateEditReducer,
   templateDeleteReducer,
   counterReducer,
+  findPassReducer,
 })
 
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware))

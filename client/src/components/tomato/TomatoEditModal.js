@@ -1,14 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  makeStyles,
-  Button,
-  FormControl,
-  InputLabel,
-  Typography,
-  TextField,
-  Select,
-  MenuItem,
-} from "@material-ui/core";
+import React, { useState, useEffect } from "react"
+import { makeStyles, Button, FormControl, InputLabel, Typography, TextField, Select, MenuItem } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -40,43 +31,40 @@ const useStyles = makeStyles((theme) => ({
   option: {
     cursor: "pointer",
   },
-}));
+}))
 
 const useInput = (initVal) => {
-  const [value, setValue] = useState(initVal);
+  const [value, setValue] = useState(initVal)
   const onChange = (e) => {
-    setValue(e.target.value);
-  };
-  return { value, onChange };
-};
+    setValue(e.target.value)
+  }
+  return { value, onChange }
+}
 
 const TomatoEditModal = (props) => {
-  const templateIdx = props.templateIdx ? props.templateIdx : 0;
-  const date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-    .toISOString()
-    .substr(0, 10);
+  const templateIdx = props.templateIdx ? props.templateIdx : 0
+  const date = props.templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
 
   const data = {
     date,
     templateIdx,
-  };
+  }
 
   useEffect(() => {
     if (localStorage.getItem("auth")) {
-      props.getTomatos(data);
-      props.clearEditResult();
+      props.getTomatos(data)
+      props.clearEditResult()
     } else {
-      props.getTempTomatoList();
+      props.getTempTomatoList()
     }
-  }, [props.isTomatoEditSucceed]);
+  }, [props.isTomatoEditSucceed])
 
-  const classes = useStyles();
-  const tomatoName = useInput(props.name);
-  const tomatoFullRegular = useInput(props.fullRegular);
-  const tomatoFullBreak = useInput(props.fullBreak);
-  const tomatoCanStart = props.tomatoCanStart;
-  console.log(props);
-  
+  const classes = useStyles()
+  const tomatoName = useInput(props.name)
+  const tomatoFullRegular = useInput(props.fullRegular)
+  const tomatoFullBreak = useInput(props.fullBreak)
+  const tomatoCanStart = props.tomatoCanStart
+
   const tomatoEditRequest = () => {
     //현재 로그인상태면 서버로 요청전송
     if (props.isLogin) {
@@ -86,8 +74,8 @@ const TomatoEditModal = (props) => {
         tomatoFullRegular: tomatoFullRegular.value,
         tomatoFullBreak: tomatoFullBreak.value,
         tomatoCanStart,
-      };
-      props.tomatoEdit(editedTomato);
+      }
+      props.tomatoEdit(editedTomato)
 
       //아니면 임시토마토를 가져와서 정보수정 후 추가 액션을 보냄
     } else {
@@ -103,14 +91,14 @@ const TomatoEditModal = (props) => {
         tomatoLeftRegular: tomatoFullRegular.value,
         tomatoFullBreak: tomatoFullBreak.value,
         tomatoLeftBreak: tomatoFullBreak.value,
-      };
+      }
       //수정요청 액션을 보내고
-      props.tempTomatoEdit(editedTempTomato);
+      props.tempTomatoEdit(editedTempTomato)
       //리스트 렌더 요청
-      props.getTempTomatoList();
+      props.getTempTomatoList()
     }
-    props.onClose();
-  };
+    props.onClose()
+  }
   return (
     <>
       {" "}
@@ -123,8 +111,8 @@ const TomatoEditModal = (props) => {
         autoFocus
         onKeyPress={(e) => {
           if (e.key === "Enter") {
-            e.preventDefault();
-            document.getElementById("editButton").click();
+            e.preventDefault()
+            document.getElementById("editButton").click()
           }
         }}
         {...tomatoName}
@@ -170,18 +158,13 @@ const TomatoEditModal = (props) => {
           </Select>
         </div>
         <div className={classes.editbtn}>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={tomatoEditRequest}
-            id="editButton"
-          >
+          <Button variant="contained" color="secondary" onClick={tomatoEditRequest} id="editButton">
             수정
           </Button>
         </div>
       </FormControl>
     </>
-  );
-};
+  )
+}
 
-export default TomatoEditModal;
+export default TomatoEditModal

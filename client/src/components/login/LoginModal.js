@@ -1,13 +1,21 @@
-import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
-import { makeStyles, Typography, Button, Avatar } from "@material-ui/core";
+import React, { useState } from "react"
+import TextField from "@material-ui/core/TextField"
+import { makeStyles, Typography, Button, Avatar } from "@material-ui/core"
+import Modals from "../common/Modal"
 
 const useStyles = makeStyles((theme) => ({
-  div: {
+  idDiv: {
     width: "100%",
     display: "flex",
     alignItems: "center",
     marginBottom: theme.spacing(2),
+  },
+
+  passDiv: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    marginBottom: theme.spacing(0.5),
   },
 
   titleId: {
@@ -19,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   button: {
-    margin: 'auto',
+    margin: "auto",
     textAlign: "center",
   },
 
@@ -27,47 +35,49 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     width: theme.spacing(15),
     height: theme.spacing(15),
-    margin: theme.spacing(0, 'auto'),
+    margin: theme.spacing(0, "auto"),
   },
 
   tomatoText: {
     display: "block",
     width: theme.spacing(15),
-    margin: theme.spacing(3, 'auto'),
+    margin: theme.spacing(3, "auto"),
   },
 
-  mButton: {
-    fontSize: 15,
+  btnDiv: {
+    display: "flex",
+    marginBottom: theme.spacing(3),
+    flexDirection: "row-reverse",
   },
-}));
+}))
 
 const useInput = (initVal) => {
-  const [value, setValue] = useState(initVal);
+  const [value, setValue] = useState(initVal)
   const onChange = (e) => {
-    setValue(e.target.value);
-  };
-  return { value, onChange };
-};
+    setValue(e.target.value)
+  }
+  return { value, onChange }
+}
 
 const LoginModal = (props) => {
-  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10);
-  const templateIdx = 0;
+  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
+  const templateIdx = 0
   const data = {
     date,
     templateIdx,
-  };
-  const classes = useStyles();
-  const email = useInput("");
-  const pass = useInput("");
+  }
+  const classes = useStyles()
+  const email = useInput("")
+  const pass = useInput("")
   const loginRequest = () => {
     const member = {
       memberId: email.value,
       memberPass: pass.value,
-    };
-    props.login(member);
-    props.getTomatos(data);
-    props.onClose();
-  };
+    }
+    props.login(member)
+    props.getTomatos(data)
+    props.onClose()
+  }
 
   return (
     <>
@@ -76,18 +86,11 @@ const LoginModal = (props) => {
         TOMATO
       </Typography>
       <form className={classes.root} noValidate autoComplete="off">
-        <div className={classes.div}>
+        <div className={classes.idDiv}>
           <Typography className={classes.titleId}>아이디</Typography>
-          <TextField
-            id="standard-textarea"
-            label=""
-            placeholder="example@tomato.com"
-            multiline
-            autoFocus
-            {...email}
-          />
+          <TextField id="standard-textarea" label="" placeholder="example@tomato.com" multiline autoFocus {...email} />
         </div>
-        <div className={classes.div}>
+        <div className={classes.passDiv}>
           <Typography className={classes.titlePass}>비밀번호</Typography>
           <TextField
             id="standard-password-input"
@@ -98,23 +101,23 @@ const LoginModal = (props) => {
             {...pass}
             onKeyPress={(e) => {
               if (e.key === "Enter") {
-                e.preventDefault();
-                document.getElementById("loginButton").click();
+                e.preventDefault()
+                document.getElementById("loginButton").click()
               }
             }}
           />
         </div>
-        {/* <div className={classes.mButton}>
-                    <Modals type="signup" />
-                    <Modals type="pass" />
-                </div> */}
+        <div className={classes.btnDiv}>
+          <Modals type="pass" />
+          <Modals type="signupInLogin" />
+        </div>
         <div className={classes.button}>
           <Button
             variant="contained"
             color="secondary"
             id="loginButton"
             onClick={() => {
-              loginRequest();
+              loginRequest()
             }}
           >
             로그인
@@ -122,7 +125,7 @@ const LoginModal = (props) => {
         </div>
       </form>
     </>
-  );
-};
+  )
+}
 
-export default LoginModal;
+export default LoginModal

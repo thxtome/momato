@@ -12,6 +12,7 @@ import { templateActions } from "../store/modules/template"
 import { templateAddActions } from "../store/modules/templateAdd"
 import { templateEditActions } from "../store/modules/templateEdit"
 import { templateDeleteActions } from "../store/modules/templateDelete"
+import { findPassActions } from "../store/modules/findPass"
 import errorDispacher from "../error/errorDispacher"
 
 function* tomatoAddSaga(action) {
@@ -136,6 +137,17 @@ function* memberUpdateSaga(action) {
   }
 }
 
+function* findPassSaga(action) {
+  try {
+    console.log(action)
+    const response = yield call(api.findPass, action.payload)
+    yield put(findPassActions.FIND_PASS_SUCCEED({ response }))
+  } catch (e) {
+    console.dir(e)
+    yield put(findPassActions.FIND_PASS_FAILED({ message: e.message }))
+  }
+}
+
 function* getCalendarSaga(action) {
   try {
     const response = yield call(api.getCalendar, action.payload.yearAndMonth)
@@ -164,6 +176,7 @@ function* baseSaga() {
   yield takeEvery(templateAddActions.TEMPLATE_ADD_REQUEST, templateAddSaga)
   yield takeEvery(templateEditActions.TEMPLATE_EDIT_REQUEST, templateEditSaga)
   yield takeEvery(templateDeleteActions.TEMPLATE_DELETE_REQUEST, templateDeleteSaga)
+  yield takeEvery(findPassActions.FIND_PASS_REQUEST, findPassSaga)
 }
 
 export default baseSaga

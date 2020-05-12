@@ -5,7 +5,7 @@ import Backdrop from "@material-ui/core/Backdrop"
 import Fade from "@material-ui/core/Fade"
 import Button from "@material-ui/core/Button"
 import TemplateEditModalContainer from "../../containers/template/TemplateEditModalContainer"
-import PassModal from "../member/PassModal"
+import FindPassModalContainer from "../../containers/member/FindPassModalContainer"
 import InfoModalContainer from "../../containers/member/InfoModalContainer"
 import SignupModalContainer from "../../containers/member/SignupModalContainer"
 import LoginModalContainer from "../../containers/login/LoginModalContainer"
@@ -40,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(60),
     marginBottom: theme.spacing(3),
   },
-  passbtn: {
-    fontSize: 5,
-  },
   addBtn: {
     margin: theme.spacing(1, "auto"),
     textAlign: "center",
@@ -61,9 +58,15 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
   },
   loadBtn: {
-    marginBottom: theme.spacing(3),
     textAlign: "right",
     fontWeight: "bold",
+  },
+  inLoginBtn: {
+    padding: 0,
+    "& > *": {
+      fontSize: "11px",
+      color: "grey",
+    },
   },
 }))
 
@@ -78,6 +81,7 @@ export default function TransitionsModal({
   tomatoCanStart,
   addTomatos,
   templates,
+  getTomatoList,
 }) {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
@@ -107,8 +111,12 @@ export default function TransitionsModal({
         <Button className={classes.infoBtn} type="button" onClick={handleOpen}>
           SIGNUP
         </Button>
+      ) : type === "signupInLogin" ? (
+        <Button className={classes.inLoginBtn} type="button" onClick={handleOpen}>
+          회원가입
+        </Button>
       ) : type === "pass" ? (
-        <Button className={classes.passBtn} type="button" onClick={handleOpen}>
+        <Button className={classes.inLoginBtn} type="button" onClick={handleOpen}>
           비밀번호 찾기
         </Button>
       ) : type === "info" ? (
@@ -163,10 +171,12 @@ export default function TransitionsModal({
               />
             ) : type === "login" ? (
               <LoginModalContainer onClose={handleClose} />
+            ) : type === "pass" ? (
+              <FindPassModalContainer onClose={handleClose} />
             ) : type === "signup" ? (
               <SignupModalContainer onClose={handleClose} />
-            ) : type === "pass" ? (
-              <PassModal onClose={handleClose} />
+            ) : type === "signupInLogin" ? (
+              <SignupModalContainer onClose={handleClose} />
             ) : type === "info" ? (
               <InfoModalContainer onClose={handleClose} />
             ) : type === "tomatoAdd" ? (

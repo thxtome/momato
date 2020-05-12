@@ -1,20 +1,14 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@material-ui/core";
-import EventNoteIcon from "@material-ui/icons/EventNote";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import MemberContainer from "../../containers/member/MemberContainer";
-import { Link } from "react-router-dom";
-import Modals from "../common/Modal";
-import TemplateListContainer from "../../containers/template/TemplateListContainer";
+import React, { useState } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import { Drawer, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core"
+import EventNoteIcon from "@material-ui/icons/EventNote"
+import CheckCircleIcon from "@material-ui/icons/CheckCircle"
+import MemberContainer from "../../containers/member/MemberContainer"
+import { Link } from "react-router-dom"
+import Modals from "../common/Modal"
+import TemplateListContainer from "../../containers/template/TemplateListContainer"
 
-const drawerWidth = 300;
+const drawerWidth = 300
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -59,16 +53,18 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(25),
     cursor: "pointer",
   },
-}));
+}))
 
 const useInput = (initVal) => {
-  const [value, setValue] = useState(initVal);
-  return { value };
-};
+  const [value, setValue] = useState(initVal)
+  return { value }
+}
 
 const Sidebar = (props) => {
-  const classes = useStyles();
-  const [clieckedIndex, setClieckedIndex] = useState(0);
+  console.log(props)
+  const isLogin = props.isLogin
+  const classes = useStyles()
+  const [clieckedIndex, setClieckedIndex] = useState(0)
 
   return (
     <Drawer
@@ -82,25 +78,9 @@ const Sidebar = (props) => {
       <div className={classes.drawerContainer}>
         <List>
           {["오늘의 토마토", "토마토 달력"].map((text, index) => (
-            <Link
-              className={classes.link}
-              key={text}
-              to={index === 0 ? "tomato" : index === 1 ? "calendar" : ""}
-            >
-              <ListItem
-                button
-                className={clieckedIndex === index ? classes.clieckedItem : ""}
-                onClick={() => setClieckedIndex(index)}
-              >
-                <ListItemIcon>
-                  {index === 0 ? (
-                    <CheckCircleIcon />
-                  ) : index === 1 ? (
-                    <EventNoteIcon />
-                  ) : (
-                    <></>
-                  )}
-                </ListItemIcon>
+            <Link className={classes.link} key={text} to={index === 0 ? "tomato" : index === 1 ? "calendar" : ""}>
+              <ListItem button className={clieckedIndex === index ? classes.clieckedItem : ""} onClick={() => setClieckedIndex(index)}>
+                <ListItemIcon>{index === 0 ? <CheckCircleIcon /> : index === 1 ? <EventNoteIcon /> : <></>}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             </Link>
@@ -112,7 +92,7 @@ const Sidebar = (props) => {
         </List>
       </div>
     </Drawer>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar
