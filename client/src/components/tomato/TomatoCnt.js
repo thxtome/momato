@@ -34,13 +34,15 @@ const useStyles = makeStyles((theme) => ({
 const calTomatoCnt = (tomatos) => {
   let canStart = 0
   let canNotStart = 0
-  tomatos.forEach((tomato) => {
-    if (tomato.tomatoCanStart) {
-      canStart++
-    } else {
-      canNotStart++
-    }
-  })
+  if (tomatos !== null) {
+    tomatos.forEach((tomato) => {
+      if (tomato.tomatoCanStart) {
+        canStart++
+      } else {
+        canNotStart++
+      }
+    })
+  }
   return { canStart, canNotStart }
 }
 
