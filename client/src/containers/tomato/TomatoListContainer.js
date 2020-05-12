@@ -1,6 +1,7 @@
 import { connect } from "react-redux"
 import { tomatoActions } from "../../store/modules/tomato.js"
 import { tomatoDeleteActions } from "../../store/modules/tomatoDelete.js"
+import { tomatoAddActions } from "../../store/modules/tomatoAdd.js"
 import TomatoList from "../../components/tomato/TomatoList.js"
 
 const mapStateToProps = (state) => {
@@ -20,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     clearDeleteResult: () => {
       dispatch(tomatoDeleteActions.TOMATO_DELETE_CLEAR())
+    },
+    addTomatos: (data) => {
+      dispatch(tomatoAddActions.TOMATO_ADD_REQUEST({ data }))
     },
   }
 }

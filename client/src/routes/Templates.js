@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import Template from "../components/template/Template"
+import TemplateContainer from "../containers/template/TemplateContainer"
 import Tomato from "../components/tomato/Tomato"
 import Modals from "../components/common/Modal"
 import TomatoListContainer from "../containers/tomato/TomatoListContainer"
@@ -12,13 +12,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Templates = (props) => {
-  const template = props.location.state.template
-  const test = props.location.state.test
   console.log(props)
+  const template = props.location.state.template
+  useEffect(() => {}, [template])
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <Template template={template} key={template.templateIdx} />
+      <TemplateContainer template={template} key={template.templateIdx} />
       <TomatoListContainer templateIdx={template.templateIdx} />
     </div>
   )

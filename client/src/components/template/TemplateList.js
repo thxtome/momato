@@ -9,7 +9,6 @@ import Collapse from "@material-ui/core/Collapse"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import { makeStyles } from "@material-ui/core"
-import StarBorder from "@material-ui/icons/StarBorder"
 import { Link } from "react-router-dom"
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NestedList(props) {
   const classes = useStyles()
+  // const deleteTemplate = props.deleteTemplate
   const [open, setOpen] = React.useState(false)
 
   const handleClick = () => {
@@ -37,6 +37,7 @@ export default function NestedList(props) {
     props.getTemplateList()
   }, [props.templateEditReducer.isTemplateEditSucceed])
   const templates = props.templateReducer.templates
+  const isTemplateEditSucceed = props.templateEditReducer.isTemplateEditSucceed
   return (
     <div>
       <ListItem button onClick={handleClick}>
@@ -53,7 +54,7 @@ export default function NestedList(props) {
               className={classes.link}
               key={index}
               to={{
-                pathname: "template",
+                pathname: `template`,
                 state: {
                   template,
                 },

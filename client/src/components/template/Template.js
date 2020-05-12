@@ -19,8 +19,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Template = ({ template }) => {
+const Template = (props) => {
   const classes = useStyles()
+  const template = props.template
+  const data = {
+    templateIdx: 0,
+    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
+  }
+  useEffect(() => {}, [props.templateDeleteReducer.isTemplateDeleteSucceed])
+  const templateDeleteRequest = () => {
+    props.deleteTemplate(template.templateIdx)
+    props.getTemplateList()
+  }
   return (
     <div className={classes.root}>
       <Paper elevation={0} className={classes.paper}>
@@ -32,7 +42,9 @@ const Template = ({ template }) => {
           </Typography>
           <Typography variant="h6">{template.templateComment}</Typography>
         </Box>
-        <Button type="button">삭제</Button>
+        <Button type="button" onClick={templateDeleteRequest}>
+          삭제
+        </Button>
       </Paper>
     </div>
   )

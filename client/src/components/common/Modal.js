@@ -1,19 +1,20 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-import Button from "@material-ui/core/Button";
-import TemplateEditModalContainer from "../../containers/template/TemplateEditModalContainer";
-import PassModal from "../member/PassModal";
-import InfoModalContainer from "../../containers/member/InfoModalContainer";
-import SignupModalContainer from "../../containers/member/SignupModalContainer";
-import LoginModalContainer from "../../containers/login/LoginModalContainer";
-import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
-import TomatoAddModalContainer from "../../containers/tomato/TomatoAddModalContainer";
-import TomatoEditModalContainer from "../../containers/tomato/TomatoEditModalContainer";
-import { ListItemText, ListItemIcon } from "@material-ui/core";
-import TemplateAddModalContainer from "../../containers/template/TemplateAddModalContainer";
+import React from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import Modal from "@material-ui/core/Modal"
+import Backdrop from "@material-ui/core/Backdrop"
+import Fade from "@material-ui/core/Fade"
+import Button from "@material-ui/core/Button"
+import TemplateEditModalContainer from "../../containers/template/TemplateEditModalContainer"
+import PassModal from "../member/PassModal"
+import InfoModalContainer from "../../containers/member/InfoModalContainer"
+import SignupModalContainer from "../../containers/member/SignupModalContainer"
+import LoginModalContainer from "../../containers/login/LoginModalContainer"
+import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded"
+import TomatoAddModalContainer from "../../containers/tomato/TomatoAddModalContainer"
+import TomatoEditModalContainer from "../../containers/tomato/TomatoEditModalContainer"
+import { ListItemText, ListItemIcon } from "@material-ui/core"
+import TemplateAddModalContainer from "../../containers/template/TemplateAddModalContainer"
+import LoadTemplateModal from "../tomato/LoadTemplateModal"
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -59,43 +60,32 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "30px",
     textTransform: "none",
   },
-}));
+  loadBtn: {
+    marginBottom: theme.spacing(3),
+    textAlign: "right",
+    fontWeight: "bold",
+  },
+}))
 
-export default function TransitionsModal({
-  type,
-  template,
-  index,
-  name,
-  fullRegular,
-  fullBreak,
-  templateIdx,
-}) {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+export default function TransitionsModal({ type, template, index, name, fullRegular, fullBreak, templateIdx, templates, addTomatos }) {
+  const classes = useStyles()
+  const [open, setOpen] = React.useState(false)
 
   const handleOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
   return (
     <div className={classes.root}>
       {type === "template" ? (
-        <Button
-          className={classes.templateBtn}
-          type="button"
-          onClick={handleOpen}
-        >
+        <Button className={classes.templateBtn} type="button" onClick={handleOpen}>
           {template.templateName}
         </Button>
       ) : type === "tomatoEdit" ? (
-        <Button
-          className={classes.tomatoBtn}
-          type="button"
-          onClick={handleOpen}
-        >
+        <Button className={classes.tomatoBtn} type="button" onClick={handleOpen}>
           {name}
         </Button>
       ) : type === "login" ? (
@@ -121,9 +111,15 @@ export default function TransitionsModal({
             토마토 추가
           </Button>
         </div>
+      ) : type === "loadTemplate" ? (
+        <div className={classes.loadBtn}>
+          <Button className={classes.loadBtn} type="button" onClick={handleOpen}>
+            텃밭 불러오기
+          </Button>
+        </div>
       ) : (
-        <div className={classes.addBtn}>
-          <Button className={classes.addBtn} type="button" onClick={handleOpen}>
+        <div className={classes.addTemplateBtn}>
+          <Button className={classes.addTemplateBtn} type="button" onClick={handleOpen}>
             <ListItemIcon>
               <AddCircleRoundedIcon />
             </ListItemIcon>
@@ -143,10 +139,7 @@ export default function TransitionsModal({
         <Fade in={open}>
           <div className={classes.paper}>
             {type === "template" ? (
-              <TemplateEditModalContainer
-                template={template}
-                onClose={handleClose}
-              />
+              <TemplateEditModalContainer template={template} onClose={handleClose} />
             ) : type === "tomatoEdit" ? (
               <TomatoEditModalContainer
                 templateIdx={templateIdx}
@@ -165,10 +158,9 @@ export default function TransitionsModal({
             ) : type === "info" ? (
               <InfoModalContainer onClose={handleClose} />
             ) : type === "tomatoAdd" ? (
-              <TomatoAddModalContainer
-                templateIdx={templateIdx}
-                onClose={handleClose}
-              />
+              <TomatoAddModalContainer templateIdx={templateIdx} onClose={handleClose} />
+            ) : type === "loadTemplate" ? (
+              <LoadTemplateModal addTomatos={addTomatos} templates={templates} onClose={handleClose} />
             ) : (
               <TemplateAddModalContainer onClose={handleClose} />
             )}
@@ -176,5 +168,5 @@ export default function TransitionsModal({
         </Fade>
       </Modal>
     </div>
-  );
+  )
 }

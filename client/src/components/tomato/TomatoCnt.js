@@ -1,9 +1,9 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
+import React from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import Paper from "@material-ui/core/Paper"
+import Grid from "@material-ui/core/Grid"
+import Avatar from "@material-ui/core/Avatar"
+import Typography from "@material-ui/core/Typography"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     color: theme.palette.text.secondary,
-    marginBottom: theme.spacing(5),
+    marginBottom: theme.spacing(1.5),
   },
   innerPaper: {
     display: "flex",
@@ -29,24 +29,24 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(3),
     height: theme.spacing(3),
   },
-}));
+}))
 
 const calTomatoCnt = (tomatos) => {
-  let canStart = 0;
-  let canNotStart = 0;
+  let canStart = 0
+  let canNotStart = 0
   tomatos.forEach((tomato) => {
     if (tomato.tomatoCanStart) {
-      canStart++;
+      canStart++
     } else {
-      canNotStart++;
+      canNotStart++
     }
-  });
-  return { canStart, canNotStart };
-};
+  })
+  return { canStart, canNotStart }
+}
 
 const Tomato = (props) => {
-  const classes = useStyles();
-  const tomatoCnt = calTomatoCnt(props.tomatos);
+  const classes = useStyles()
+  const tomatoCnt = calTomatoCnt(props.tomatos)
 
   return (
     <div className={classes.root}>
@@ -57,37 +57,21 @@ const Tomato = (props) => {
               <Grid item xs={4}>
                 <Paper className={classes.innerPaper}>
                   오늘의 목표
-                  <Avatar
-                    className={classes.tomatoImg}
-                    src="/images/homeMade.png"
-                  />
-                  <Typography variant={"body1"}>
-                    {tomatoCnt.canStart + tomatoCnt.canNotStart}
-                  </Typography>
+                  <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
+                  <Typography variant={"body1"}>{tomatoCnt.canStart + tomatoCnt.canNotStart}</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={4}>
                 <Paper className={classes.innerPaper}>
                   재배중
-                  <Avatar
-                    className={classes.tomatoImg}
-                    src="/images/homeMade.png"
-                  />
-                  <Typography variant={"body1"}>
-                    {tomatoCnt.canStart}
-                  </Typography>
+                  <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
+                  <Typography variant={"body1"}>{tomatoCnt.canStart}</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={4}>
                 <Paper className={classes.innerPaper}>
-                  재배완료{" "}
-                  <Avatar
-                    className={classes.tomatoImg}
-                    src="/images/homeMade.png"
-                  />
-                  <Typography variant={"body1"}>
-                    {tomatoCnt.canNotStart}
-                  </Typography>
+                  재배완료 <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
+                  <Typography variant={"body1"}>{tomatoCnt.canNotStart}</Typography>
                 </Paper>
               </Grid>
             </Grid>
@@ -95,7 +79,7 @@ const Tomato = (props) => {
         </Grid>
       </Grid>
     </div>
-  );
-};
+  )
+}
 
-export default Tomato;
+export default Tomato

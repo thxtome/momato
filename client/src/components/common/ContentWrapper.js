@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Toolbar from "@material-ui/core/Toolbar"
 import CalenderContainer from "../../containers/calendar/CalenderContainer"
 import Tomatos from "../../routes/Tomatos"
-import Template from "../../routes/Templates"
+import Templates from "../../routes/Templates"
 import CounterContainer from "../../containers/counter/CounterContainer"
 import TemplateAddModal from "../template/TemplateAddModal"
 
@@ -27,7 +27,7 @@ const ContentWrapper = () => {
         <Route exact path="/" component={Tomatos} />
         <Route path="/tomato" component={Tomatos} />
         <Route path="/calendar" component={CalenderContainer} />
-        <Route path="/template" component={Template} />
+        <Route path="/template" component={Templates} />
         <Route path="/counter" component={CounterContainer} />
         <Route path="/addTemplate" component={TemplateAddModal} />
       </Switch>

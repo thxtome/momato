@@ -25,7 +25,9 @@ const TomatoList = (props) => {
   useEffect(() => {
     props.getTomatoList(data)
   }, [props.templateIdx])
-
+  useEffect(() => {
+    props.getTomatoList(data)
+  }, [props.tomatoAddReducer.isTomatoAddSucceed])
   useEffect(() => {
     if (localStorage.getItem("auth")) {
       props.getTomatoList(data)
@@ -35,10 +37,18 @@ const TomatoList = (props) => {
     }
   }, [props.tomatoDeleteReducer.isTomatoDeleteSucceed])
   const tomatos = props.tomatoReducer.tomatos
+  const templates = props.templateReducer.templates
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      {templateIdx ? <></> : <TomatoCnt tomatos={tomatos}></TomatoCnt>}
+      {templateIdx ? (
+        <></>
+      ) : (
+        <>
+          <TomatoCnt tomatos={tomatos}></TomatoCnt>
+          <Modals addTomatos={props.addTomatos} templates={templates} type="loadTemplate" />
+        </>
+      )}
       {tomatos &&
         tomatos.map((tomato) => (
           <Tomato

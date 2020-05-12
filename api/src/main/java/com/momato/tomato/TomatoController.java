@@ -56,6 +56,7 @@ public class TomatoController {
 			}
 		// 템플릿 복사 후 토마토 등록	
 		} else if(createType.equals("copy")) {
+			System.out.println("도착");
 			Tomato tomato = new Tomato();
 			tomato.setTemplateIdx(param.getTemplateIdx());
 			List<Tomato> list = new ArrayList<>();
@@ -79,6 +80,7 @@ public class TomatoController {
 	@PutMapping()
 	public ResponseResult editTomato(@RequestBody Tomato tomato, @AuthenticationPrincipal String memberId) {
 		tomato.setMemberId(memberId);
+		System.out.println(tomato);
 		service.editTomato(tomato);
 		return new ResponseResult(HttpStatus.OK);
 	}

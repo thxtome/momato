@@ -65,6 +65,7 @@ export const tomatoAdd = ({ createType, tomatoName, templateIdx }) =>
         tomatoName,
         templateIdx,
       },
+      templateIdx,
     },
   })
 
