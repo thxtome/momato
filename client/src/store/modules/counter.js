@@ -156,9 +156,9 @@ const reducer = createReducer(initialState, {
   [ADD_TIME]: (state, action) => {
     console.log(state.currentTime);
     console.log(state.timePassed);
-    const timePassed =
-      state.timePassed +
-      Math.round((new Date().getTime() - state.currentTime) / 1000);
+    const timePassed = Math.round(
+      state.timePassed + (new Date().getTime() - state.currentTime) / 1000
+    );
     console.log(timePassed);
     return { ...state, currentTime: new Date().getTime(), timePassed };
   },
