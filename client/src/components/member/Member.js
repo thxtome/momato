@@ -21,7 +21,7 @@ const Member = ({ memberInfo, isLogin }) => {
     ? memberInfo
     : {
         memberName: "비회원",
-        memberGrade: { gradeComment: "씨를 뿌리기 시작한 초보 농사꾼" },
+        memberGrade: { gradeComment: "토마토 재배에 꿈을 품은 농사꾼 지망생" },
       };
 
   const classes = useStyles();

@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
   logout: {
     color: "black",
   },
-  appMenu: {},
 }));
 
 const Header = (props) => {

@@ -41,9 +41,9 @@ const reducer = createReducer(initialState, {
             tomato = {
               ...tomato,
               tomatoFullRegular: editedTomato.tomatoFullRegular,
-              tomatoLeftRegular: editedTomato.tomatoLeftRegular,
+              tomatoLeftRegular: editedTomato.tomatoFullRegular,
               tomatoFullBreak: editedTomato.tomatoFullBreak,
-              tomatoLeftBreak: editedTomato.tomatoLeftBreak,
+              tomatoLeftBreak: editedTomato.tomatoFullBreak,
             };
           }
           return tomato;

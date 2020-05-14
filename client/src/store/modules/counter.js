@@ -119,7 +119,12 @@ const reducer = createReducer(initialState, {
   },
 
   [TOMATO_BREAK_TIME_FINISH_SUCCED]: (state, action) => {
-    return { ...state, isFinished: true };
+    return {
+      ...state,
+      isFinished: true,
+      leftTime: 0,
+      timePassed: 0,
+    };
   },
 
   [TEMP_TOMATO_FINISH]: (state, action) => {
@@ -152,7 +157,8 @@ const reducer = createReducer(initialState, {
     console.log(state.currentTime);
     console.log(state.timePassed);
     const timePassed =
-      state.timePassed + (new Date().getTime() - state.currentTime) / 1000;
+      state.timePassed +
+      Math.round((new Date().getTime() - state.currentTime) / 1000);
     console.log(timePassed);
     return { ...state, currentTime: new Date().getTime(), timePassed };
   },

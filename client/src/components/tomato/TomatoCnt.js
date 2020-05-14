@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     marginBottom: theme.spacing(1.5),
   },
+  cntContainer: {
+    alignItems: "center",
+  },
   innerPaper: {
     display: "flex",
     marginBottom: 0,
@@ -30,51 +33,67 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(3),
     height: theme.spacing(3),
   },
-}))
+}));
 
 const calTomatoCnt = (tomatos) => {
-  let canStart = 0
-  let canNotStart = 0
+  let canStart = 0;
+  let canNotStart = 0;
   if (tomatos !== null) {
     tomatos.forEach((tomato) => {
       if (tomato.tomatoCanStart) {
-        canStart++
+        canStart++;
       } else {
-        canNotStart++
+        canNotStart++;
       }
-    })
+    });
   }
-  return { canStart, canNotStart }
-}
+  return { canStart, canNotStart };
+};
 
 const Tomato = (props) => {
-  const classes = useStyles()
-  const tomatoCnt = calTomatoCnt(props.tomatos)
+  const classes = useStyles();
+  const tomatoCnt = calTomatoCnt(props.tomatos);
 
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} className={classes.cntContainer}>
               <Grid item xs={4}>
                 <Paper className={classes.innerPaper}>
                   오늘의 목표
-                  <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
-                  <Typography variant={"body1"}>{tomatoCnt.canStart + tomatoCnt.canNotStart}</Typography>
+                  <Avatar
+                    className={classes.tomatoImg}
+                    src="/images/homeMade.png"
+                  />
+                  <Typography variant={"body1"}>
+                    {tomatoCnt.canStart + tomatoCnt.canNotStart}
+                  </Typography>
                 </Paper>
               </Grid>
               <Grid item xs={4}>
                 <Paper className={classes.innerPaper}>
                   재배중
-                  <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
-                  <Typography variant={"body1"}>{tomatoCnt.canStart}</Typography>
+                  <Avatar
+                    className={classes.tomatoImg}
+                    src="/images/homeMade.png"
+                  />
+                  <Typography variant={"body1"}>
+                    {tomatoCnt.canStart}
+                  </Typography>
                 </Paper>
               </Grid>
               <Grid item xs={4}>
                 <Paper className={classes.innerPaper}>
-                  재배완료 <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
-                  <Typography variant={"body1"}>{tomatoCnt.canNotStart}</Typography>
+                  재배완료{" "}
+                  <Avatar
+                    className={classes.tomatoImg}
+                    src="/images/homeMade.png"
+                  />
+                  <Typography variant={"body1"}>
+                    {tomatoCnt.canNotStart}
+                  </Typography>
                 </Paper>
               </Grid>
             </Grid>

@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  menuButton: {
+    color: "black",
+  },
 }));
 
 const AppMenu = () => {
@@ -29,7 +32,6 @@ const AppMenu = () => {
       <IconButton
         edge="start"
         className={classes.menuButton}
-        color="black"
         aria-label="menu"
         onClick={handleClick}
       >

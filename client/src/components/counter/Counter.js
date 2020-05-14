@@ -154,7 +154,7 @@ const Counter = (props) => {
     //타이머가 작동상태이면
     if (isGoing === true) {
       //시간이 다 됐는지 확인하고
-      if (timePassed > leftTime) {
+      if (timePassed >= leftTime) {
         finishNotify(target);
         stopTimer(target);
 
@@ -225,8 +225,8 @@ const Counter = (props) => {
                 : `0${Math.floor((leftTime - timePassed) / 60)}`
             }:${
               (leftTime - timePassed) % 60 >= 10
-                ? Math.round(leftTime - timePassed) % 60
-                : `0${Math.round(leftTime - timePassed) % 60}`
+                ? (leftTime - timePassed) % 60
+                : `0${(leftTime - timePassed) % 60}`
             }
             `}
           </Typography>

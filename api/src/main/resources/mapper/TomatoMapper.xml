@@ -55,8 +55,8 @@
 		   set tomato_name = #{tomatoName},
 		       tomato_full_regular = #{tomatoFullRegular},
 		       tomato_full_break = #{tomatoFullBreak},
-		       tomato_left_regular = #{tomatoFullRegular},
-		       tomato_left_break = #{tomatoFullBreak},
+		       tomato_left_regular = #{tomatoLeftRegular},
+		       tomato_left_break = #{tomatoLeftBreak},
 		       tomato_can_start = #{tomatoCanStart}
 		 where tomato_idx = #{tomatoIdx}
 	</update>
