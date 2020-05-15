@@ -1,6 +1,7 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -50,8 +51,10 @@ const useStyles = makeStyles((theme) => ({
 
   innerDate: {
     width: "100%",
-    height: "100%",
     display: "flex",
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:theme.spacing(0.5),
   },
 
   thead: {
@@ -59,10 +62,22 @@ const useStyles = makeStyles((theme) => ({
   },
 
   tomatoImg: {
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(1),
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+    width: '35%',
+    height: 'auto',
+    marginRight: theme.spacing(0.5),
+  },
+
+  thMoblie: {
+    padding: "3px",
+  },
+
+  tdMoblie: {
+    padding: "3px",
+    height: "50px",
+  },
+
+  dateFontMobile: {
+    fontSize: "0.5rem",
   },
 }));
 
@@ -113,19 +128,29 @@ const Dates = (props) => {
   const classes = useStyles();
   const dates = fillDate(props.year, props.month, props.tomatoOfDates);
   const rows = createRows(dates);
+  const matches = useMediaQuery("(min-width:700px)");
 
+  let dayOfTheWeek = matches
+    ? [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ]
+    : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow className={classes.thead}>
-            <StyledTableCell>Sunday</StyledTableCell>
-            <StyledTableCell>Monday</StyledTableCell>
-            <StyledTableCell>Tuesday</StyledTableCell>
-            <StyledTableCell>Wednesday</StyledTableCell>
-            <StyledTableCell>Thursday</StyledTableCell>
-            <StyledTableCell>Friday</StyledTableCell>
-            <StyledTableCell>Saturday</StyledTableCell>
+            {dayOfTheWeek.map((day) => (
+              <StyledTableCell className={matches ? "" : classes.thMoblie}>
+                {day}
+              </StyledTableCell>
+            ))}
           </TableRow>
         </TableHead>
 
@@ -133,8 +158,13 @@ const Dates = (props) => {
           {rows.map((row, index) => (
             <StyledTableRow key={index}>
               {row.map((dateInfo, index) => (
-                <StyledTableCell key={index} component="td" scope="row">
-                  <Box className={classes.date} component={"div"}>
+                <StyledTableCell
+                  className={matches ? "" : classes.tdMoblie}
+                  key={index}
+                  component="td"
+                  scope="row"
+                >
+                  <Box className={matches ? `${classes.date}` : `${classes.date} ${classes.dateFontMobile}`} component={"div"}>
                     {dateInfo ? dateInfo.date : ""}
                     {dateInfo && dateInfo.tomatoCnt ? (
                       <Box className={classes.innerDate}>

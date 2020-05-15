@@ -10,6 +10,7 @@ import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite"
 import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import RestoreIcon from "@material-ui/icons/Restore";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -35,13 +36,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   tomatoImg: {
-    width: "215px",
-    height: "215px",
+    maxWidth: "215px",
+    maxHeight: "215px",
+    width: "20%",
+    height: "auto",
     marginRight: "20px",
-  },
-
-  time: {
-    fontSize: "10rem",
   },
 
   countDetail: {
@@ -64,13 +63,38 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "10rem",
   },
 
+  fontSize: {
+    fontSize: "10rem",
+  },
+
+  fontSizeMobile: {
+    fontSize: "5rem",
+  },
+
+  iconSize: {
+    fontSize: "10rem",
+  },
+
+  iconSizeMobile: {
+    fontSize: "5rem",
+  },
+
   finishIcon: {
     fontSize: "10rem",
     color: "seagreen",
   },
 
+  finishIconMobile: {
+    fontSize: "5rem",
+    color: "seagreen",
+  },
+
   finishMsg: {
     fontSize: "6rem",
+  },
+
+  finishMsgMobile: {
+    fontSize: "3rem",
   },
 }));
 
@@ -97,6 +121,7 @@ const finishNotify = (target) => {
 };
 
 const Counter = (props) => {
+  const matches = useMediaQuery("(min-width:700px)");
   const {
     timePassed,
     leftTime,
@@ -217,7 +242,10 @@ const Counter = (props) => {
                 : "/images/rest.gif"
             }
           ></Avatar>
-          <Typography className={classes.time} variant={"body1"}>
+          <Typography
+            className={matches ? classes.fontSize : classes.fontSizeMobile}
+            variant={"body1"}
+          >
             {`
             ${
               (leftTime - timePassed) / 60 > 10
@@ -235,9 +263,12 @@ const Counter = (props) => {
       {isFinished ? (
         <Box className={classes.btnDetailBox} component={"div"}>
           <CheckCircleOutlineIcon
-            className={classes.finishIcon}
+            className={matches ? classes.finishIcon : classes.finishIconMobile}
           ></CheckCircleOutlineIcon>
-          <Typography className={classes.finishMsg} variant={"body1"}>
+          <Typography
+            className={matches ? classes.finishMsg : classes.finishMsgMobile}
+            variant={"body1"}
+          >
             재배완료
           </Typography>
         </Box>
@@ -251,7 +282,9 @@ const Counter = (props) => {
                 }}
               >
                 <PauseCircleFilledIcon
-                  className={classes.btnDetail}
+                  className={
+                    matches ? classes.iconSize : classes.iconSizeMobile
+                  }
                 ></PauseCircleFilledIcon>
               </IconButton>
             ) : (
@@ -261,7 +294,9 @@ const Counter = (props) => {
                 }}
               >
                 <PlayCircleFilledWhiteIcon
-                  className={classes.btnDetail}
+                  className={
+                    matches ? classes.iconSize : classes.iconSizeMobile
+                  }
                 ></PlayCircleFilledWhiteIcon>
               </IconButton>
             )}
@@ -273,7 +308,9 @@ const Counter = (props) => {
                 resetTimer(target);
               }}
             >
-              <RestoreIcon className={classes.btnDetail}></RestoreIcon>
+              <RestoreIcon
+                className={matches ? classes.iconSize : classes.iconSizeMobile}
+              ></RestoreIcon>
             </IconButton>
           </Box>
         </Box>
