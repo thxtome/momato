@@ -11,6 +11,6 @@
 				   and member_id = #{memberId}
 				   and tomato_can_Start = false
 				   and template_idx is null) dates
-		group by date(date);
+		group by date;
 	</select>
 </mapper>
