@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     color: "black",
   },
+  link: {
+    color: "inherit",
+    textDecoration: "none",
+  },
 }));
 
 const AppMenu = () => {
@@ -45,12 +49,12 @@ const AppMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
-          <Link to="tomato">오늘의토마토</Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to="calendar">토마토달력</Link>
-        </MenuItem>
+        <Link to="tomato" className={classes.link}>
+          <MenuItem onClick={handleClose}>오늘의토마토</MenuItem>
+        </Link>
+        <Link to="calendar" className={classes.link}>
+          <MenuItem onClick={handleClose}>토마토달력</MenuItem>
+        </Link>
         <MenuItem onClick={handleClose}>토마토 텃밭</MenuItem>
       </Menu>
     </>
