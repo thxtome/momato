@@ -34,7 +34,7 @@ const useInput = (initVal) => {
 
 const TomatoAddModal = (props) => {
   const { isTomatoAddSucceed, isLogin } = props
-
+  const CHARACTER_LIMIT = 15
   let templateIdx = props.templateIdx ? props.templateIdx : 0
   let date = templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
 
@@ -92,6 +92,10 @@ const TomatoAddModal = (props) => {
         placeholder="토마토 이름"
         multiline
         autoFocus
+        inputProps={{
+          maxlength: CHARACTER_LIMIT,
+        }}
+        helperText={`${tomatoName.value.length}/${CHARACTER_LIMIT}`}
         {...tomatoName}
         onKeyPress={(e) => {
           if (e.key === "Enter") {

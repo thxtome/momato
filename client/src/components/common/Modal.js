@@ -4,6 +4,8 @@ import Modal from "@material-ui/core/Modal"
 import Backdrop from "@material-ui/core/Backdrop"
 import Fade from "@material-ui/core/Fade"
 import Button from "@material-ui/core/Button"
+import GrainIcon from "@material-ui/icons/Grain"
+import EventNoteIcon from "@material-ui/icons/EventNote"
 import TemplateEditModalContainer from "../../containers/template/TemplateEditModalContainer"
 import FindPassModalContainer from "../../containers/member/FindPassModalContainer"
 import InfoModalContainer from "../../containers/member/InfoModalContainer"
@@ -12,7 +14,7 @@ import LoginModalContainer from "../../containers/login/LoginModalContainer"
 import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded"
 import TomatoAddModalContainer from "../../containers/tomato/TomatoAddModalContainer"
 import TomatoEditModalContainer from "../../containers/tomato/TomatoEditModalContainer"
-import { ListItemText, ListItemIcon } from "@material-ui/core"
+import { ListItemText, ListItemIcon, ListItem } from "@material-ui/core"
 import TemplateAddModalContainer from "../../containers/template/TemplateAddModalContainer"
 import LoadTemplateModal from "../tomato/LoadTemplateModal"
 
@@ -136,6 +138,20 @@ export default function TransitionsModal({
             텃밭 불러오기
           </Button>
         </div>
+      ) : type === "loginForTemplate" ? (
+        <ListItem button onClick={handleOpen}>
+          <ListItemIcon>
+            <GrainIcon />
+          </ListItemIcon>
+          <ListItemText primary="토마토 텃밭" />
+        </ListItem>
+      ) : type === "loginForCalendar" ? (
+        <ListItem button onClick={handleOpen}>
+          <ListItemIcon>
+            <EventNoteIcon />
+          </ListItemIcon>
+          <ListItemText primary="토마토 달력" />
+        </ListItem>
       ) : (
         <div className={classes.addTemplateBtn}>
           <Button className={classes.addTemplateBtn} type="button" onClick={handleOpen}>
@@ -183,6 +199,10 @@ export default function TransitionsModal({
               <TomatoAddModalContainer templateIdx={templateIdx} onClose={handleClose} />
             ) : type === "loadTemplate" ? (
               <LoadTemplateModal addTomatos={addTomatos} templates={templates} onClose={handleClose} />
+            ) : type === "loginForTemplate" ? (
+              <LoginModalContainer onClose={handleClose} />
+            ) : type === "loginForCalendar" ? (
+              <LoginModalContainer onClose={handleClose} />
             ) : (
               <TemplateAddModalContainer onClose={handleClose} />
             )}

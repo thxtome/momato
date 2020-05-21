@@ -30,7 +30,9 @@ const mapDispatchToProps = (dispatch) => {
     tomatoTempDelete: (tomatoIdx) => {
       dispatch(tomatoDeleteActions.TOMATO_TEMP_DELETE({ tomatoIdx }))
     },
-
+    clearAddResult: () => {
+      dispatch(tomatoAddActions.TOMATO_ADD_CLEAR())
+    },
     clearDeleteResult: () => {
       dispatch(tomatoDeleteActions.TOMATO_DELETE_CLEAR())
     },

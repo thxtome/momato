@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
     getTemplateList: () => {
       dispatch(templateActions.TEMPLATE_REQUEST())
     },
+    clearEditResult: () => {
+      dispatch(templateEditActions.TEMPLATE_EDIT_CLEAR())
+    },
   }
 }
 

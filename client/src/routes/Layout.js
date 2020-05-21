@@ -1,6 +1,6 @@
 import React from "react"
 import ContentWrapper from "../components/common/ContentWrapper"
-import Sidebar from "../components/sidebar/Sidebar"
+import SidebarContainer from "../containers/sidebar/SidebarContainer"
 import HeaderContainer from "../containers/header/HeaderContainer"
 import MemberInfoContainer from "../containers/common/MemberInfoContainer"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
@@ -11,7 +11,7 @@ const Layout = () => {
     <>
       <MemberInfoContainer />
       <HeaderContainer />
-      {matches ? <Sidebar /> : ""}
+      {matches ? <SidebarContainer /> : ""}
       <ContentWrapper />
     </>
   )

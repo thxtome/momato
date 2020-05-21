@@ -44,7 +44,7 @@ const useInput = (initVal) => {
 const TomatoEditModal = (props) => {
   const templateIdx = props.templateIdx ? props.templateIdx : 0
   const date = props.templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
-
+  const CHARACTER_LIMIT = 15
   const data = {
     date,
     templateIdx,
@@ -109,6 +109,10 @@ const TomatoEditModal = (props) => {
         placeholder={props.name}
         multiline
         autoFocus
+        inputProps={{
+          maxlength: CHARACTER_LIMIT,
+        }}
+        helperText={`${tomatoName.value.length}/${CHARACTER_LIMIT}`}
         onKeyPress={(e) => {
           if (e.key === "Enter") {
             e.preventDefault()

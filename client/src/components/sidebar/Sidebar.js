@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core"
 import EventNoteIcon from "@material-ui/icons/EventNote"
@@ -61,10 +61,13 @@ const useInput = (initVal) => {
 }
 
 const Sidebar = (props) => {
-  console.log(props)
-  const isLogin = props.isLogin
+  const isLogin = props.loginReducer.isLogin
   const classes = useStyles()
   const [clieckedIndex, setClieckedIndex] = useState(0)
+  useEffect(() => {
+    props.getTemplateList()
+    props.clearEditResult()
+  }, [props.templateEditReducer.isTemplateEditSucceed])
 
   return (
     <Drawer
@@ -77,18 +80,37 @@ const Sidebar = (props) => {
       <MemberContainer />
       <div className={classes.drawerContainer}>
         <List>
-          {["오늘의 토마토", "토마토 달력"].map((text, index) => (
-            <Link className={classes.link} key={text} to={index === 0 ? "tomato" : index === 1 ? "calendar" : ""}>
-              <ListItem button className={clieckedIndex === index ? classes.clieckedItem : ""} onClick={() => setClieckedIndex(index)}>
-                <ListItemIcon>{index === 0 ? <CheckCircleIcon /> : index === 1 ? <EventNoteIcon /> : <></>}</ListItemIcon>
-                <ListItemText primary={text} />
+          {isLogin ? (
+            ["오늘의 토마토", "토마토 달력"].map((text, index) => (
+              <Link className={classes.link} key={text} to={index === 0 ? "tomato" : index === 1 ? "calendar" : ""}>
+                <ListItem button className={clieckedIndex === index ? classes.clieckedItem : ""} onClick={() => setClieckedIndex(index)}>
+                  <ListItemIcon>{index === 0 ? <CheckCircleIcon /> : index === 1 ? <EventNoteIcon /> : ""}</ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              </Link>
+            ))
+          ) : (
+            <>
+              <ListItem button className={clieckedIndex === 0 ? classes.clieckedItem : ""} onClick={() => setClieckedIndex(0)}>
+                <ListItemIcon>
+                  <CheckCircleIcon />{" "}
+                </ListItemIcon>
+                <ListItemText primary={"오늘의 토마토"} />
               </ListItem>
-            </Link>
-          ))}
-          <TemplateListContainer />
-          <ListItem className={classes.addTemplate}>
-            <Modals type="addTemplate" />
-          </ListItem>
+              <Modals type="loginForCalendar" />
+              <Modals type="loginForTemplate" />
+            </>
+          )}
+          {isLogin ? (
+            <>
+              <TemplateListContainer />
+              <ListItem className={classes.addTemplate}>
+                <Modals type="addTemplate" />
+              </ListItem>
+            </>
+          ) : (
+            ""
+          )}
         </List>
       </div>
     </Drawer>

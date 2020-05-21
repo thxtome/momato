@@ -26,7 +26,6 @@ const Template = (props) => {
     templateIdx: 0,
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
   }
-  useEffect(() => {}, [props.templateDeleteReducer.isTemplateDeleteSucceed])
   const templateDeleteRequest = () => {
     props.deleteTemplate(template.templateIdx)
     props.getTemplateList()

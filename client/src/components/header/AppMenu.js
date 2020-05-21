@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import IconButton from "@material-ui/core/IconButton"
+import MenuIcon from "@material-ui/icons/Menu"
+import Menu from "@material-ui/core/Menu"
+import MenuItem from "@material-ui/core/MenuItem"
+import { Link } from "react-router-dom"
+import TemplateListContainer from "../../containers/template/TemplateListContainer"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,48 +14,37 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     color: "black",
   },
-}));
+}))
 
 const AppMenu = () => {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const classes = useStyles()
+  const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   return (
     <>
-      <IconButton
-        edge="start"
-        className={classes.menuButton}
-        aria-label="menu"
-        onClick={handleClick}
-      >
+      <IconButton edge="start" className={classes.menuButton} aria-label="menu" onClick={handleClick}>
         <MenuIcon />
       </IconButton>
 
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
+      <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={handleClose}>
           <Link to="tomato">오늘의토마토</Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Link to="calendar">토마토달력</Link>
         </MenuItem>
-        <MenuItem onClick={handleClose}>토마토 텃밭</MenuItem>
+        <TemplateListContainer />
       </Menu>
     </>
-  );
-};
+  )
+}
 
-export default AppMenu;
+export default AppMenu

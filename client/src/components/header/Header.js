@@ -1,17 +1,17 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Typography from "@material-ui/core/Typography";
-import Toolbar from "@material-ui/core/Toolbar";
-import Modals from "../common/Modal";
-import { Button } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { Link } from "react-router-dom";
-import AppMenu from "./AppMenu";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import React from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import AppBar from "@material-ui/core/AppBar"
+import Typography from "@material-ui/core/Typography"
+import Toolbar from "@material-ui/core/Toolbar"
+import Modals from "../common/Modal"
+import { Button } from "@material-ui/core"
+import IconButton from "@material-ui/core/IconButton"
+import MenuIcon from "@material-ui/icons/Menu"
+import Menu from "@material-ui/core/Menu"
+import MenuItem from "@material-ui/core/MenuItem"
+import { Link } from "react-router-dom"
+import AppMenu from "./AppMenu"
+import useMediaQuery from "@material-ui/core/useMediaQuery"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,18 +39,18 @@ const useStyles = makeStyles((theme) => ({
   logout: {
     color: "black",
   },
-}));
+}))
 
 const Header = (props) => {
-  const classes = useStyles();
-  const matches = useMediaQuery("(min-width:700px)");
+  const classes = useStyles()
+  const matches = useMediaQuery("(min-width:700px)")
   const logoutRequest = () => {
-    props.logout(localStorage.getItem("auth"));
-    props.getTempTomatoList();
-  };
+    props.logout(localStorage.getItem("auth"))
+    props.getTempTomatoList()
+  }
 
   return (
-    <AppBar className={classes.root}>
+    <AppBar className={classes.root} elevation={1}>
       <Toolbar className={classes.toolbar}>
         {matches ? "" : <AppMenu className={classes.appMenu} />}
 
@@ -63,7 +63,7 @@ const Header = (props) => {
           <Button
             className={classes.logout}
             onClick={() => {
-              logoutRequest();
+              logoutRequest()
             }}
           >
             LOGOUT
@@ -72,7 +72,7 @@ const Header = (props) => {
         {!localStorage.getItem("auth") ? <Modals type="signup" /> : null}
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

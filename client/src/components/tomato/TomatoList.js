@@ -29,6 +29,7 @@ const TomatoList = (props) => {
     if (isLogin) {
       props.getTomatoList(data)
       props.clearDeleteResult()
+      props.clearAddResult()
     } else {
       props.getTempTomatoList()
     }

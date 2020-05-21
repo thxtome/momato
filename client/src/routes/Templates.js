@@ -12,7 +12,19 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Templates = (props) => {
-  console.log(props)
+  console.log("props", props)
+  useEffect(() => {
+    console.log(props.loginReducer.isLogin)
+    if (props.templateDeleteReducer.isTemplateDeleteSucceed) {
+      props.history.push("/")
+    } else if (props.templateEditReducer.isTemplateEditSucceed) {
+      props.history.push("/")
+      props.clearEditResult()
+    }
+    if (!props.loginReducer.isLogin) {
+      props.history.push("/")
+    }
+  }, [props.loginReducer.isLogin, props.templateDeleteReducer.isTemplateDeleteSucceed, props.templateEditReducer.isTemplateEditSucceed])
   const template = props.location.state.template
   useEffect(() => {}, [template])
   const classes = useStyles()

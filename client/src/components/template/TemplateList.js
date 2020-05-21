@@ -8,7 +8,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import Collapse from "@material-ui/core/Collapse"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
-import { makeStyles } from "@material-ui/core"
+import { makeStyles, useMediaQuery } from "@material-ui/core"
 import { Link } from "react-router-dom"
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NestedList(props) {
   const classes = useStyles()
-  // const deleteTemplate = props.deleteTemplate
+  const matches = useMediaQuery("(min-width:100px)")
   const [open, setOpen] = React.useState(false)
 
   const handleClick = () => {
@@ -35,15 +35,19 @@ export default function NestedList(props) {
   }
   useEffect(() => {
     props.getTemplateList()
-  }, [props.templateEditReducer.isTemplateEditSucceed])
+    props.clearDeleteResult()
+  }, [props.templateDeleteReducer.isTemplateDeleteSucceed])
   const templates = props.templateReducer.templates
-  const isTemplateEditSucceed = props.templateEditReducer.isTemplateEditSucceed
   return (
     <div>
       <ListItem button onClick={handleClick}>
-        <ListItemIcon>
-          <GrainIcon />
-        </ListItemIcon>
+        {matches ? (
+          ""
+        ) : (
+          <ListItemIcon>
+            <GrainIcon />
+          </ListItemIcon>
+        )}
         <ListItemText primary="토마토 텃밭" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
