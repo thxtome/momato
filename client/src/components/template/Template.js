@@ -6,16 +6,42 @@ import Modals from "../common/Modal"
 const useStyles = makeStyles((theme) => ({
   root: {
     flexgrow: 1,
+    display: "absolute",
   },
   paper: {
     display: "flex",
     alignItems: "center",
-    marginBottom: theme.spacing(5),
   },
   name: {
     display: "flex",
     alignItems: "center",
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(0),
+    "& > *": {
+      [theme.breakpoints.down("650")]: {
+        fontSize: 12,
+        margin: theme.spacing(0),
+        padding: theme.spacing(0),
+      },
+    },
+  },
+  comment: {
+    fontSize: 15,
+    marginLeft: theme.spacing(2),
+    marginBottom: theme.spacing(4),
+    [theme.breakpoints.down("650")]: {
+      fontSize: 10,
+      marginLeft: theme.spacing(2),
+      marginBottom: theme.spacing(3),
+    },
+  },
+  deleteBtn: {
+    "& > *": {
+      [theme.breakpoints.down("650")]: {
+        fontSize: 10,
+        margin: theme.spacing(0),
+        padding: theme.spacing(0),
+      },
+    },
   },
 }))
 
@@ -33,18 +59,18 @@ const Template = (props) => {
   return (
     <div className={classes.root}>
       <Paper elevation={0} className={classes.paper}>
-        <Box className={classes.name} flexgrow={1}>
+        <Box className={classes.name}>
           <Typography flexgrow={1} className={classes.name} variant="h4">
             <Modals type="template" template={template}>
               {template.templateName}
             </Modals>
           </Typography>
-          <Typography variant="h6">{template.templateComment}</Typography>
+          <Button className={classes.deleteBtn} type="button" onClick={templateDeleteRequest}>
+            삭제
+          </Button>
         </Box>
-        <Button type="button" onClick={templateDeleteRequest}>
-          삭제
-        </Button>
       </Paper>
+      <div className={classes.comment}>{template.templateComment}</div>
     </div>
   )
 }

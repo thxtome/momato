@@ -6,6 +6,7 @@ import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 import { Link } from "react-router-dom"
 import TemplateListContainer from "../../containers/template/TemplateListContainer"
+import Modals from "../common/Modal"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +34,7 @@ const AppMenu = () => {
   }
 
   return (
-    <>
+    <div className={classes.root}>
       <IconButton edge="start" className={classes.menuButton} aria-label="menu" onClick={handleClick}>
         <MenuIcon />
       </IconButton>
@@ -45,9 +46,10 @@ const AppMenu = () => {
         <Link to="calendar" className={classes.link}>
           <MenuItem onClick={handleClose}>토마토달력</MenuItem>
         </Link>
-        <TemplateListContainer />
+        <TemplateListContainer onClose={handleClose} />
+        <Modals onClose={handleClose} type="addTemplate" />
       </Menu>
-    </>
+    </div>
   )
 }
 

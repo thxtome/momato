@@ -5,11 +5,6 @@ import Typography from "@material-ui/core/Typography"
 import Toolbar from "@material-ui/core/Toolbar"
 import Modals from "../common/Modal"
 import { Button } from "@material-ui/core"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
-import Menu from "@material-ui/core/Menu"
-import MenuItem from "@material-ui/core/MenuItem"
-import { Link } from "react-router-dom"
 import AppMenu from "./AppMenu"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 
@@ -43,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   const classes = useStyles()
-  const matches = useMediaQuery("(min-width:700px)")
+  const matches = useMediaQuery("(min-width:800px)")
   const logoutRequest = () => {
     props.logout(localStorage.getItem("auth"))
     props.getTempTomatoList()

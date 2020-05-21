@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
 import Modals from "../common/Modal"
 import TemplateListContainer from "../../containers/template/TemplateListContainer"
 
-const drawerWidth = 300
+const drawerWidth = 270
 
 const useStyles = makeStyles((theme) => ({
   appBar: {

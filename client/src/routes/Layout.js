@@ -6,7 +6,7 @@ import MemberInfoContainer from "../containers/common/MemberInfoContainer"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 
 const Layout = () => {
-  const matches = useMediaQuery("(min-width:700px)")
+  const matches = useMediaQuery("(min-width:800px)")
   return (
     <>
       <MemberInfoContainer />

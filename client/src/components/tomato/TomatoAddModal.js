@@ -2,11 +2,28 @@ import React, { useState, useEffect } from "react"
 import { makeStyles, Button, TextField, Typography } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
+  addTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(3),
+    "& > *": {
+      [theme.breakpoints.down("650")]: {
+        fontSize: 11,
+      },
+    },
+  },
+
   textField: {
     width: "100%",
     display: "flex",
     alignItems: "center",
     marginBottom: theme.spacing(2),
+    "& > *": {
+      [theme.breakpoints.down("650")]: {
+        fontSize: 12,
+      },
+    },
   },
 
   title: {
@@ -15,12 +32,13 @@ const useStyles = makeStyles((theme) => ({
 
   button: {
     display: "block",
-    margin: theme.spacing(2, "auto"),
+    margin: theme.spacing(1, "auto"),
     textAlign: "center",
-  },
-
-  select: {
-    width: "40%",
+    "& > *": {
+      [theme.breakpoints.down("650")]: {
+        fontSize: 11,
+      },
+    },
   },
 }))
 
@@ -83,8 +101,9 @@ const TomatoAddModal = (props) => {
 
   return (
     <>
-      <h2 id="transition-modal-title">토마토 추가</h2>
-      <Typography id="transition-modal-description" />
+      <Typography className={classes.addTitle} id="transition-modal-title">
+        토마토 추가
+      </Typography>
       <TextField
         className={classes.textField}
         id="standard-textarea"
@@ -93,7 +112,7 @@ const TomatoAddModal = (props) => {
         multiline
         autoFocus
         inputProps={{
-          maxlength: CHARACTER_LIMIT,
+          maxLength: CHARACTER_LIMIT,
         }}
         helperText={`${tomatoName.value.length}/${CHARACTER_LIMIT}`}
         {...tomatoName}

@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     color: theme.palette.text.secondary,
     alignItems: "center",
+    [theme.breakpoints.down("650")]: {
+      padding: theme.spacing(1),
+    },
   },
   name: {
     flexGrow: 1,
@@ -29,6 +32,20 @@ const useStyles = makeStyles((theme) => ({
   },
   finishIcon: {
     color: "seagreen",
+  },
+  leftTime: {
+    [theme.breakpoints.down("650")]: {
+      fontSize: 8,
+    },
+  },
+  playBtn: {
+    "& > *": {
+      [theme.breakpoints.down("650")]: {
+        size: "small",
+        margin: theme.spacing(0),
+        padding: theme.spacing(0),
+      },
+    },
   },
 }))
 
@@ -75,7 +92,7 @@ const Tomato = ({
             <Box component={"div"}>
               {!templateIdx ? (
                 tomatoCanStart ? (
-                  <IconButton aria-label="start">
+                  <IconButton aria-label="start" className={classes.playBtn}>
                     <Link
                       className={classes.link}
                       to={{
@@ -119,7 +136,9 @@ const Tomato = ({
                 tomatoCanStart={tomatoCanStart}
               />
             </Typography>
-            <Typography variant="caption">남은시간 : {Math.floor(tomatoLeftRegular / 60)}분</Typography>
+            <Typography className={classes.leftTime} variant="caption">
+              남은시간 : {Math.floor(tomatoLeftRegular / 60)}분
+            </Typography>
             <Box component={"div"}>
               <IconButton aria-label="start" onClick={tomatoDeleteRequest}>
                 <DeleteIcon />

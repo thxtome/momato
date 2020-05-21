@@ -14,7 +14,7 @@ import LoginModalContainer from "../../containers/login/LoginModalContainer"
 import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded"
 import TomatoAddModalContainer from "../../containers/tomato/TomatoAddModalContainer"
 import TomatoEditModalContainer from "../../containers/tomato/TomatoEditModalContainer"
-import { ListItemText, ListItemIcon, ListItem } from "@material-ui/core"
+import { ListItemText, ListItemIcon, ListItem, useMediaQuery } from "@material-ui/core"
 import TemplateAddModalContainer from "../../containers/template/TemplateAddModalContainer"
 import LoadTemplateModal from "../tomato/LoadTemplateModal"
 
@@ -53,11 +53,21 @@ const useStyles = makeStyles((theme) => ({
   },
   tomatoBtn: {
     textTransform: "none",
+    [theme.breakpoints.down("650")]: {
+      fontSize: 10,
+    },
   },
   templateBtn: {
     fontWeight: "bold",
     fontSize: "30px",
     textTransform: "none",
+    "& > *": {
+      [theme.breakpoints.down("650")]: {
+        fontSize: 14,
+        margin: theme.spacing(0),
+        padding: theme.spacing(0),
+      },
+    },
   },
   loadBtn: {
     textAlign: "right",
@@ -83,9 +93,10 @@ export default function TransitionsModal({
   tomatoCanStart,
   addTomatos,
   templates,
-  getTomatoList,
+  onClose,
 }) {
   const classes = useStyles()
+  const matches = useMediaQuery("(min-width:800px)")
   const [open, setOpen] = React.useState(false)
 
   const handleOpen = () => {
@@ -158,7 +169,7 @@ export default function TransitionsModal({
             <ListItemIcon>
               <AddCircleRoundedIcon />
             </ListItemIcon>
-            <ListItemText primary="텃밭 만들기" />
+            <ListItemText onClick={onClose} primary="텃밭 만들기" />
           </Button>
         </div>
       )}

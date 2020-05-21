@@ -23,11 +23,24 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "black",
   },
+  title: {
+    "& > *": {
+      fontSize: 13,
+    },
+  },
+  linkText: {
+    "& > *": {
+      fontSize: 13,
+      width: theme.spacing(5),
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+    },
+  },
 }))
 
 export default function NestedList(props) {
   const classes = useStyles()
-  const matches = useMediaQuery("(min-width:100px)")
+  const matches = useMediaQuery("(min-width:800px)")
   const [open, setOpen] = React.useState(false)
 
   const handleClick = () => {
@@ -42,11 +55,11 @@ export default function NestedList(props) {
     <div>
       <ListItem button onClick={handleClick}>
         {matches ? (
-          ""
-        ) : (
           <ListItemIcon>
             <GrainIcon />
           </ListItemIcon>
+        ) : (
+          ""
         )}
         <ListItemText primary="토마토 텃밭" />
         {open ? <ExpandLess /> : <ExpandMore />}
@@ -63,12 +76,13 @@ export default function NestedList(props) {
                   template,
                 },
               }}
+              onClick={props.onClose}
             >
               <ListItem button className={classes.nested}>
                 <ListItemIcon>
                   <LocalFloristIcon />
                 </ListItemIcon>
-                <ListItemText primary={template.templateName} />
+                <ListItemText className={classes.linkText} className={classes.title} primary={template.templateName} />
               </ListItem>
             </Link>
           ))}

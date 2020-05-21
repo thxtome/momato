@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Input, Button, makeStyles, TextField } from "@material-ui/core"
+import { Button, makeStyles, TextField } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
     "& > *": {
       width: theme.spacing(50),
+      [theme.breakpoints.down("650")]: {
+        width: theme.spacing(25),
+        fontSize: 12,
+      },
     },
   },
   editbtn: {
@@ -27,8 +31,9 @@ const useInput = (initVal) => {
 }
 
 const TemplateEditModal = (props) => {
-  console.log(props)
   const template = props.template
+  const NAME_CHARACTER_LIMIT = 15
+  const COMMENT_CHARACTER_LIMIT = 25
   const classes = useStyles()
   const name = useInput(template.templateName)
   const comment = useInput(template.templateComment)
@@ -55,6 +60,10 @@ const TemplateEditModal = (props) => {
           type="name"
           className={classes.edit}
           defaultValue={template.templateName}
+          inputProps={{
+            maxLength: NAME_CHARACTER_LIMIT,
+          }}
+          helperText={`${name.value.length}/${NAME_CHARACTER_LIMIT}`}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
               e.preventDefault()
@@ -69,6 +78,10 @@ const TemplateEditModal = (props) => {
           id="comment"
           className={classes.edit}
           defaultValue={template.templateComment}
+          inputProps={{
+            maxLength: COMMENT_CHARACTER_LIMIT,
+          }}
+          helperText={`${comment.value.length}/${COMMENT_CHARACTER_LIMIT}`}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
               e.preventDefault()
