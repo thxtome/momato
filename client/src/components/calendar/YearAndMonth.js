@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import Avatar from "@material-ui/core/Avatar";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,16 +16,28 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-around",
     alignItems: "center",
     height: "100%",
+    paddingLeft: "40px",
   },
   paper: {
     boxShadow: "none",
   },
+  msgMobile: {
+    display: "none",
+  },
+  yearMoblie: {
+    fontSize: "1.5rem",
+  },
+  monthMoblie: {
+    fontSize: "2rem",
+    marginLeft: theme.spacing(2),
+  },
 }));
 
 const YearAndMonth = ({ year, month, prevMonth, nextMonth, tomatoOfDates }) => {
+  const matches = useMediaQuery("(min-width:700px)");
   const classes = useStyles();
   let cnt = 0;
-  
+
   tomatoOfDates.forEach((element) => {
     cnt += parseInt(element.tomatoCnt);
   });
@@ -42,10 +55,20 @@ const YearAndMonth = ({ year, month, prevMonth, nextMonth, tomatoOfDates }) => {
             <KeyboardArrowLeftIcon />
           </IconButton>
           <Box component={"div"}>
-            <Typography variant={"h4"}>{year}</Typography>
+            <Typography
+              variant={"h4"}
+              className={matches ? "" : classes.yearMoblie}
+            >
+              {year}
+            </Typography>
           </Box>
           <Box component={"div"}>
-            <Typography variant={"h2"}>{month}</Typography>
+            <Typography
+              variant={"h2"}
+              className={matches ? "" : classes.monthMoblie}
+            >
+              {month}
+            </Typography>
           </Box>
           <IconButton
             onClick={() => {
@@ -62,7 +85,12 @@ const YearAndMonth = ({ year, month, prevMonth, nextMonth, tomatoOfDates }) => {
 
       <Grid item xs={6}>
         <Box className={classes.root} component={"div"}>
-          <Typography variant={"h4"}>이달의 토마토</Typography>
+          <Typography
+            variant={"h4"}
+            className={matches ? "" : classes.msgMobile}
+          >
+            이달의 토마토
+          </Typography>
           <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
           <Typography variant={"h4"}>{cnt}</Typography>
         </Box>

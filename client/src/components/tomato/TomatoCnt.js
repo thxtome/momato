@@ -1,9 +1,9 @@
-import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import Paper from "@material-ui/core/Paper"
-import Grid from "@material-ui/core/Grid"
-import Avatar from "@material-ui/core/Avatar"
-import Typography from "@material-ui/core/Typography"
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,12 +26,20 @@ const useStyles = makeStyles((theme) => ({
     border: "none",
     fontWeight: 600,
     alignItems: "center",
+    flexWrap: "wrap",
+    fontSize: "0.9rem",
+    justifyContent: "center",
   },
   tomatoImg: {
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(1),
     width: theme.spacing(3),
     height: theme.spacing(3),
+    marginRight: theme.spacing(1),
+  },
+  innerCnt: {
+    width: "100%",
+    display: "flex",
+    marginTop: "5px",
+    justifyContent: "center",
   },
 }));
 
@@ -63,37 +71,43 @@ const Tomato = (props) => {
               <Grid item xs={4}>
                 <Paper className={classes.innerPaper}>
                   오늘의 목표
-                  <Avatar
-                    className={classes.tomatoImg}
-                    src="/images/homeMade.png"
-                  />
-                  <Typography variant={"body1"}>
-                    {tomatoCnt.canStart + tomatoCnt.canNotStart}
-                  </Typography>
+                  <div className={classes.innerCnt}>
+                    <Avatar
+                      className={classes.tomatoImg}
+                      src="/images/homeMade.png"
+                    />
+                    <Typography variant={"body1"}>
+                      {tomatoCnt.canStart + tomatoCnt.canNotStart}
+                    </Typography>
+                  </div>
                 </Paper>
               </Grid>
               <Grid item xs={4}>
                 <Paper className={classes.innerPaper}>
                   재배중
-                  <Avatar
-                    className={classes.tomatoImg}
-                    src="/images/homeMade.png"
-                  />
-                  <Typography variant={"body1"}>
-                    {tomatoCnt.canStart}
-                  </Typography>
+                  <div className={classes.innerCnt}>
+                    <Avatar
+                      className={classes.tomatoImg}
+                      src="/images/homeMade.png"
+                    />
+                    <Typography variant={"body1"}>
+                      {tomatoCnt.canStart}
+                    </Typography>
+                  </div>
                 </Paper>
               </Grid>
               <Grid item xs={4}>
                 <Paper className={classes.innerPaper}>
-                  재배완료{" "}
-                  <Avatar
-                    className={classes.tomatoImg}
-                    src="/images/homeMade.png"
-                  />
-                  <Typography variant={"body1"}>
-                    {tomatoCnt.canNotStart}
-                  </Typography>
+                  재배완료
+                  <div className={classes.innerCnt}>
+                    <Avatar
+                      className={classes.tomatoImg}
+                      src="/images/homeMade.png"
+                    />
+                    <Typography variant={"body1"}>
+                      {tomatoCnt.canNotStart}
+                    </Typography>
+                  </div>
                 </Paper>
               </Grid>
             </Grid>
@@ -101,7 +115,7 @@ const Tomato = (props) => {
         </Grid>
       </Grid>
     </div>
-  )
-}
+  );
+};
 
-export default Tomato
+export default Tomato;
