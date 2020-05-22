@@ -7,51 +7,26 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     width: "100%",
-    "& > *": {
-      [theme.breakpoints.down("650")]: {
-        fontSize: 11,
-      },
-    },
   },
   div: {
     width: "100%",
     display: "flex",
     alignItems: "center",
     marginBottom: theme.spacing(2),
-    [theme.breakpoints.down("650")]: {
-      marginBottom: theme.spacing(1),
-    },
   },
 
   title: {
     marginRight: theme.spacing(20),
-    [theme.breakpoints.down("650")]: {
-      marginRight: theme.spacing(9),
-      fontSize: 13,
-    },
   },
 
   editbtn: {
     m: "auto",
     textAlign: "center",
-    "& > *": {
-      [theme.breakpoints.down("650")]: {
-        fontSize: 11,
-      },
-    },
   },
 
   select: {
     width: "40%",
     cursor: "pointer",
-  },
-
-  selectTime: {
-    "& > *": {
-      [theme.breakpoints.down("650")]: {
-        fontSize: 13,
-      },
-    },
   },
 
   option: {
@@ -153,7 +128,6 @@ const TomatoEditModal = (props) => {
           <InputLabel htmlFor="fullRegular"></InputLabel>
           <Typography className={classes.title}>재배 시간</Typography>
           <Select
-            className={classes.selectTime}
             inputProps={{
               name: "tomatoFullRegular",
               id: "uncontrolled-native",
@@ -177,7 +151,6 @@ const TomatoEditModal = (props) => {
           <InputLabel htmlFor="fullBreak"></InputLabel>
           <Typography className={classes.title}>휴식 시간</Typography>
           <Select
-            className={classes.selectTime}
             inputProps={{
               name: "tomatoFullBreak",
               id: "uncontrolled-native",

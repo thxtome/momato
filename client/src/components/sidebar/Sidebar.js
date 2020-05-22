@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
   },
   addTemplate: {
-    marginLeft: theme.spacing(4),
+    marginLeft: theme.spacing(2),
     width: theme.spacing(25),
     cursor: "pointer",
   },

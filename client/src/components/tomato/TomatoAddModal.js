@@ -7,22 +7,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(3),
-    "& > *": {
-      [theme.breakpoints.down("650")]: {
-        fontSize: 11,
-      },
-    },
   },
 
   textField: {
-    width: "100%",
     display: "flex",
     alignItems: "center",
     marginBottom: theme.spacing(2),
     "& > *": {
-      [theme.breakpoints.down("650")]: {
-        fontSize: 12,
-      },
+      width: theme.spacing(35),
     },
   },
 
@@ -34,11 +26,6 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     margin: theme.spacing(1, "auto"),
     textAlign: "center",
-    "& > *": {
-      [theme.breakpoints.down("650")]: {
-        fontSize: 11,
-      },
-    },
   },
 }))
 

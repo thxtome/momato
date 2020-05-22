@@ -8,7 +8,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import Collapse from "@material-ui/core/Collapse"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
-import { makeStyles, useMediaQuery } from "@material-ui/core"
+import { makeStyles, useMediaQuery, Typography } from "@material-ui/core"
 import { Link } from "react-router-dom"
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,11 +29,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   linkText: {
-    "& > *": {
-      fontSize: 13,
-      width: theme.spacing(5),
-      overflow: "hidden",
-      textOverflow: "ellipsis",
+    fontSize: 13,
+    width: theme.spacing(5),
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    width: 150,
+    height: 20,
+    [theme.breakpoints.down("650")]: {
+      fontSize: 12,
+      width: 90,
+      height: 15,
     },
   },
 }))
@@ -82,7 +87,11 @@ export default function NestedList(props) {
                 <ListItemIcon>
                   <LocalFloristIcon />
                 </ListItemIcon>
-                <ListItemText className={classes.linkText} className={classes.title} primary={template.templateName} />
+                <ListItemText className={classes.title}>
+                  <Typography noWrap className={classes.linkText}>
+                    {template.templateName}
+                  </Typography>
+                </ListItemText>
               </ListItem>
             </Link>
           ))}

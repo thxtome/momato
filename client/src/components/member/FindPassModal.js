@@ -34,6 +34,14 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(15),
     margin: theme.spacing(3, "auto"),
   },
+  text: {
+    width: theme.spacing(22),
+    "& > *": {
+      [theme.breakpoints.down("650")]: {
+        fontSize: 13,
+      },
+    },
+  },
 }))
 
 const useInput = (initVal) => {
@@ -64,7 +72,15 @@ const FindPassModal = (props) => {
       <form className={classes.root} noValidate autoComplete="off">
         <div className={classes.div}>
           <Typography className={classes.titleId}>아이디</Typography>
-          <TextField id="standard-textarea" label="" placeholder="example@tomato.com" multiline autoFocus {...memberId} />
+          <TextField
+            className={classes.text}
+            id="standard-textarea"
+            label=""
+            placeholder="example@tomato.com"
+            multiline
+            autoFocus
+            {...memberId}
+          />
         </div>
         <div className={classes.button}>
           <Button variant="contained" color="secondary" onClick={findPassRequest}>

@@ -49,6 +49,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
     flexDirection: "row-reverse",
   },
+  text: {
+    width: theme.spacing(22),
+    "& > *": {
+      [theme.breakpoints.down("650")]: {
+        fontSize: 13,
+      },
+    },
+  },
 }))
 
 const useInput = (initVal) => {
@@ -88,11 +96,20 @@ const LoginModal = (props) => {
       <form className={classes.root} noValidate autoComplete="off">
         <div className={classes.idDiv}>
           <Typography className={classes.titleId}>아이디</Typography>
-          <TextField id="standard-textarea" label="" placeholder="example@tomato.com" multiline autoFocus {...email} />
+          <TextField
+            className={classes.text}
+            id="standard-textarea"
+            label=""
+            placeholder="example@tomato.com"
+            multiline
+            autoFocus
+            {...email}
+          />
         </div>
         <div className={classes.passDiv}>
           <Typography className={classes.titlePass}>비밀번호</Typography>
           <TextField
+            className={classes.text}
             id="standard-password-input"
             label=""
             type="password"

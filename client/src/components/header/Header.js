@@ -47,12 +47,12 @@ const Header = (props) => {
   return (
     <AppBar className={classes.root} elevation={1}>
       <Toolbar className={classes.toolbar}>
-        {matches ? "" : <AppMenu className={classes.appMenu} />}
+        {matches ? "" : <AppMenu isLogin={props.loginReducer.isLogin} className={classes.appMenu} />}
 
         <Typography variant="h6" edge="start" className={classes.title}>
           MOMATO
         </Typography>
-        {!localStorage.getItem("auth") ? (
+        {!props.loginReducer.isLogin ? (
           <Modals type="login" />
         ) : (
           <Button

@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from "react";
-import {
-  Avatar,
-  makeStyles,
-  Typography,
-  TextField,
-  Button,
-} from "@material-ui/core";
-import { toast } from "react-toastify";
+import React, { useState, useEffect } from "react"
+import { Avatar, makeStyles, Typography, TextField, Button } from "@material-ui/core"
+import { toast } from "react-toastify"
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -14,6 +8,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     marginBottom: theme.spacing(2),
+  },
+
+  nameDiv: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    marginBottom: theme.spacing(0),
   },
 
   name: {
@@ -45,21 +46,30 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(15),
     margin: theme.spacing(3, "auto"),
   },
-}));
+  text: {
+    width: theme.spacing(22),
+    "& > *": {
+      [theme.breakpoints.down("650")]: {
+        fontSize: 13,
+      },
+    },
+  },
+}))
 
 const useInput = (initVal) => {
-  const [value, setValue] = useState(initVal);
+  const [value, setValue] = useState(initVal)
   const onChange = (e) => {
-    setValue(e.target.value);
-  };
-  return { value, onChange };
-};
+    setValue(e.target.value)
+  }
+  return { value, onChange }
+}
 
 const InfoModal = (props) => {
-  const inputMemberName = useInput("");
-  const inputMemberPass = useInput("");
-  const inputMemberPassChk = useInput("");
-  const classes = useStyles();
+  const inputMemberName = useInput("")
+  const inputMemberPass = useInput("")
+  const inputMemberPassChk = useInput("")
+  const CHARACTER_LIMIT = 10
+  const classes = useStyles()
 
   const memberUpdateBtn = () => {
     //비밀번호 확인과 일치하면 수정요청을 보내고 아니면 일치하지 않는다고 메세지를 띄운다
@@ -67,26 +77,26 @@ const InfoModal = (props) => {
       props.memberUpdateRequest({
         memberName: inputMemberName.value,
         memberPass: inputMemberPass.value,
-      });
+      })
     } else {
       toast.info("비밀번호가 일치하지 않습니다.", {
         position: toast.POSITION.TOP_CENTER,
-      });
+      })
     }
-  };
+  }
 
   useEffect(() => {
     //수정이 성공하면 메세지 띄우고
     if (props.memberUpdateReducer.isUpdateSucceed) {
       toast.info("수정이 완료되었습니다.", {
         position: toast.POSITION.TOP_CENTER,
-      });
+      })
       //업데이트 성공 여부를 클리어하고
-      props.memberUpdateClear();
+      props.memberUpdateClear()
       //모달을 닫는다.
-      props.onClose();
+      props.onClose()
     }
-  });
+  })
 
   return (
     <>
@@ -95,14 +105,19 @@ const InfoModal = (props) => {
         TOMATO
       </Typography>
       <form className={classes.root} noValidate autoComplete="off">
-        <div className={classes.div}>
+        <div className={classes.nameDiv}>
           <Typography className={classes.name}>닉네임</Typography>
           <TextField
+            className={classes.text}
             id="standard-textarea"
             label=""
             placeholder="nickname"
             multiline
             autoFocus
+            inputProps={{
+              maxLength: CHARACTER_LIMIT,
+            }}
+            helperText={`${inputMemberName.value.length}/${CHARACTER_LIMIT}`}
             onChange={inputMemberName.onChange}
           />
         </div>
@@ -110,6 +125,7 @@ const InfoModal = (props) => {
         <div className={classes.div}>
           <Typography className={classes.pass}>비밀번호</Typography>
           <TextField
+            className={classes.text}
             id="standard-password-input"
             label=""
             type="password"
@@ -121,6 +137,7 @@ const InfoModal = (props) => {
         <div className={classes.div}>
           <Typography className={classes.confirm}>비밀번호 확인</Typography>
           <TextField
+            className={classes.text}
             id="standard-password-input"
             label=""
             type="password"
@@ -133,7 +150,7 @@ const InfoModal = (props) => {
             variant="contained"
             color="secondary"
             onClick={() => {
-              memberUpdateBtn();
+              memberUpdateBtn()
             }}
           >
             수정
@@ -141,7 +158,7 @@ const InfoModal = (props) => {
         </div>
       </form>
     </>
-  );
-};
+  )
+}
 
-export default InfoModal;
+export default InfoModal

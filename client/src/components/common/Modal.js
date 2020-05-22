@@ -14,7 +14,7 @@ import LoginModalContainer from "../../containers/login/LoginModalContainer"
 import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded"
 import TomatoAddModalContainer from "../../containers/tomato/TomatoAddModalContainer"
 import TomatoEditModalContainer from "../../containers/tomato/TomatoEditModalContainer"
-import { ListItemText, ListItemIcon, ListItem, useMediaQuery } from "@material-ui/core"
+import { ListItemText, ListItemIcon, ListItem, useMediaQuery, MenuItem } from "@material-ui/core"
 import TemplateAddModalContainer from "../../containers/template/TemplateAddModalContainer"
 import LoadTemplateModal from "../tomato/LoadTemplateModal"
 
@@ -163,6 +163,14 @@ export default function TransitionsModal({
           </ListItemIcon>
           <ListItemText primary="토마토 달력" />
         </ListItem>
+      ) : type === "loginForTemplateInMenu" ? (
+        <ListItem button onClick={handleOpen}>
+          <ListItemText primary="토마토 텃밭" />
+        </ListItem>
+      ) : type === "loginForCalendarInMenu" ? (
+        <ListItem button onClick={handleOpen}>
+          <ListItemText primary="토마토 달력" />
+        </ListItem>
       ) : (
         <div className={classes.addTemplateBtn}>
           <Button className={classes.addTemplateBtn} type="button" onClick={handleOpen}>
@@ -213,6 +221,10 @@ export default function TransitionsModal({
             ) : type === "loginForTemplate" ? (
               <LoginModalContainer onClose={handleClose} />
             ) : type === "loginForCalendar" ? (
+              <LoginModalContainer onClose={handleClose} />
+            ) : type === "loginForTemplateInMenu" ? (
+              <LoginModalContainer onClose={handleClose} />
+            ) : type === "loginForCalendarInMenu" ? (
               <LoginModalContainer onClose={handleClose} />
             ) : (
               <TemplateAddModalContainer onClose={handleClose} />
