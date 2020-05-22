@@ -51,10 +51,14 @@ export default function NestedList(props) {
   const handleClick = () => {
     setOpen(!open)
   }
-  useEffect(() => {
-    props.getTemplateList()
-    props.clearDeleteResult()
-  }, [props.templateDeleteReducer.isTemplateDeleteSucceed])
+  // useEffect(() => {
+  //   props.getTemplateList()
+  //   if (props.templateDeleteReducer.isTemplateDeleteSucceed) {
+  //     props.clearDeleteResult()
+  //   } else if (props.templateEditReducer.isTemplateEditSucceed) {
+  //     props.clearEditResult()
+  //   }
+  // }, [props.templateDeleteReducer.isTemplateDeleteSucceed, props.templateEditReducer.isTemplateEditSucceed])
   const templates = props.templateReducer.templates
   return (
     <div>

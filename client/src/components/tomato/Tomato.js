@@ -39,10 +39,19 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   playBtn: {
-    "& > *": {
-      [theme.breakpoints.down("650")]: {
+    [theme.breakpoints.down("650")]: {
+      padding: theme.spacing(0),
+      "& > *": {
         size: "small",
-        margin: theme.spacing(0),
+        padding: theme.spacing(0),
+      },
+    },
+  },
+  trashBtn: {
+    [theme.breakpoints.down("650")]: {
+      padding: theme.spacing(0),
+      "& > *": {
+        size: "small",
         padding: theme.spacing(0),
       },
     },
@@ -140,7 +149,7 @@ const Tomato = ({
               남은시간 : {Math.floor(tomatoLeftRegular / 60)}분
             </Typography>
             <Box component={"div"}>
-              <IconButton aria-label="start" onClick={tomatoDeleteRequest}>
+              <IconButton aria-label="start" onClick={tomatoDeleteRequest} className={classes.trashBtn}>
                 <DeleteIcon />
               </IconButton>
             </Box>

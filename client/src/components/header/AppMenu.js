@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const AppMenu = (props) => {
-  console.log(props)
+  console.log(props.templateEditReducer.isTemplateEditSucceed)
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -36,7 +36,14 @@ const AppMenu = (props) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  useEffect(() => {}, [props.isLogin])
+  useEffect(() => {
+    props.getTemplateList()
+    if (props.templateEditReducer.isTemplateEditSucceed) {
+      props.clearEditResult()
+    } else if (props.templateDeleteReducer.isTemplateDeleteSucceed) {
+      props.clearDeleteResult()
+    }
+  }, [props.templateEditReducer.isTemplateEditSucceed, props.templateDeleteReducer.isTemplateDeleteSucceed])
   return (
     <div className={classes.root}>
       <IconButton edge="start" className={classes.menuButton} aria-label="menu" onClick={handleClick}>
@@ -47,8 +54,11 @@ const AppMenu = (props) => {
         <Link to="tomato" className={classes.link}>
           <MenuItem onClick={handleClose}>오늘의 토마토</MenuItem>
         </Link>
-        {props.isLogin ? (
+        {props.loginReducer.isLogin ? (
           <div>
+            <Link to="member-info" className={classes.link}>
+              <MenuItem onClick={handleClose}>농사꾼 정보</MenuItem>
+            </Link>
             <Link to="calendar" className={classes.link}>
               <MenuItem onClick={handleClose}>토마토 달력</MenuItem>
             </Link>

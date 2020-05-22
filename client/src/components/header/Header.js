@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography"
 import Toolbar from "@material-ui/core/Toolbar"
 import Modals from "../common/Modal"
 import { Button } from "@material-ui/core"
-import AppMenu from "./AppMenu"
+import AppMenuContainer from "../../containers/header/AppMenuContainer"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 
 const useStyles = makeStyles((theme) => ({
@@ -47,7 +47,7 @@ const Header = (props) => {
   return (
     <AppBar className={classes.root} elevation={1}>
       <Toolbar className={classes.toolbar}>
-        {matches ? "" : <AppMenu isLogin={props.loginReducer.isLogin} className={classes.appMenu} />}
+        {matches ? "" : <AppMenuContainer />}
 
         <Typography variant="h6" edge="start" className={classes.title}>
           MOMATO
@@ -64,7 +64,7 @@ const Header = (props) => {
             LOGOUT
           </Button>
         )}
-        {!localStorage.getItem("auth") ? <Modals type="signup" /> : null}
+        {!props.loginReducer.isLogin ? <Modals type="signup" /> : null}
       </Toolbar>
     </AppBar>
   )

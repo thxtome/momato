@@ -6,6 +6,11 @@ const useStyles = makeStyles((theme) => ({
   button: {
     fontSize: 30,
   },
+  div: {
+    [theme.breakpoints.down("650")]: {
+      marginBottom: theme.spacing(1),
+    },
+  },
   content: {
     display: "block",
     marginBottom: theme.spacing(3),
@@ -62,7 +67,7 @@ const TemplateModal = (props) => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <h2 id="transition-modal-title">텃밭 만들기</h2>
-          <div>
+          <div className={classes.div}>
             <TextField
               autoFocus
               className={classes.content}
@@ -80,7 +85,7 @@ const TemplateModal = (props) => {
               {...templateName}
             />
           </div>
-          <div>
+          <div className={classes.div}>
             <TextField
               id="comment"
               className={classes.content}

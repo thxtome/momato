@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   tomatoBtn: {
     textTransform: "none",
     [theme.breakpoints.down("650")]: {
-      fontSize: 10,
+      fontSize: 12,
     },
   },
   templateBtn: {
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
     "& > *": {
       [theme.breakpoints.down("650")]: {
-        fontSize: 14,
+        fontSize: 18,
         margin: theme.spacing(0),
         padding: theme.spacing(0),
       },
@@ -94,6 +94,7 @@ export default function TransitionsModal({
   addTomatos,
   templates,
   onClose,
+  history,
 }) {
   const classes = useStyles()
   const matches = useMediaQuery("(min-width:800px)")
@@ -193,7 +194,7 @@ export default function TransitionsModal({
         <Fade in={open}>
           <div className={classes.paper}>
             {type === "template" ? (
-              <TemplateEditModalContainer template={template} onClose={handleClose} />
+              <TemplateEditModalContainer history={history} template={template} onClose={handleClose} />
             ) : type === "tomatoEdit" ? (
               <TomatoEditModalContainer
                 templateIdx={templateIdx}

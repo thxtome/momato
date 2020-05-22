@@ -80,11 +80,9 @@ function* templateEditSaga(action) {
 
 function* templateDeleteSaga(action) {
   try {
-    console.log(action)
     const response = yield call(api.removeTemplate, action.payload.data)
     yield put(templateDeleteActions.TEMPLATE_DELETE_SUCCEED({ response }))
   } catch (e) {
-    console.log(e)
     yield put({ type: "TEMPLATE_DELETE_FAILED", message: e.message })
   }
 }
@@ -119,7 +117,6 @@ function* signupSaga(action) {
 function* memberInfoSaga(action) {
   try {
     const response = yield call(api.getMemberInfo)
-    console.log(response)
     yield put(loginActions.MEMBERINFO_SUCCEED({ memberInfo: response.data.data.result }))
   } catch (e) {
     console.dir(e)
@@ -139,7 +136,6 @@ function* memberUpdateSaga(action) {
 
 function* findPassSaga(action) {
   try {
-    console.log(action)
     const response = yield call(api.findPass, action.payload)
     yield put(findPassActions.FIND_PASS_SUCCEED({ response }))
   } catch (e) {

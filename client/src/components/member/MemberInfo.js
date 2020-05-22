@@ -1,5 +1,5 @@
 import React from "react"
-import { Avatar, makeStyles, Typography, Toolbar } from "@material-ui/core"
+import { Avatar, makeStyles, Typography, Toolbar, Paper } from "@material-ui/core"
 import Modals from "../common/Modal"
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Member = ({ memberInfo, isLogin }) => {
+const MemberInfo = ({ memberInfo, isLogin }) => {
   memberInfo = memberInfo
     ? memberInfo
     : {
@@ -26,8 +26,6 @@ const Member = ({ memberInfo, isLogin }) => {
   const classes = useStyles()
   return (
     <>
-      <Toolbar />
-      <Toolbar />
       <Avatar className={classes.userGrade} src={memberInfo.memberGrade.gradeImageUrl} />
       {isLogin ? <Modals type="info" name={memberInfo.memberName} /> : <Modals type="login" name={memberInfo.memberName} />}
       <Typography className={classes.gradeComment} variant="caption" display="block" gutterBottom>
@@ -37,4 +35,4 @@ const Member = ({ memberInfo, isLogin }) => {
   )
 }
 
-export default Member
+export default MemberInfo

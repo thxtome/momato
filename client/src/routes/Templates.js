@@ -12,25 +12,23 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Templates = (props) => {
-  console.log("props", props)
+  console.log(props.location)
   useEffect(() => {
-    console.log(props.loginReducer.isLogin)
     if (props.templateDeleteReducer.isTemplateDeleteSucceed) {
       props.history.push("/")
-    } else if (props.templateEditReducer.isTemplateEditSucceed) {
-      props.history.push("/")
-      props.clearEditResult()
-    }
-    if (!props.loginReducer.isLogin) {
+    } else if (!props.loginReducer.isLogin) {
       props.history.push("/")
     }
-  }, [props.loginReducer.isLogin, props.templateDeleteReducer.isTemplateDeleteSucceed, props.templateEditReducer.isTemplateEditSucceed])
-  const template = props.location.state.template
+  }, [props.loginReducer.isLogin, props.templateDeleteReducer.isTemplateDeleteSucceed])
+  let template = props.location.state.template
+  if (!props.location.state.template) {
+    template = props.location
+  }
   useEffect(() => {}, [template])
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <TemplateContainer template={template} key={template.templateIdx} />
+      <TemplateContainer history={props.history} template={template} key={template.templateIdx} />
       <TomatoListContainer templateIdx={template.templateIdx} />
     </div>
   )
