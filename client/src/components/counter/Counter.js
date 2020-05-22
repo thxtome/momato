@@ -96,29 +96,16 @@ const useStyles = makeStyles((theme) => ({
   finishMsgMobile: {
     fontSize: "3rem",
   },
-}));
 
-const finishNotify = (target) => {
-  let message =
-    target === "regularTime"
-      ? "집중시간이 끝났습니다! 휴식 시간을 가져보세요."
-      : "휴식시간이 끝났습니다! 새로운 집중 시간을 가져보세요.";
-  let options = {
-    body: message,
-    icon: "/images/homeMade.png",
-  };
-  if (!("Notification" in window)) {
-    alert("브라우저가 알림을 지원하지 않습니다.");
-  } else if (Notification.permission === "granted") {
-    var notification = new Notification("MOMATO", options);
-  } else if (Notification.permission !== "denied") {
-    Notification.requestPermission(function (permission) {
-      if (permission === "granted") {
-        var notification = new Notification("MOMATO", options);
-      }
-    });
-  }
-};
+  notificationAllow: {
+    display: "none",
+    marginRight: "5px",
+  },
+
+  notificationNotAllow: {
+    marginRight: "5px",
+  },
+}));
 
 const Counter = (props) => {
   const matches = useMediaQuery("(min-width:700px)");
@@ -142,9 +129,68 @@ const Counter = (props) => {
     tempTomatoSave,
     finishTempTimer,
   } = props;
-
   const isLogin = props.location.state.isLogin;
   const tomatoIdx = props.location.state.tomatoIdx;
+  //알림지원여부
+  const [isNotificationSupport, setIsNotificationSupport] = useState(true);
+  const [isNotificationAllow, setIsNotificationAllow] = useState(false);
+  let notificationMsg = !isNotificationSupport
+    ? "브라우저가 알림을 지원하지 않습니다."
+    : isNotificationAllow
+    ? ""
+    : "알림을 허용하시면 종료시간에 알림을 드립니다.";
+
+  //알림 허용 및 띄우기
+  const showNotification = (msg) => {
+    Notification.requestPermission((result) => {
+      if (result === "granted") {
+        setIsNotificationAllow(true);
+        navigator.serviceWorker.ready.then(function (registration) {
+          registration.showNotification("MOMATO", {
+            body: msg,
+            icon: "/images/homeMade.png",
+            vibrate: [200],
+          });
+        });
+      } else {
+        alert("시간이 종료되도 알림이 오지 않습니다.");
+      }
+    });
+  };
+
+  //최초의 알림 허용 판단 및 요청
+  const notificationAllow = () => {
+    console.log("allow");
+    //허용상태를 보고
+    switch (Notification.permission) {
+      //첫 요청일 때
+      case "default":
+        console.log("default");
+        showNotification("알림이 허용되었습니다.");
+        break;
+
+      //이미 허용일때
+      case "granted":
+        console.log("granted");
+        setIsNotificationAllow(true);
+        break;
+
+      //거절일 떄
+      case "denied":
+        console.log("denied");
+        setIsNotificationAllow(false);
+        break;
+    }
+  };
+
+  //멈췄을 때 알림
+  const sendStopNot = (target) => {
+    let msg =
+      target === "regularTime"
+        ? "집중시간이 끝났습니다! 휴식 시간을 가져보세요."
+        : "휴식시간이 끝났습니다! 새로운 집중 시간을 가져보세요.";
+    showNotification(msg);
+  };
 
   //처음 페이지 생성시
   useEffect(() => {
@@ -160,6 +206,16 @@ const Counter = (props) => {
       }
     };
     document.addEventListener("keydown", handleRefresh);
+
+    //알림을 지원하는 브라우저가 아니면 알림지원을 false로 놓는다.
+    if (!("Notification" in window)) {
+      console.log("not support");
+      setIsNotificationSupport(false);
+    } else {
+      //아니면 알림 허용 판단 및 요청을 한다
+      console.log("support");
+      notificationAllow();
+    }
 
     //페이지를 나가거나 이동시 처리
     //로그인이 되어있으면 연결을 종료하고 로그인이 안되어있으면 임시토마토에 저장
@@ -180,7 +236,10 @@ const Counter = (props) => {
     if (isGoing === true) {
       //시간이 다 됐는지 확인하고
       if (timePassed >= leftTime) {
-        finishNotify(target);
+        //알림을 지원하면 알림을 보냄
+        if (isNotificationSupport) {
+          sendStopNot(target);
+        }
         stopTimer(target);
 
         //로그인이 되어있으면
@@ -200,7 +259,7 @@ const Counter = (props) => {
         clearTimeout(key);
       };
     }
-  });
+  }, [isGoing, timePassed]);
 
   //연결상태와 토마토 로드상태 따라 렌더
   useEffect(() => {
@@ -227,6 +286,17 @@ const Counter = (props) => {
   return (
     <Paper className={classes.Container}>
       <Box className={classes.closeBtnBox} component={"div"}>
+        {isNotificationAllow && isNotificationSupport ? (
+          ""
+        ) : (
+          <Button
+            className={classes.notificationNotAllow}
+            variant="contained"
+            color="primary"
+          >
+            {notificationMsg}
+          </Button>
+        )}
         <Button variant="contained" color="secondary" onClick={goBack}>
           나가기
         </Button>
