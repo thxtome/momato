@@ -1,6 +1,11 @@
 import { counterActions } from "../store/modules/counter";
 import SockJsClient from "sockjs-client";
 
+const url =
+  process.env.NODE_ENV === "production"
+    ? "https://www.momato.net:8000"
+    : "http://localhost:8080";
+
 let countSocket = undefined;
 
 const socketSubscribe = (dispatch) => {
@@ -63,7 +68,7 @@ const socketSubscribe = (dispatch) => {
 };
 
 const openSocket = (dispatch) => {
-  countSocket = new SockJsClient("http://localhost:8080/tomatoTimer");
+  countSocket = new SockJsClient(`${url}/tomatoTimer`);
   socketSubscribe(dispatch);
 };
 

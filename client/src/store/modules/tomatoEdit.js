@@ -40,6 +40,7 @@ const reducer = createReducer(initialState, {
           if (tomato.tomatoIdx === editedTomato.tomatoIdx) {
             tomato = {
               ...tomato,
+              tomatoName: editedTomato.tomatoName,
               tomatoFullRegular: editedTomato.tomatoFullRegular,
               tomatoLeftRegular: editedTomato.tomatoFullRegular,
               tomatoFullBreak: editedTomato.tomatoFullBreak,

@@ -1,9 +1,14 @@
 import axios from "axios";
 
+const url =
+  process.env.NODE_ENV === "production"
+    ? "https://www.momato.net:8000"
+    : "http://localhost:8080";
+
 export const login = ({ memberId, memberPass }) =>
   axios({
     method: "post",
-    url: "http://localhost:8080/members/signin",
+    url: `${url}/members/signin`,
     data: {
       memberId,
       memberPass,
@@ -13,14 +18,14 @@ export const login = ({ memberId, memberPass }) =>
 export const logout = (auth) =>
   axios({
     method: "get",
-    url: "http://localhost:8080/members/logout",
+    url: `${url}/members/logout`,
     headers: { Authorization: auth },
   });
 
 export const signup = ({ memberId, memberPass, memberName }) =>
   axios({
     method: "post",
-    url: "http://localhost:8080/members",
+    url: `${url}/members`,
     data: {
       memberId,
       memberPass,
@@ -31,14 +36,14 @@ export const signup = ({ memberId, memberPass, memberName }) =>
 export const getMemberInfo = () =>
   axios({
     method: "get",
-    url: "http://localhost:8080/members",
+    url: `${url}/members`,
     headers: { Authorization: localStorage.getItem("auth") },
   });
 
 export const updateMember = ({ memberPass, memberName }) =>
   axios({
     method: "put",
-    url: "http://localhost:8080/members",
+    url: `${url}/members`,
     headers: { Authorization: localStorage.getItem("auth") },
     data: {
       memberPass,
@@ -49,21 +54,21 @@ export const updateMember = ({ memberPass, memberName }) =>
 export const findPass = (memberId) =>
   axios({
     method: "get",
-    url: `http://localhost:8080/members/tempPass?memberId=${memberId}`,
+    url: `${url}/members/tempPass?memberId=${memberId}`,
   });
 
 export const getTomato = (data) => {
   return axios({
     method: "get",
     headers: { Authorization: localStorage.getItem("auth") },
-    url: `http://localhost:8080/tomatos?tomatoDate=${data.date}&templateIdx=${data.templateIdx}`,
+    url: `${url}/tomatos?tomatoDate=${data.date}&templateIdx=${data.templateIdx}`,
   });
 };
 
 export const tomatoAdd = ({ createType, tomatoName, templateIdx }) =>
   axios({
     method: "post",
-    url: "http://localhost:8080/tomatos",
+    url: `${url}/tomatos`,
     headers: { Authorization: localStorage.getItem("auth") },
     data: {
       createType,
@@ -84,7 +89,7 @@ export const tomatoEdit = ({
 }) =>
   axios({
     method: "put",
-    url: "http://localhost:8080/tomatos",
+    url: `${url}/tomatos`,
     headers: { Authorization: localStorage.getItem("auth") },
     data: {
       tomatoIdx,
@@ -100,21 +105,21 @@ export const tomatoEdit = ({
 export const tomatoDelete = (tomatoIdx) =>
   axios({
     method: "delete",
-    url: `http://localhost:8080/tomatos/${tomatoIdx}`,
+    url: `${url}/tomatos/${tomatoIdx}`,
     headers: { Authorization: localStorage.getItem("auth") },
   });
 
 export const getCalendar = ({ year, month }) =>
   axios({
     method: "get",
-    url: `http://localhost:8080/calendar?year=${year}&month=${month}`,
+    url: `${url}/calendar?year=${year}&month=${month}`,
     headers: { Authorization: localStorage.getItem("auth") },
   });
 
 export const template = () => {
   return axios({
     method: "get",
-    url: `http://localhost:8080/templates`,
+    url: `${url}/templates`,
     headers: { Authorization: localStorage.getItem("auth") },
   });
 };
@@ -122,7 +127,7 @@ export const template = () => {
 export const templateAdd = ({ templateName, templateComment }) =>
   axios({
     method: "post",
-    url: "http://localhost:8080/templates",
+    url: `${url}/templates`,
     headers: { Authorization: localStorage.getItem("auth") },
     data: {
       templateName,
@@ -137,18 +142,18 @@ export const updateTemplate = ({
 }) =>
   axios({
     method: "put",
-    url: "http://localhost:8080/templates",
+    url: `${url}/templates`,
     headers: { Authorization: localStorage.getItem("auth") },
     data: {
       templateIdx,
       templateName,
       templateComment,
     },
-  })
+  });
 
 export const removeTemplate = (templateIdx) =>
   axios({
     method: "delete",
-    url: `http://localhost:8080/templates/${templateIdx}`,
+    url: `${url}/templates/${templateIdx}`,
     headers: { Authorization: localStorage.getItem("auth") },
-  })
+  });
