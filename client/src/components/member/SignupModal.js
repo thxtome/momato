@@ -77,19 +77,45 @@ const SignupModal = (props) => {
       <form className={classes.root} noValidate autoComplete="off">
         <div className={classes.div}>
           <Typography className={classes.titleId}>아이디</Typography>
-          <TextField className={classes.text} label="" placeholder="example@tomato.com" multiline autoFocus {...email} />
+          <TextField
+            className={classes.text}
+            label=""
+            placeholder="example@tomato.com"
+            multiline
+            autoFocus
+            {...email}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                document.getElementById("text").focus()
+              }
+            }}
+          />
         </div>
 
         <div className={classes.div}>
           <Typography className={classes.titleId}>닉네임</Typography>
-          <TextField className={classes.text} label="" placeholder="nickname" multiline {...name} />
+          <TextField
+            id="text"
+            className={classes.text}
+            label=""
+            placeholder="nickname"
+            multiline
+            {...name}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                document.getElementById("pass").focus()
+              }
+            }}
+          />
         </div>
 
         <div className={classes.div}>
           <Typography className={classes.titlePass}>비밀번호</Typography>
           <TextField
             className={classes.text}
-            id="standard-password-input"
+            id="pass"
             label=""
             type="password"
             placeholder="password"

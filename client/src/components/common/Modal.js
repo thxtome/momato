@@ -14,7 +14,7 @@ import LoginModalContainer from "../../containers/login/LoginModalContainer"
 import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded"
 import TomatoAddModalContainer from "../../containers/tomato/TomatoAddModalContainer"
 import TomatoEditModalContainer from "../../containers/tomato/TomatoEditModalContainer"
-import { ListItemText, ListItemIcon, ListItem, useMediaQuery, MenuItem } from "@material-ui/core"
+import { ListItemText, ListItemIcon, ListItem } from "@material-ui/core"
 import TemplateAddModalContainer from "../../containers/template/TemplateAddModalContainer"
 import LoadTemplateModal from "../tomato/LoadTemplateModal"
 
@@ -33,9 +33,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 5,
     outline: "none",
   },
-  templateBtn: {
-    fontSize: 30,
-  },
   edit: {
     paddingBottom: theme.spacing(1),
     display: "block",
@@ -47,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   infoBtn: {
+    textTransform: "none",
     width: "100%",
     textAlign: "center",
     fontSize: 20,
@@ -59,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
   templateBtn: {
     fontWeight: "bold",
-    fontSize: "30px",
+    fontSize: 30,
     textTransform: "none",
     "& > *": {
       [theme.breakpoints.down("650")]: {
@@ -97,7 +95,6 @@ export default function TransitionsModal({
   history,
 }) {
   const classes = useStyles()
-  const matches = useMediaQuery("(min-width:800px)")
   const [open, setOpen] = React.useState(false)
 
   const handleOpen = () => {

@@ -31,7 +31,6 @@ const useInput = (initVal) => {
 }
 
 const TemplateEditModal = (props) => {
-  console.log(props.history)
   let template = props.template
   const NAME_CHARACTER_LIMIT = 15
   const COMMENT_CHARACTER_LIMIT = 25
@@ -52,7 +51,6 @@ const TemplateEditModal = (props) => {
     template = data
     props.editTemplate(data)
     props.onClose()
-    console.log(template)
     props.history.push(template, `template`)
   }
   return (

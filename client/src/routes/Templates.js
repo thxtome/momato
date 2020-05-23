@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Templates = (props) => {
-  console.log(props.location)
   useEffect(() => {
     if (props.templateDeleteReducer.isTemplateDeleteSucceed) {
       props.history.push("/")

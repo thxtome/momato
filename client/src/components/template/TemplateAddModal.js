@@ -44,7 +44,7 @@ const useInput = (initVal) => {
 const TemplateModal = (props) => {
   const classes = useStyles()
   const NAME_CHARACTER_LIMIT = 15
-  const COMMENT_CHARACTER_LIMIT = 25
+  const COMMENT_CHARACTER_LIMIT = 50
   const templateName = useInput("")
   const templateComment = useInput("")
 

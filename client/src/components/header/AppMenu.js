@@ -7,9 +7,6 @@ import MenuItem from "@material-ui/core/MenuItem"
 import { Link } from "react-router-dom"
 import TemplateListContainer from "../../containers/template/TemplateListContainer"
 import Modals from "../common/Modal"
-import { ListItemIcon } from "@material-ui/core"
-import EventNoteIcon from "@material-ui/icons/EventNote"
-import CheckCircleIcon from "@material-ui/icons/CheckCircle"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const AppMenu = (props) => {
-  console.log(props.templateEditReducer.isTemplateEditSucceed)
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
 

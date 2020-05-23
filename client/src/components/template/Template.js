@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Typography, Paper, Box, IconButton } from "@material-ui/core"
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline"
@@ -54,13 +54,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Template = (props) => {
-  console.log(props.history)
   const classes = useStyles()
   const template = props.template
-  const data = {
-    templateIdx: 0,
-    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
-  }
   const templateDeleteRequest = () => {
     props.deleteTemplate(template.templateIdx)
     props.getTemplateList()

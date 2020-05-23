@@ -119,6 +119,12 @@ const InfoModal = (props) => {
             }}
             helperText={`${inputMemberName.value.length}/${CHARACTER_LIMIT}`}
             onChange={inputMemberName.onChange}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                document.getElementById("pass").focus()
+              }
+            }}
           />
         </div>
 
@@ -126,11 +132,17 @@ const InfoModal = (props) => {
           <Typography className={classes.pass}>비밀번호</Typography>
           <TextField
             className={classes.text}
-            id="standard-password-input"
+            id="pass"
             label=""
             type="password"
             placeholder="password"
             onChange={inputMemberPass.onChange}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                document.getElementById("passConfirm").focus()
+              }
+            }}
           />
         </div>
 
@@ -138,15 +150,22 @@ const InfoModal = (props) => {
           <Typography className={classes.confirm}>비밀번호 확인</Typography>
           <TextField
             className={classes.text}
-            id="standard-password-input"
+            id="passConfirm"
             label=""
             type="password"
             placeholder="password"
             onChange={inputMemberPassChk.onChange}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                document.getElementById("button").click()
+              }
+            }}
           />
         </div>
         <div className={classes.button}>
           <Button
+            id="button"
             variant="contained"
             color="secondary"
             onClick={() => {

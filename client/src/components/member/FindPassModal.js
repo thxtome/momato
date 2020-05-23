@@ -80,10 +80,16 @@ const FindPassModal = (props) => {
             multiline
             autoFocus
             {...memberId}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                document.getElementById("button").click()
+              }
+            }}
           />
         </div>
         <div className={classes.button}>
-          <Button variant="contained" color="secondary" onClick={findPassRequest}>
+          <Button id="button" variant="contained" color="secondary" onClick={findPassRequest}>
             메일 전송
           </Button>
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import GrainIcon from "@material-ui/icons/Grain"
 import LocalFloristIcon from "@material-ui/icons/LocalFlorist"
 import ListItemText from "@material-ui/core/ListItemText"
@@ -30,10 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
   linkText: {
     fontSize: 13,
-    width: theme.spacing(5),
+    width: theme.spacing(18),
     overflow: "hidden",
     textOverflow: "ellipsis",
-    width: 150,
     height: 20,
     [theme.breakpoints.down("650")]: {
       fontSize: 12,
@@ -51,14 +50,6 @@ export default function NestedList(props) {
   const handleClick = () => {
     setOpen(!open)
   }
-  // useEffect(() => {
-  //   props.getTemplateList()
-  //   if (props.templateDeleteReducer.isTemplateDeleteSucceed) {
-  //     props.clearDeleteResult()
-  //   } else if (props.templateEditReducer.isTemplateEditSucceed) {
-  //     props.clearEditResult()
-  //   }
-  // }, [props.templateDeleteReducer.isTemplateDeleteSucceed, props.templateEditReducer.isTemplateEditSucceed])
   const templates = props.templateReducer.templates
   return (
     <div>

@@ -1,13 +1,26 @@
-import React from "react"
-import { Avatar, makeStyles, Typography, Toolbar, Paper } from "@material-ui/core"
+import React, { useEffect } from "react"
+import { Avatar, makeStyles, Typography } from "@material-ui/core"
 import Modals from "../common/Modal"
 
 const useStyles = makeStyles((theme) => ({
-  userGrade: {
-    alignSelf: "center",
+  imgDiv: {
+    display: "flex",
+    "& > *": {
+      margin: theme.spacing(10, "auto"),
+    },
+  },
+  userGradeImg: {
+    alignSelf: "centers",
     marginBottom: theme.spacing(2),
     width: theme.spacing(10),
     height: theme.spacing(10),
+  },
+  textDiv: {
+    display: "flex",
+    "& > *": {
+      display: "block",
+      margin: theme.spacing(2, "auto"),
+    },
   },
   gradeComment: {
     color: "#999",
@@ -15,22 +28,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const MemberInfo = ({ memberInfo, isLogin }) => {
-  memberInfo = memberInfo
-    ? memberInfo
-    : {
-        memberName: "비회원",
-        memberGrade: { gradeComment: "토마토 재배에 꿈을 품은 농사꾼 지망생" },
-      }
+const MemberInfo = ({ memberInfo, isLogin, isUpdateSucceed, history, getMemberInfo, clearUpdateResult }) => {
+  useEffect(() => {
+    if (!isLogin) {
+      history.push("/")
+    } else if (isUpdateSucceed) {
+      getMemberInfo()
+      clearUpdateResult()
+      history.push("/member-info")
+    }
+  }, [isLogin, isUpdateSucceed])
 
   const classes = useStyles()
   return (
     <>
-      <Avatar className={classes.userGrade} src={memberInfo.memberGrade.gradeImageUrl} />
-      {isLogin ? <Modals type="info" name={memberInfo.memberName} /> : <Modals type="login" name={memberInfo.memberName} />}
-      <Typography className={classes.gradeComment} variant="caption" display="block" gutterBottom>
-        {memberInfo.memberGrade.gradeComment}
-      </Typography>
+      {isLogin ? (
+        <>
+          <div className={classes.imgDiv}>
+            <Avatar className={classes.userGradeImg} src={memberInfo.memberGrade.gradeImageUrl} />
+          </div>
+          <Modals type="info" name={memberInfo.memberName} />
+          <div className={classes.textDiv}>
+            <Typography className={classes.gradeComment} variant="caption" display="block" gutterBottom>
+              {memberInfo.memberGrade.gradeComment}
+            </Typography>
+          </div>
+        </>
+      ) : (
+        ""
+      )}
     </>
   )
 }

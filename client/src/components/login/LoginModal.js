@@ -104,13 +104,19 @@ const LoginModal = (props) => {
             multiline
             autoFocus
             {...email}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                document.getElementById("pass").focus()
+              }
+            }}
           />
         </div>
         <div className={classes.passDiv}>
           <Typography className={classes.titlePass}>비밀번호</Typography>
           <TextField
             className={classes.text}
-            id="standard-password-input"
+            id="pass"
             label=""
             type="password"
             autoComplete="current-password"
