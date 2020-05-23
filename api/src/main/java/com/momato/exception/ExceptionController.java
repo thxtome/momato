@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import javax.mail.MessagingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -23,7 +24,7 @@ public class ExceptionController {
 		ResponseResult rr = new ResponseResult(InvalidException, "0001", req.getRequestURI().toString()); 
 		return rr;
 	}
-    
+
     @ExceptionHandler(InvalidRequestException.class)
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     public ResponseResult invalidRequestException(HttpServletRequest req, Exception e) {
@@ -37,6 +38,24 @@ public class ExceptionController {
     public ResponseResult emptyRequestBodyException(HttpServletRequest req, Exception e) {
     	InvalidRequestException defaultException = new InvalidRequestException ("request body is missing",e);
     	ResponseResult rr = new ResponseResult(defaultException, "0003", req.getRequestURI().toString()); 
+    	return rr;
+    }
+    
+    //잘못된 이메일일 경우
+    @ExceptionHandler(MessagingException.class)
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST)
+    public ResponseResult MessagingException(HttpServletRequest req, Exception e) {
+    	IdNotFoundException idNotFoundEx = new IdNotFoundException(e.getMessage(),e);
+    	ResponseResult rr = new ResponseResult(idNotFoundEx, "findPass", "0001", req.getRequestURI().toString()); 
+    	return rr;
+    }
+    
+    //이메일 찾기 id가 없을 경우
+    @ExceptionHandler(IdNotFoundException.class)
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST)
+    public ResponseResult IdNotFoundException(HttpServletRequest req, Exception e) {
+    	IdNotFoundException idNotFoundEx = new IdNotFoundException(e.getMessage(),e);
+    	ResponseResult rr = new ResponseResult(idNotFoundEx, "findPass", "0002", req.getRequestURI().toString()); 
     	return rr;
     }
     

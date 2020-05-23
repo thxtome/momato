@@ -4,6 +4,7 @@ import javax.mail.MessagingException;
 import javax.validation.constraints.Email;
 
 import com.momato.common.dto.ResponseResult;
+import com.momato.exception.IdNotFoundException;
 import com.momato.exception.InvalidRequestException;
 import com.momato.member.dto.Member;
 
@@ -16,5 +17,5 @@ public interface MemberService {
 	public ResponseResult retrieveMemberByIdExcludePass(String memberId);
 	public ResponseResult deleteMember(String memberId);
 	public ResponseResult updateMember(Member member);
-	public ResponseResult createTempPass(@Email String memberId) throws MessagingException, InvalidRequestException;
+	public ResponseResult createTempPass(@Email String memberId) throws MessagingException, IdNotFoundException;
 }

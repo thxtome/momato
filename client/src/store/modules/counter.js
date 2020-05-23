@@ -43,7 +43,7 @@ const initialState = {
   fullTime: 0,
   leftTime: 0,
   timePassed: 0,
-  target: null,
+  target: "regularTime",
   isGoing: false,
   isLodaSucced: false,
   isConnected: false,

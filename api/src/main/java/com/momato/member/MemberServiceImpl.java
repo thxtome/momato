@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.momato.common.dto.ResponseResult;
-import com.momato.exception.InvalidRequestException;
+import com.momato.exception.IdNotFoundException;
 import com.momato.member.dto.Member;
 import com.momato.member.dto.UserPrincipal;
 import com.momato.util.MailUtil;
@@ -88,12 +88,12 @@ public class MemberServiceImpl implements MemberService, UserDetailsService{
 	}
 
 	@Override
-	public ResponseResult createTempPass(@Email String memberId) throws MessagingException, InvalidRequestException {
+	public ResponseResult createTempPass(@Email String memberId) throws MessagingException, IdNotFoundException {
 		Member member = mapper.selectMemberByIdExcludePass(memberId);
 		//아이디가 없을 경우
 		if(member == null) {
 			//예외처리
-			throw new InvalidRequestException("member is not found");
+			throw new IdNotFoundException("member is not found");
 		} else {
 			//임시비밀번호 생성
 			String tempPass = generatePass();
@@ -102,7 +102,11 @@ public class MemberServiceImpl implements MemberService, UserDetailsService{
 			//멤버 업데이트
 			mapper.updateMember(member);
 			//임시비밀번호를 멤버의 메일로 전송
-			mailUtil.sendMail(memberId, tempPass);
+			try {
+				mailUtil.sendMail(memberId, tempPass);				
+			} catch (Exception e) {
+				throw new MessagingException("invalid address");
+			}
 		}
 		
 		return new ResponseResult(HttpStatus.OK);

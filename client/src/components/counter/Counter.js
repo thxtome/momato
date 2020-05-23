@@ -138,7 +138,7 @@ const Counter = (props) => {
     ? "브라우저가 알림을 지원하지 않습니다."
     : isNotificationAllow
     ? ""
-    : "알림을 허용하시면 종료시간에 알림을 드립니다.";
+    : "알림 허용시 종료시간을 알려드립니다.";
 
   //알림 허용 및 띄우기
   const showNotification = (msg) => {

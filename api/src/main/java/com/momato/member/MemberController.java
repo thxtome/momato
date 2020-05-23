@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.momato.common.dto.ResponseResult;
+import com.momato.exception.IdNotFoundException;
 import com.momato.exception.InvalidRequestException;
 import com.momato.member.dto.Member;
 
@@ -30,7 +31,7 @@ public class MemberController {
 		System.out.println(member.hasAllData());
 		if(!member.hasAllData()) {
 			throw new InvalidRequestException("member parameter is empty");
-		}		
+		}
 		return service.createMember(member);
 	}
 	
@@ -54,7 +55,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/tempPass")
-	public ResponseResult createTempPass(@Email String memberId) throws MessagingException, InvalidRequestException {
+	public ResponseResult createTempPass(@Email String memberId) throws MessagingException, IdNotFoundException {
 		return service.createTempPass(memberId);
 	}
 }

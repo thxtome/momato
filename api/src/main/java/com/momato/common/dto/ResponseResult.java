@@ -47,7 +47,7 @@ public class ResponseResult {
 		this.code = httpStatus.value();
 		this.status = (httpStatus.isError()) ? false : true;
 		this.message = httpStatus.getReasonPhrase();
-		this.error = new ErrorResult(errorCode, "Common", ex.getMessage(), referedUrl);
+		this.error = new ErrorResult(errorCode, category, ex.getMessage(), referedUrl);
 		this.timestamp = new Date();
 	}
 	
