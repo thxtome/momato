@@ -1,7 +1,7 @@
 package com.momato.tomato;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class TomatoController {
 	
 	// 토마토등록일 또는 템플릿인덱스로 조회
 	@GetMapping()
-	public ResponseResult retrieveTomato(@RequestParam(defaultValue = "0") int templateIdx, @RequestParam(defaultValue = "") @DateTimeFormat(pattern = "yyyy-MM-dd") Date tomatoDate, @AuthenticationPrincipal String memberId) {
+	public ResponseResult retrieveTomato(@RequestParam(defaultValue = "0") int templateIdx, @RequestParam(defaultValue = "") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate tomatoDate, @AuthenticationPrincipal String memberId) {
 		System.out.println("도착");
 		Tomato tomato = new Tomato();
 		tomato.setTemplateIdx(templateIdx);

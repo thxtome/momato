@@ -1,6 +1,10 @@
 package com.momato.template.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -9,6 +13,10 @@ public class Template {
 	private int templateIdx;
 	private String templateName;
 	private String templateComment;
-	private Date templateRegdate;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
+	private LocalDate templateRegdate;
+
 	private String memberId;
 }
