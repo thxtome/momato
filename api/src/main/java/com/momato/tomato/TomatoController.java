@@ -32,12 +32,10 @@ public class TomatoController {
 	// 토마토등록일 또는 템플릿인덱스로 조회
 	@GetMapping()
 	public ResponseResult retrieveTomato(@RequestParam(defaultValue = "0") int templateIdx, @RequestParam(defaultValue = "") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate tomatoDate, @AuthenticationPrincipal String memberId) {
-		System.out.println("도착");
 		Tomato tomato = new Tomato();
 		tomato.setTemplateIdx(templateIdx);
 		tomato.setTomatoDate(tomatoDate);
 		tomato.setMemberId(memberId);
-		System.out.println("토마토" + tomato);
 		return new ResponseResult(HttpStatus.OK, service.retrieveTomato(tomato));
 	}
 	
@@ -48,8 +46,7 @@ public class TomatoController {
 		if (createType.equals("simple")) {
 			Tomato tomato = param.getData();
 			tomato.setMemberId(memberId);
-			System.out.println(tomato);
-			if (tomato.getTemplateIdx() == 0) {
+			if (tomato.getTemplateIdx() == null) {
 				service.addTomato(tomato);
 			} else {
 				service.addTemplateTomato(tomato);
@@ -64,7 +61,6 @@ public class TomatoController {
 			service.addTomato(t);
 			}
 		}
-		System.out.println(param);
 		return new ResponseResult(HttpStatus.OK);
 	}
 	
