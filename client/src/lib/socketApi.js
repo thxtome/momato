@@ -4,7 +4,7 @@ import SockJsClient from "sockjs-client";
 const url =
   process.env.NODE_ENV === "production"
     ? "https://www.momato.net:8000"
-    : "http://192.168.0.96:8080";
+    : "http://localhost:8080";
 
 let countSocket = undefined;
 
@@ -82,9 +82,11 @@ const request = (params, failed) => {
     if (countSocket) {
       countSocket.send(JSON.stringify(params));
     } else {
+      console.log("socketIsClosed");
       failed();
     }
   } catch (error) {
+    console.log("socketError");
     console.dir(error);
   }
 };

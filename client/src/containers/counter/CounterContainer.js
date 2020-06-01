@@ -38,6 +38,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     loadTomato: (tomatoIdx) => {
+      console.log("load");
       socketApi.request({ action: "load", tomatoIdx }, () => {
         dispatch(counterActions.TOMATO_LOAD_FAILD());
       });
@@ -45,6 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     startTimer: isLogin
       ? (target) => {
+          console.log("start");
           socketApi.request({ target, action: "start" }, () => {
             dispatch(counterActions.TOMATO_START_FAILD());
           });
@@ -55,6 +57,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     stopTimer: isLogin
       ? (target) => {
+          console.log("stop");
           socketApi.request({ target, action: "stop" }, () => {
             dispatch(counterActions.TOMATO_STOP_FAILD());
           });
@@ -65,6 +68,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     resetTimer: isLogin
       ? (target) => {
+          console.log("reset");
           socketApi.request({ target, action: "reset" }, () => {
             dispatch(counterActions.TOMATO_RESET_FAILD());
           });
