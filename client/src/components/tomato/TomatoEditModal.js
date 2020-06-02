@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { makeStyles, Button, FormControl, InputLabel, Typography, TextField, Select, MenuItem } from "@material-ui/core"
+import { required } from "../../lib/validation"
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -67,38 +68,40 @@ const TomatoEditModal = (props) => {
   const tomatoCanStart = props.tomatoCanStart
 
   const tomatoEditRequest = () => {
-    //현재 로그인상태면 서버로 요청전송
-    if (props.isLogin) {
-      const editedTomato = {
-        tomatoIdx: props.index,
-        tomatoName: tomatoName.value,
-        tomatoFullRegular: tomatoFullRegular.value,
-        tomatoFullBreak: tomatoFullBreak.value,
-        tomatoCanStart,
-      }
-      props.tomatoEdit(editedTomato)
+    if (required(tomatoName.value, "토마토 이름")) {
+      //현재 로그인상태면 서버로 요청전송
+      if (props.isLogin) {
+        const editedTomato = {
+          tomatoIdx: props.index,
+          tomatoName: tomatoName.value,
+          tomatoFullRegular: tomatoFullRegular.value,
+          tomatoFullBreak: tomatoFullBreak.value,
+          tomatoCanStart,
+        }
+        props.tomatoEdit(editedTomato)
 
-      //아니면 임시토마토를 가져와서 정보수정 후 추가 액션을 보냄
-    } else {
-      const editedTempTomato = {
-        tomatoIdx: props.index,
-        tomatoName: tomatoName.value,
-        template: 0,
-        tomatoCanStart: 1,
-        tomatoDate: new Date(),
-        tomatoEndTime: 0,
-        tomatoStartTime: 0,
-        tomatoFullRegular: tomatoFullRegular.value,
-        tomatoLeftRegular: tomatoFullRegular.value,
-        tomatoFullBreak: tomatoFullBreak.value,
-        tomatoLeftBreak: tomatoFullBreak.value,
+        //아니면 임시토마토를 가져와서 정보수정 후 추가 액션을 보냄
+      } else {
+        const editedTempTomato = {
+          tomatoIdx: props.index,
+          tomatoName: tomatoName.value,
+          template: 0,
+          tomatoCanStart: 1,
+          tomatoDate: new Date(),
+          tomatoEndTime: 0,
+          tomatoStartTime: 0,
+          tomatoFullRegular: tomatoFullRegular.value,
+          tomatoLeftRegular: tomatoFullRegular.value,
+          tomatoFullBreak: tomatoFullBreak.value,
+          tomatoLeftBreak: tomatoFullBreak.value,
+        }
+        //수정요청 액션을 보내고
+        props.tempTomatoEdit(editedTempTomato)
+        //리스트 렌더 요청
+        props.getTempTomatoList()
       }
-      //수정요청 액션을 보내고
-      props.tempTomatoEdit(editedTempTomato)
-      //리스트 렌더 요청
-      props.getTempTomatoList()
+      props.onClose()
     }
-    props.onClose()
   }
   return (
     <>
@@ -111,7 +114,7 @@ const TomatoEditModal = (props) => {
         multiline
         autoFocus
         inputProps={{
-          maxlength: CHARACTER_LIMIT,
+          maxLength: CHARACTER_LIMIT,
         }}
         helperText={`${tomatoName.value.length}/${CHARACTER_LIMIT}`}
         onKeyPress={(e) => {

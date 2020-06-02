@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { makeStyles, Button, TextField, Typography } from "@material-ui/core"
+import { required } from "../../lib/validation"
 
 const useStyles = makeStyles((theme) => ({
   addTitle: {
@@ -59,31 +60,33 @@ const TomatoAddModal = (props) => {
   const tomatoName = useInput("")
   const tomatoAddRequest = () => {
     //로그인이면 서버로 요청을 보냄
-    if (isLogin) {
-      const data = {
-        createType: createType.value,
-        tomatoName: tomatoName.value,
-        templateIdx: props.templateIdx,
+    if (required(tomatoName.value, "토마토 이름")) {
+      if (isLogin) {
+        const data = {
+          createType: createType.value,
+          tomatoName: tomatoName.value,
+          templateIdx: props.templateIdx,
+        }
+        props.tomatoAdd(data)
+      } else {
+        //아니면 임시 토마토를 액션에 넣어서 스토어에 요청을 보냄
+        const tempTomato = {
+          tomatoName: tomatoName.value,
+          template: 0,
+          tomatoCanStart: 1,
+          tomatoDate: new Date(),
+          tomatoEndTime: 0,
+          tomatoStartTime: 0,
+          tomatoFullRegular: 1500,
+          tomatoLeftRegular: 1500,
+          tomatoFullBreak: 300,
+          tomatoLeftBreak: 300,
+        }
+        props.addTempTomato(tempTomato)
+        props.getTempTomatoList()
       }
-      props.tomatoAdd(data)
-    } else {
-      //아니면 임시 토마토를 액션에 넣어서 스토어에 요청을 보냄
-      const tempTomato = {
-        tomatoName: tomatoName.value,
-        template: 0,
-        tomatoCanStart: 1,
-        tomatoDate: new Date(),
-        tomatoEndTime: 0,
-        tomatoStartTime: 0,
-        tomatoFullRegular: 1500,
-        tomatoLeftRegular: 1500,
-        tomatoFullBreak: 300,
-        tomatoLeftBreak: 300,
-      }
-      props.addTempTomato(tempTomato)
-      props.getTempTomatoList()
+      props.onClose()
     }
-    props.onClose()
   }
 
   return (

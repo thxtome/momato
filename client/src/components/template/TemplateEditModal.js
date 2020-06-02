@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Button, makeStyles, TextField } from "@material-ui/core"
+import { required } from "../../lib/validation"
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -43,15 +44,17 @@ const TemplateEditModal = (props) => {
   }, [props.templateEditReducer.isTemplateEditSucceed])
 
   const templateEditRequest = () => {
-    const data = {
-      templateIdx: template.templateIdx,
-      templateName: name.value,
-      templateComment: comment.value,
+    if (required(name.value, "텃밭 이름")) {
+      const data = {
+        templateIdx: template.templateIdx,
+        templateName: name.value,
+        templateComment: comment.value,
+      }
+      template = data
+      props.editTemplate(data)
+      props.onClose()
+      props.history.push(template, `template`)
     }
-    template = data
-    props.editTemplate(data)
-    props.onClose()
-    props.history.push(template, `template`)
   }
   return (
     <>

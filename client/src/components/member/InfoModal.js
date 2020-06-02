@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Avatar, makeStyles, Typography, TextField, Button } from "@material-ui/core"
 import { toast } from "react-toastify"
+import { required, checkPass } from "../../lib/validation"
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -65,22 +66,20 @@ const useInput = (initVal) => {
 }
 
 const InfoModal = (props) => {
-  const inputMemberName = useInput("")
-  const inputMemberPass = useInput("")
-  const inputMemberPassChk = useInput("")
+  console.log(props)
+
+  const inputMemberName = useInput(props.loginReducer.memberInfo.memberName)
+  const inputMemberPass = useInput("password")
+  const inputMemberPassChk = useInput("password")
   const CHARACTER_LIMIT = 10
   const classes = useStyles()
 
   const memberUpdateBtn = () => {
     //비밀번호 확인과 일치하면 수정요청을 보내고 아니면 일치하지 않는다고 메세지를 띄운다
-    if (inputMemberPass.value === inputMemberPassChk.value) {
+    if (required(inputMemberName.value) && checkPass(inputMemberPass.value, inputMemberPassChk.value)) {
       props.memberUpdateRequest({
         memberName: inputMemberName.value,
         memberPass: inputMemberPass.value,
-      })
-    } else {
-      toast.info("비밀번호가 일치하지 않습니다.", {
-        position: toast.POSITION.TOP_CENTER,
       })
     }
   }
@@ -125,6 +124,7 @@ const InfoModal = (props) => {
                 document.getElementById("pass").focus()
               }
             }}
+            {...inputMemberName}
           />
         </div>
 
@@ -132,6 +132,7 @@ const InfoModal = (props) => {
           <Typography className={classes.pass}>비밀번호</Typography>
           <TextField
             className={classes.text}
+            validators={["required"]}
             id="pass"
             label=""
             type="password"
@@ -143,6 +144,7 @@ const InfoModal = (props) => {
                 document.getElementById("passConfirm").focus()
               }
             }}
+            {...inputMemberPass}
           />
         </div>
 
@@ -150,6 +152,7 @@ const InfoModal = (props) => {
           <Typography className={classes.confirm}>비밀번호 확인</Typography>
           <TextField
             className={classes.text}
+            validators={["required"]}
             id="passConfirm"
             label=""
             type="password"
@@ -161,6 +164,7 @@ const InfoModal = (props) => {
                 document.getElementById("button").click()
               }
             }}
+            {...inputMemberPassChk}
           />
         </div>
         <div className={classes.button}>

@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import TextField from "@material-ui/core/TextField"
 import { makeStyles, Typography, Button, Avatar } from "@material-ui/core"
 import Modals from "../common/Modal"
+import { required } from "../../lib/validation"
 
 const useStyles = makeStyles((theme) => ({
   idDiv: {
@@ -78,13 +79,14 @@ const LoginModal = (props) => {
   const email = useInput("")
   const pass = useInput("")
   const loginRequest = () => {
-    const member = {
-      memberId: email.value,
-      memberPass: pass.value,
+    if (required(email.value, "아이디") && required(pass.value, "비밀번호")) {
+      props.login({
+        memberId: email.value,
+        memberPass: pass.value,
+      })
+      props.getTomatos(data)
+      props.onClose()
     }
-    props.login(member)
-    props.getTomatos(data)
-    props.onClose()
   }
 
   return (

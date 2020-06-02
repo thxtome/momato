@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Button, makeStyles, TextField } from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
+import { required } from "../../lib/validation"
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -54,12 +55,14 @@ const TemplateModal = (props) => {
   }, [props.templateAddReducer.isTemplateAddSucceed])
 
   const templateAddRequest = () => {
-    const data = {
-      templateName: templateName.value,
-      templateComment: templateComment.value,
+    if (required(templateName.value, "텃밭 이름")) {
+      const data = {
+        templateName: templateName.value,
+        templateComment: templateComment.value,
+      }
+      props.addTemplate(data)
+      props.onClose()
     }
-    props.addTemplate(data)
-    props.onClose()
   }
 
   return (

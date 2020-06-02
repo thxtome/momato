@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { makeStyles, TextField, Typography, Button, Avatar } from "@material-ui/core"
+import { required } from "../../lib/validation"
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -56,11 +57,10 @@ const FindPassModal = (props) => {
   const classes = useStyles()
   const memberId = useInput("")
   const findPassRequest = () => {
-    const data = {
-      memberId: memberId.value,
+    if (required(memberId.value, "아이디")) {
+      props.sendTempPass(memberId.value)
+      props.onClose()
     }
-    props.sendTempPass(memberId.value)
-    props.onClose()
   }
 
   return (

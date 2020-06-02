@@ -1,9 +1,6 @@
-import axios from "axios";
+import axios from "axios"
 
-const url =
-  process.env.NODE_ENV === "production"
-    ? "https://www.momato.net:8000"
-    : "http://localhost:8080";
+const url = process.env.NODE_ENV === "production" ? "https://www.momato.net:8000" : "http://localhost:8080"
 
 export const login = ({ memberId, memberPass }) =>
   axios({
@@ -13,14 +10,14 @@ export const login = ({ memberId, memberPass }) =>
       memberId,
       memberPass,
     },
-  });
+  })
 
 export const logout = (auth) =>
   axios({
     method: "get",
     url: `${url}/members/logout`,
     headers: { Authorization: auth },
-  });
+  })
 
 export const signup = ({ memberId, memberPass, memberName }) =>
   axios({
@@ -31,14 +28,14 @@ export const signup = ({ memberId, memberPass, memberName }) =>
       memberPass,
       memberName,
     },
-  });
+  })
 
 export const getMemberInfo = () =>
   axios({
     method: "get",
     url: `${url}/members`,
     headers: { Authorization: localStorage.getItem("auth") },
-  });
+  })
 
 export const updateMember = ({ memberPass, memberName }) =>
   axios({
@@ -49,21 +46,21 @@ export const updateMember = ({ memberPass, memberName }) =>
       memberPass,
       memberName,
     },
-  });
+  })
 
 export const findPass = (memberId) =>
   axios({
     method: "get",
     url: `${url}/members/tempPass?memberId=${memberId}`,
-  });
+  })
 
 export const getTomato = (data) => {
   return axios({
     method: "get",
     headers: { Authorization: localStorage.getItem("auth") },
     url: `${url}/tomatos?tomatoDate=${data.date}&templateIdx=${data.templateIdx}`,
-  });
-};
+  })
+}
 
 export const tomatoAdd = ({ createType, tomatoName, templateIdx }) =>
   axios({
@@ -78,15 +75,9 @@ export const tomatoAdd = ({ createType, tomatoName, templateIdx }) =>
       },
       templateIdx,
     },
-  });
+  })
 
-export const tomatoEdit = ({
-  tomatoIdx,
-  tomatoName,
-  tomatoFullRegular,
-  tomatoFullBreak,
-  tomatoCanStart,
-}) =>
+export const tomatoEdit = ({ tomatoIdx, tomatoName, tomatoFullRegular, tomatoFullBreak, tomatoCanStart }) =>
   axios({
     method: "put",
     url: `${url}/tomatos`,
@@ -100,29 +91,29 @@ export const tomatoEdit = ({
       tomatoLeftBreak: tomatoFullBreak,
       tomatoCanStart,
     },
-  });
+  })
 
 export const tomatoDelete = (tomatoIdx) =>
   axios({
     method: "delete",
     url: `${url}/tomatos/${tomatoIdx}`,
     headers: { Authorization: localStorage.getItem("auth") },
-  });
+  })
 
 export const getCalendar = ({ year, month }) =>
   axios({
     method: "get",
     url: `${url}/calendar?year=${year}&month=${month}`,
     headers: { Authorization: localStorage.getItem("auth") },
-  });
+  })
 
 export const template = () => {
   return axios({
     method: "get",
     url: `${url}/templates`,
     headers: { Authorization: localStorage.getItem("auth") },
-  });
-};
+  })
+}
 
 export const templateAdd = ({ templateName, templateComment }) =>
   axios({
@@ -133,13 +124,9 @@ export const templateAdd = ({ templateName, templateComment }) =>
       templateName,
       templateComment,
     },
-  });
+  })
 
-export const updateTemplate = ({
-  templateIdx,
-  templateName,
-  templateComment,
-}) =>
+export const updateTemplate = ({ templateIdx, templateName, templateComment }) =>
   axios({
     method: "put",
     url: `${url}/templates`,
@@ -149,11 +136,11 @@ export const updateTemplate = ({
       templateName,
       templateComment,
     },
-  });
+  })
 
 export const removeTemplate = (templateIdx) =>
   axios({
     method: "delete",
     url: `${url}/templates/${templateIdx}`,
     headers: { Authorization: localStorage.getItem("auth") },
-  });
+  })

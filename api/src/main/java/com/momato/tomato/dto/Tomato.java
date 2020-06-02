@@ -25,7 +25,7 @@ public class Tomato {
 	private boolean tomatoCanStart;
 	private long tomatoStartTime;
 	private long tomatoEndTime;
-	private int templateIdx;
+	private Integer templateIdx;
 	private String memberId;
 	
 	public void startTimer() {
