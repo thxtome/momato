@@ -20,7 +20,8 @@ function* tomatoAddSaga(action) {
     const response = yield call(api.tomatoAdd, action.payload.data);
     yield put(tomatoAddActions.TOMATO_ADD_SUCCEED({ response }));
   } catch (e) {
-    console.log(e);
+    console.dir(e);
+    errorDispacher(e);
     yield put({ type: "TOMATO_ADD_FAILED", message: e.message });
   }
 }
@@ -30,7 +31,7 @@ function* tomatoEditSaga(action) {
     const response = yield call(api.tomatoEdit, action.payload.data);
     yield put(tomatoEditActions.TOMATO_EDIT_SUCCEED({ response }));
   } catch (e) {
-    console.log(e);
+    console.dir(e);
     yield put({ type: "TOMATO_EDIT_FAILED", message: e.message });
   }
 }
@@ -40,7 +41,7 @@ function* tomatoDeleteSaga(action) {
     const response = yield call(api.tomatoDelete, action.payload.data);
     yield put(tomatoDeleteActions.TOMATO_DELETE_SUCCEED({ response }));
   } catch (e) {
-    console.log(e);
+    console.dir(e);
     yield put({ type: "TOMATO_DELETE_FAILED", message: e.message });
   }
 }
@@ -52,7 +53,7 @@ function* tomatoSaga(action) {
       tomatoActions.TOMATO_SUCCEED({ tomatos: response.data.data.result })
     );
   } catch (e) {
-    console.log(e);
+    console.dir(e);
     yield put({ type: "TOMATO_FAILED", message: e.message });
   }
 }
@@ -64,7 +65,7 @@ function* templateSaga(action) {
       templateActions.TEMPLATE_SUCCEED({ templates: response.data.data.result })
     );
   } catch (e) {
-    console.log(e);
+    console.dir(e);
     yield put({ type: "TEMPLATE_FAILED", message: e.message });
   }
 }
@@ -74,7 +75,7 @@ function* templateAddSaga(action) {
     const response = yield call(api.templateAdd, action.payload.data);
     yield put(templateAddActions.TEMPLATE_ADD_SUCCEED({ response }));
   } catch (e) {
-    console.log(e);
+    console.dir(e);
     yield put({ type: "TEMPLATE_ADD_FAILED", message: e.message });
   }
 }
@@ -84,7 +85,7 @@ function* templateEditSaga(action) {
     const response = yield call(api.updateTemplate, action.payload);
     yield put(templateEditActions.TEMPLATE_EDIT_SUCCEED({ response }));
   } catch (e) {
-    console.log(e);
+    console.dir(e);
     yield put({ type: "TEMPLATE_EDIT_FAILED", message: e.message });
   }
 }
@@ -94,7 +95,7 @@ function* templateDeleteSaga(action) {
     const response = yield call(api.removeTemplate, action.payload.data);
     yield put(templateDeleteActions.TEMPLATE_DELETE_SUCCEED({ response }));
   } catch (e) {
-    console.log(e);
+    console.dir(e);
     yield put({ type: "TEMPLATE_DELETE_FAILED", message: e.message });
   }
 }
@@ -104,8 +105,8 @@ function* loginSaga(action) {
     const response = yield call(api.login, action.payload.member);
     yield put(loginActions.LOGIN_SUCCEEDED({ response }));
   } catch (e) {
-    console.log(e);
-    errorDispacher(e.response.data.error);
+    console.dir(e);
+    errorDispacher(e);
   }
 }
 
@@ -114,7 +115,7 @@ function* logoutSaga(action) {
     const response = yield call(api.logout, action.payload.auth);
     yield put(loginActions.LOGOUT_SUCCEEDED({ response }));
   } catch (e) {
-    console.log(e);
+    console.dir(e);
     yield put(loginActions.LOGOUT_FAILED({ e }));
   }
 }
@@ -124,7 +125,7 @@ function* signupSaga(action) {
     const response = yield call(api.signup, action.payload.member);
     yield put(signupActions.SIGNUP_SUCCEED({ response }));
   } catch (e) {
-    console.log(e);
+    console.dir(e);
     yield put(signupActions.SIGNUP_FAILED({ message: e.message }));
   }
 }
@@ -136,8 +137,8 @@ function* memberInfoSaga(action) {
       loginActions.MEMBERINFO_SUCCEED({ memberInfo: response.data.data.result })
     );
   } catch (e) {
-    console.log(e);
-    errorDispacher(e.response.data.error);
+    console.dir(e);
+    errorDispacher(e);
   }
 }
 
@@ -146,8 +147,8 @@ function* memberUpdateSaga(action) {
     const response = yield call(api.updateMember, action.payload.member);
     yield put(memberUpdateActions.MEMBER_UPDATE_SUCCEED({ response }));
   } catch (e) {
-    console.log(e);
-    errorDispacher(e.response.data.error);
+    console.dir(e);
+    errorDispacher(e);
   }
 }
 
@@ -157,7 +158,7 @@ function* findPassSaga(action) {
     yield put(findPassActions.FIND_PASS_SUCCEED({ response }));
   } catch (e) {
     console.dir(e);
-    errorDispacher(e.response.data.error);
+    errorDispacher(e);
   }
 }
 
@@ -170,7 +171,7 @@ function* getCalendarSaga(action) {
       })
     );
   } catch (e) {
-    console.log(e);
+    console.dir(e);
   }
 }
 

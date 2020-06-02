@@ -46,7 +46,7 @@ public class ExceptionController {
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     public ResponseResult MessagingException(HttpServletRequest req, Exception e) {
     	IdNotFoundException idNotFoundEx = new IdNotFoundException(e.getMessage(),e);
-    	ResponseResult rr = new ResponseResult(idNotFoundEx, "findPass", "0001", req.getRequestURI().toString()); 
+    	ResponseResult rr = new ResponseResult(idNotFoundEx, "FindPass", "0001", req.getRequestURI().toString()); 
     	return rr;
     }
     
@@ -55,7 +55,7 @@ public class ExceptionController {
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     public ResponseResult IdNotFoundException(HttpServletRequest req, Exception e) {
     	IdNotFoundException idNotFoundEx = new IdNotFoundException(e.getMessage(),e);
-    	ResponseResult rr = new ResponseResult(idNotFoundEx, "findPass", "0002", req.getRequestURI().toString()); 
+    	ResponseResult rr = new ResponseResult(idNotFoundEx, "FindPass", "0002", req.getRequestURI().toString()); 
     	return rr;
     }
     
