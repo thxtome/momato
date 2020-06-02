@@ -12,8 +12,8 @@ const mapDispatchToProps = (dispatch) => {
     login: (member) => {
       dispatch(loginActions.LOGIN_REQUEST({ member }));
     },
-    getTomatos: (date) => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ date }));
+    getTomatos: (data) => {
+      dispatch(tomatoActions.TOMATO_REQUEST({ data }));
     },
     loginFailedClear: () => {
       dispatch(loginActions.LOGIN_FAILED_CLEAR());
