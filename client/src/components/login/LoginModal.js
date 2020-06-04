@@ -79,7 +79,7 @@ const LoginModal = (props) => {
   const email = useInput("")
   const pass = useInput("")
   const loginRequest = () => {
-    if (required(email.value, "아이디") && required(pass.value, "비밀번호")) {
+    if (required(email.value, "아이디")) {
       props.login({
         memberId: email.value,
         memberPass: pass.value,

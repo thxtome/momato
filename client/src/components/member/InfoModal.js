@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Avatar, makeStyles, Typography, TextField, Button } from "@material-ui/core"
 import { toast } from "react-toastify"
-import { required, checkPass } from "../../lib/validation"
+import { required, checkPass, comparePass } from "../../lib/validation"
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -69,14 +69,18 @@ const InfoModal = (props) => {
   console.log(props)
 
   const inputMemberName = useInput(props.loginReducer.memberInfo.memberName)
-  const inputMemberPass = useInput("password")
-  const inputMemberPassChk = useInput("password")
+  const inputMemberPass = useInput("")
+  const inputMemberPassChk = useInput("")
   const CHARACTER_LIMIT = 10
   const classes = useStyles()
 
   const memberUpdateBtn = () => {
     //비밀번호 확인과 일치하면 수정요청을 보내고 아니면 일치하지 않는다고 메세지를 띄운다
-    if (required(inputMemberName.value) && checkPass(inputMemberPass.value, inputMemberPassChk.value)) {
+    if (
+      required(inputMemberName.value, "닉네임") &&
+      checkPass(inputMemberPass.value) &&
+      comparePass(inputMemberPass.value, inputMemberPassChk.value)
+    ) {
       props.memberUpdateRequest({
         memberName: inputMemberName.value,
         memberPass: inputMemberPass.value,
@@ -132,12 +136,14 @@ const InfoModal = (props) => {
           <Typography className={classes.pass}>비밀번호</Typography>
           <TextField
             className={classes.text}
-            validators={["required"]}
             id="pass"
             label=""
             type="password"
             placeholder="password"
             onChange={inputMemberPass.onChange}
+            InputProps={{
+              className: classes.inputPass,
+            }}
             onKeyPress={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault()
@@ -152,7 +158,6 @@ const InfoModal = (props) => {
           <Typography className={classes.confirm}>비밀번호 확인</Typography>
           <TextField
             className={classes.text}
-            validators={["required"]}
             id="passConfirm"
             label=""
             type="password"

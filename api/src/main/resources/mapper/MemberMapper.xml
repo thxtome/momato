@@ -65,7 +65,7 @@
 			<if test="memberName != null">
 				member_name = #{memberName}, 
 			</if>
-			<if test="memberPass != null">
+			<if test="memberPass != ''">
 		    	member_pass = #{memberPass},  
 			</if>
 		</set>

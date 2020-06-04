@@ -80,7 +80,7 @@ public class MemberServiceImpl implements MemberService, UserDetailsService{
 
 	@Override
 	public ResponseResult updateMember(Member member) {
-		if(member.getMemberPass() != null) {
+		if(member.getMemberPass() != "") {
 			member.setMemberPass(passwordEncoder.encode(member.getMemberPass()));
 		}
 		mapper.updateMember(member);

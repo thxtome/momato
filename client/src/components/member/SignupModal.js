@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Avatar, makeStyles, Typography, TextField, Button } from "@material-ui/core"
-import { isEmail, required } from "../../lib/validation"
+import { isEmail, required, checkPass } from "../../lib/validation"
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -61,7 +61,13 @@ const SignupModal = (props) => {
   const name = useInput("")
 
   const singupRequest = () => {
-    if (required(email.value, "아이디") && isEmail(email.value) && required(name.value, "닉네임") && required(pass.value, "비밀번호")) {
+    if (
+      required(email.value, "아이디") &&
+      isEmail(email.value) &&
+      required(name.value, "닉네임") &&
+      required(pass.value, "비밀번호") &&
+      checkPass(pass.value)
+    ) {
       props.signup({
         memberId: email.value,
         memberPass: pass.value,
