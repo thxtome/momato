@@ -43,6 +43,11 @@ public class Tomato {
 			tomatoStartTime = tomatoEndTime;
 		}
 		this.tomatoLeftRegular -= (int) ((tomatoEndTime - tomatoStartTime)/1000); 
+		
+		if(this.tomatoLeftRegular < 0) {
+			this.tomatoLeftRegular = 0;
+		}
+		
 		System.out.println("시작시간 : " + new Date(tomatoStartTime));
 		System.out.println("종료시간 : " +new Date(tomatoEndTime));
 		this.tomatoStartTime = 0;
@@ -54,6 +59,11 @@ public class Tomato {
 			tomatoStartTime = tomatoEndTime;
 		}
 		this.tomatoLeftBreak -= (int) ((tomatoEndTime - tomatoStartTime)/1000); 
+		
+		if(this.tomatoLeftBreak < 0) {
+			this.tomatoLeftBreak = 0;
+		}
+		
 		this.tomatoStartTime = 0;
 		this.tomatoEndTime = 0;
 	}

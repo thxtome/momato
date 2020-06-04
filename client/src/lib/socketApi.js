@@ -61,6 +61,11 @@ const socketSubscribe = (dispatch) => {
         }
         break;
 
+      case "ping":
+        countSocket.send(JSON.stringify({ action: "pong" }));
+        
+        break;
+
       default:
         break;
     }
