@@ -74,6 +74,19 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 			socketResp.addData("tomato", tomato);
 			socketResp.addData("action", action);
 			break;
+			
+			// 재연결시 
+		case "reload":
+			// 클라이언트로부터 토마토 정보를 받아와 맵에 추가
+			tomato = socketReq.getTomato();
+			tomatoMap.put(session.getId(), tomato);
+			//db에 저장
+			service.editTomato(tomato);
+			// 응답객체 생성후 토마토 정보와 함께 보내줌
+			socketResp = new WebsocketResponse(true);
+			socketResp.addData("tomato", tomato);
+			socketResp.addData("action", action);
+			break;
 
 		// 타이머 시작요청을 받으면
 		case "start":
