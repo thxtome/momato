@@ -192,6 +192,16 @@ const Counter = (props) => {
     showNotification(msg);
   };
 
+  const beforeBtnClick = (fn) => {
+    if (isConnected) {
+      fn();
+    } else if (Navigator.onLine) {
+      //reConnect();
+    } else {
+      errorDispacher({ message: "Network Error" });
+    }
+  };
+
   //처음 페이지 생성시
   useEffect(() => {
     //로그인이 되어있으면 소켓을 연다
