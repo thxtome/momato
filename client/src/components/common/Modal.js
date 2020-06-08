@@ -17,6 +17,7 @@ import TomatoEditModalContainer from "../../containers/tomato/TomatoEditModalCon
 import { ListItemText, ListItemIcon, ListItem } from "@material-ui/core"
 import TemplateAddModalContainer from "../../containers/template/TemplateAddModalContainer"
 import LoadTemplateModal from "../tomato/LoadTemplateModal"
+import WithdrawModalContainer from "../../containers/member/WithdrawModalContainer"
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -78,6 +79,9 @@ const useStyles = makeStyles((theme) => ({
       color: "grey",
     },
   },
+  withdraw: {
+    color: "black",
+  },
 }))
 
 export default function TransitionsModal({
@@ -133,6 +137,10 @@ export default function TransitionsModal({
       ) : type === "info" ? (
         <Button className={classes.infoBtn} type="button" onClick={handleOpen}>
           {name}
+        </Button>
+      ) : type === "withdraw" ? (
+        <Button className={classes.withdraw} type="button" onClick={handleOpen}>
+          회원탈퇴
         </Button>
       ) : type === "tomatoAdd" ? (
         <div className={classes.addBtn}>
@@ -212,6 +220,8 @@ export default function TransitionsModal({
               <SignupModalContainer onClose={handleClose} />
             ) : type === "info" ? (
               <InfoModalContainer onClose={handleClose} />
+            ) : type === "withdraw" ? (
+              <WithdrawModalContainer onClose={handleClose} />
             ) : type === "tomatoAdd" ? (
               <TomatoAddModalContainer templateIdx={templateIdx} onClose={handleClose} />
             ) : type === "loadTemplate" ? (

@@ -55,14 +55,17 @@ const Header = (props) => {
         {!props.loginReducer.isLogin ? (
           <Modals type="login" />
         ) : (
-          <Button
-            className={classes.logout}
-            onClick={() => {
-              logoutRequest()
-            }}
-          >
-            LOGOUT
-          </Button>
+          <>
+            <Button
+              className={classes.logout}
+              onClick={() => {
+                logoutRequest()
+              }}
+            >
+              LOGOUT
+            </Button>
+            <Modals type="withdraw" />
+          </>
         )}
         {!props.loginReducer.isLogin ? <Modals type="signup" /> : null}
       </Toolbar>

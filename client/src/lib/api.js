@@ -54,6 +54,13 @@ export const findPass = (memberId) =>
     url: `${url}/members/tempPass?memberId=${memberId}`,
   })
 
+export const withdraw = () =>
+  axios({
+    method: "delete",
+    headers: { Authorization: localStorage.getItem("auth") },
+    url: `${url}/members`,
+  })
+
 export const getTomato = (data) => {
   return axios({
     method: "get",

@@ -74,7 +74,7 @@
 	
 	<delete id="deleteMember" parameterType="string">
 		delete 
-		  from member
+		  from `member`
 		 where member_id = #{memberId}
 	</delete>
 </mapper>
