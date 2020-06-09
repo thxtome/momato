@@ -112,6 +112,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       socketApi.request({ action: "reload", reloadData });
     },
 
+    unexpectedClose: () => {
+      dispatch(counterActions.UNEXPECTED_SOCKET_CLOSED());
+    },
+
     //임시토마토 저장
     tempTomatoSave: (tomatoIdx) => {
       dispatch(counterActions.TEMP_TOMATO_SAVE({ tomatoIdx }));

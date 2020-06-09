@@ -77,7 +77,7 @@ const socketSubscribe = (dispatch) => {
     }
     countSocket.onclose = (e) => {
       if (e.code === 1006 || e.code === 1001) {
-        dispatch(counterActions.UNEXPECTED_SOCKET_CLOSED());
+        dispatch(counterActions.SOCKET_RECONNECTING());
       }
     };
   };

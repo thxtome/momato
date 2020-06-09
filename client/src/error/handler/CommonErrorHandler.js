@@ -8,6 +8,11 @@ const CommonErrorHandler = (errorDetail) => {
         position: toast.POSITION.TOP_CENTER,
       });
       break;
+    case "0002":
+      toast.error(`소켓 연결 오류입니다.`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      break;
   }
 };
 

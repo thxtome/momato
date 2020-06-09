@@ -127,6 +127,7 @@ const Counter = (props) => {
     closeConnection,
     reConnect,
     reload,
+    unexpectedClose,
     isLoaded,
     isFinished,
     loadTempTomato,
@@ -298,11 +299,15 @@ const Counter = (props) => {
     //연결은 됐는데 로드가 안 됐으면
     //토마토를 로드함
     if (isLogin) {
-      if (connectState === WEBSOCKET_CONNECTED_STATE.UNEXPECTED_CLOSE) {
+      if (connectState === WEBSOCKET_CONNECTED_STATE.RECONNECTING) {
         let cnt = 0;
         let key = setInterval(() => {
           if (cnt === 5) {
             clearTimeout(key);
+            errorDispacher({
+              message: "Socket Connection Error",
+            });
+            unexpectedClose();
             return;
           }
           cnt++;
