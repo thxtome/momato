@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.PongMessage;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -16,6 +15,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.google.gson.Gson;
 import com.momato.tomato.TomatoService;
 import com.momato.tomato.dto.Tomato;
+import com.momato.websocket.dto.ReloadData;
 import com.momato.websocket.dto.WebsocketReqeust;
 import com.momato.websocket.dto.WebsocketResponse;
 
@@ -74,14 +74,25 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 			socketResp.addData("tomato", tomato);
 			socketResp.addData("action", action);
 			break;
-			
-			// 재연결시 
+
+		// 재연결시
 		case "reload":
 			// 클라이언트로부터 토마토 정보를 받아와 맵에 추가
-			tomato = socketReq.getTomato();
+			ReloadData reloadData = socketReq.getReloadData();
+			tomato = service.retrieveOneTomato(socketReq.getReloadData().getTomatoIdx());
+			
+			if(reloadData.isTargetRegular()) {
+				tomato.setTomatoLeftRegular(reloadData.getLeftTime());
+			} else {
+				tomato.setTomatoLeftBreak(reloadData.getLeftTime());
+			}
+			
+			if(reloadData.isGoing()) {
+				tomato.startTimer();
+			}
+			
 			tomatoMap.put(session.getId(), tomato);
-			//db에 저장
-			service.editTomato(tomato);
+
 			// 응답객체 생성후 토마토 정보와 함께 보내줌
 			socketResp = new WebsocketResponse(true);
 			socketResp.addData("tomato", tomato);
@@ -181,15 +192,17 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 		unexpectedClose(session);
 	}
 
-	@Scheduled(fixedDelay = 3000)
+	@Scheduled(fixedDelay = 5000)
 	public void sendPingMessage() throws Exception {
 		// 5초동안 응답을 받고 남아있는 키를 비정상 종료로 간주한다. 그리고 종료시킨다
-
+		System.out.println("핑");
 		for (String key : pingList) {
 			WebSocketSession session = sessionMap.get(key);
+			System.out.println("퐁");
 			unexpectedClose(session);
+
 		}
-		
+
 		pingList.clear();
 		pingList.addAll(sessionMap.keySet());
 		for (WebSocketSession session : sessionMap.values()) {
@@ -205,13 +218,13 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 		if (lastSocketReq.isRequiredSave()) {
 			Tomato tomato = tomatoMap.get(session.getId());
 			tomato.endTimer();
-			
+
 			if (lastSocketReq.isTargetRegularTime()) {
 				tomato.calRegularTime();
 			} else {
 				tomato.calBreakTime();
 			}
-			
+
 			service.editTomato(tomato);
 		}
 

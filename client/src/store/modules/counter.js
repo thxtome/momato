@@ -1,4 +1,5 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
+import { WEBSOCKET_CONNECTED_STATE } from "../../lib/socketApi";
 
 //로그인시 소켓에 요청하거나 응답받는 액션
 const TOMATO_LOAD_FAILD = createAction("TOMATO_LOAD_FAILD");
@@ -14,6 +15,8 @@ const TOMATO_REGULAR_TIME_FINISH_SUCCED = createAction(
 );
 const TOMATO_FINISH_FAILD = createAction("TOMATO_FINISH_FAILD");
 const OPEN_SOCKET_SUCCEED = createAction("OPEN_SOCKET_SUCCEED");
+const UNEXPECTED_SOCKET_CLOSED = createAction("UNEXPECTED_SOCKET_CLOSED");
+const SOCKET_RECONNECTING = createAction("SOCKET_RECONNECTING");
 const CLOSE_SOCKET = createAction("CLOSE_SOCKET");
 const ADD_TIME = createAction("ADD_TIME");
 
@@ -32,6 +35,8 @@ export const counterActions = {
   TOMATO_REGULAR_TIME_FINISH_SUCCED,
   TOMATO_FINISH_FAILD,
   OPEN_SOCKET_SUCCEED,
+  SOCKET_RECONNECTING,
+  UNEXPECTED_SOCKET_CLOSED,
   CLOSE_SOCKET,
   ADD_TIME,
   TEMP_TOMATO_LOAD,
@@ -46,7 +51,7 @@ const initialState = {
   target: "regularTime",
   isGoing: false,
   isLodaSucced: false,
-  isConnected: false,
+  connectState: WEBSOCKET_CONNECTED_STATE.CLOSE,
   isLoaded: false,
   isFinished: false,
   currentTime: null,
@@ -164,7 +169,23 @@ const reducer = createReducer(initialState, {
   },
 
   [OPEN_SOCKET_SUCCEED]: (state, action) => {
-    return { ...state, isConnected: true };
+    return { ...state, connectState: WEBSOCKET_CONNECTED_STATE.CONNECTED };
+  },
+
+  [UNEXPECTED_SOCKET_CLOSED]: (state, action) => {
+    return {
+      ...state,
+      isGoing: false,
+      isFinished: false,
+      connectState: WEBSOCKET_CONNECTED_STATE.UNEXPECTED_CLOSE,
+    };
+  },
+
+  [SOCKET_RECONNECTING]: (state, action) => {
+    return {
+      ...state,
+      connectState: WEBSOCKET_CONNECTED_STATE.RECONNECTING,
+    };
   },
 
   [CLOSE_SOCKET]: (state, action) => {
@@ -172,10 +193,10 @@ const reducer = createReducer(initialState, {
       fullTime: 0,
       leftTime: 0,
       timePassed: 0,
-      target: null,
+      target: "regularTime",
       isGoing: false,
       isLodaSucced: false,
-      isConnected: false,
+      connectState: WEBSOCKET_CONNECTED_STATE.CLOSE,
       isLoaded: false,
       isFinished: false,
       currentTime: null,
@@ -206,7 +227,7 @@ const reducer = createReducer(initialState, {
       target: null,
       isGoing: false,
       isLodaSucced: false,
-      isConnected: false,
+      connectState: WEBSOCKET_CONNECTED_STATE.CLOSE,
       isLoaded: false,
       isFinished: false,
       currentTime: null,

@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
     isGoing,
     timePassed,
     target,
-    isConnected,
+    connectState,
     isLoaded,
     isFinished,
   } = state.counterReducer;
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     isGoing,
     timePassed,
     target,
-    isConnected,
+    connectState,
     isLoaded,
     isFinished,
   };
@@ -101,6 +101,20 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           dispatch(counterActions.CLOSE_SOCKET());
         }
       : () => {},
+
+    reConnect: isLogin
+      ? () => {
+          socketApi.openSocket(dispatch);
+        }
+      : () => {},
+
+    reload: (reloadData) => {
+      socketApi.request({ action: "reload", reloadData });
+    },
+
+    unexpectedClose: () => {
+      dispatch(counterActions.UNEXPECTED_SOCKET_CLOSED());
+    },
 
     //임시토마토 저장
     tempTomatoSave: (tomatoIdx) => {

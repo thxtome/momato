@@ -1,7 +1,5 @@
 package com.momato.websocket.dto;
 
-import com.momato.tomato.dto.Tomato;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,14 +9,14 @@ public class WebsocketReqeust {
 	private String action;
 	private String target;
 	private int tomatoIdx;
-	private Tomato tomato;
+	private ReloadData reloadData;
 	
 	public boolean isTargetRegularTime() {
-		return target.contentEquals("regularTime");
+		return (null != target && target.contentEquals("regularTime")) || (action.equals("reload") && reloadData.isTargetRegular());
 	};
 	
 	public boolean isRequiredSave() {
-		return action.equals("start");
+		return action.equals("start") || (action.equals("reload") && reloadData.isGoing()) ;
 	}
 	
 }
