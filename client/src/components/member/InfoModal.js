@@ -66,8 +66,6 @@ const useInput = (initVal) => {
 }
 
 const InfoModal = (props) => {
-  console.log(props)
-
   const inputMemberName = useInput(props.loginReducer.memberInfo.memberName)
   const inputMemberPass = useInput("")
   const inputMemberPassChk = useInput("")

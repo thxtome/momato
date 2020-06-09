@@ -4,7 +4,8 @@ import { templateActions } from "../../store/modules/template.js"
 import TemplateEditModal from "../../components/template/TemplateEditModal.js"
 
 const mapStateToProps = (state) => {
-  return state
+  const { isTemplateEditSucceed } = state.templateEditReducer
+  return { isTemplateEditSucceed }
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -35,7 +35,6 @@ const useInput = (initVal) => {
 }
 
 const WithdrawModal = (props) => {
-  console.log(props)
   const classes = useStyles()
   const withDrawRequest = () => {
     props.withdrawRequest()

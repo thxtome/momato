@@ -1,8 +1,6 @@
 import React, { useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import TemplateContainer from "../containers/template/TemplateContainer"
-import Tomato from "../components/tomato/Tomato"
-import Modals from "../components/common/Modal"
 import TomatoListContainer from "../containers/tomato/TomatoListContainer"
 
 const useStyles = makeStyles((theme) => ({

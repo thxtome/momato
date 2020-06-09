@@ -50,7 +50,6 @@ function* tomatoDeleteSaga(action) {
 }
 
 function* tomatoSaga(action) {
-  console.log(action)
   try {
     const response = yield call(api.getTomato, action.payload.data)
     yield put(tomatoActions.TOMATO_SUCCEED({ tomatos: response.data.data.result }))

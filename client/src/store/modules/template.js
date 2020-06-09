@@ -9,21 +9,22 @@ export const templateActions = { TEMPLATE_REQUEST, TEMPLATE_SUCCEED, TEMPLATE_FA
 
 const initialState = {
   isTemplateSucceed: false,
+  isTemplateLoading: false,
   templates: [],
 }
 
 const reducer = createReducer(initialState, {
   [TEMPLATE_REQUEST]: (state, action) => {
-    return { ...state, action }
+    return { ...state, action, isTemplateLoading: true }
   },
 
   [TEMPLATE_SUCCEED]: (state, action) => {
     const templates = action.payload.templates
-    return { ...state, templates: templates }
+    return { ...state, templates: templates, isTemplateLoading: false }
   },
 
   [TEMPLATE_FAILED]: (state, action) => {
-    return { ...state, isTemplateSucceed: false }
+    return { ...state, isTemplateSucceed: false, isTemplateLoading: false }
   },
 
   [TEMPLATE_CLEAR]: (state, action) => {

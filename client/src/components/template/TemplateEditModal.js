@@ -32,16 +32,13 @@ const useInput = (initVal) => {
 }
 
 const TemplateEditModal = (props) => {
+  const isTemplateEditSucceed = props
   let template = props.template
   const NAME_CHARACTER_LIMIT = 15
   const COMMENT_CHARACTER_LIMIT = 25
   const classes = useStyles()
   const name = useInput(template.templateName)
   const comment = useInput(template.templateComment)
-
-  useEffect(() => {
-    props.getTemplateList()
-  }, [props.templateEditReducer.isTemplateEditSucceed])
 
   const templateEditRequest = () => {
     if (required(name.value, "텃밭 이름")) {
@@ -53,6 +50,7 @@ const TemplateEditModal = (props) => {
       template = data
       props.editTemplate(data)
       props.onClose()
+      props.clearEditResult()
       props.history.push(template, `template`)
     }
   }

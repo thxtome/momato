@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Typography from "@material-ui/core/Typography"
@@ -7,6 +7,7 @@ import Modals from "../common/Modal"
 import { Button } from "@material-ui/core"
 import AppMenuContainer from "../../containers/header/AppMenuContainer"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
+import Load from "../common/Load"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,39 +38,48 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Header = (props) => {
+  const { isLogin, isMemberLoading, isTomatoLoading, isTemplateLoading, isCalendarLoading } = props
+  let isLoading = false
   const classes = useStyles()
   const matches = useMediaQuery("(min-width:800px)")
   const logoutRequest = () => {
     props.logout(localStorage.getItem("auth"))
     props.getTempTomatoList()
   }
-
+  if (isMemberLoading || isTomatoLoading || isTemplateLoading || isCalendarLoading) {
+    isLoading = true
+  } else if (!isMemberLoading && !isTomatoLoading && !isTemplateLoading && !isCalendarLoading) {
+    isLoading = false
+  }
   return (
-    <AppBar className={classes.root} elevation={1}>
-      <Toolbar className={classes.toolbar}>
-        {matches ? "" : <AppMenuContainer />}
+    <>
+      {isLoading ? <Load /> : <></>}
+      <AppBar className={classes.root} elevation={1}>
+        <Toolbar className={classes.toolbar}>
+          {matches ? "" : <AppMenuContainer />}
 
-        <Typography variant="h6" edge="start" className={classes.title}>
-          MOMATO
-        </Typography>
-        {!props.loginReducer.isLogin ? (
-          <Modals type="login" />
-        ) : (
-          <>
-            <Button
-              className={classes.logout}
-              onClick={() => {
-                logoutRequest()
-              }}
-            >
-              LOGOUT
-            </Button>
-            <Modals type="withdraw" />
-          </>
-        )}
-        {!props.loginReducer.isLogin ? <Modals type="signup" /> : null}
-      </Toolbar>
-    </AppBar>
+          <Typography variant="h6" edge="start" className={classes.title}>
+            MOMATO
+          </Typography>
+          {!isLogin ? (
+            <Modals type="login" />
+          ) : (
+            <>
+              <Button
+                className={classes.logout}
+                onClick={() => {
+                  logoutRequest()
+                }}
+              >
+                LOGOUT
+              </Button>
+              <Modals type="withdraw" />
+            </>
+          )}
+          {!isLogin ? <Modals type="signup" /> : null}
+        </Toolbar>
+      </AppBar>
+    </>
   )
 }
 
