@@ -1,48 +1,60 @@
-import { counterActions } from "../store/modules/counter"
-import SockJsClient from "sockjs-client"
+import { counterActions } from "../store/modules/counter";
+import SockJsClient from "sockjs-client";
 
-const url = process.env.NODE_ENV === "production" ? "https://www.momato.net:8000" : "http://localhost:8080"
+export const WEBSOCKET_CONNECTED_STATE = {
+  CONNECTED: 1,
+  RECONNECTING: 2,
+  UNEXPECTED_CLOSE: 3,
+  CLOSE: 4,
+};
 
-let countSocket = undefined
+const url =
+  process.env.NODE_ENV === "production"
+    ? "https://www.momato.net:8000"
+    : "http://localhost:8080";
+
+let countSocket = undefined;
 
 const socketSubscribe = (dispatch) => {
   countSocket.onmessage = (e) => {
-    const response = JSON.parse(e.data)
+    const response = JSON.parse(e.data);
 
     switch (response.data.action) {
       case "connection":
-        dispatch(counterActions.OPEN_SOCKET_SUCCEED())
-        break
+        dispatch(counterActions.OPEN_SOCKET_SUCCEED());
+        break;
 
       case "load":
-        let target
-        let fullTime
-        let leftTime
+        let target;
+        let fullTime;
+        let leftTime;
 
         if (response.data.tomato.tomatoCanStart) {
-          target = "regularTime"
-          fullTime = response.data.tomato.tomatoFullRegular
-          leftTime = response.data.tomato.tomatoLeftRegular
+          target = "regularTime";
+          fullTime = response.data.tomato.tomatoFullRegular;
+          leftTime = response.data.tomato.tomatoLeftRegular;
         } else {
-          target = "breakTime"
-          fullTime = response.data.tomato.tomatoFullBreak
-          leftTime = response.data.tomato.tomatoLeftBreak
+          target = "breakTime";
+          fullTime = response.data.tomato.tomatoFullBreak;
+          leftTime = response.data.tomato.tomatoLeftBreak;
         }
-        console.log({ target, leftTime, fullTime })
-        dispatch(counterActions.TOMATO_LOAD_SUCCED({ target, leftTime, fullTime }))
-        break
+        console.log({ target, leftTime, fullTime });
+        dispatch(
+          counterActions.TOMATO_LOAD_SUCCED({ target, leftTime, fullTime })
+        );
+        break;
 
       case "start":
-        dispatch(counterActions.TOMATO_START_SUCCED())
-        break
+        dispatch(counterActions.TOMATO_START_SUCCED());
+        break;
 
       case "stop":
-        dispatch(counterActions.TOMATO_STOP_SUCCED())
-        break
+        dispatch(counterActions.TOMATO_STOP_SUCCED());
+        break;
 
       case "reset":
-        dispatch(counterActions.TOMATO_RESET_SUCCED())
-        break
+        dispatch(counterActions.TOMATO_RESET_SUCCED());
+        break;
 
       case "finish":
         if (response.data.target === "regularTime") {
@@ -50,45 +62,47 @@ const socketSubscribe = (dispatch) => {
             counterActions.TOMATO_REGULAR_TIME_FINISH_SUCCED({
               breakTime: response.data.tomato.tomatoFullBreak,
             })
-          )
+          );
         } else {
-          dispatch(counterActions.TOMATO_BREAK_TIME_FINISH_SUCCED())
+          dispatch(counterActions.TOMATO_BREAK_TIME_FINISH_SUCCED());
         }
-        break
+        break;
 
       case "ping":
-        countSocket.send(JSON.stringify({ action: "pong" }))
-
-        break
+        countSocket.send(JSON.stringify({ action: "pong" }));
+        break;
 
       default:
-        break
+        break;
     }
-  }
-}
+    countSocket.onclose = (e) => {
+      if (e.code === 1006 || e.code === 1001) {
+        dispatch(counterActions.UNEXPECTED_SOCKET_CLOSED());
+      }
+    };
+  };
+};
 
 const openSocket = (dispatch) => {
-  countSocket = new SockJsClient(`${url}/tomatoTimer`)
-  socketSubscribe(dispatch)
-}
+  countSocket = new SockJsClient(`${url}/tomatoTimer`);
+  socketSubscribe(dispatch);
+};
 
 const closeSocket = () => {
-  countSocket.close()
-  countSocket = null
-}
+  countSocket.close();
+  countSocket = null;
+};
 
 const request = (params, failed) => {
   try {
     if (countSocket) {
-      countSocket.send(JSON.stringify(params))
+      countSocket.send(JSON.stringify(params));
     } else {
-      console.log("socketIsClosed")
-      failed()
+      failed();
     }
   } catch (error) {
-    console.log("socketError")
-    console.dir(error)
+    console.dir(error);
   }
-}
+};
 
-export default { openSocket, closeSocket, request }
+export default { openSocket, closeSocket, request };

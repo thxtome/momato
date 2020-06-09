@@ -11,6 +11,8 @@ import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import RestoreIcon from "@material-ui/icons/Restore";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import errorDispacher from "../../error/errorDispacher";
+import { WEBSOCKET_CONNECTED_STATE } from "../../lib/socketApi";
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -114,6 +116,7 @@ const Counter = (props) => {
     leftTime,
     isGoing,
     target,
+    connectState,
     startTimer,
     stopTimer,
     resetTimer,
@@ -122,7 +125,8 @@ const Counter = (props) => {
     loadTomato,
     openConnection,
     closeConnection,
-    isConnected,
+    reConnect,
+    reload,
     isLoaded,
     isFinished,
     loadTempTomato,
@@ -134,6 +138,9 @@ const Counter = (props) => {
   //알림지원여부
   const [isNotificationSupport, setIsNotificationSupport] = useState(true);
   const [isNotificationAllow, setIsNotificationAllow] = useState(false);
+  //재연결 인터벌 키
+  const [reConnectIntevalKey, setReConnectIntevalKey] = useState(null);
+  console.log(props);
   let notificationMsg = !isNotificationSupport
     ? "브라우저가 알림을 지원하지 않습니다."
     : isNotificationAllow
@@ -193,7 +200,7 @@ const Counter = (props) => {
   };
 
   const beforeBtnClick = (fn) => {
-    if (isConnected) {
+    if (connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED) {
       fn();
     } else if (Navigator.onLine) {
       //reConnect();
@@ -240,7 +247,6 @@ const Counter = (props) => {
         };
   }, []);
 
-  //매번 렌더시
   useEffect(() => {
     //타이머가 작동상태이면
     if (isGoing === true) {
@@ -276,7 +282,7 @@ const Counter = (props) => {
     //연결은 됐는데 로드가 안 됐으면
     //토마토를 로드함
     if (isLogin) {
-      if (isConnected && !isLoaded) {
+      if (connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED && !isLoaded) {
         loadTomato(tomatoIdx);
       }
       //로그인이 안됐으면서 로드가 안 됐으면 임시 토마토를 로드한다.
@@ -285,7 +291,46 @@ const Counter = (props) => {
         loadTempTomato(tomatoIdx);
       }
     }
-  }, [isConnected, isLoaded]);
+  }, [connectState, isLoaded]);
+
+  //재연결이 필요할 때
+  useEffect(() => {
+    //연결은 됐는데 로드가 안 됐으면
+    //토마토를 로드함
+    if (isLogin) {
+      if (connectState === WEBSOCKET_CONNECTED_STATE.UNEXPECTED_CLOSE) {
+        let cnt = 0;
+        let key = setInterval(() => {
+          if (cnt === 5) {
+            clearTimeout(key);
+            return;
+          }
+          cnt++;
+          console.log(key, cnt, "reconnect");
+          reConnect();
+        }, 2000);
+        setReConnectIntevalKey(key);
+
+        return () => {
+          clearTimeout(key);
+        };
+      } else if (
+        //재연결이 성공하면
+        connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED &&
+        isLoaded
+      ) {
+        clearTimeout(reConnectIntevalKey);
+        let reloadData = {
+          leftTime: leftTime - timePassed,
+          target,
+          isGoing,
+          isFinished,
+          tomatoIdx,
+        };
+        reload(reloadData);
+      }
+    }
+  }, [connectState]);
 
   //뒤로가기
   const goBack = () => {
