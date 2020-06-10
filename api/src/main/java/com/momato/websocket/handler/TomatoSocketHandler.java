@@ -91,11 +91,14 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 				tomato.startTimer();
 			}
 			
+			if(reloadData.getLeftTime() == 0) {
+				reloadData.setFinished(true);				
+			}
 			tomatoMap.put(session.getId(), tomato);
 
 			// 응답객체 생성후 토마토 정보와 함께 보내줌
 			socketResp = new WebsocketResponse(true);
-			socketResp.addData("tomato", tomato);
+			socketResp.addData("reloadData", reloadData);
 			socketResp.addData("action", action);
 			break;
 

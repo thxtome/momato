@@ -38,7 +38,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     loadTomato: (tomatoIdx) => {
-      console.log("load");
       socketApi.request({ action: "load", tomatoIdx }, () => {
         dispatch(counterActions.TOMATO_LOAD_FAILD());
       });
@@ -57,18 +56,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     stopTimer: isLogin
       ? (target) => {
-          console.log("stop");
           socketApi.request({ target, action: "stop" }, () => {
             dispatch(counterActions.TOMATO_STOP_FAILD());
           });
         }
       : () => {
-          dispatch(counterActions.TOMATO_STOP_SUCCED());
+        dispatch(counterActions.TOMATO_STOP_SUCCED());
         },
 
     resetTimer: isLogin
       ? (target) => {
-          console.log("reset");
           socketApi.request({ target, action: "reset" }, () => {
             dispatch(counterActions.TOMATO_RESET_FAILD());
           });
@@ -78,13 +75,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
 
     finishTimer: (target) => {
+      dispatch(counterActions.TOMATO_STOP_SUCCED());
       socketApi.request({ target, action: "finish" }, () => {
         dispatch(counterActions.TOMATO_FINISH_FAILD());
       });
     },
 
     finishTempTimer: (tomatoIdx) => {
+      dispatch(counterActions.TOMATO_STOP_SUCCED());
       dispatch(counterActions.TEMP_TOMATO_FINISH({ tomatoIdx }));
+    },
+
+    finishTimerOnReconnecting: () => {
+      dispatch(counterActions.TOMATO_STOP_ON_RECONNECTING());
     },
 
     //소켓을 열고 구독신청함

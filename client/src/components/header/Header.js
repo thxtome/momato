@@ -38,18 +38,37 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Header = (props) => {
-  const { isLogin, isMemberLoading, isTomatoLoading, isTemplateLoading, isCalendarLoading } = props
-  let isLoading = false
-  const classes = useStyles()
-  const matches = useMediaQuery("(min-width:800px)")
+  const {
+    isLogin,
+    isMemberLoading,
+    isTomatoLoading,
+    isTemplateLoading,
+    isCalendarLoading,
+    isTimerLoading,
+  } = props;
+  let isLoading = false;
+  const classes = useStyles();
+  const matches = useMediaQuery("(min-width:800px)");
   const logoutRequest = () => {
-    props.logout(localStorage.getItem("auth"))
-    props.getTempTomatoList()
-  }
-  if (isMemberLoading || isTomatoLoading || isTemplateLoading || isCalendarLoading) {
-    isLoading = true
-  } else if (!isMemberLoading && !isTomatoLoading && !isTemplateLoading && !isCalendarLoading) {
-    isLoading = false
+    props.logout(localStorage.getItem("auth"));
+    props.getTempTomatoList();
+  };
+  if (
+    isMemberLoading ||
+    isTomatoLoading ||
+    isTemplateLoading ||
+    isCalendarLoading ||
+    isTimerLoading
+  ) {
+    isLoading = true;
+  } else if (
+    !isMemberLoading &&
+    !isTomatoLoading &&
+    !isTemplateLoading &&
+    !isCalendarLoading &&
+    !isTimerLoading
+  ) {
+    isLoading = false;
   }
   return (
     <>

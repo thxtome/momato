@@ -6,6 +6,7 @@ const TOMATO_LOAD_FAILD = createAction("TOMATO_LOAD_FAILD");
 const TOMATO_LOAD_SUCCED = createAction("TOMATO_LOAD_SUCCED");
 const TOMATO_START_SUCCED = createAction("TOMATO_START_SUCCED");
 const TOMATO_STOP_SUCCED = createAction("TOMATO_STOP_SUCCED");
+const TOMATO_STOP_ON_RECONNECTING = createAction("TOMATO_STOP_ON_RECONNECTING");
 const TOMATO_RESET_SUCCED = createAction("TOMATO_RESET_SUCCED");
 const TOMATO_BREAK_TIME_FINISH_SUCCED = createAction(
   "TOMATO_BREAK_TIME_FINISH_SUCCED"
@@ -30,6 +31,7 @@ export const counterActions = {
   TOMATO_LOAD_FAILD,
   TOMATO_START_SUCCED,
   TOMATO_STOP_SUCCED,
+  TOMATO_STOP_ON_RECONNECTING,
   TOMATO_RESET_SUCCED,
   TOMATO_BREAK_TIME_FINISH_SUCCED,
   TOMATO_REGULAR_TIME_FINISH_SUCCED,
@@ -55,6 +57,7 @@ const initialState = {
   isLoaded: false,
   isFinished: false,
   currentTime: null,
+  isTimerLoading: false,
 };
 
 const reducer = createReducer(initialState, {
@@ -102,6 +105,10 @@ const reducer = createReducer(initialState, {
 
   [TOMATO_STOP_SUCCED]: (state, action) => {
     return { ...state, isGoing: false, startTime: null };
+  },
+
+  [TOMATO_STOP_ON_RECONNECTING]: (state) => {
+    return { ...state, isGoing: false };
   },
 
   [TOMATO_RESET_SUCCED]: (state, action) => {
@@ -159,17 +166,18 @@ const reducer = createReducer(initialState, {
   },
 
   [ADD_TIME]: (state, action) => {
-    console.log(state.currentTime);
-    console.log(state.timePassed);
     const timePassed = Math.round(
       state.timePassed + (new Date().getTime() - state.currentTime) / 1000
     );
-    console.log(timePassed);
     return { ...state, currentTime: new Date().getTime(), timePassed };
   },
 
   [OPEN_SOCKET_SUCCEED]: (state, action) => {
-    return { ...state, connectState: WEBSOCKET_CONNECTED_STATE.CONNECTED };
+    return {
+      ...state,
+      connectState: WEBSOCKET_CONNECTED_STATE.CONNECTED,
+      isTimerLoading: false,
+    };
   },
 
   [UNEXPECTED_SOCKET_CLOSED]: (state, action) => {
@@ -178,6 +186,7 @@ const reducer = createReducer(initialState, {
       isGoing: false,
       isFinished: false,
       connectState: WEBSOCKET_CONNECTED_STATE.UNEXPECTED_CLOSE,
+      isTimerLoading: false,
     };
   },
 
@@ -185,6 +194,7 @@ const reducer = createReducer(initialState, {
     return {
       ...state,
       connectState: WEBSOCKET_CONNECTED_STATE.RECONNECTING,
+      isTimerLoading: true,
     };
   },
 

@@ -38,10 +38,19 @@ const socketSubscribe = (dispatch) => {
           fullTime = response.data.tomato.tomatoFullBreak;
           leftTime = response.data.tomato.tomatoLeftBreak;
         }
-        console.log({ target, leftTime, fullTime });
         dispatch(
           counterActions.TOMATO_LOAD_SUCCED({ target, leftTime, fullTime })
         );
+        break;
+
+      case "reload":
+        const isFinished = response.data.reloadData.isFinished;
+        const reloadTarget = response.data.reloadData.target;
+        if (isFinished) {
+          request({ target: reloadTarget, action: "finish" }, () => {
+            dispatch(counterActions.TOMATO_FINISH_FAILD());
+          });
+        }
         break;
 
       case "start":

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { makeStyles, Paper, Avatar, Typography, Box } from "@material-ui/core"
+import React from "react"
+import { makeStyles, Box } from "@material-ui/core"
 import CircularProgress from "@material-ui/core/CircularProgress"
 
 const useStyles = makeStyles((theme) => ({
