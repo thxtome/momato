@@ -54,37 +54,35 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	private Authentication getUsernamePasswordAuthentication(HttpServletRequest request)
 			throws AuthenticationException {
 		String token = request.getHeader(JwtProperties.HEADER_STRING);
-		
-//        try {
-		if (token != null) {
-			// 토큰의 유효성체크
-			String memberId = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET.getBytes())).build()
-					.verify(token.replace(JwtProperties.TOKEN_PREFIX, "")).getSubject();
 
-			// db에서 로그아웃한 회원인지 확인
-			if (service.jwtIsInvalid(token)) {
-				throw new JwtAuthenticationException("token is expired");
-			}
-
-			// db에서 유저의 정보와 권한을 가져옴
-			if (memberId != null) {
-				Member member = service.retrieveMemberById(memberId);
-
-				// db에서 로그아웃하거나 탈퇴한 회원인지 확인
-				if (member == null) {
-					throw new JwtAuthenticationException("member in this token is not found");
-				}
-				UserPrincipal principal = new UserPrincipal(member);
-				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(memberId, null,
-						principal.getAuthorities());
-				return auth;
-			}
+		if (token == null) {
 			return null;
 		}
-		return null;
-//		} catch (com.auth0.jwt.exceptions.TokenExpiredException e) {
-//
-//		}
+
+		// 토큰의 유효성체크
+		String memberId = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET.getBytes())).build()
+				.verify(token.replace(JwtProperties.TOKEN_PREFIX, "")).getSubject();
+
+		// db에서 로그아웃한 회원인지 확인
+		if (service.jwtIsInvalid(token)) {
+			throw new JwtAuthenticationException("token is expired");
+		}
+
+		// db에서 유저의 정보와 권한을 가져옴
+		if (memberId == null) {
+			return null;
+		}
+		
+		
+		Member member = service.retrieveMemberById(memberId);
+		// db에서 로그아웃하거나 탈퇴한 회원인지 확인
+		if (member == null) {
+			throw new JwtAuthenticationException("member in this token is not found");
+		}
+		UserPrincipal principal = new UserPrincipal(member);
+		UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(memberId, null,
+				principal.getAuthorities());
+		return auth;
 
 	}
 

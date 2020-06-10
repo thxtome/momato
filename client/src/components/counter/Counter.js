@@ -13,6 +13,8 @@ import RestoreIcon from "@material-ui/icons/Restore";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import errorDispacher from "../../error/errorDispacher";
 import { WEBSOCKET_CONNECTED_STATE } from "../../lib/socketApi";
+import bell from "../../sounds/bell.mp3";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -119,7 +121,6 @@ const Counter = (props) => {
     connectState,
     startTimer,
     stopTimer,
-    stopTempTimer,
     resetTimer,
     finishTimer,
     addTime,
@@ -136,6 +137,7 @@ const Counter = (props) => {
     finishTempTimer,
     finishTimerOnReconnecting,
   } = props;
+
   const isLogin = props.location.state.isLogin;
   const tomatoIdx = props.location.state.tomatoIdx;
   //알림지원여부
@@ -143,12 +145,6 @@ const Counter = (props) => {
   const [isNotificationAllow, setIsNotificationAllow] = useState(false);
   //재연결 인터벌 키
   const [reConnectIntevalKey, setReConnectIntevalKey] = useState(null);
-
-  let notificationMsg = !isNotificationSupport
-    ? "브라우저가 알림을 지원하지 않습니다."
-    : isNotificationAllow
-    ? ""
-    : "알림 허용시 종료시간을 알려드립니다.";
 
   //알림 허용 및 띄우기=====================================================================================================
   const showNotification = (msg) => {
@@ -163,7 +159,7 @@ const Counter = (props) => {
           });
         });
       } else {
-        alert("시간이 종료되도 알림이 오지 않습니다.");
+        alert("백그라운드 실행시 알림이 오지 않습니다.");
       }
     });
   };
@@ -195,12 +191,47 @@ const Counter = (props) => {
   };
 
   //완료시 알람=====================================================================================
-  const sendStopNot = (target) => {
+  const sendFinish = (target) => {
     let msg =
       target === "regularTime"
         ? "집중시간이 끝났습니다! 휴식 시간을 가져보세요."
         : "휴식시간이 끝났습니다! 새로운 집중 시간을 가져보세요.";
-    showNotification(msg);
+
+    if (isNotificationSupport && Notification.permission === "granted") {
+      showNotification(msg);
+    } else {
+      showToast(msg);
+    }
+  };
+
+  //메세지 반환 함수==============================================================================================================
+  const notificationMsg = () => {
+    return !isNotificationSupport
+      ? "브라우저가 알림을 지원하지 않습니다."
+      : isNotificationAllow
+      ? ""
+      : "알림 허용시 백그라운드에서도 알림을 받을 수 있습니다.";
+  };
+
+  //종료토스트==============================================================================================================
+  const showToast = (msg) => {
+    toast.info(msg, {
+      position: toast.POSITION.TOP_CENTER,
+    });
+    new Audio(bell).play();
+  };
+
+  //시간 계산 함수==============================================================================================================
+  const calTime = () => {
+    let minute = (leftTime - timePassed) / 60;
+    let second = (leftTime - timePassed) % 60;
+    minute = minute < 0 ? 0 : minute;
+    second = second < 0 ? 0 : second;
+    return `
+    ${minute >= 10 ? Math.floor(minute) : `0${Math.floor(minute)}`}:${
+      second >= 10 ? second : `0${second}`
+    }
+    `;
   };
 
   //버튼클릭시 연결상태확인 =======================================================================================
@@ -253,96 +284,106 @@ const Counter = (props) => {
 
   //타이머기능=========================================================================================================================
   useEffect(() => {
-    //타이머가 작동상태이면
-    if (isGoing === true) {
-      //시간이 다 됐는지 확인하고
-      if (timePassed >= leftTime) {
-        //알림을 지원하면 알림을 보냄
-        if (isNotificationSupport) {
-          sendStopNot(target);
-        }
+    //타이머가 작동상태가 아니면 리턴
+    if (isGoing !== true) {
+      return;
+    }
 
-        //로그인이 되어있으면
-        if (isLogin) {
-          if (connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED) {
-            finishTimer(target);
-          } else {
-            finishTimerOnReconnecting();
-          }
-
-          //로그인이 안 되어있으면
-        } else {
-          finishTempTimer(tomatoIdx);
-        }
-      }
-
+    //시간이 남았으면 리턴
+    if (timePassed < leftTime) {
       //1초마다 시간을 더하는 액션을 보냄
       const key = setTimeout(() => {
         addTime();
       }, 1000);
+
       return () => {
         clearTimeout(key);
       };
     }
+
+    //완료 알림
+    sendFinish(target);
+
+    //로그인이 안되어있으면
+    if (!isLogin) {
+      finishTempTimer(tomatoIdx);
+      return;
+    }
+
+    //로그인이 되어있으면서 연결상태면 정상처리
+    if (connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED) {
+      finishTimer(target);
+
+      //로그인이 되어있으면서 연결이 안되어있을 때 처리
+    } else {
+      finishTimerOnReconnecting();
+    }
   }, [isGoing, timePassed]);
 
   //토마토로드기능=========================================================================================================================
-  //
   useEffect(() => {
-    //연결은 됐는데 로드가 안 됐으면
-    //토마토를 로드함
-    if (isLogin) {
-      if (connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED && !isLoaded) {
-        loadTomato(tomatoIdx);
-      }
-      //로그인이 안됐으면서 로드가 안 됐으면 임시 토마토를 로드한다.
-    } else {
-      if (!isLoaded) {
-        loadTempTomato(tomatoIdx);
-      }
+    //토마토를 로드가 됐으면 생략
+    if (isLoaded) {
+      return;
+    }
+
+    //로그인이 안됐으면서 로드가 안 됐으면 임시 토마토를 로드한다.
+    if (!isLogin) {
+      loadTempTomato(tomatoIdx);
+      return;
+    }
+
+    //로그인과 연결을 만족할 떄 처리
+    if (connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED) {
+      loadTomato(tomatoIdx);
     }
   }, [connectState, isLoaded]);
 
   //연결상태관리=========================================================================================================
   useEffect(() => {
-    //연결은 됐는데 로드가 안 됐으면
-    //토마토를 로드함
-    if (isLogin) {
-      if (connectState === WEBSOCKET_CONNECTED_STATE.RECONNECTING) {
-        let cnt = 0;
-        let key = setInterval(() => {
-          if (cnt === 5) {
-            clearTimeout(key);
-            errorDispacher({
-              message: "Socket Connection Error",
-            });
-            unexpectedClose();
-            return;
-          }
-          cnt++;
-          console.log(key, cnt, "reconnect");
-          reConnect();
-        }, 2000);
-        setReConnectIntevalKey(key);
+    //비로그인상태시 리턴
+    if (!isLogin) {
+      return;
+    }
 
-        return () => {
-          clearTimeout(key);
-        };
-      } else if (
-        //재연결이 성공하면
-        connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED &&
-        isLoaded
-      ) {
-        clearTimeout(reConnectIntevalKey);
-        let reloadData = {
-          leftTime: leftTime - timePassed,
-          target,
-          isGoing,
-          isFinished,
-          tomatoIdx,
-        };
-        reload(reloadData);
-      }
+    //재연결시도중일때
+    if (connectState === WEBSOCKET_CONNECTED_STATE.RECONNECTING) {
+      let cnt = 0;
+
+      //재연결 시도
+      let key = setInterval(() => {
+        //5회 시도시 연결 오류로 간주
+        if (cnt++ === 5) {
+          clearInterval(key);
+          errorDispacher({
+            message: "Socket Connection Error",
+          });
+          unexpectedClose();
+          return;
+        }
+        reConnect();
+      }, 2000);
+
+      //키값 보관
+      setReConnectIntevalKey(key);
+
+      //언마운트시 인터벌 제거
+      return () => {
+        clearInterval(key);
+      };
+    }
+
+    //재연결이 성공했을 때(연결성공으로 바뀌고 load가 true상태이면 재연결 성공으로 간주)
+    if (connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED && isLoaded) {
+      clearInterval(reConnectIntevalKey);
+      let reloadData = {
+        leftTime: leftTime - timePassed,
+        target,
+        isGoing,
+        isFinished,
+        tomatoIdx,
+      };
+      reload(reloadData);
     }
   }, [connectState]);
 
@@ -363,7 +404,7 @@ const Counter = (props) => {
             variant="contained"
             color="primary"
           >
-            {notificationMsg}
+            {notificationMsg()}
           </Button>
         )}
         <Button variant="contained" color="secondary" onClick={goBack}>
@@ -385,17 +426,7 @@ const Counter = (props) => {
             className={matches ? classes.fontSize : classes.fontSizeMobile}
             variant={"body1"}
           >
-            {`
-            ${
-              (leftTime - timePassed) / 60 > 10
-                ? Math.floor((leftTime - timePassed) / 60)
-                : `0${Math.floor((leftTime - timePassed) / 60)}`
-            }:${
-              (leftTime - timePassed) % 60 >= 10
-                ? (leftTime - timePassed) % 60
-                : `0${(leftTime - timePassed) % 60}`
-            }
-            `}
+            {calTime()}
           </Typography>
         </Box>
       </Box>

@@ -84,6 +84,7 @@ const socketSubscribe = (dispatch) => {
       default:
         break;
     }
+    //소켓클로즈시 정상 종료가 아니면 재연결처리
     countSocket.onclose = (e) => {
       if (e.code === 1006 || e.code === 1001) {
         dispatch(counterActions.SOCKET_RECONNECTING());
