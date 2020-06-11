@@ -11,29 +11,67 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const TomatoList = (props) => {
-  const { isLogin, isTomatoDeleteSucceed, isTomatoAddSucceed, tomatos, templates } = props
-  const templateIdx = props.templateIdx ? props.templateIdx : 0
-  const date = props.templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
+const TomatoList = ({
+  isLogin,
+  isTomatoAddSucceed,
+  isTomatoEditSucceed,
+  isTomatoDeleteSucceed,
+  tomatos,
+  templates,
+  templateIdx,
+  getTomatoList,
+  getTempTomatoList,
+  addTomatos,
+  deleteTomato,
+  deleteTempTomato,
+  clearAddResult,
+  clearEditResult,
+  clearDeleteResult,
+}) => {
+  templateIdx = templateIdx ? templateIdx : ""
+  const date = templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
   const data = {
     date,
     templateIdx,
   }
+
+  // 템플릿이 바뀌면 토마토 목록 불러오기
   useEffect(() => {
-    if (isLogin) {
-      props.getTomatoList(data)
-    }
+    getTomatoList(data)
   }, [templateIdx])
 
+  // 로그인 시 토마토목록, 로그아웃 시 토마토임시목록 불러오기
   useEffect(() => {
     if (isLogin) {
-      props.getTomatoList(data)
-      props.clearDeleteResult()
-      props.clearAddResult()
+      getTomatoList(data)
     } else {
-      props.getTempTomatoList()
+      getTempTomatoList()
     }
-  }, [isLogin, isTomatoDeleteSucceed, isTomatoAddSucceed])
+  }, [isLogin])
+
+  // 토마토 추가 시 토마토목록 다시 불러오기
+  useEffect(() => {
+    if (isLogin) {
+      getTomatoList(data)
+      clearAddResult()
+    }
+  }, [isTomatoAddSucceed])
+
+  // 토마토 수정 시 토마토 목록 다시 불러오기
+  useEffect(() => {
+    if (isLogin) {
+      getTomatoList(data)
+      clearEditResult()
+    }
+  }, [isTomatoEditSucceed])
+
+  // 토마토 삭제 시 토마토 목록 다시 불러오기
+  useEffect(() => {
+    if (isLogin) {
+      getTomatoList(data)
+      clearDeleteResult()
+    }
+  }, [isTomatoDeleteSucceed])
 
   const classes = useStyles()
   return (
@@ -43,22 +81,22 @@ const TomatoList = (props) => {
       ) : (
         <>
           <TomatoCnt tomatos={tomatos}></TomatoCnt>
-          {isLogin ? <Modals addTomatos={props.addTomatos} templates={templates} type="loadTemplate" /> : <></>}
+          {isLogin ? <Modals addTomatos={addTomatos} templates={templates} type="loadTemplate" /> : <></>}
         </>
       )}
       {tomatos &&
         tomatos.map((tomato) => (
           <Tomato
             isLogin={isLogin}
-            tomatoDelete={props.tomatoDelete}
-            getTomatoList={props.getTomatoList}
-            tomatoTempDelete={props.tomatoTempDelete}
-            getTempTomatoList={props.getTempTomatoList}
+            deleteTomato={deleteTomato}
+            getTomatoList={getTomatoList}
+            deleteTempTomato={deleteTempTomato}
+            getTempTomatoList={getTempTomatoList}
             {...tomato}
             key={tomato.tomatoIdx}
           />
         ))}
-      <Modals templateIdx={props.templateIdx} type="tomatoAdd"></Modals>
+      <Modals templateIdx={templateIdx} type="tomatoAdd"></Modals>
     </div>
   )
 }

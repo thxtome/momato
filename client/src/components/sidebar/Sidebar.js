@@ -60,14 +60,9 @@ const useInput = (initVal) => {
   return { value }
 }
 
-const Sidebar = (props) => {
-  const isLogin = props.loginReducer.isLogin
+const Sidebar = ({ isLogin }) => {
   const classes = useStyles()
   const [clieckedIndex, setClieckedIndex] = useState(0)
-  useEffect(() => {
-    props.getTemplateList()
-    props.clearEditResult()
-  }, [props.templateEditReducer.isTemplateEditSucceed])
 
   return (
     <Drawer

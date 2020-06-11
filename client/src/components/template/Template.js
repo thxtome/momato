@@ -59,6 +59,7 @@ const Template = (props) => {
   const templateDeleteRequest = () => {
     props.deleteTemplate(template.templateIdx)
     props.getTemplateList()
+    props.clearDeleteResult()
   }
   return (
     <div className={classes.root}>

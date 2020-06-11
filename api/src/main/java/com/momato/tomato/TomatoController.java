@@ -33,6 +33,7 @@ public class TomatoController {
 	@GetMapping()
 	public ResponseResult retrieveTomato(@RequestParam(defaultValue = "0") int templateIdx, @RequestParam(defaultValue = "") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate tomatoDate, @AuthenticationPrincipal String memberId) {
 		Tomato tomato = new Tomato();
+		System.out.println("템플릿 인덱스" + templateIdx);
 		tomato.setTemplateIdx(templateIdx);
 		tomato.setTomatoDate(tomatoDate);
 		tomato.setMemberId(memberId);

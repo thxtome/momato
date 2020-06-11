@@ -68,7 +68,7 @@ const useInput = (initVal) => {
   return { value, onChange }
 }
 
-const LoginModal = (props) => {
+const LoginModal = ({ login, onClose }) => {
   let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
   const templateIdx = 0
   const data = {
@@ -80,12 +80,11 @@ const LoginModal = (props) => {
   const pass = useInput("")
   const loginRequest = () => {
     if (required(email.value, "아이디")) {
-      props.login({
+      login({
         memberId: email.value,
         memberPass: pass.value,
       })
-      props.getTomatos(data)
-      props.onClose()
+      onClose()
     }
   }
 

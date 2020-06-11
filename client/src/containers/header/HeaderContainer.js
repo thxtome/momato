@@ -4,11 +4,11 @@ import { connect } from "react-redux"
 import { tomatoActions } from "../../store/modules/tomato.js"
 
 const mapStateToProps = (state) => {
-  const { isLogin, isMemberLoading } = state.loginReducer;
-  const { isTomatoLoading } = state.tomatoReducer;
-  const { isTemplateLoading } = state.templateReducer;
-  const { isCalendarLoading } = state.calendarReducer;
-  const { isTimerLoading } = state.counterReducer;
+  const { isLogin, isMemberLoading } = state.loginReducer
+  const { isTomatoLoading } = state.tomatoReducer
+  const { isTemplateLoading } = state.templateReducer
+  const { isCalendarLoading } = state.calendarReducer
+  const { isTimerLoading } = state.counterReducer
   return {
     isLogin,
     isMemberLoading,
@@ -16,16 +16,13 @@ const mapStateToProps = (state) => {
     isTemplateLoading,
     isCalendarLoading,
     isTimerLoading,
-  };
-};
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: (auth) => {
       dispatch(loginActions.LOGOUT_REQUEST({ auth }))
-    },
-    getTomatos: (date) => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ date }))
     },
     getTempTomatoList: () => {
       dispatch(tomatoActions.TOMATO_TEMP_REQUEST())

@@ -16,24 +16,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
-  //   box: {
-  //     backgroundColor: "#E9E9E9",
-  //     width: "65px",
-  //     height: "65px",
-  //     opacity: 0.5,
-  //     display: "flex",
-  //     flexDirection: "column",
-  //     alignItems: "center",
-  //     justifyContent: "center",
-  //     borderRadius: "10px",
-  //   },
   circular: {
     "& > *": {
       opacity: 0.5,
     },
   },
 }))
-
+// 로딩시 화면
 const Load = () => {
   const classes = useStyles()
   return (

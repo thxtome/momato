@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Typography from "@material-ui/core/Typography"
@@ -37,38 +37,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Header = (props) => {
-  const {
-    isLogin,
-    isMemberLoading,
-    isTomatoLoading,
-    isTemplateLoading,
-    isCalendarLoading,
-    isTimerLoading,
-  } = props;
-  let isLoading = false;
-  const classes = useStyles();
-  const matches = useMediaQuery("(min-width:800px)");
+const Header = ({
+  isLogin,
+  isMemberLoading,
+  isTomatoLoading,
+  isTemplateLoading,
+  isCalendarLoading,
+  isTimerLoading,
+  logout,
+  getTempTomatoList,
+}) => {
+  const classes = useStyles()
+  const matches = useMediaQuery("(min-width:800px)")
+
   const logoutRequest = () => {
-    props.logout(localStorage.getItem("auth"));
-    props.getTempTomatoList();
-  };
-  if (
-    isMemberLoading ||
-    isTomatoLoading ||
-    isTemplateLoading ||
-    isCalendarLoading ||
-    isTimerLoading
-  ) {
-    isLoading = true;
-  } else if (
-    !isMemberLoading &&
-    !isTomatoLoading &&
-    !isTemplateLoading &&
-    !isCalendarLoading &&
-    !isTimerLoading
-  ) {
-    isLoading = false;
+    // 로그아웃시 로컬스토리지 토큰삭제 후 임시토마토 불러오기
+    logout(localStorage.getItem("auth"))
+    getTempTomatoList()
+  }
+
+  // 멤버정보, 토마토, 템플릿, 달력, 타이머의 로딩이 모드 끝나는지 확인 후 로딩창 지우기
+  let isLoading = false
+  if (isMemberLoading || isTomatoLoading || isTemplateLoading || isCalendarLoading || isTimerLoading) {
+    isLoading = true
+  } else if (!isMemberLoading && !isTomatoLoading && !isTemplateLoading && !isCalendarLoading && !isTimerLoading) {
+    isLoading = false
   }
   return (
     <>
@@ -92,7 +85,6 @@ const Header = (props) => {
               >
                 LOGOUT
               </Button>
-              <Modals type="withdraw" />
             </>
           )}
           {!isLogin ? <Modals type="signup" /> : null}

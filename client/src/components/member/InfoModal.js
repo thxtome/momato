@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Avatar, makeStyles, Typography, TextField, Button } from "@material-ui/core"
 import { toast } from "react-toastify"
 import { required, checkPass, comparePass } from "../../lib/validation"
+import Modals from "../common/Modal"
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -33,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: "auto",
     textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+    marginBottom: theme.spacing(2),
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingRight: 20,
   },
 
   tomatoImg: {
@@ -53,6 +60,13 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.down("650")]: {
         fontSize: 13,
       },
+    },
+  },
+  editBtn: {
+    marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(2),
+    "& > *": {
+      width: theme.spacing(7),
     },
   },
 }))
@@ -172,6 +186,7 @@ const InfoModal = (props) => {
         </div>
         <div className={classes.button}>
           <Button
+            className={classes.editBtn}
             id="button"
             variant="contained"
             color="secondary"
@@ -181,6 +196,7 @@ const InfoModal = (props) => {
           >
             수정
           </Button>
+          <Modals type="withdraw" />
         </div>
       </form>
     </>

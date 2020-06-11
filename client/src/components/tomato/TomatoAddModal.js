@@ -38,26 +38,15 @@ const useInput = (initVal) => {
   return { value, onChange }
 }
 
-const TomatoAddModal = (props) => {
-  const { isTomatoAddSucceed, isLogin } = props
+const TomatoAddModal = ({ isLogin, templateIdx, addTomato, addTempTomato, getTempTomatoList, onClose }) => {
   const CHARACTER_LIMIT = 15
-  let templateIdx = props.templateIdx ? props.templateIdx : 0
+  templateIdx = templateIdx ? templateIdx : ""
   let date = templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
-
-  useEffect(() => {
-    if (isLogin) {
-      const data = {
-        date,
-        templateIdx,
-      }
-      props.getTomatos(data)
-      props.clearAddResult()
-    }
-  }, [isTomatoAddSucceed])
 
   const classes = useStyles()
   const createType = useInput("simple")
   const tomatoName = useInput("")
+
   const tomatoAddRequest = () => {
     //로그인이면 서버로 요청을 보냄
     if (required(tomatoName.value, "토마토 이름")) {
@@ -65,9 +54,9 @@ const TomatoAddModal = (props) => {
         const data = {
           createType: createType.value,
           tomatoName: tomatoName.value,
-          templateIdx: props.templateIdx,
+          templateIdx: templateIdx,
         }
-        props.tomatoAdd(data)
+        addTomato(data)
       } else {
         //아니면 임시 토마토를 액션에 넣어서 스토어에 요청을 보냄
         const tempTomato = {
@@ -82,10 +71,10 @@ const TomatoAddModal = (props) => {
           tomatoFullBreak: 300,
           tomatoLeftBreak: 300,
         }
-        props.addTempTomato(tempTomato)
-        props.getTempTomatoList()
+        addTempTomato(tempTomato)
+        getTempTomatoList()
       }
-      props.onClose()
+      onClose()
     }
   }
 

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import GrainIcon from "@material-ui/icons/Grain"
 import LocalFloristIcon from "@material-ui/icons/LocalFlorist"
 import ListItemText from "@material-ui/core/ListItemText"
@@ -43,10 +43,24 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function NestedList(props) {
+  console.log(props.templateDeleteReducer.isTemplateDeleteSucceed)
   const classes = useStyles()
   const matches = useMediaQuery("(min-width:800px)")
   const [open, setOpen] = React.useState(false)
 
+  useEffect(() => {
+    if (props.templateEditReducer.isTemplateEditSucceed) {
+      props.getTemplateList()
+      props.clearEditResult()
+    }
+    if (props.templateDeleteReducer.isTemplateDeleteSucceed) {
+      props.getTemplateList()
+      props.clearDeleteResult()
+    }
+    if (props.loginReducer.isLogin) {
+      props.getTemplateList()
+    }
+  }, [props.templateEditReducer.isTemplateEditSucceed, props.templateDeleteReducer.isTemplateDeleteSucceed, props.loginReducer.isLogin])
   const handleClick = () => {
     setOpen(!open)
   }

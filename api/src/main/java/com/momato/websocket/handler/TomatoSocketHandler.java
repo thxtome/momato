@@ -198,7 +198,6 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 	@Scheduled(fixedDelay = 5000)
 	public void sendPingMessage() throws Exception {
 		// 5초동안 응답을 받고 남아있는 키를 비정상 종료로 간주한다. 그리고 종료시킨다
-		System.out.println("핑");
 		for (String key : pingList) {
 			WebSocketSession session = sessionMap.get(key);
 			System.out.println("퐁");

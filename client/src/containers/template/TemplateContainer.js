@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     getTemplateList: () => {
       dispatch(templateActions.TEMPLATE_REQUEST())
     },
+    clearDeleteResult: () => {
+      dispatch(templateDeleteActions.TEMPLATE_DELETE_CLEAR())
+    },
   }
 }
 

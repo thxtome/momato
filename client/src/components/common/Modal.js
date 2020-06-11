@@ -79,9 +79,6 @@ const useStyles = makeStyles((theme) => ({
       color: "grey",
     },
   },
-  withdraw: {
-    color: "black",
-  },
 }))
 
 export default function TransitionsModal({
@@ -109,6 +106,7 @@ export default function TransitionsModal({
     setOpen(false)
   }
   return (
+    // 타입별로 모달창 연결하는 버튼들
     <div className={classes.root}>
       {type === "template" ? (
         <Button className={classes.templateBtn} type="button" onClick={handleOpen}>
@@ -139,7 +137,7 @@ export default function TransitionsModal({
           {name}
         </Button>
       ) : type === "withdraw" ? (
-        <Button className={classes.withdraw} type="button" onClick={handleOpen}>
+        <Button className={classes.withdraw} variant="outlined" color="secondary" type="button" onClick={handleOpen}>
           회원탈퇴
         </Button>
       ) : type === "tomatoAdd" ? (
@@ -196,6 +194,7 @@ export default function TransitionsModal({
         closeAfterTransition
         BackdropComponent={Backdrop}
       >
+        {/* 타입별 모달창 컴포넌트 */}
         <Fade in={open}>
           <div className={classes.paper}>
             {type === "template" ? (

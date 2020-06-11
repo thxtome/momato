@@ -43,47 +43,50 @@ const useInput = (initVal) => {
   return { value, onChange }
 }
 
-const TomatoEditModal = (props) => {
-  const templateIdx = props.templateIdx ? props.templateIdx : 0
-  const date = props.templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
+const TomatoEditModal = ({
+  isLogin,
+  templateIdx,
+  index,
+  name,
+  fullRegular,
+  fullBreak,
+  tomatoCanStart,
+  editTomato,
+  editTempTomato,
+  getTempTomatoList,
+  onClose,
+}) => {
+  templateIdx = templateIdx ? templateIdx : 0
+  const times = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  const date = templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
   const CHARACTER_LIMIT = 15
   const data = {
     date,
     templateIdx,
   }
 
-  useEffect(() => {
-    if (localStorage.getItem("auth")) {
-      props.getTomatos(data)
-      props.clearEditResult()
-    } else {
-      props.getTempTomatoList()
-    }
-  }, [props.isTomatoEditSucceed])
-
   const classes = useStyles()
-  const tomatoName = useInput(props.name)
-  const tomatoFullRegular = useInput(props.fullRegular)
-  const tomatoFullBreak = useInput(props.fullBreak)
-  const tomatoCanStart = props.tomatoCanStart
+  const tomatoName = useInput(name)
+  const tomatoFullRegular = useInput(fullRegular)
+  const tomatoFullBreak = useInput(fullBreak)
 
   const tomatoEditRequest = () => {
     if (required(tomatoName.value, "토마토 이름")) {
       //현재 로그인상태면 서버로 요청전송
-      if (props.isLogin) {
+      if (isLogin) {
         const editedTomato = {
-          tomatoIdx: props.index,
+          tomatoIdx: index,
           tomatoName: tomatoName.value,
           tomatoFullRegular: tomatoFullRegular.value,
           tomatoFullBreak: tomatoFullBreak.value,
           tomatoCanStart,
         }
-        props.tomatoEdit(editedTomato)
+        editTomato(editedTomato)
 
         //아니면 임시토마토를 가져와서 정보수정 후 추가 액션을 보냄
       } else {
         const editedTempTomato = {
-          tomatoIdx: props.index,
+          tomatoIdx: index,
           tomatoName: tomatoName.value,
           template: 0,
           tomatoCanStart: 1,
@@ -96,11 +99,11 @@ const TomatoEditModal = (props) => {
           tomatoLeftBreak: tomatoFullBreak.value,
         }
         //수정요청 액션을 보내고
-        props.tempTomatoEdit(editedTempTomato)
+        editTempTomato(editedTempTomato)
         //리스트 렌더 요청
-        props.getTempTomatoList()
+        getTempTomatoList()
       }
-      props.onClose()
+      onClose()
     }
   }
   return (
@@ -110,7 +113,7 @@ const TomatoEditModal = (props) => {
         className={classes.name}
         id="standard-textarea"
         label=""
-        placeholder={props.name}
+        placeholder={name}
         multiline
         autoFocus
         inputProps={{
@@ -140,12 +143,11 @@ const TomatoEditModal = (props) => {
             }}
             {...tomatoFullRegular}
           >
-            <MenuItem value={300}>5분</MenuItem>
-            <MenuItem value={600}>10분</MenuItem>
-            <MenuItem value={900}>15분</MenuItem>
-            <MenuItem value={1200}>20분</MenuItem>
-            <MenuItem value={1500}>25분</MenuItem>
-            <MenuItem value={1800}>30분</MenuItem>
+            {times.map((time) => (
+              <MenuItem key={time} value={time * 300}>
+                {time * 5}분
+              </MenuItem>
+            ))}
           </Select>
         </div>
       </FormControl>
@@ -160,12 +162,15 @@ const TomatoEditModal = (props) => {
             }}
             {...tomatoFullBreak}
           >
-            <MenuItem value={300}>5분</MenuItem>
-            <MenuItem value={600}>10분</MenuItem>
-            <MenuItem value={900}>15분</MenuItem>
-            <MenuItem value={1200}>20분</MenuItem>
-            <MenuItem value={1500}>25분</MenuItem>
-            <MenuItem value={1800}>30분</MenuItem>
+            {times.map((time, index) => {
+              if (index <= 5) {
+                return (
+                  <MenuItem key={time} value={time * 300}>
+                    {time * 5}분
+                  </MenuItem>
+                )
+              }
+            })}
           </Select>
         </div>
         <div className={classes.editbtn}>
