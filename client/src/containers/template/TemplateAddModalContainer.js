@@ -12,12 +12,6 @@ const mapDispatchToProps = (dispatch) => {
     addTemplate: (data) => {
       dispatch(templateAddActions.TEMPLATE_ADD_REQUEST({ data }))
     },
-    getTemplateList: () => {
-      dispatch(templateActions.TEMPLATE_REQUEST())
-    },
-    clearAddResult: () => {
-      dispatch(templateAddActions.TEMPLATE_ADD_CLEAR())
-    },
   }
 }
 

@@ -42,26 +42,23 @@ const useInput = (initVal) => {
   return { value, onChange }
 }
 
-const TemplateModal = (props) => {
+const TemplateModal = ({ addTemplate, onClose }) => {
   const classes = useStyles()
   const NAME_CHARACTER_LIMIT = 15
   const COMMENT_CHARACTER_LIMIT = 50
   const templateName = useInput("")
   const templateComment = useInput("")
 
-  useEffect(() => {
-    props.getTemplateList()
-    props.clearAddResult()
-  }, [props.templateAddReducer.isTemplateAddSucceed])
-
   const templateAddRequest = () => {
+    // 텃밭이름 유효성 확인
     if (required(templateName.value, "텃밭 이름")) {
       const data = {
         templateName: templateName.value,
         templateComment: templateComment.value,
       }
-      props.addTemplate(data)
-      props.onClose()
+
+      addTemplate(data)
+      onClose()
     }
   }
 

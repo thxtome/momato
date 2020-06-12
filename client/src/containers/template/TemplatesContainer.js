@@ -4,7 +4,9 @@ import { templateDeleteActions } from "../../store/modules/templateDelete.js"
 import { templateEditActions } from "../../store/modules/templateEdit.js"
 
 const mapStateToProps = (state) => {
-  return state
+  const { isLogin } = state.loginReducer
+  const { isTemplateDeleteSucceed } = state.templateDeleteReducer.isTemplateDeleteSucceed
+  return { isLogin, isTemplateDeleteSucceed }
 }
 
 const mapDispatchToProps = (dispatch) => {

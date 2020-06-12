@@ -34,20 +34,12 @@ const TomatoList = ({
     date,
     templateIdx,
   }
+  console.log("렌더", data)
 
-  // 템플릿이 바뀌면 토마토 목록 불러오기
+  // 텃밭이 바뀌면 토마토 목록 불러오기
   useEffect(() => {
     getTomatoList(data)
   }, [templateIdx])
-
-  // 로그인 시 토마토목록, 로그아웃 시 토마토임시목록 불러오기
-  useEffect(() => {
-    if (isLogin) {
-      getTomatoList(data)
-    } else {
-      getTempTomatoList()
-    }
-  }, [isLogin])
 
   // 토마토 추가 시 토마토목록 다시 불러오기
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Typography, Paper, Box, IconButton } from "@material-ui/core"
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline"
@@ -53,21 +53,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Template = (props) => {
+const Template = ({ deleteTemplate, history, template }) => {
   const classes = useStyles()
-  const template = props.template
+
   const templateDeleteRequest = () => {
-    props.deleteTemplate(template.templateIdx)
-    props.getTemplateList()
-    props.clearDeleteResult()
+    deleteTemplate(template.templateIdx)
+    // 텃밭 삭제 시 토마토화면으로 이동
+    history.push("/")
   }
+
   return (
     <div className={classes.root}>
       <Paper elevation={0} className={classes.paper}>
         <Box className={classes.name}>
           <Box className={classes.templateName}>
             <Typography variant="h4">
-              <Modals history={props.history} type="template" template={template}>
+              <Modals history={history} type="template" template={template}>
                 {template.templateName}
               </Modals>
             </Typography>

@@ -1,11 +1,16 @@
 import { connect } from "react-redux"
 import { templateActions } from "../../store/modules/template.js"
-import { templateDeleteActions } from "../../store/modules/templateDelete.js"
+import { templateAddActions } from "../../store/modules/templateAdd.js"
 import { templateEditActions } from "../../store/modules/templateEdit.js"
+import { templateDeleteActions } from "../../store/modules/templateDelete.js"
 import TemplateList from "../../components/template/TemplateList.js"
 
 const mapStateToProps = (state) => {
-  return state
+  const { isTemplateAddSucceed } = state.templateAddReducer
+  const { isTemplateEditSucceed } = state.templateEditReducer
+  const { isTemplateDeleteSucceed } = state.templateDeleteReducer
+  const { templates } = state.templateReducer
+  return { isTemplateAddSucceed, isTemplateEditSucceed, isTemplateDeleteSucceed, templates }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -13,14 +18,14 @@ const mapDispatchToProps = (dispatch) => {
     getTemplateList: () => {
       dispatch(templateActions.TEMPLATE_REQUEST())
     },
-    clearDeleteResult: () => {
-      dispatch(templateDeleteActions.TEMPLATE_DELETE_CLEAR())
+    clearAddResult: () => {
+      dispatch(templateAddActions.TEMPLATE_ADD_CLEAR())
     },
     clearEditResult: () => {
       dispatch(templateEditActions.TEMPLATE_EDIT_CLEAR())
     },
-    clearTemplateResult: () => {
-      dispatch(templateActions.TEMPLATE_CLEAR())
+    clearDeleteResult: () => {
+      dispatch(templateDeleteActions.TEMPLATE_DELETE_CLEAR())
     },
   }
 }

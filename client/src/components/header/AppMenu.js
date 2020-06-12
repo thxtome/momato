@@ -32,14 +32,6 @@ const AppMenu = (props) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  useEffect(() => {
-    props.getTemplateList()
-    if (props.templateEditReducer.isTemplateEditSucceed) {
-      props.clearEditResult()
-    } else if (props.templateDeleteReducer.isTemplateDeleteSucceed) {
-      props.clearDeleteResult()
-    }
-  }, [props.templateEditReducer.isTemplateEditSucceed, props.templateDeleteReducer.isTemplateDeleteSucceed])
   return (
     <div className={classes.root}>
       <IconButton edge="start" className={classes.menuButton} aria-label="menu" onClick={handleClick}>

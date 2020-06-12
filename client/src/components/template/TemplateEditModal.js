@@ -31,9 +31,7 @@ const useInput = (initVal) => {
   return { value, onChange }
 }
 
-const TemplateEditModal = (props) => {
-  const isTemplateEditSucceed = props
-  let template = props.template
+const TemplateEditModal = ({ history, editTemplate, getTemplateList, onClose, template }) => {
   const NAME_CHARACTER_LIMIT = 15
   const COMMENT_CHARACTER_LIMIT = 25
   const classes = useStyles()
@@ -48,10 +46,11 @@ const TemplateEditModal = (props) => {
         templateComment: comment.value,
       }
       template = data
-      props.editTemplate(data)
-      props.onClose()
-      props.clearEditResult()
-      props.history.push(template, `template`)
+      editTemplate(data)
+      onClose()
+      // 텃밭 수정시 해당 텃밭으로 이동
+      history.push(template, `template`)
+      // 텃밭목록 다시 그리기
     }
   }
   return (
@@ -62,7 +61,7 @@ const TemplateEditModal = (props) => {
           autoFocus
           type="name"
           className={classes.edit}
-          defaultValue={template.templateName}
+          value={template.templateName}
           inputProps={{
             maxLength: NAME_CHARACTER_LIMIT,
           }}
@@ -80,7 +79,7 @@ const TemplateEditModal = (props) => {
         <TextField
           id="comment"
           className={classes.edit}
-          defaultValue={template.templateComment}
+          value={template.templateComment}
           inputProps={{
             maxLength: COMMENT_CHARACTER_LIMIT,
           }}

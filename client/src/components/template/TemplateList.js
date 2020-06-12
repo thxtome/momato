@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import GrainIcon from "@material-ui/icons/Grain"
 import LocalFloristIcon from "@material-ui/icons/LocalFlorist"
 import ListItemText from "@material-ui/core/ListItemText"
@@ -40,31 +40,67 @@ const useStyles = makeStyles((theme) => ({
       height: 15,
     },
   },
+  clieckedItem: {
+    backgroundColor: "#ccc",
+  },
 }))
 
-export default function NestedList(props) {
-  console.log(props.templateDeleteReducer.isTemplateDeleteSucceed)
+const useInput = (initVal) => {
+  const [value, setValue] = useState(initVal)
+  return { value }
+}
+
+export default function NestedList({
+  isTemplateAddSucceed,
+  isTemplateEditSucceed,
+  isTemplateDeleteSucceed,
+  getTemplateList,
+  clearAddResult,
+  clearEditResult,
+  clearDeleteResult,
+  handleIndex,
+  templates,
+}) {
+  console.log("리스트 그리기")
   const classes = useStyles()
+  const [clieckedIndex, setClieckedIndex] = useState()
   const matches = useMediaQuery("(min-width:800px)")
   const [open, setOpen] = React.useState(false)
 
+  // 텃밭추가 시 텃밭리스트 불러오기
   useEffect(() => {
-    if (props.templateEditReducer.isTemplateEditSucceed) {
-      props.getTemplateList()
-      props.clearEditResult()
+    console.log("여기")
+    if (isTemplateAddSucceed) {
+      getTemplateList()
+      clearAddResult()
     }
-    if (props.templateDeleteReducer.isTemplateDeleteSucceed) {
-      props.getTemplateList()
-      props.clearDeleteResult()
+  }, [isTemplateAddSucceed])
+
+  // 텃밭수정 시 텃밭리스트 불러오기
+  useEffect(() => {
+    if (isTemplateEditSucceed) {
+      console.log("수정")
+      getTemplateList()
+      clearEditResult()
     }
-    if (props.loginReducer.isLogin) {
-      props.getTemplateList()
+  }, [isTemplateEditSucceed])
+
+  // 텃밭삭제 시 텃밭리스트 불러오기
+  useEffect(() => {
+    if (isTemplateDeleteSucceed) {
+      getTemplateList()
+      clearDeleteResult()
     }
-  }, [props.templateEditReducer.isTemplateEditSucceed, props.templateDeleteReducer.isTemplateDeleteSucceed, props.loginReducer.isLogin])
+  }, [isTemplateDeleteSucceed])
+
   const handleClick = () => {
     setOpen(!open)
   }
-  const templates = props.templateReducer.templates
+  // 텃밭 클릭시 사이드바 clickedIndex값 변경
+  const onIndexSubmit = () => {
+    handleIndex(setClieckedIndex)
+  }
+
   return (
     <div>
       <ListItem button onClick={handleClick}>
@@ -90,9 +126,15 @@ export default function NestedList(props) {
                   template,
                 },
               }}
-              onClick={props.onClose}
             >
-              <ListItem button className={classes.nested}>
+              <ListItem
+                button
+                className={clieckedIndex === index ? classes.clieckedItem : ""}
+                onClick={() => {
+                  setClieckedIndex(index)
+                  onIndexSubmit()
+                }}
+              >
                 <ListItemIcon>
                   <LocalFloristIcon />
                 </ListItemIcon>

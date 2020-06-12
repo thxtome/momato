@@ -51,6 +51,7 @@ function* tomatoDeleteSaga(action) {
 
 function* tomatoSaga(action) {
   try {
+    console.log("토마토요청", action.payload.data)
     const response = yield call(api.getTomato, action.payload.data)
     yield put(tomatoActions.TOMATO_SUCCEED({ tomatos: response.data.data.result }))
   } catch (e) {
@@ -62,6 +63,7 @@ function* tomatoSaga(action) {
 
 function* templateSaga(action) {
   try {
+    console.log("텃밭요청", action)
     const response = yield call(api.template, action)
     yield put(templateActions.TEMPLATE_SUCCEED({ templates: response.data.data.result }))
   } catch (e) {

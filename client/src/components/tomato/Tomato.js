@@ -73,12 +73,6 @@ const Tomato = ({
   tomatoCanStart,
 }) => {
   const classes = useStyles()
-  templateIdx = templateIdx ? templateIdx : 0
-  let date = templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
-  const data = {
-    date,
-    templateIdx,
-  }
 
   const tomatoDeleteRequest = () => {
     //로그인이면 토마토 삭제를 서버에 요청

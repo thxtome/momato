@@ -8,18 +8,4 @@ const mapStateToProps = (state) => {
   return state
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getTemplateList: () => {
-      dispatch(templateActions.TEMPLATE_REQUEST())
-    },
-    clearEditResult: () => {
-      dispatch(templateEditActions.TEMPLATE_EDIT_CLEAR())
-    },
-    clearDeleteResult: () => {
-      dispatch(templateDeleteActions.TEMPLATE_DELETE_CLEAR())
-    },
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppMenu)
+export default connect(mapStateToProps)(AppMenu)

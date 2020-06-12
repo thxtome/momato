@@ -63,6 +63,13 @@ const useInput = (initVal) => {
 const Sidebar = ({ isLogin }) => {
   const classes = useStyles()
   const [clieckedIndex, setClieckedIndex] = useState(0)
+  let setListIndex = () => {}
+
+  // 사이드바 목록 클릭시 텃밭 리스트 clickedIndex 초기화
+  const getClickedIndex = (fn) => {
+    setClieckedIndex()
+    setListIndex = fn
+  }
 
   return (
     <Drawer
@@ -78,7 +85,14 @@ const Sidebar = ({ isLogin }) => {
           {isLogin ? (
             ["오늘의 토마토", "토마토 달력"].map((text, index) => (
               <Link className={classes.link} key={text} to={index === 0 ? "tomato" : index === 1 ? "calendar" : ""}>
-                <ListItem button className={clieckedIndex === index ? classes.clieckedItem : ""} onClick={() => setClieckedIndex(index)}>
+                <ListItem
+                  button
+                  className={clieckedIndex === index ? classes.clieckedItem : ""}
+                  onClick={() => {
+                    setClieckedIndex(index)
+                    setListIndex()
+                  }}
+                >
                   <ListItemIcon>{index === 0 ? <CheckCircleIcon /> : index === 1 ? <EventNoteIcon /> : ""}</ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItem>
@@ -98,7 +112,7 @@ const Sidebar = ({ isLogin }) => {
           )}
           {isLogin ? (
             <>
-              <TemplateListContainer />
+              <TemplateListContainer handleIndex={getClickedIndex} />
               <ListItem className={classes.addTemplate}>
                 <Modals type="addTemplate" />
               </ListItem>

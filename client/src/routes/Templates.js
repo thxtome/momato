@@ -9,24 +9,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Templates = (props) => {
-  console.log(props)
-  useEffect(() => {
-    if (props.templateDeleteReducer.isTemplateDeleteSucceed) {
-      props.history.push("/")
-    } else if (!props.loginReducer.isLogin) {
-      props.history.push("/")
-    }
-  }, [props.loginReducer.isLogin, props.templateDeleteReducer.isTemplateDeleteSucceed])
-  let template = props.location.state.template
-  if (!props.location.state.template) {
-    template = props.location
-  }
-  useEffect(() => {}, [template])
+const Templates = ({ isLogin, history, location }) => {
   const classes = useStyles()
+  let template = location.state.template
+  // 텃밭 수정 시 push된 template로 저장
+  if (!template) {
+    template = location
+  }
+
+  // 로그아웃 시 토마토화면으로 이동
+  useEffect(() => {
+    if (!isLogin) {
+      history.push("/")
+    }
+  }, [isLogin])
+
   return (
     <div className={classes.root}>
-      <TemplateContainer history={props.history} template={template} key={template.templateIdx} />
+      <TemplateContainer history={history} location={location} template={template} key={template.templateIdx} />
       <TomatoListContainer templateIdx={template.templateIdx} />
     </div>
   )
