@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles"
 import Tomato from "../tomato/Tomato"
 import TomatoCnt from "../tomato/TomatoCnt"
 import Modals from "../common/Modal"
-import Load from "../common/Load"
 
 const useStyles = makeStyles((theme) => ({
   root: {

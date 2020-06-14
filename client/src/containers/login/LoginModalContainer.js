@@ -1,7 +1,6 @@
 import LoginModal from "../../components/login/LoginModal"
 import { loginActions } from "../../store/modules/login"
 import { connect } from "react-redux"
-import { tomatoActions } from "../../store/modules/tomato.js"
 
 const mapStateToProps = (state) => {
   return state

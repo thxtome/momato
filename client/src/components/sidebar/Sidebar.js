@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core"
 import EventNoteIcon from "@material-ui/icons/EventNote"

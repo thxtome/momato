@@ -69,12 +69,6 @@ const useInput = (initVal) => {
 }
 
 const LoginModal = ({ login, onClose }) => {
-  let date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
-  const templateIdx = 0
-  const data = {
-    date,
-    templateIdx,
-  }
   const classes = useStyles()
   const email = useInput("")
   const pass = useInput("")

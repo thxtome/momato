@@ -22,7 +22,7 @@ const Templates = ({ isLogin, history, location }) => {
     if (!isLogin) {
       history.push("/")
     }
-  }, [isLogin])
+  }, [isLogin, history])
 
   return (
     <div className={classes.root}>

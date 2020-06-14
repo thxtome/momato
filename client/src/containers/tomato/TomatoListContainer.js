@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
   const isTomatoDeleteSucceed = state.tomatoDeleteReducer.isTomatoDeleteSucceed
   const tomatos = state.tomatoReducer.tomatos
   const templates = state.templateReducer.templates
-  return { isLogin, isTomatoAddSucceed, isTomatoEditSucceed, isTomatoDeleteSucceed, isTomatoAddSucceed, tomatos, templates }
+  return { isLogin, isTomatoAddSucceed, isTomatoEditSucceed, isTomatoDeleteSucceed, tomatos, templates }
 }
 
 const mapDispatchToProps = (dispatch) => {

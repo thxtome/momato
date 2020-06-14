@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const AppMenu = (props) => {
+const AppMenu = ({ isLogin }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -42,7 +42,7 @@ const AppMenu = (props) => {
         <Link to="tomato" className={classes.link}>
           <MenuItem onClick={handleClose}>오늘의 토마토</MenuItem>
         </Link>
-        {props.loginReducer.isLogin ? (
+        {isLogin ? (
           <div>
             <Link to="member-info" className={classes.link}>
               <MenuItem onClick={handleClose}>농사꾼 정보</MenuItem>

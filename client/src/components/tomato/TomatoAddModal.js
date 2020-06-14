@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { makeStyles, Button, TextField, Typography } from "@material-ui/core"
 import { required } from "../../lib/validation"
 
@@ -40,8 +40,6 @@ const useInput = (initVal) => {
 
 const TomatoAddModal = ({ isLogin, templateIdx, addTomato, addTempTomato, getTempTomatoList, onClose }) => {
   const CHARACTER_LIMIT = 15
-  templateIdx = templateIdx ? templateIdx : ""
-  let date = templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
 
   const classes = useStyles()
   const createType = useInput("simple")
@@ -86,7 +84,6 @@ const TomatoAddModal = ({ isLogin, templateIdx, addTomato, addTempTomato, getTem
       <TextField
         className={classes.textField}
         id="standard-textarea"
-        className={classes.textField}
         placeholder="토마토 이름"
         multiline
         autoFocus

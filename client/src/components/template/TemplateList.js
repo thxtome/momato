@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import GrainIcon from "@material-ui/icons/Grain"
 import LocalFloristIcon from "@material-ui/icons/LocalFlorist"
 import ListItemText from "@material-ui/core/ListItemText"
@@ -65,8 +65,7 @@ export default function NestedList({
   const classes = useStyles()
   const [clieckedIndex, setClieckedIndex] = useState()
   const matches = useMediaQuery("(min-width:800px)")
-  const [open, setOpen] = React.useState(false)
-
+  const [open, setOpen] = useState(false)
   // 텃밭추가 시 텃밭리스트 불러오기
   useEffect(() => {
     console.log("여기")
@@ -74,7 +73,7 @@ export default function NestedList({
       getTemplateList()
       clearAddResult()
     }
-  }, [isTemplateAddSucceed])
+  }, [isTemplateAddSucceed, getTemplateList, clearAddResult])
 
   // 텃밭수정 시 텃밭리스트 불러오기
   useEffect(() => {

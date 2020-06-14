@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import { makeStyles, Typography, Button } from "@material-ui/core"
 import { toast } from "react-toastify"
 
@@ -26,14 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const useInput = (initVal) => {
-  const [value, setValue] = useState(initVal)
-  const onChange = (e) => {
-    setValue(e.target.value)
-  }
-  return { value, onChange }
-}
-
 const WithdrawModal = (props) => {
   const classes = useStyles()
   const withDrawRequest = () => {
@@ -44,7 +36,7 @@ const WithdrawModal = (props) => {
   }
   useEffect(() => {
     if (props.withdrawReducer.isWithdrawSucceed) {
-      toast.info("탈퇴 되었습니다.", {
+      toast.info("회원탈퇴 되었습니다.", {
         position: toast.POSITION.TOP_CENTER,
       })
       props.memberInfoClear()
