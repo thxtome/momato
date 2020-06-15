@@ -119,6 +119,8 @@ const Counter = (props) => {
     isGoing,
     target,
     connectState,
+    isLoaded,
+    isFinished,
     startTimer,
     stopTimer,
     resetTimer,
@@ -130,8 +132,6 @@ const Counter = (props) => {
     reConnect,
     reload,
     unexpectedClose,
-    isLoaded,
-    isFinished,
     loadTempTomato,
     tempTomatoSave,
     finishTempTimer,
@@ -140,9 +140,11 @@ const Counter = (props) => {
 
   const isLogin = props.location.state.isLogin;
   const tomatoIdx = props.location.state.tomatoIdx;
+
   //알림지원여부
   const [isNotificationSupport, setIsNotificationSupport] = useState(true);
   const [isNotificationAllow, setIsNotificationAllow] = useState(false);
+
   //재연결 인터벌 키
   const [reConnectIntevalKey, setReConnectIntevalKey] = useState(null);
 
@@ -170,7 +172,6 @@ const Counter = (props) => {
     switch (Notification.permission) {
       //첫 요청일 때
       case "default":
-        console.log("default");
         showNotification("알림이 허용되었습니다.");
         break;
 
@@ -181,7 +182,6 @@ const Counter = (props) => {
 
       //거절일 떄
       case "denied":
-        console.log("denied");
         setIsNotificationAllow(false);
         break;
 
@@ -259,6 +259,7 @@ const Counter = (props) => {
         tempTomatoSave(tomatoIdx);
       }
     };
+    
     document.addEventListener("keydown", handleRefresh);
 
     //알림을 지원하는 브라우저가 아니면 알림지원을 false로 놓는다.
@@ -282,6 +283,7 @@ const Counter = (props) => {
         };
   }, []);
 
+  
   //타이머기능=========================================================================================================================
   useEffect(() => {
     //타이머가 작동상태가 아니면 리턴

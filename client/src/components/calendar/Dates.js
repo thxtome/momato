@@ -52,9 +52,9 @@ const useStyles = makeStyles((theme) => ({
   innerDate: {
     width: "100%",
     display: "flex",
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:theme.spacing(0.5),
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: theme.spacing(0.5),
   },
 
   thead: {
@@ -62,8 +62,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   tomatoImg: {
-    width: '35%',
-    height: 'auto',
+    width: "35%",
+    height: "auto",
     marginRight: theme.spacing(0.5),
   },
 
@@ -146,8 +146,11 @@ const Dates = (props) => {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow className={classes.thead}>
-            {dayOfTheWeek.map((day) => (
-              <StyledTableCell className={matches ? "" : classes.thMoblie}>
+            {dayOfTheWeek.map((day, index) => (
+              <StyledTableCell
+                className={matches ? "" : classes.thMoblie}
+                key={index}
+              >
                 {day}
               </StyledTableCell>
             ))}
@@ -164,7 +167,14 @@ const Dates = (props) => {
                   component="td"
                   scope="row"
                 >
-                  <Box className={matches ? `${classes.date}` : `${classes.date} ${classes.dateFontMobile}`} component={"div"}>
+                  <Box
+                    className={
+                      matches
+                        ? `${classes.date}`
+                        : `${classes.date} ${classes.dateFontMobile}`
+                    }
+                    component={"div"}
+                  >
                     {dateInfo ? dateInfo.date : ""}
                     {dateInfo && dateInfo.tomatoCnt ? (
                       <Box className={classes.innerDate}>

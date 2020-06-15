@@ -1,6 +1,6 @@
-import React, { useState } from "react"
-import { makeStyles, Button, TextField, Typography } from "@material-ui/core"
-import { required } from "../../lib/validation"
+import React, { useState, useEffect } from "react";
+import { makeStyles, Button, TextField, Typography } from "@material-ui/core";
+import { required } from "../../lib/validation";
 
 const useStyles = makeStyles((theme) => ({
   addTitle: {
@@ -28,22 +28,49 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1, "auto"),
     textAlign: "center",
   },
-}))
+}));
 
 const useInput = (initVal) => {
-  const [value, setValue] = useState(initVal)
+  const [value, setValue] = useState(initVal);
   const onChange = (e) => {
-    setValue(e.target.value)
-  }
-  return { value, onChange }
-}
+    setValue(e.target.value);
+  };
+  return { value, onChange };
+};
 
-const TomatoAddModal = ({ isLogin, templateIdx, addTomato, addTempTomato, getTempTomatoList, onClose }) => {
-  const CHARACTER_LIMIT = 15
+const TomatoAddModal = ({
+  isLogin,
+  templateIdx,
+  isTomatoAddSucceed,
+  addTomato,
+  addTempTomato,
+  getTempTomatoList,
+  onClose,
+  getTomatoList,
+  clearAddResult,
+}) => {
+  const CHARACTER_LIMIT = 15;
 
-  const classes = useStyles()
-  const createType = useInput("simple")
-  const tomatoName = useInput("")
+  const classes = useStyles();
+  const createType = useInput("simple");
+  const tomatoName = useInput("");
+
+  // 토마토 추가 시 토마토목록 다시 불러오기
+  useEffect(() => {
+    if (isLogin) {
+      if (isTomatoAddSucceed === false) {
+        return;
+      }
+      getTomatoList({
+        date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+          .toISOString()
+          .substr(0, 10),
+        templateIdx: templateIdx,
+      });
+      clearAddResult();
+      onClose();
+    }
+  }, [isTomatoAddSucceed]);
 
   const tomatoAddRequest = () => {
     //로그인이면 서버로 요청을 보냄
@@ -53,8 +80,8 @@ const TomatoAddModal = ({ isLogin, templateIdx, addTomato, addTempTomato, getTem
           createType: createType.value,
           tomatoName: tomatoName.value,
           templateIdx: templateIdx,
-        }
-        addTomato(data)
+        };
+        addTomato(data);
       } else {
         //아니면 임시 토마토를 액션에 넣어서 스토어에 요청을 보냄
         const tempTomato = {
@@ -68,13 +95,13 @@ const TomatoAddModal = ({ isLogin, templateIdx, addTomato, addTempTomato, getTem
           tomatoLeftRegular: 1500,
           tomatoFullBreak: 300,
           tomatoLeftBreak: 300,
-        }
-        addTempTomato(tempTomato)
-        getTempTomatoList()
+        };
+        addTempTomato(tempTomato);
+        getTempTomatoList();
+        onClose();
       }
-      onClose()
     }
-  }
+  };
 
   return (
     <>
@@ -94,8 +121,8 @@ const TomatoAddModal = ({ isLogin, templateIdx, addTomato, addTempTomato, getTem
         {...tomatoName}
         onKeyPress={(e) => {
           if (e.key === "Enter") {
-            e.preventDefault()
-            document.getElementById("addButton").click()
+            e.preventDefault();
+            document.getElementById("addButton").click();
           }
         }}
       />
@@ -105,14 +132,14 @@ const TomatoAddModal = ({ isLogin, templateIdx, addTomato, addTempTomato, getTem
           color="secondary"
           id="addButton"
           onClick={() => {
-            tomatoAddRequest()
+            tomatoAddRequest();
           }}
         >
           추가
         </Button>
       </span>
     </>
-  )
-}
+  );
+};
 
-export default TomatoAddModal
+export default TomatoAddModal;

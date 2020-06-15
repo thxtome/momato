@@ -50,7 +50,7 @@ const useInput = (initVal) => {
   return { value }
 }
 
-export default function NestedList({
+export default function TemplateList({
   isTemplateAddSucceed,
   isTemplateEditSucceed,
   isTemplateDeleteSucceed,
