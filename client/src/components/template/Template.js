@@ -15,19 +15,18 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     display: "flex",
-    p: 1,
+    width: "100%",
     alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "spaceBetween",
     "& > *": {
+      width: "95%",
       [theme.breakpoints.down("650")]: {
         fontSize: 14,
         margin: theme.spacing(0),
         padding: theme.spacing(0),
       },
     },
-  },
-  templateName: {
-    flexgrow: 1,
-    p: 1,
   },
   comment: {
     fontSize: 15,

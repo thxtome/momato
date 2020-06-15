@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { makeStyles, Button, FormControl, InputLabel, Typography, TextField, Select, MenuItem } from "@material-ui/core"
 import { required } from "../../lib/validation"
 
@@ -51,24 +51,36 @@ const TomatoEditModal = ({
   fullRegular,
   fullBreak,
   tomatoCanStart,
+  isTomatoEditSucceed,
   editTomato,
   editTempTomato,
   getTempTomatoList,
+  getTomatoList,
+  clearEditResult,
   onClose,
 }) => {
   templateIdx = templateIdx ? templateIdx : 0
   const times = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-  const date = templateIdx ? "" : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
   const CHARACTER_LIMIT = 15
-  const data = {
-    date,
-    templateIdx,
-  }
 
   const classes = useStyles()
   const tomatoName = useInput(name)
   const tomatoFullRegular = useInput(fullRegular)
   const tomatoFullBreak = useInput(fullBreak)
+
+  // 토마토 수정 시 토마토 목록 다시 불러오기
+  useEffect(() => {
+    if (isLogin) {
+      if (isTomatoEditSucceed === false) {
+        return
+      }
+      getTomatoList({
+        date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
+        templateIdx: templateIdx,
+      })
+      clearEditResult()
+    }
+  }, [isTomatoEditSucceed])
 
   const tomatoEditRequest = () => {
     if (required(tomatoName.value, "토마토 이름")) {

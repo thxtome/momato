@@ -61,9 +61,6 @@ const useStyles = makeStyles((theme) => ({
 const Tomato = ({
   isLogin,
   templateIdx,
-  deleteTomato,
-  deleteTempTomato,
-  getTempTomatoList,
   tomatoName,
   tomatoLeftRegular,
   tomatoLeftBreak,
@@ -71,6 +68,9 @@ const Tomato = ({
   tomatoFullRegular,
   tomatoFullBreak,
   tomatoCanStart,
+  deleteTomato,
+  deleteTempTomato,
+  getTempTomatoList,
 }) => {
   const classes = useStyles()
 

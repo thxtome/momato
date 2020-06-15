@@ -90,7 +90,7 @@ const InfoModal = (props) => {
     //비밀번호 확인과 일치하면 수정요청을 보내고 아니면 일치하지 않는다고 메세지를 띄운다
     if (
       required(inputMemberName.value, "닉네임") &&
-      checkPass(inputMemberPass.value) &&
+      checkPass(inputMemberPass.value, "edit") &&
       comparePass(inputMemberPass.value, inputMemberPassChk.value)
     ) {
       props.memberUpdateRequest({

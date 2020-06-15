@@ -5,7 +5,8 @@ import TomatoEditModal from "../../components/tomato/TomatoEditModal.js"
 
 const mapStateToProps = (state) => {
   const { isLogin } = state.loginReducer
-  return { isLogin }
+  const isTomatoEditSucceed = state.tomatoEditReducer.isTomatoEditSucceed
+  return { isLogin, isTomatoEditSucceed }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -18,6 +19,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     getTempTomatoList: () => {
       dispatch(tomatoActions.TOMATO_TEMP_REQUEST())
+    },
+    getTomatoList: (data) => {
+      dispatch(tomatoActions.TOMATO_REQUEST({ data }))
+    },
+    clearEditResult: () => {
+      dispatch(tomatoEditActions.TOMATO_EDIT_CLEAR())
     },
   }
 }

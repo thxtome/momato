@@ -23,9 +23,12 @@ const required = (value, type) => {
   return true
 }
 
-const checkPass = (value) => {
+const checkPass = (value, type) => {
   const reg = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
-  if (!reg.test(value)) {
+  // 회원정보 수정시 비밀번호 미입력이여도 유효성 통과
+  if (type === "edit" && value === "") {
+    return true
+  } else if (!reg.test(value)) {
     toast.info("비밀번호는 8자 이상, 영문/숫자/특수문자를 포함해야 합니다.", {
       position: toast.POSITION.TOP_CENTER,
     })

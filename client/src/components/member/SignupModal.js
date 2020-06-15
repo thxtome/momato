@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Avatar, makeStyles, Typography, TextField, Button } from "@material-ui/core"
 import { isEmail, required, checkPass } from "../../lib/validation"
+import { toast } from "react-toastify"
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -9,7 +10,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginBottom: theme.spacing(2),
   },
-
+  nameDiv: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    marginBottom: theme.spacing(1),
+  },
   titleId: {
     marginRight: theme.spacing(5),
   },
@@ -19,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   button: {
-    margin: theme.spacing("auto"),
+    margin: "auto",
     textAlign: "center",
   },
 
@@ -53,12 +59,21 @@ const useInput = (initVal) => {
   return { value, onChange }
 }
 
-const SignupModal = (props) => {
+const SignupModal = ({ isSignupSucceed, signup, onClose }) => {
   const classes = useStyles()
+  const CHARACTER_LIMIT = 10
 
   const email = useInput("")
   const pass = useInput("")
   const name = useInput("")
+  console.log("회원가입모달 렌더")
+  useEffect(() => {
+    if (isSignupSucceed) {
+      toast.info("회원가입에 성공하였습니다.", {
+        position: toast.POSITION.TOP_CENTER,
+      })
+    }
+  }, [isSignupSucceed])
 
   const singupRequest = () => {
     if (
@@ -66,14 +81,14 @@ const SignupModal = (props) => {
       isEmail(email.value) &&
       required(name.value, "닉네임") &&
       required(pass.value, "비밀번호") &&
-      checkPass(pass.value)
+      checkPass(pass.value, "signup")
     ) {
-      props.signup({
+      signup({
         memberId: email.value,
         memberPass: pass.value,
         memberName: name.value,
       })
-      props.onClose()
+      onClose()
     }
   }
   return (
@@ -101,7 +116,7 @@ const SignupModal = (props) => {
           />
         </div>
 
-        <div className={classes.div}>
+        <div className={classes.nameDiv}>
           <Typography className={classes.titleId}>닉네임</Typography>
           <TextField
             id="text"
@@ -109,6 +124,10 @@ const SignupModal = (props) => {
             label=""
             placeholder="nickname"
             multiline
+            inputProps={{
+              maxLength: CHARACTER_LIMIT,
+            }}
+            helperText={`${name.value.length}/${CHARACTER_LIMIT}`}
             {...name}
             onKeyPress={(e) => {
               if (e.key === "Enter") {
