@@ -6,7 +6,7 @@
 		select *
 		  from tomato
 		<choose>
-			<when test='tomatoDate != null'>
+			<when test='templateIdx == null'>
 		 		where member_id = #{memberId}
 				  and date(tomato_date) = #{tomatoDate}
 				  and template_idx is null

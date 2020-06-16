@@ -31,7 +31,7 @@ public class TomatoController {
 	
 	// 토마토등록일 또는 템플릿인덱스로 조회
 	@GetMapping()
-	public ResponseResult retrieveTomato(@RequestParam(defaultValue = "0") int templateIdx, @RequestParam(defaultValue = "") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate tomatoDate, @AuthenticationPrincipal String memberId) {
+	public ResponseResult retrieveTomato(Integer templateIdx, @RequestParam(defaultValue = "") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate tomatoDate, @AuthenticationPrincipal String memberId) {
 		Tomato tomato = new Tomato();
 		System.out.println("템플릿 인덱스" + templateIdx);
 		tomato.setTemplateIdx(templateIdx);
