@@ -6,14 +6,13 @@ const MemberInfo = ({ isLogin, getMemberInfo, memberInfo, getTemplateList, getTo
     date: templateIdx ? '' : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
     templateIdx,
   };
+
   //최초에 한번 로그인이 안되어있는데 jwt가 있으면 정보를 요청한다.
   useEffect(() => {
     if (!isLogin && localStorage.getItem('auth')) {
       console.log('enter');
       getMemberInfo();
       getTemplateList();
-    } else if (!isLogin) {
-      getTempTomatoList();
     }
   }, []);
 
@@ -22,7 +21,6 @@ const MemberInfo = ({ isLogin, getMemberInfo, memberInfo, getTemplateList, getTo
     if (isLogin && !memberInfo) {
       console.log('enter');
       getMemberInfo();
-      getTomatoList(data);
       getTemplateList();
     }
   }, [isLogin]);
