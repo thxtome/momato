@@ -1,13 +1,13 @@
-import Member from "../../components/member/Member";
-import { loginActions } from "../../store/modules/login";
-import { connect } from "react-redux";
+import Member from '../../components/member/Member';
+import { loginActions } from '../../store/modules/login';
+import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { memberInfo, isLogin } = state.loginReducer;
   return { memberInfo, isLogin };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     getMemberInfo: () => {
       dispatch(loginActions.MEMBERINFO_REQUEST());

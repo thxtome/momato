@@ -1,14 +1,14 @@
-import Calendar from "../../routes/Calendar";
-import { calendarActions } from "../../store/modules/calendar";
-import { connect } from "react-redux";
+import Calendar from '../../routes/Calendar';
+import { calendarActions } from '../../store/modules/calendar';
+import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return state;
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getTomatoCntOfDate: (yearAndMonth) => {
+    getTomatoCntOfDate: yearAndMonth => {
       dispatch(calendarActions.CALENDAR_REQUEST({ yearAndMonth }));
     },
     clearUpdated: () => {

@@ -1,83 +1,83 @@
-import React from "react";
-import Box from "@material-ui/core/Box";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import React from 'react';
+import Box from '@material-ui/core/Box';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Avatar from "@material-ui/core/Avatar";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
 
-const StyledTableCell = withStyles((theme) => ({
+const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
-    textAlign: "center",
-    width: "20%",
+    textAlign: 'center',
+    width: '20%',
   },
   body: {
     fontSize: 14,
-    textAlign: "center",
-    height: "80px",
-    "&:hover": {
+    textAlign: 'center',
+    height: '80px',
+    '&:hover': {
       opacity: 0.5,
     },
-    width: "20%",
+    width: '20%',
   },
 }))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
+const StyledTableRow = withStyles(theme => ({
   head: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   root: {
-    "&:nth-of-type(odd)": {
+    '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default,
     },
-    display: "flex",
+    display: 'flex',
   },
 }))(TableRow);
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   date: {
-    width: "100%",
-    height: "100%",
-    textAlign: "start",
+    width: '100%',
+    height: '100%',
+    textAlign: 'start',
   },
 
   innerDate: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: theme.spacing(0.5),
   },
 
   thead: {
-    display: "flex",
+    display: 'flex',
   },
 
   tomatoImg: {
-    width: "35%",
-    height: "auto",
+    width: '35%',
+    height: 'auto',
     marginRight: theme.spacing(0.5),
   },
 
   thMoblie: {
-    padding: "3px",
+    padding: '3px',
   },
 
   tdMoblie: {
-    padding: "3px",
-    height: "50px",
+    padding: '3px',
+    height: '50px',
   },
 
   dateFontMobile: {
-    fontSize: "0.5rem",
+    fontSize: '0.5rem',
   },
 }));
 
@@ -95,7 +95,7 @@ const fillDate = (year, month, tomatoOfDates = []) => {
   }
 
   //토마토를 채움
-  tomatoOfDates.forEach((ele) => {
+  tomatoOfDates.forEach(ele => {
     dates[parseInt(ele.date) + firstDay - 1] = {
       date: parseInt(ele.date),
       tomatoCnt: ele.tomatoCnt,
@@ -106,7 +106,7 @@ const fillDate = (year, month, tomatoOfDates = []) => {
 };
 
 //채운 날짜를 row형식에 맞게 삽입
-const createRows = (dates) => {
+const createRows = dates => {
   const rows = [];
 
   for (let i = 0; i < 6; i++) {
@@ -124,33 +124,22 @@ const createRows = (dates) => {
   return rows;
 };
 
-const Dates = (props) => {
+const Dates = props => {
   const classes = useStyles();
   const dates = fillDate(props.year, props.month, props.tomatoOfDates);
   const rows = createRows(dates);
-  const matches = useMediaQuery("(min-width:700px)");
+  const matches = useMediaQuery('(min-width:700px)');
 
   let dayOfTheWeek = matches
-    ? [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ]
-    : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    ? ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
+      <Table className={classes.table} aria-label='customized table'>
         <TableHead>
           <TableRow className={classes.thead}>
             {dayOfTheWeek.map((day, index) => (
-              <StyledTableCell
-                className={matches ? "" : classes.thMoblie}
-                key={index}
-              >
+              <StyledTableCell className={matches ? '' : classes.thMoblie} key={index}>
                 {day}
               </StyledTableCell>
             ))}
@@ -161,31 +150,19 @@ const Dates = (props) => {
           {rows.map((row, index) => (
             <StyledTableRow key={index}>
               {row.map((dateInfo, index) => (
-                <StyledTableCell
-                  className={matches ? "" : classes.tdMoblie}
-                  key={index}
-                  component="td"
-                  scope="row"
-                >
+                <StyledTableCell className={matches ? '' : classes.tdMoblie} key={index} component='td' scope='row'>
                   <Box
-                    className={
-                      matches
-                        ? `${classes.date}`
-                        : `${classes.date} ${classes.dateFontMobile}`
-                    }
-                    component={"div"}
+                    className={matches ? `${classes.date}` : `${classes.date} ${classes.dateFontMobile}`}
+                    component={'div'}
                   >
-                    {dateInfo ? dateInfo.date : ""}
+                    {dateInfo ? dateInfo.date : ''}
                     {dateInfo && dateInfo.tomatoCnt ? (
                       <Box className={classes.innerDate}>
-                        <Avatar
-                          className={classes.tomatoImg}
-                          src="/images/homeMade.png"
-                        />
+                        <Avatar className={classes.tomatoImg} src='/images/homeMade.png' />
                         {dateInfo.tomatoCnt}
                       </Box>
                     ) : (
-                      ""
+                      ''
                     )}
                   </Box>
                 </StyledTableCell>

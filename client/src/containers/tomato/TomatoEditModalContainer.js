@@ -1,32 +1,32 @@
-import { connect } from "react-redux"
-import { tomatoEditActions } from "../../store/modules/tomatoEdit.js"
-import { tomatoActions } from "../../store/modules/tomato.js"
-import TomatoEditModal from "../../components/tomato/TomatoEditModal.js"
+import { connect } from 'react-redux';
+import { tomatoEditActions } from '../../store/modules/tomatoEdit.js';
+import { tomatoActions } from '../../store/modules/tomato.js';
+import TomatoEditModal from '../../components/tomato/TomatoEditModal.js';
 
-const mapStateToProps = (state) => {
-  const { isLogin } = state.loginReducer
-  const isTomatoEditSucceed = state.tomatoEditReducer.isTomatoEditSucceed
-  return { isLogin, isTomatoEditSucceed }
-}
+const mapStateToProps = state => {
+  const { isLogin } = state.loginReducer;
+  const isTomatoEditSucceed = state.tomatoEditReducer.isTomatoEditSucceed;
+  return { isLogin, isTomatoEditSucceed };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    editTomato: (data) => {
-      dispatch(tomatoEditActions.TOMATO_EDIT_REQUEST({ data }))
+    editTomato: data => {
+      dispatch(tomatoEditActions.TOMATO_EDIT_REQUEST({ data }));
     },
-    editTempTomato: (editedTempTomato) => {
-      dispatch(tomatoEditActions.TOMATO_TEMP_EDIT({ editedTempTomato }))
+    editTempTomato: editedTempTomato => {
+      dispatch(tomatoEditActions.TOMATO_TEMP_EDIT({ editedTempTomato }));
     },
     getTempTomatoList: () => {
-      dispatch(tomatoActions.TOMATO_TEMP_REQUEST())
+      dispatch(tomatoActions.TOMATO_TEMP_REQUEST());
     },
-    getTomatoList: (data) => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ data }))
+    getTomatoList: data => {
+      dispatch(tomatoActions.TOMATO_REQUEST({ data }));
     },
     clearEditResult: () => {
-      dispatch(tomatoEditActions.TOMATO_EDIT_CLEAR())
+      dispatch(tomatoEditActions.TOMATO_EDIT_CLEAR());
     },
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(TomatoEditModal)
+export default connect(mapStateToProps, mapDispatchToProps)(TomatoEditModal);

@@ -1,12 +1,12 @@
-import React, { useState } from "react"
-import { makeStyles, TextField, Typography, Button, Avatar } from "@material-ui/core"
-import { required } from "../../lib/validation"
+import React, { useState } from 'react';
+import { makeStyles, TextField, Typography, Button, Avatar } from '@material-ui/core';
+import { required } from '../../lib/validation';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   div: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
     marginBottom: theme.spacing(2),
   },
 
@@ -19,83 +19,83 @@ const useStyles = makeStyles((theme) => ({
   },
 
   button: {
-    margin: "auto",
-    textAlign: "center",
+    margin: 'auto',
+    textAlign: 'center',
   },
 
   tomatoImg: {
-    display: "block",
+    display: 'block',
     width: theme.spacing(15),
     height: theme.spacing(15),
-    margin: theme.spacing(0, "auto"),
+    margin: theme.spacing(0, 'auto'),
   },
 
   tomatoText: {
-    display: "block",
+    display: 'block',
     width: theme.spacing(15),
-    margin: theme.spacing(3, "auto"),
+    margin: theme.spacing(3, 'auto'),
   },
   text: {
     width: theme.spacing(22),
-    "& > *": {
-      [theme.breakpoints.down("650")]: {
+    '& > *': {
+      [theme.breakpoints.down('650')]: {
         fontSize: 13,
       },
     },
   },
-}))
+}));
 
-const useInput = (initVal) => {
-  const [value, setValue] = useState(initVal)
-  const onChange = (e) => {
-    setValue(e.target.value)
-  }
-  return { value, onChange }
-}
+const useInput = initVal => {
+  const [value, setValue] = useState(initVal);
+  const onChange = e => {
+    setValue(e.target.value);
+  };
+  return { value, onChange };
+};
 
-const FindPassModal = (props) => {
-  const classes = useStyles()
-  const memberId = useInput("")
+const FindPassModal = props => {
+  const classes = useStyles();
+  const memberId = useInput('');
   const findPassRequest = () => {
-    if (required(memberId.value, "아이디")) {
-      props.sendTempPass(memberId.value)
-      props.onClose()
+    if (required(memberId.value, '아이디')) {
+      props.sendTempPass(memberId.value);
+      props.onClose();
     }
-  }
+  };
 
   return (
     <>
-      <Avatar className={classes.tomatoImg} src="/images/homeMade.png" />
-      <Typography className={classes.tomatoText} variant="h5">
+      <Avatar className={classes.tomatoImg} src='/images/homeMade.png' />
+      <Typography className={classes.tomatoText} variant='h5'>
         TOMATO
       </Typography>
-      <form className={classes.root} noValidate autoComplete="off">
+      <form className={classes.root} noValidate autoComplete='off'>
         <div className={classes.div}>
           <Typography className={classes.titleId}>아이디</Typography>
           <TextField
             className={classes.text}
-            id="standard-textarea"
-            label=""
-            placeholder="example@tomato.com"
+            id='standard-textarea'
+            label=''
+            placeholder='example@tomato.com'
             multiline
             autoFocus
             {...memberId}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault()
-                document.getElementById("button").click()
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('button').click();
               }
             }}
           />
         </div>
         <div className={classes.button}>
-          <Button id="button" variant="contained" color="secondary" onClick={findPassRequest}>
+          <Button id='button' variant='contained' color='secondary' onClick={findPassRequest}>
             메일 전송
           </Button>
         </div>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default FindPassModal
+export default FindPassModal;

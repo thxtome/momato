@@ -1,22 +1,22 @@
-import LoginErrorHandler from "./handler/LoginErrorHandler";
-import CommonErrorHandler from "./handler/CommonErrorHandler";
-import FindPassErrorHandler from "./handler/FindPassErrorHandler";
-import AuthorizationErrorHandler from "./handler/AuthorizationErrorHandler";
-import customError from "./customError";
+import LoginErrorHandler from './handler/LoginErrorHandler';
+import CommonErrorHandler from './handler/CommonErrorHandler';
+import FindPassErrorHandler from './handler/FindPassErrorHandler';
+import AuthorizationErrorHandler from './handler/AuthorizationErrorHandler';
+import customError from './customError';
 
-const dispachError = (error) => {
+const dispachError = error => {
   const errorDetail = customError(error);
   switch (errorDetail.category) {
-    case "Authorization":
+    case 'Authorization':
       AuthorizationErrorHandler(errorDetail);
       break;
-    case "Login":
+    case 'Login':
       LoginErrorHandler(errorDetail);
       break;
-    case "FindPass":
+    case 'FindPass':
       FindPassErrorHandler(errorDetail);
       break;
-    case "Common":
+    case 'Common':
       CommonErrorHandler(errorDetail);
       break;
 

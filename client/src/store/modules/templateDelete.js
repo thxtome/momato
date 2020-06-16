@@ -1,9 +1,9 @@
-import { createReducer, createAction } from "@reduxjs/toolkit";
+import { createReducer, createAction } from '@reduxjs/toolkit';
 
-const TEMPLATE_DELETE_REQUEST = createAction("TEMPLATE_DELETE_REQUEST");
-const TEMPLATE_DELETE_SUCCEED = createAction("TEMPLATE_DELETE_SUCCEED");
-const TEMPLATE_DELETE_FAILED = createAction("TEMPLATE_DELETE_FAILED");
-const TEMPLATE_DELETE_CLEAR = createAction("TEMPLATE_DELETE_CLEAR");
+const TEMPLATE_DELETE_REQUEST = createAction('TEMPLATE_DELETE_REQUEST');
+const TEMPLATE_DELETE_SUCCEED = createAction('TEMPLATE_DELETE_SUCCEED');
+const TEMPLATE_DELETE_FAILED = createAction('TEMPLATE_DELETE_FAILED');
+const TEMPLATE_DELETE_CLEAR = createAction('TEMPLATE_DELETE_CLEAR');
 
 export const templateDeleteActions = {
   TEMPLATE_DELETE_REQUEST,

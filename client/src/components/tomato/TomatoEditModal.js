@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from "react"
-import { makeStyles, Button, FormControl, InputLabel, Typography, TextField, Select, MenuItem } from "@material-ui/core"
-import { required } from "../../lib/validation"
+import React, { useState, useEffect } from 'react';
+import {
+  makeStyles,
+  Button,
+  FormControl,
+  InputLabel,
+  Typography,
+  TextField,
+  Select,
+  MenuItem,
+} from '@material-ui/core';
+import { required } from '../../lib/validation';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   formControl: {
-    display: "block",
+    display: 'block',
   },
   name: {
-    width: "100%",
+    width: '100%',
   },
   div: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
     marginBottom: theme.spacing(2),
   },
 
@@ -21,27 +30,27 @@ const useStyles = makeStyles((theme) => ({
   },
 
   editbtn: {
-    m: "auto",
-    textAlign: "center",
+    m: 'auto',
+    textAlign: 'center',
   },
 
   select: {
-    width: "40%",
-    cursor: "pointer",
+    width: '40%',
+    cursor: 'pointer',
   },
 
   option: {
-    cursor: "pointer",
+    cursor: 'pointer',
   },
-}))
+}));
 
-const useInput = (initVal) => {
-  const [value, setValue] = useState(initVal)
-  const onChange = (e) => {
-    setValue(e.target.value)
-  }
-  return { value, onChange }
-}
+const useInput = initVal => {
+  const [value, setValue] = useState(initVal);
+  const onChange = e => {
+    setValue(e.target.value);
+  };
+  return { value, onChange };
+};
 
 const TomatoEditModal = ({
   isLogin,
@@ -59,31 +68,31 @@ const TomatoEditModal = ({
   clearEditResult,
   onClose,
 }) => {
-  templateIdx = templateIdx ? templateIdx : 0
-  const times = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-  const CHARACTER_LIMIT = 15
+  templateIdx = templateIdx ? templateIdx : 0;
+  const times = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const CHARACTER_LIMIT = 15;
 
-  const classes = useStyles()
-  const tomatoName = useInput(name)
-  const tomatoFullRegular = useInput(fullRegular)
-  const tomatoFullBreak = useInput(fullBreak)
+  const classes = useStyles();
+  const tomatoName = useInput(name);
+  const tomatoFullRegular = useInput(fullRegular);
+  const tomatoFullBreak = useInput(fullBreak);
 
   // 토마토 수정 시 토마토 목록 다시 불러오기
   useEffect(() => {
     if (isLogin) {
       if (isTomatoEditSucceed === false) {
-        return
+        return;
       }
       getTomatoList({
         date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
         templateIdx: templateIdx,
-      })
-      clearEditResult()
+      });
+      clearEditResult();
     }
-  }, [isTomatoEditSucceed])
+  }, [isTomatoEditSucceed]);
 
   const tomatoEditRequest = () => {
-    if (required(tomatoName.value, "토마토 이름")) {
+    if (required(tomatoName.value, '토마토 이름')) {
       //현재 로그인상태면 서버로 요청전송
       if (isLogin) {
         const editedTomato = {
@@ -92,8 +101,8 @@ const TomatoEditModal = ({
           tomatoFullRegular: tomatoFullRegular.value,
           tomatoFullBreak: tomatoFullBreak.value,
           tomatoCanStart,
-        }
-        editTomato(editedTomato)
+        };
+        editTomato(editedTomato);
 
         //아니면 임시토마토를 가져와서 정보수정 후 추가 액션을 보냄
       } else {
@@ -109,22 +118,22 @@ const TomatoEditModal = ({
           tomatoLeftRegular: tomatoFullRegular.value,
           tomatoFullBreak: tomatoFullBreak.value,
           tomatoLeftBreak: tomatoFullBreak.value,
-        }
+        };
         //수정요청 액션을 보내고
-        editTempTomato(editedTempTomato)
+        editTempTomato(editedTempTomato);
         //리스트 렌더 요청
-        getTempTomatoList()
+        getTempTomatoList();
       }
-      onClose()
+      onClose();
     }
-  }
+  };
   return (
     <>
-      {" "}
+      {' '}
       <TextField
         className={classes.name}
-        id="standard-textarea"
-        label=""
+        id='standard-textarea'
+        label=''
         placeholder={name}
         multiline
         autoFocus
@@ -132,30 +141,30 @@ const TomatoEditModal = ({
           maxLength: CHARACTER_LIMIT,
         }}
         helperText={`${tomatoName.value.length}/${CHARACTER_LIMIT}`}
-        onKeyPress={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault()
-            document.getElementById("editButton").click()
+        onKeyPress={e => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('editButton').click();
           }
         }}
         {...tomatoName}
-      />{" "}
-      <p id="transition-modal-description" />
+      />{' '}
+      <p id='transition-modal-description' />
       <FormControl className={classes.formControl}>
         <div className={classes.div}>
-          <InputLabel htmlFor="fullRegular"></InputLabel>
+          <InputLabel htmlFor='fullRegular'></InputLabel>
           <Typography className={classes.title}>재배 시간</Typography>
           <Select
             inputProps={{
-              name: "tomatoFullRegular",
-              id: "uncontrolled-native",
+              name: 'tomatoFullRegular',
+              id: 'uncontrolled-native',
               classes: {
                 input: classes.resize,
               },
             }}
             {...tomatoFullRegular}
           >
-            {times.map((time) => (
+            {times.map(time => (
               <MenuItem key={time} value={time * 300}>
                 {time * 5}분
               </MenuItem>
@@ -165,12 +174,12 @@ const TomatoEditModal = ({
       </FormControl>
       <FormControl className={classes.formControl}>
         <div className={classes.div}>
-          <InputLabel htmlFor="fullBreak"></InputLabel>
+          <InputLabel htmlFor='fullBreak'></InputLabel>
           <Typography className={classes.title}>휴식 시간</Typography>
           <Select
             inputProps={{
-              name: "tomatoFullBreak",
-              id: "uncontrolled-native",
+              name: 'tomatoFullBreak',
+              id: 'uncontrolled-native',
             }}
             {...tomatoFullBreak}
           >
@@ -180,19 +189,19 @@ const TomatoEditModal = ({
                   <MenuItem key={time} value={time * 300}>
                     {time * 5}분
                   </MenuItem>
-                )
+                );
               }
             })}
           </Select>
         </div>
         <div className={classes.editbtn}>
-          <Button variant="contained" color="secondary" onClick={tomatoEditRequest} id="editButton">
+          <Button variant='contained' color='secondary' onClick={tomatoEditRequest} id='editButton'>
             수정
           </Button>
         </div>
       </FormControl>
     </>
-  )
-}
+  );
+};
 
-export default TomatoEditModal
+export default TomatoEditModal;

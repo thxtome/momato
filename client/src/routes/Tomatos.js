@@ -1,8 +1,8 @@
-import React from "react"
-import TomatoListContainer from "../containers/tomato/TomatoListContainer"
+import React from 'react';
+import TomatoListContainer from '../containers/tomato/TomatoListContainer';
 
 const Tomatos = () => {
-  return <TomatoListContainer />
-}
+  return <TomatoListContainer />;
+};
 
-export default Tomatos
+export default Tomatos;

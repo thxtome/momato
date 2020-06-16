@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles, Button, TextField, Typography } from "@material-ui/core";
-import { required } from "../../lib/validation";
+import React, { useState, useEffect } from 'react';
+import { makeStyles, Button, TextField, Typography } from '@material-ui/core';
+import { required } from '../../lib/validation';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   addTitle: {
     fontSize: 22,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(3),
   },
 
   textField: {
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
     marginBottom: theme.spacing(2),
-    "& > *": {
+    '& > *': {
       width: theme.spacing(35),
     },
   },
@@ -24,15 +24,15 @@ const useStyles = makeStyles((theme) => ({
   },
 
   button: {
-    display: "block",
-    margin: theme.spacing(1, "auto"),
-    textAlign: "center",
+    display: 'block',
+    margin: theme.spacing(1, 'auto'),
+    textAlign: 'center',
   },
 }));
 
-const useInput = (initVal) => {
+const useInput = initVal => {
   const [value, setValue] = useState(initVal);
-  const onChange = (e) => {
+  const onChange = e => {
     setValue(e.target.value);
   };
   return { value, onChange };
@@ -52,8 +52,8 @@ const TomatoAddModal = ({
   const CHARACTER_LIMIT = 15;
 
   const classes = useStyles();
-  const createType = useInput("simple");
-  const tomatoName = useInput("");
+  const createType = useInput('simple');
+  const tomatoName = useInput('');
 
   // 토마토 추가 시 토마토목록 다시 불러오기
   useEffect(() => {
@@ -62,9 +62,7 @@ const TomatoAddModal = ({
         return;
       }
       getTomatoList({
-        date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-          .toISOString()
-          .substr(0, 10),
+        date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
         templateIdx: templateIdx,
       });
       clearAddResult();
@@ -74,8 +72,9 @@ const TomatoAddModal = ({
 
   const tomatoAddRequest = () => {
     //로그인이면 서버로 요청을 보냄
-    if (required(tomatoName.value, "토마토 이름")) {
+    if (required(tomatoName.value, '토마토 이름')) {
       if (isLogin) {
+        console.log('인덱스', templateIdx);
         const data = {
           createType: createType.value,
           tomatoName: tomatoName.value,
@@ -105,13 +104,13 @@ const TomatoAddModal = ({
 
   return (
     <>
-      <Typography className={classes.addTitle} id="transition-modal-title">
+      <Typography className={classes.addTitle} id='transition-modal-title'>
         토마토 추가
       </Typography>
       <TextField
         className={classes.textField}
-        id="standard-textarea"
-        placeholder="토마토 이름"
+        id='standard-textarea'
+        placeholder='토마토 이름'
         multiline
         autoFocus
         inputProps={{
@@ -119,18 +118,18 @@ const TomatoAddModal = ({
         }}
         helperText={`${tomatoName.value.length}/${CHARACTER_LIMIT}`}
         {...tomatoName}
-        onKeyPress={(e) => {
-          if (e.key === "Enter") {
+        onKeyPress={e => {
+          if (e.key === 'Enter') {
             e.preventDefault();
-            document.getElementById("addButton").click();
+            document.getElementById('addButton').click();
           }
         }}
       />
       <span className={classes.button}>
         <Button
-          variant="contained"
-          color="secondary"
-          id="addButton"
+          variant='contained'
+          color='secondary'
+          id='addButton'
           onClick={() => {
             tomatoAddRequest();
           }}

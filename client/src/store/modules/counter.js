@@ -1,30 +1,26 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
-import { WEBSOCKET_CONNECTED_STATE } from "../../lib/socketApi";
+import { createAction, createReducer } from '@reduxjs/toolkit';
+import { WEBSOCKET_CONNECTED_STATE } from '../../lib/socketApi';
 
 //로그인시 소켓에 요청하거나 응답받는 액션
-const TOMATO_LOAD_FAILD = createAction("TOMATO_LOAD_FAILD");
-const TOMATO_LOAD_SUCCED = createAction("TOMATO_LOAD_SUCCED");
-const TOMATO_START_SUCCED = createAction("TOMATO_START_SUCCED");
-const TOMATO_STOP_SUCCED = createAction("TOMATO_STOP_SUCCED");
-const TOMATO_STOP_ON_RECONNECTING = createAction("TOMATO_STOP_ON_RECONNECTING");
-const TOMATO_RESET_SUCCED = createAction("TOMATO_RESET_SUCCED");
-const TOMATO_BREAK_TIME_FINISH_SUCCED = createAction(
-  "TOMATO_BREAK_TIME_FINISH_SUCCED"
-);
-const TOMATO_REGULAR_TIME_FINISH_SUCCED = createAction(
-  "TOMATO_REGULAR_TIME_FINISH_SUCCED"
-);
-const TOMATO_FINISH_FAILD = createAction("TOMATO_FINISH_FAILD");
-const OPEN_SOCKET_SUCCEED = createAction("OPEN_SOCKET_SUCCEED");
-const UNEXPECTED_SOCKET_CLOSED = createAction("UNEXPECTED_SOCKET_CLOSED");
-const SOCKET_RECONNECTING = createAction("SOCKET_RECONNECTING");
-const CLOSE_SOCKET = createAction("CLOSE_SOCKET");
-const ADD_TIME = createAction("ADD_TIME");
+const TOMATO_LOAD_FAILD = createAction('TOMATO_LOAD_FAILD');
+const TOMATO_LOAD_SUCCED = createAction('TOMATO_LOAD_SUCCED');
+const TOMATO_START_SUCCED = createAction('TOMATO_START_SUCCED');
+const TOMATO_STOP_SUCCED = createAction('TOMATO_STOP_SUCCED');
+const TOMATO_STOP_ON_RECONNECTING = createAction('TOMATO_STOP_ON_RECONNECTING');
+const TOMATO_RESET_SUCCED = createAction('TOMATO_RESET_SUCCED');
+const TOMATO_BREAK_TIME_FINISH_SUCCED = createAction('TOMATO_BREAK_TIME_FINISH_SUCCED');
+const TOMATO_REGULAR_TIME_FINISH_SUCCED = createAction('TOMATO_REGULAR_TIME_FINISH_SUCCED');
+const TOMATO_FINISH_FAILD = createAction('TOMATO_FINISH_FAILD');
+const OPEN_SOCKET_SUCCEED = createAction('OPEN_SOCKET_SUCCEED');
+const UNEXPECTED_SOCKET_CLOSED = createAction('UNEXPECTED_SOCKET_CLOSED');
+const SOCKET_RECONNECTING = createAction('SOCKET_RECONNECTING');
+const CLOSE_SOCKET = createAction('CLOSE_SOCKET');
+const ADD_TIME = createAction('ADD_TIME');
 
 //비로그인시 액션
-const TEMP_TOMATO_LOAD = createAction("TEMP_TOMATO_LOAD");
-const TEMP_TOMATO_FINISH = createAction("TEMP_TOMATO_FINISH");
-const TEMP_TOMATO_SAVE = createAction("TEMP_TOMATO_SAVE");
+const TEMP_TOMATO_LOAD = createAction('TEMP_TOMATO_LOAD');
+const TEMP_TOMATO_FINISH = createAction('TEMP_TOMATO_FINISH');
+const TEMP_TOMATO_SAVE = createAction('TEMP_TOMATO_SAVE');
 
 export const counterActions = {
   TOMATO_LOAD_SUCCED,
@@ -50,7 +46,7 @@ const initialState = {
   fullTime: 0,
   leftTime: 0,
   timePassed: 0,
-  target: "regularTime",
+  target: 'regularTime',
   isGoing: false,
   isLodaSucced: false,
   connectState: WEBSOCKET_CONNECTED_STATE.CLOSE,
@@ -72,19 +68,13 @@ const reducer = createReducer(initialState, {
   },
 
   [TEMP_TOMATO_LOAD]: (state, action) => {
-    const tomato = JSON.parse(sessionStorage.getItem("tomatos")).filter(
-      (tom) => {
-        return tom.tomatoIdx === action.payload.tomatoIdx;
-      }
-    )[0];
+    const tomato = JSON.parse(sessionStorage.getItem('tomatos')).filter(tom => {
+      return tom.tomatoIdx === action.payload.tomatoIdx;
+    })[0];
 
-    const target = tomato.tomatoCanStart ? "regularTime" : "breakTime";
-    const fullTime = tomato.tomatoCanStart
-      ? tomato.tomatoFullRegular
-      : tomato.tomatoFullBreak;
-    const leftTime = tomato.tomatoCanStart
-      ? tomato.tomatoLeftRegular
-      : tomato.tomatoLeftBreak;
+    const target = tomato.tomatoCanStart ? 'regularTime' : 'breakTime';
+    const fullTime = tomato.tomatoCanStart ? tomato.tomatoFullRegular : tomato.tomatoFullBreak;
+    const leftTime = tomato.tomatoCanStart ? tomato.tomatoLeftRegular : tomato.tomatoLeftBreak;
 
     return {
       ...state,
@@ -107,7 +97,7 @@ const reducer = createReducer(initialState, {
     return { ...state, isGoing: false, startTime: null };
   },
 
-  [TOMATO_STOP_ON_RECONNECTING]: (state) => {
+  [TOMATO_STOP_ON_RECONNECTING]: state => {
     return { ...state, isGoing: false };
   },
 
@@ -126,7 +116,7 @@ const reducer = createReducer(initialState, {
       fullTime: action.payload.breakTime,
       leftTime: action.payload.breakTime,
       timePassed: 0,
-      target: "breakTime",
+      target: 'breakTime',
     };
   },
 
@@ -140,25 +130,23 @@ const reducer = createReducer(initialState, {
   },
 
   [TEMP_TOMATO_FINISH]: (state, action) => {
-    if (state.target === "regularTime") {
+    if (state.target === 'regularTime') {
       let breakTime;
       const tomatoIdx = action.payload.tomatoIdx;
-      const tomatos = JSON.parse(sessionStorage.getItem("tomatos")).map(
-        (tomato) => {
-          if (tomato.tomatoIdx === tomatoIdx) {
-            tomato.tomatoCanStart = 0;
-            breakTime = tomato.tomatoFullBreak;
-          }
-          return tomato;
+      const tomatos = JSON.parse(sessionStorage.getItem('tomatos')).map(tomato => {
+        if (tomato.tomatoIdx === tomatoIdx) {
+          tomato.tomatoCanStart = 0;
+          breakTime = tomato.tomatoFullBreak;
         }
-      );
-      sessionStorage.setItem("tomatos", JSON.stringify(tomatos));
+        return tomato;
+      });
+      sessionStorage.setItem('tomatos', JSON.stringify(tomatos));
       return {
         ...state,
         fullTime: breakTime,
         leftTime: breakTime,
         timePassed: 0,
-        target: "breakTime",
+        target: 'breakTime',
       };
     } else {
       return { ...state, isFinished: true, timePassed: 0, leftTime: 0 };
@@ -166,9 +154,7 @@ const reducer = createReducer(initialState, {
   },
 
   [ADD_TIME]: (state, action) => {
-    const timePassed = Math.round(
-      state.timePassed + (new Date().getTime() - state.currentTime) / 1000
-    );
+    const timePassed = Math.round(state.timePassed + (new Date().getTime() - state.currentTime) / 1000);
     return { ...state, currentTime: new Date().getTime(), timePassed };
   },
 
@@ -203,7 +189,7 @@ const reducer = createReducer(initialState, {
       fullTime: 0,
       leftTime: 0,
       timePassed: 0,
-      target: "regularTime",
+      target: 'regularTime',
       isGoing: false,
       isLodaSucced: false,
       connectState: WEBSOCKET_CONNECTED_STATE.CLOSE,
@@ -216,19 +202,17 @@ const reducer = createReducer(initialState, {
   //인덱스를 가지고 토마토를 가져와서 타겟에 따라 남은 시간을 수정하고 다시 세션에 넣어준다.
   [TEMP_TOMATO_SAVE]: (state, action) => {
     const tomatoIdx = action.payload.tomatoIdx;
-    const tomatos = JSON.parse(sessionStorage.getItem("tomatos")).map(
-      (tomato) => {
-        if (tomato.tomatoIdx === tomatoIdx) {
-          if (state.target === "regularTime") {
-            tomato.tomatoLeftRegular = state.leftTime - state.timePassed;
-          } else {
-            tomato.tomatoLeftBreak = state.leftTime - state.timePassed;
-          }
+    const tomatos = JSON.parse(sessionStorage.getItem('tomatos')).map(tomato => {
+      if (tomato.tomatoIdx === tomatoIdx) {
+        if (state.target === 'regularTime') {
+          tomato.tomatoLeftRegular = state.leftTime - state.timePassed;
+        } else {
+          tomato.tomatoLeftBreak = state.leftTime - state.timePassed;
         }
-        return tomato;
       }
-    );
-    sessionStorage.setItem("tomatos", JSON.stringify(tomatos));
+      return tomato;
+    });
+    sessionStorage.setItem('tomatos', JSON.stringify(tomatos));
     return {
       ...state,
       fullTime: 0,

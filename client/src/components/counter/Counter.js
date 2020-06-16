@@ -1,118 +1,118 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
-import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
-import RestoreIcon from "@material-ui/icons/Restore";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import errorDispacher from "../../error/errorDispacher";
-import { WEBSOCKET_CONNECTED_STATE } from "../../lib/socketApi";
-import bell from "../../sounds/bell.mp3";
-import { toast } from "react-toastify";
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
+import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import RestoreIcon from '@material-ui/icons/Restore';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import errorDispacher from '../../error/errorDispacher';
+import { WEBSOCKET_CONNECTED_STATE } from '../../lib/socketApi';
+import bell from '../../sounds/bell.mp3';
+import { toast } from 'react-toastify';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   Container: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
     top: 0,
     left: 0,
     zIndex: 1600,
   },
   closeBtnBox: {
-    display: "flex",
-    justifyContent: "flex-end",
-    margin: "10px",
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: '10px',
   },
 
   countDetailBox: {
-    width: "100%",
-    height: "60%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    height: '60%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   tomatoImg: {
-    maxWidth: "215px",
-    maxHeight: "215px",
-    width: "20%",
-    height: "auto",
-    marginRight: "20px",
+    maxWidth: '215px',
+    maxHeight: '215px',
+    width: '20%',
+    height: 'auto',
+    marginRight: '20px',
   },
 
   countDetail: {
-    width: "100%",
-    height: "60%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    height: '60%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   btnDetailBox: {
-    width: "100%",
-    height: "20%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    height: '20%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   btnDetail: {
-    fontSize: "10rem",
+    fontSize: '10rem',
   },
 
   fontSize: {
-    fontSize: "10rem",
+    fontSize: '10rem',
   },
 
   fontSizeMobile: {
-    fontSize: "5rem",
+    fontSize: '5rem',
   },
 
   iconSize: {
-    fontSize: "10rem",
+    fontSize: '10rem',
   },
 
   iconSizeMobile: {
-    fontSize: "5rem",
+    fontSize: '5rem',
   },
 
   finishIcon: {
-    fontSize: "10rem",
-    color: "seagreen",
+    fontSize: '10rem',
+    color: 'seagreen',
   },
 
   finishIconMobile: {
-    fontSize: "5rem",
-    color: "seagreen",
+    fontSize: '5rem',
+    color: 'seagreen',
   },
 
   finishMsg: {
-    fontSize: "6rem",
+    fontSize: '6rem',
   },
 
   finishMsgMobile: {
-    fontSize: "3rem",
+    fontSize: '3rem',
   },
 
   notificationAllow: {
-    display: "none",
-    marginRight: "5px",
+    display: 'none',
+    marginRight: '5px',
   },
 
   notificationNotAllow: {
-    marginRight: "5px",
+    marginRight: '5px',
   },
 }));
 
-const Counter = (props) => {
-  const matches = useMediaQuery("(min-width:700px)");
+const Counter = props => {
+  const matches = useMediaQuery('(min-width:700px)');
   const {
     timePassed,
     leftTime,
@@ -149,19 +149,19 @@ const Counter = (props) => {
   const [reConnectIntevalKey, setReConnectIntevalKey] = useState(null);
 
   //알림 허용 및 띄우기=====================================================================================================
-  const showNotification = (msg) => {
-    Notification.requestPermission((result) => {
-      if (result === "granted") {
+  const showNotification = msg => {
+    Notification.requestPermission(result => {
+      if (result === 'granted') {
         setIsNotificationAllow(true);
         navigator.serviceWorker.ready.then(function (registration) {
-          registration.showNotification("MOMATO", {
+          registration.showNotification('MOMATO', {
             body: msg,
-            icon: "/images/homeMade.png",
+            icon: '/images/homeMade.png',
             vibrate: [200],
           });
         });
       } else {
-        alert("백그라운드 실행시 알림이 오지 않습니다.");
+        alert('백그라운드 실행시 알림이 오지 않습니다.');
       }
     });
   };
@@ -171,17 +171,17 @@ const Counter = (props) => {
     //허용상태를 보고
     switch (Notification.permission) {
       //첫 요청일 때
-      case "default":
-        showNotification("알림이 허용되었습니다.");
+      case 'default':
+        showNotification('알림이 허용되었습니다.');
         break;
 
       //이미 허용일때
-      case "granted":
+      case 'granted':
         setIsNotificationAllow(true);
         break;
 
       //거절일 떄
-      case "denied":
+      case 'denied':
         setIsNotificationAllow(false);
         break;
 
@@ -191,13 +191,13 @@ const Counter = (props) => {
   };
 
   //완료시 알람=====================================================================================
-  const sendFinish = (target) => {
+  const sendFinish = target => {
     let msg =
-      target === "regularTime"
-        ? "집중시간이 끝났습니다! 휴식 시간을 가져보세요."
-        : "휴식시간이 끝났습니다! 새로운 집중 시간을 가져보세요.";
+      target === 'regularTime'
+        ? '집중시간이 끝났습니다! 휴식 시간을 가져보세요.'
+        : '휴식시간이 끝났습니다! 새로운 집중 시간을 가져보세요.';
 
-    if (isNotificationSupport && Notification.permission === "granted") {
+    if (isNotificationSupport && Notification.permission === 'granted') {
       showNotification(msg);
     } else {
       showToast(msg);
@@ -207,14 +207,14 @@ const Counter = (props) => {
   //메세지 반환 함수==============================================================================================================
   const notificationMsg = () => {
     return !isNotificationSupport
-      ? "브라우저가 알림을 지원하지 않습니다."
+      ? '브라우저가 알림을 지원하지 않습니다.'
       : isNotificationAllow
-      ? ""
-      : "알림 허용시 백그라운드에서도 알림을 받을 수 있습니다.";
+      ? ''
+      : '알림 허용시 백그라운드에서도 알림을 받을 수 있습니다.';
   };
 
   //종료토스트==============================================================================================================
-  const showToast = (msg) => {
+  const showToast = msg => {
     toast.info(msg, {
       position: toast.POSITION.TOP_CENTER,
     });
@@ -228,20 +228,18 @@ const Counter = (props) => {
     minute = minute < 0 ? 0 : minute;
     second = second < 0 ? 0 : second;
     return `
-    ${minute >= 10 ? Math.floor(minute) : `0${Math.floor(minute)}`}:${
-      second >= 10 ? second : `0${second}`
-    }
+    ${minute >= 10 ? Math.floor(minute) : `0${Math.floor(minute)}`}:${second >= 10 ? second : `0${second}`}
     `;
   };
 
   //버튼클릭시 연결상태확인 =======================================================================================
-  const beforeBtnClick = (fn) => {
+  const beforeBtnClick = fn => {
     //로그인이 안되어있거나 로그인이 되어있으면 연결이 되어있어야 실행
     if (!isLogin || connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED) {
       fn();
     } else {
       errorDispacher({
-        message: "Socket Connection Error",
+        message: 'Socket Connection Error',
       });
     }
   };
@@ -254,16 +252,16 @@ const Counter = (props) => {
     }
 
     //페이지를 새로고침시 유지가 안 되기때문에 비회원은 따로 처리
-    const handleRefresh = (e) => {
+    const handleRefresh = e => {
       if (e.keyCode === 116 && !isLogin) {
         tempTomatoSave(tomatoIdx);
       }
     };
-    
-    document.addEventListener("keydown", handleRefresh);
+
+    document.addEventListener('keydown', handleRefresh);
 
     //알림을 지원하는 브라우저가 아니면 알림지원을 false로 놓는다.
-    if (!("Notification" in window)) {
+    if (!('Notification' in window)) {
       setIsNotificationSupport(false);
     } else {
       //아니면 알림 허용 판단 및 요청을 한다
@@ -274,16 +272,15 @@ const Counter = (props) => {
     //로그인이 되어있으면 연결을 종료하고 로그인이 안되어있으면 임시토마토에 저장
     return isLogin
       ? () => {
-          document.removeEventListener("keydown", handleRefresh);
+          document.removeEventListener('keydown', handleRefresh);
           closeConnection();
         }
       : () => {
-          document.removeEventListener("keydown", handleRefresh);
+          document.removeEventListener('keydown', handleRefresh);
           tempTomatoSave(tomatoIdx);
         };
   }, []);
 
-  
   //타이머기능=========================================================================================================================
   useEffect(() => {
     //타이머가 작동상태가 아니면 리턴
@@ -358,7 +355,7 @@ const Counter = (props) => {
         if (cnt++ === 5) {
           clearInterval(key);
           errorDispacher({
-            message: "Socket Connection Error",
+            message: 'Socket Connection Error',
           });
           unexpectedClose();
           return;
@@ -397,56 +394,42 @@ const Counter = (props) => {
   const classes = useStyles();
   return (
     <Paper className={classes.Container}>
-      <Box className={classes.closeBtnBox} component={"div"}>
+      <Box className={classes.closeBtnBox} component={'div'}>
         {isNotificationAllow && isNotificationSupport ? (
-          ""
+          ''
         ) : (
-          <Button
-            className={classes.notificationNotAllow}
-            variant="contained"
-            color="primary"
-          >
+          <Button className={classes.notificationNotAllow} variant='contained' color='primary'>
             {notificationMsg()}
           </Button>
         )}
-        <Button variant="contained" color="secondary" onClick={goBack}>
+        <Button variant='contained' color='secondary' onClick={goBack}>
           나가기
         </Button>
       </Box>
 
-      <Box className={classes.countDetailBox} component={"div"}>
-        <Box className={classes.countDetail} component={"div"}>
+      <Box className={classes.countDetailBox} component={'div'}>
+        <Box className={classes.countDetail} component={'div'}>
           <Avatar
             className={classes.tomatoImg}
-            src={
-              target === "regularTime"
-                ? "/images/homeMade.png"
-                : "/images/rest.gif"
-            }
+            src={target === 'regularTime' ? '/images/homeMade.png' : '/images/rest.gif'}
           ></Avatar>
-          <Typography
-            className={matches ? classes.fontSize : classes.fontSizeMobile}
-            variant={"body1"}
-          >
+          <Typography className={matches ? classes.fontSize : classes.fontSizeMobile} variant={'body1'}>
             {calTime()}
           </Typography>
         </Box>
       </Box>
       {isFinished ? (
-        <Box className={classes.btnDetailBox} component={"div"}>
+        <Box className={classes.btnDetailBox} component={'div'}>
           <CheckCircleOutlineIcon
             className={matches ? classes.finishIcon : classes.finishIconMobile}
           ></CheckCircleOutlineIcon>
-          <Typography
-            className={matches ? classes.finishMsg : classes.finishMsgMobile}
-            variant={"body1"}
-          >
+          <Typography className={matches ? classes.finishMsg : classes.finishMsgMobile} variant={'body1'}>
             재배완료
           </Typography>
         </Box>
       ) : (
-        <Box className={classes.btnDetailBox} component={"div"}>
-          <Box component={"div"}>
+        <Box className={classes.btnDetailBox} component={'div'}>
+          <Box component={'div'}>
             {isGoing ? (
               <IconButton
                 onClick={() => {
@@ -454,9 +437,7 @@ const Counter = (props) => {
                 }}
               >
                 <PauseCircleFilledIcon
-                  className={
-                    matches ? classes.iconSize : classes.iconSizeMobile
-                  }
+                  className={matches ? classes.iconSize : classes.iconSizeMobile}
                 ></PauseCircleFilledIcon>
               </IconButton>
             ) : (
@@ -466,21 +447,15 @@ const Counter = (props) => {
                 }}
               >
                 <PlayCircleFilledWhiteIcon
-                  className={
-                    matches ? classes.iconSize : classes.iconSizeMobile
-                  }
+                  className={matches ? classes.iconSize : classes.iconSizeMobile}
                 ></PlayCircleFilledWhiteIcon>
               </IconButton>
             )}
           </Box>
 
-          <Box component={"div"}>
-            <IconButton
-              onClick={() => beforeBtnClick(() => resetTimer(target))}
-            >
-              <RestoreIcon
-                className={matches ? classes.iconSize : classes.iconSizeMobile}
-              ></RestoreIcon>
+          <Box component={'div'}>
+            <IconButton onClick={() => beforeBtnClick(() => resetTimer(target))}>
+              <RestoreIcon className={matches ? classes.iconSize : classes.iconSizeMobile}></RestoreIcon>
             </IconButton>
           </Box>
         </Box>

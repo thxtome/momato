@@ -1,10 +1,10 @@
-import { createReducer, createAction } from "@reduxjs/toolkit";
+import { createReducer, createAction } from '@reduxjs/toolkit';
 
-const TOMATO_DELETE_REQUEST = createAction("TOMATO_DELETE_REQUEST");
-const TOMATO_DELETE_SUCCEED = createAction("TOMATO_DELETE_SUCCEED");
-const TOMATO_DELETE_FAILED = createAction("TOMATO_DELETE_FAILED");
-const TOMATO_DELETE_CLEAR = createAction("TOMATO_DELETE_CLEAR");
-const TOMATO_TEMP_DELETE = createAction("TOMATO_TEMP_DELETE");
+const TOMATO_DELETE_REQUEST = createAction('TOMATO_DELETE_REQUEST');
+const TOMATO_DELETE_SUCCEED = createAction('TOMATO_DELETE_SUCCEED');
+const TOMATO_DELETE_FAILED = createAction('TOMATO_DELETE_FAILED');
+const TOMATO_DELETE_CLEAR = createAction('TOMATO_DELETE_CLEAR');
+const TOMATO_TEMP_DELETE = createAction('TOMATO_TEMP_DELETE');
 
 export const tomatoDeleteActions = {
   TOMATO_DELETE_REQUEST,
@@ -28,17 +28,17 @@ const reducer = createReducer(initialState, {
     //액션에서 토마토 인덱스를 받아서
     const tomatoIdx = action.payload.tomatoIdx;
     //세션에서 가져온 토마토 배열에서
-    let tomatos = JSON.parse(sessionStorage.getItem("tomatos"));
+    let tomatos = JSON.parse(sessionStorage.getItem('tomatos'));
     tomatos = tomatos ? tomatos : [];
 
     //인덱스가 같으면 제거해해서 다시 세션에 넣는다.
     sessionStorage.setItem(
-      "tomatos",
+      'tomatos',
       JSON.stringify(
-        tomatos.filter((tomato) => {
+        tomatos.filter(tomato => {
           return tomato.tomatoIdx !== tomatoIdx;
-        })
-      )
+        }),
+      ),
     );
 
     return { ...state };

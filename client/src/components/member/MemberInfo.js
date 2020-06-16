@@ -1,45 +1,45 @@
-import React, { useEffect } from "react"
-import { Avatar, makeStyles, Typography } from "@material-ui/core"
-import Modals from "../common/Modal"
+import React, { useEffect } from 'react';
+import { Avatar, makeStyles, Typography } from '@material-ui/core';
+import Modals from '../common/Modal';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   imgDiv: {
-    display: "flex",
-    "& > *": {
-      margin: theme.spacing(10, "auto"),
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(10, 'auto'),
     },
   },
   userGradeImg: {
-    alignSelf: "centers",
+    alignSelf: 'centers',
     marginBottom: theme.spacing(2),
     width: theme.spacing(10),
     height: theme.spacing(10),
   },
   textDiv: {
-    display: "flex",
-    "& > *": {
-      display: "block",
-      margin: theme.spacing(2, "auto"),
+    display: 'flex',
+    '& > *': {
+      display: 'block',
+      margin: theme.spacing(2, 'auto'),
     },
   },
   gradeComment: {
-    color: "#999",
-    alignSelf: "center",
+    color: '#999',
+    alignSelf: 'center',
   },
-}))
+}));
 
 const MemberInfo = ({ memberInfo, isLogin, isUpdateSucceed, history, getMemberInfo, clearUpdateResult }) => {
   useEffect(() => {
     if (!isLogin) {
-      history.push("/")
+      history.push('/');
     } else if (isUpdateSucceed) {
-      getMemberInfo()
-      clearUpdateResult()
-      history.push("/member-info")
+      getMemberInfo();
+      clearUpdateResult();
+      history.push('/member-info');
     }
-  }, [isLogin, isUpdateSucceed])
+  }, [isLogin, isUpdateSucceed]);
 
-  const classes = useStyles()
+  const classes = useStyles();
   return (
     <>
       {isLogin ? (
@@ -47,18 +47,18 @@ const MemberInfo = ({ memberInfo, isLogin, isUpdateSucceed, history, getMemberIn
           <div className={classes.imgDiv}>
             <Avatar className={classes.userGradeImg} src={memberInfo.memberGrade.gradeImageUrl} />
           </div>
-          <Modals type="info" name={memberInfo.memberName} />
+          <Modals type='info' name={memberInfo.memberName} />
           <div className={classes.textDiv}>
-            <Typography className={classes.gradeComment} variant="caption" display="block" gutterBottom>
+            <Typography className={classes.gradeComment} variant='caption' display='block' gutterBottom>
               {memberInfo.memberGrade.gradeComment}
             </Typography>
           </div>
         </>
       ) : (
-        ""
+        ''
       )}
     </>
-  )
-}
+  );
+};
 
-export default MemberInfo
+export default MemberInfo;

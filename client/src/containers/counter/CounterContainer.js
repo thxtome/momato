@@ -1,19 +1,10 @@
-import Counter from "../../components/counter/Counter";
-import { connect } from "react-redux";
-import { counterActions } from "../../store/modules/counter";
-import socketApi from "../../lib/socketApi";
+import Counter from '../../components/counter/Counter';
+import { connect } from 'react-redux';
+import { counterActions } from '../../store/modules/counter';
+import socketApi from '../../lib/socketApi';
 
-const mapStateToProps = (state) => {
-  const {
-    fullTime,
-    leftTime,
-    isGoing,
-    timePassed,
-    target,
-    connectState,
-    isLoaded,
-    isFinished,
-  } = state.counterReducer;
+const mapStateToProps = state => {
+  const { fullTime, leftTime, isGoing, timePassed, target, connectState, isLoaded, isFinished } = state.counterReducer;
   return {
     fullTime,
     leftTime,
@@ -33,20 +24,20 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(counterActions.ADD_TIME());
     },
 
-    loadTempTomato: (tomatoIdx) => {
+    loadTempTomato: tomatoIdx => {
       dispatch(counterActions.TEMP_TOMATO_LOAD({ tomatoIdx }));
     },
 
-    loadTomato: (tomatoIdx) => {
-      socketApi.request({ action: "load", tomatoIdx }, () => {
+    loadTomato: tomatoIdx => {
+      socketApi.request({ action: 'load', tomatoIdx }, () => {
         dispatch(counterActions.TOMATO_LOAD_FAILD());
       });
     },
 
     startTimer: isLogin
-      ? (target) => {
-          console.log("start");
-          socketApi.request({ target, action: "start" }, () => {
+      ? target => {
+          console.log('start');
+          socketApi.request({ target, action: 'start' }, () => {
             dispatch(counterActions.TOMATO_START_FAILD());
           });
         }
@@ -55,18 +46,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
 
     stopTimer: isLogin
-      ? (target) => {
-          socketApi.request({ target, action: "stop" }, () => {
+      ? target => {
+          socketApi.request({ target, action: 'stop' }, () => {
             dispatch(counterActions.TOMATO_STOP_FAILD());
           });
         }
       : () => {
-        dispatch(counterActions.TOMATO_STOP_SUCCED());
+          dispatch(counterActions.TOMATO_STOP_SUCCED());
         },
 
     resetTimer: isLogin
-      ? (target) => {
-          socketApi.request({ target, action: "reset" }, () => {
+      ? target => {
+          socketApi.request({ target, action: 'reset' }, () => {
             dispatch(counterActions.TOMATO_RESET_FAILD());
           });
         }
@@ -74,14 +65,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           dispatch(counterActions.TOMATO_RESET_SUCCED());
         },
 
-    finishTimer: (target) => {
+    finishTimer: target => {
       dispatch(counterActions.TOMATO_STOP_SUCCED());
-      socketApi.request({ target, action: "finish" }, () => {
+      socketApi.request({ target, action: 'finish' }, () => {
         dispatch(counterActions.TOMATO_FINISH_FAILD());
       });
     },
 
-    finishTempTimer: (tomatoIdx) => {
+    finishTempTimer: tomatoIdx => {
       dispatch(counterActions.TOMATO_STOP_SUCCED());
       dispatch(counterActions.TEMP_TOMATO_FINISH({ tomatoIdx }));
     },
@@ -111,8 +102,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         }
       : () => {},
 
-    reload: (reloadData) => {
-      socketApi.request({ action: "reload", reloadData });
+    reload: reloadData => {
+      socketApi.request({ action: 'reload', reloadData });
     },
 
     unexpectedClose: () => {
@@ -120,7 +111,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     //임시토마토 저장
-    tempTomatoSave: (tomatoIdx) => {
+    tempTomatoSave: tomatoIdx => {
       dispatch(counterActions.TEMP_TOMATO_SAVE({ tomatoIdx }));
     },
   };
