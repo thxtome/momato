@@ -17,17 +17,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const LoadTemplateModal = (props) => {
-  useEffect(() => {}, [])
+const LoadTemplateModal = ({ isTomatoAddSucceed, addTomatos, getTomatoList, clearAddResult, onClose, templates }) => {
+  useEffect(() => {
+    if (!isTomatoAddSucceed) {
+      return
+    }
+    getTomatoList({
+      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
+      templateIdx: null,
+    })
+    clearAddResult()
+  }, [isTomatoAddSucceed])
   const classes = useStyles()
-  const templates = props.templates
   const data = {
     createType: "copy",
     templateIdx: null,
   }
   const tomatoAddRequest = (data) => {
-    props.addTomatos(data)
-    props.onClose()
+    addTomatos(data)
+    onClose()
   }
   return (
     <>

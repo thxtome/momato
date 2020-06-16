@@ -63,13 +63,6 @@ const useInput = (initVal) => {
 const Sidebar = ({ isLogin }) => {
   const classes = useStyles()
   const [clieckedIndex, setClieckedIndex] = useState(0)
-  let setListIndex = () => {}
-
-  // 사이드바 목록 클릭시 텃밭 리스트 clickedIndex 초기화
-  const getClickedIndex = (fn) => {
-    setClieckedIndex()
-    setListIndex = fn
-  }
 
   return (
     <Drawer
@@ -90,7 +83,6 @@ const Sidebar = ({ isLogin }) => {
                   className={clieckedIndex === index ? classes.clieckedItem : ""}
                   onClick={() => {
                     setClieckedIndex(index)
-                    setListIndex()
                   }}
                 >
                   <ListItemIcon>{index === 0 ? <CheckCircleIcon /> : index === 1 ? <EventNoteIcon /> : ""}</ListItemIcon>
@@ -112,7 +104,7 @@ const Sidebar = ({ isLogin }) => {
           )}
           {isLogin ? (
             <>
-              <TemplateListContainer handleIndex={getClickedIndex} />
+              <TemplateListContainer clieckedIndex={clieckedIndex} setClieckedIndex={setClieckedIndex} />
               <ListItem className={classes.addTemplate}>
                 <Modals type="addTemplate" />
               </ListItem>

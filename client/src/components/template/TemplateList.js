@@ -54,16 +54,17 @@ export default function TemplateList({
   isTemplateAddSucceed,
   isTemplateEditSucceed,
   isTemplateDeleteSucceed,
+  clieckedIndex,
   getTemplateList,
   clearAddResult,
   clearEditResult,
   clearDeleteResult,
-  handleIndex,
+  setClieckedIndex = () => {},
+  onClose = () => {},
   templates,
 }) {
   console.log("리스트 그리기")
   const classes = useStyles()
-  const [clieckedIndex, setClieckedIndex] = useState()
   const matches = useMediaQuery("(min-width:800px)")
   const [open, setOpen] = useState(false)
   // 텃밭추가 시 텃밭리스트 불러오기
@@ -95,10 +96,6 @@ export default function TemplateList({
   const handleClick = () => {
     setOpen(!open)
   }
-  // 텃밭 클릭시 사이드바 clickedIndex값 변경
-  const onIndexSubmit = () => {
-    handleIndex(setClieckedIndex)
-  }
 
   return (
     <div>
@@ -128,10 +125,11 @@ export default function TemplateList({
             >
               <ListItem
                 button
-                className={clieckedIndex === index ? classes.clieckedItem : ""}
+                className={clieckedIndex === index + 2 ? classes.clieckedItem : ""}
                 onClick={() => {
-                  setClieckedIndex(index)
-                  onIndexSubmit()
+                  // sidebar의 setClickedIndex
+                  setClieckedIndex(index + 2)
+                  onClose()
                 }}
               >
                 <ListItemIcon>

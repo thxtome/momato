@@ -16,7 +16,7 @@ import TomatoAddModalContainer from "../../containers/tomato/TomatoAddModalConta
 import TomatoEditModalContainer from "../../containers/tomato/TomatoEditModalContainer"
 import { ListItemText, ListItemIcon, ListItem } from "@material-ui/core"
 import TemplateAddModalContainer from "../../containers/template/TemplateAddModalContainer"
-import LoadTemplateModal from "../tomato/LoadTemplateModal"
+import LoadTemplateModalContainer from "../../containers/tomato/LoadTemplateModalContainer"
 import WithdrawModalContainer from "../../containers/member/WithdrawModalContainer"
 
 const useStyles = makeStyles((theme) => ({
@@ -90,7 +90,6 @@ export default function TransitionsModal({
   fullBreak,
   templateIdx,
   tomatoCanStart,
-  addTomatos,
   templates,
   onClose,
   history,
@@ -224,7 +223,7 @@ export default function TransitionsModal({
             ) : type === "tomatoAdd" ? (
               <TomatoAddModalContainer templateIdx={templateIdx} onClose={handleClose} />
             ) : type === "loadTemplate" ? (
-              <LoadTemplateModal addTomatos={addTomatos} templates={templates} onClose={handleClose} />
+              <LoadTemplateModalContainer templates={templates} onClose={handleClose} />
             ) : type === "loginForTemplate" ? (
               <LoginModalContainer onClose={handleClose} />
             ) : type === "loginForCalendar" ? (

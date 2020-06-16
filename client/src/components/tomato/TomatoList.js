@@ -70,7 +70,7 @@ const TomatoList = ({
             key={tomato.tomatoIdx}
           />
         ))}
-      <Modals templateIdx={templateIdx} type="tomatoAdd"></Modals>
+      <Modals templates={templates} type="tomatoAdd"></Modals>
     </div>
   )
 }
