@@ -40,6 +40,17 @@ const TomatoList = ({
     }
   }, [isLogin, templateIdx]);
 
+  // 토마토 삭제 시 토마토 목록 다시 불러오기
+  useEffect(() => {
+    if (isLogin) {
+      if (isTomatoDeleteSucceed === false) {
+        return;
+      }
+      getTomatoList(data);
+      clearDeleteResult();
+    }
+  }, [isTomatoDeleteSucceed]);
+
   const classes = useStyles();
   return (
     <div className={classes.root}>
