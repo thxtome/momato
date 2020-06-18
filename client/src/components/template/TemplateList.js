@@ -90,6 +90,7 @@ export default function TemplateList({
     if (isTemplateDeleteSucceed) {
       getTemplateList();
       clearDeleteResult();
+      setClieckedIndex(0);
     }
   }, [isTemplateDeleteSucceed]);
 

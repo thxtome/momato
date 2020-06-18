@@ -12,6 +12,9 @@ const mapDispatchToProps = dispatch => {
     signup: member => {
       dispatch(signupActions.SIGNUP_REQUEST({ member }));
     },
+    clearSignupResult: () => {
+      dispatch(signupActions.SIGNUP_CLEAR());
+    },
   };
 };
 

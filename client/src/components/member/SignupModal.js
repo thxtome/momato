@@ -59,7 +59,7 @@ const useInput = initVal => {
   return { value, onChange };
 };
 
-const SignupModal = ({ isSignupSucceed, signup, onClose }) => {
+const SignupModal = ({ isSignupSucceed, signup, clearSignupResult, onClose }) => {
   const classes = useStyles();
   const CHARACTER_LIMIT = 10;
 
@@ -72,6 +72,8 @@ const SignupModal = ({ isSignupSucceed, signup, onClose }) => {
       toast.info('회원가입에 성공하였습니다.', {
         position: toast.POSITION.TOP_CENTER,
       });
+      clearSignupResult();
+      onClose();
     }
   }, [isSignupSucceed]);
 
@@ -88,7 +90,6 @@ const SignupModal = ({ isSignupSucceed, signup, onClose }) => {
         memberPass: pass.value,
         memberName: name.value,
       });
-      onClose();
     }
   };
   return (
