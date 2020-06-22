@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Explain from './Explain';
+import MobileExplain from './MobileExplain';
+import { useMediaQuery } from '@material-ui/core';
 
 // 로딩시 화면
 const ExplainWrapper = () => {
+  const matches = useMediaQuery('(min-width:800px)');
   const [explainRequired, setExplainRequired] = useState(false);
   const finishExplain = () => {
     localStorage.setItem('explainRequired', JSON.stringify(false));
@@ -33,7 +36,19 @@ const ExplainWrapper = () => {
     }
     setExplainRequired(explainRequired);
   }, []);
-  return <>{explainRequired ? <Explain finishExplain={finishExplain} /> : ''}</>;
+  return (
+    <>
+      {explainRequired ? (
+        matches ? (
+          <Explain finishExplain={finishExplain} />
+        ) : (
+          <MobileExplain finishExplain={finishExplain} />
+        )
+      ) : (
+        ''
+      )}
+    </>
+  );
 };
 
 export default ExplainWrapper;
