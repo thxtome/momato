@@ -1,6 +1,6 @@
 import React from 'react';
 import ContentWrapper from '../components/common/ContentWrapper';
-import ExplainWrapper from '../components/common/ExplainWrapper';
+import ExplainWrapper from '../components/explain/ExplainWrapper';
 import SidebarContainer from '../containers/sidebar/SidebarContainer';
 import HeaderContainer from '../containers/header/HeaderContainer';
 import MemberInfoContainer from '../containers/common/MemberInfoContainer';

@@ -1,18 +1,8 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { makeStyles, Box } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import ExplainPaper from './ExplainPaper';
 
 const useStyles = makeStyles(theme => ({
-  root: {},
-
-  msgBox: {
-    position: 'absolute',
-    width: 300,
-    height: 300,
-    zIndex: 1310,
-    background: 'white',
-  },
-
   drop: {
     position: 'absolute',
     textAlign: 'center',
@@ -36,11 +26,11 @@ function useWindowSize() {
 }
 
 // 로딩시 화면
-const ExplainWrapper = () => {
+const ExplainWrapper = ({ finishExplain }) => {
   const classes = useStyles();
   const [width, height] = useWindowSize();
-  const [step, setStep] = useState(4);
-  const postion = [
+  const [step, setStep] = useState(0);
+  const position = [
     {
       msgBox: { top: height / 2 - 150, left: width / 2 - 150 },
       top: { top: 0, left: 0, width: '100%', height: '100%' },
@@ -84,28 +74,32 @@ const ExplainWrapper = () => {
       right: { top: 231, left: window.innerWidth - 42, width: 295, height: 54 },
     },
   ];
-
+  const msgArr = ['내용1', '내용2', '내용3', '내용4', '내용5', '내용6'];
   const next = () => {
     setStep(step + 1);
   };
   const prev = () => {
     setStep(step - 1);
   };
-
+  const close = () => {
+    finishExplain();
+  };
+  const props = {
+    msgBoxPosition: position[step].msgBox,
+    msg: msgArr[step],
+    step,
+    next,
+    prev,
+    close,
+    isLast: step === position.length - 1,
+  };
   return (
     <Box className={classes.root}>
-      <Box className={classes.msgBox} style={postion[step].msgBox}>
-        <Button onClick={prev} disabled={step === 0 ? true : false}>
-          이전
-        </Button>
-        <Button onClick={next} disabled={step === postion.length - 1 ? true : false}>
-          다음
-        </Button>
-      </Box>
-      <Box className={classes.drop} style={postion[step].top}></Box>
-      <Box className={classes.drop} style={postion[step].bottom}></Box>
-      <Box className={classes.drop} style={postion[step].left}></Box>
-      <Box className={classes.drop} style={postion[step].right}></Box>
+      <ExplainPaper {...props} />
+      <Box className={classes.drop} style={position[step].top}></Box>
+      <Box className={classes.drop} style={position[step].bottom}></Box>
+      <Box className={classes.drop} style={position[step].left}></Box>
+      <Box className={classes.drop} style={position[step].right}></Box>
     </Box>
   );
 };

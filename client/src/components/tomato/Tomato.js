@@ -94,32 +94,32 @@ const Tomato = ({
             <Box component={'div'}>
               {!templateIdx ? (
                 tomatoCanStart ? (
-                  <IconButton aria-label='start' className={classes.playBtn}>
-                    <Link
-                      className={classes.link}
-                      to={{
-                        pathname: `counter`,
-                        state: {
-                          tomatoIdx,
-                          isLogin,
-                          tempTomato: isLogin
-                            ? null
-                            : {
-                                templateIdx,
-                                tomatoName,
-                                tomatoLeftRegular,
-                                tomatoLeftBreak,
-                                tomatoIdx,
-                                tomatoFullRegular,
-                                tomatoFullBreak,
-                                tomatoCanStart,
-                              },
-                        },
-                      }}
-                    >
+                  <Link
+                    className={classes.link}
+                    to={{
+                      pathname: `counter`,
+                      state: {
+                        tomatoIdx,
+                        isLogin,
+                        tempTomato: isLogin
+                          ? null
+                          : {
+                              templateIdx,
+                              tomatoName,
+                              tomatoLeftRegular,
+                              tomatoLeftBreak,
+                              tomatoIdx,
+                              tomatoFullRegular,
+                              tomatoFullBreak,
+                              tomatoCanStart,
+                            },
+                      },
+                    }}
+                  >
+                    <IconButton aria-label='start' className={classes.playBtn}>
                       <PlayCircleFilledWhiteIcon />
-                    </Link>
-                  </IconButton>
+                    </IconButton>
+                  </Link>
                 ) : (
                   <CheckCircleOutlineIcon className={classes.finishIcon} />
                 )
