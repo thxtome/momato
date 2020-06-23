@@ -67,7 +67,7 @@ const FindPassModal = props => {
     <>
       <Avatar className={classes.tomatoImg} src='/images/homeMade.png' />
       <Typography className={classes.tomatoText} variant='h5'>
-        TOMATO
+        MOMATO
       </Typography>
       <form className={classes.root} noValidate autoComplete='off'>
         <div className={classes.div}>
