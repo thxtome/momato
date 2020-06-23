@@ -137,9 +137,9 @@ const Counter = props => {
     finishTempTimer,
     finishTimerOnReconnecting,
   } = props;
-
-  const isLogin = props.location.state.isLogin;
-  const tomatoIdx = props.location.state.tomatoIdx;
+  const state = props.location.state ? props.location.state : { isLogin: false, tomatoIdx: 1 };
+  const isLogin = state.isLogin;
+  const tomatoIdx = state.tomatoIdx;
 
   //알림지원여부
   const [isNotificationSupport, setIsNotificationSupport] = useState(true);

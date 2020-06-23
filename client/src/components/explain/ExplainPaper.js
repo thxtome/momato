@@ -70,14 +70,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Explain = props => {
-  const { msgBoxPosition, msg, step, next, prev, close, isLast } = props;
-  console.log(props);
+  const { msgBoxPosition, title, msg, step, next, prev, close, isLast } = props;
   const classes = useStyles();
   return (
     <Box className={classes.msgBox} style={msgBoxPosition}>
       <Box className={classes.titleAndCloseBtn}>
         <Typography variant={'h6'} className={classes.title}>
-          제목
+          {title}
         </Typography>
         <button onClick={close} className={classes.closeBtn}>
           x

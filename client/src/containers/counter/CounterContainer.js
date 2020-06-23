@@ -18,7 +18,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const isLogin = ownProps.location.state.isLogin;
+  const state = ownProps.location.state ? ownProps.location.state : { isLogin: false };
+  const isLogin = state.isLogin ? true : false;
   return {
     addTime: () => {
       dispatch(counterActions.ADD_TIME());

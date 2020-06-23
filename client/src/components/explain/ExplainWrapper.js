@@ -34,7 +34,9 @@ const ExplainWrapper = () => {
       );
       explainRequired = true;
     }
-    setExplainRequired(explainRequired);
+    setTimeout(() => {
+      setExplainRequired(explainRequired);
+    }, 500);
   }, []);
   return (
     <>
