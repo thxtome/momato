@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Explain from './Explain';
 import MobileExplain from './MobileExplain';
 import { useMediaQuery } from '@material-ui/core';
-
 // 로딩시 화면
 const ExplainWrapper = () => {
   const matches = useMediaQuery('(min-width:800px)');

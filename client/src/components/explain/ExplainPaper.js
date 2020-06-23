@@ -3,6 +3,7 @@ import { makeStyles, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
 
 const StyledButton = withStyles({
   root: {
@@ -11,9 +12,9 @@ const StyledButton = withStyles({
     border: 0,
     color: 'white',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    width: 60,
-    height: 20,
-    fontSize: '0.7rem',
+    width: 80,
+    height: 30,
+    fontSize: '0.8rem',
   },
   label: {
     textTransform: 'capitalize',
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   msgBox: {
     transition: '1s',
     position: 'absolute',
-    width: 300,
+    width: 380,
     height: 'min-content',
     zIndex: 1310,
     background: 'white',
@@ -35,6 +36,7 @@ const useStyles = makeStyles(theme => ({
     boxSizing: 'border-box',
     justifyContent: 'center',
   },
+
   titleAndCloseBtn: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -43,13 +45,26 @@ const useStyles = makeStyles(theme => ({
     height: 'min-content',
     marginBottom: theme.spacing(0.5),
   },
-  title: {},
-  closeBtn: {},
+
+  title: {
+    fontSize: '1.1rem',
+    fontWeight: 'bold',
+  },
+
+  msg: {
+    fontSize: '0.9rem',
+    color: 'white',
+  },
+
   content: {
     width: '100%',
     height: 'min-content',
     marginBottom: theme.spacing(1.2),
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
   },
+
   buttons: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -58,14 +73,54 @@ const useStyles = makeStyles(theme => ({
     height: 'min-content',
     marginBottom: theme.spacing(0.5),
   },
+
   closeBtn: {
+    top: -4,
+    position: 'relative',
     width: 30,
     border: 'none',
     background: 'none',
-    fontSize: '1.5rem',
+    fontSize: '1.3rem',
     '&:hover': {
       opacity: 0.5,
     },
+  },
+
+  bubble: {
+    marginTop: 20,
+    position: 'relative',
+    width: 250,
+    height: 'max-content',
+    padding: 10,
+    background: 'rgb(255, 42, 64,0.65)',
+    '-webkit-border-radius': 10,
+    '-moz-border-radius': 10,
+    'border-radius': 10,
+  },
+
+  pointer: {
+    content: '',
+    position: 'absolute',
+    borderStyle: 'solid',
+    borderWidth: '15px 15px 0',
+    borderColor: 'rgb(255, 42, 64,0.65) transparent',
+    display: 'block',
+    width: 0,
+    zIndex: 1,
+    bottom: '-15px',
+    left: '110px',
+  },
+
+  characterImg: {
+    width: theme.spacing(20),
+    height: theme.spacing(20),
+    marginRight: theme.spacing(1),
+  },
+
+  imgBox: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
   },
 }));
 
@@ -83,7 +138,15 @@ const Explain = props => {
         </button>
       </Box>
       <Box className={classes.content}>
-        <Typography variant={'body1'}>{msg}</Typography>
+        <Box className={classes.bubble}>
+          <Box className={classes.pointer}></Box>
+          <Typography variant={'body1'} className={classes.msg}>
+            {msg}
+          </Typography>
+        </Box>
+        <Box className={classes.imgBox}>
+          <Avatar className={classes.characterImg} src='/images/tomatoChar.png' />
+        </Box>
       </Box>
       <Box className={classes.buttons}>
         <StyledButton onClick={prev} disabled={step === 0 ? true : false}>
