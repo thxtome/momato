@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { makeStyles, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import RootRef from '@material-ui/core/RootRef';
 
 const StyledButton = withStyles({
   root: {
@@ -124,6 +125,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Explain = props => {
+  console.log(1);
+
+  const bubble = useRef();
+  const [bubbleHeight, setBubbleHeight] = useState(null);
+  useEffect(() => {
+    if (bubble.current) {
+      setBubbleHeight(bubble.current.clientHeight);
+    }
+  });
+
   const { msgBoxPosition, title, msg, step, next, prev, close, isLast } = props;
   const classes = useStyles();
   return (
@@ -141,12 +152,14 @@ const Explain = props => {
         <Box className={classes.imgBox}>
           <Avatar className={classes.characterImg} src='/images/tomatoChar.png' />
         </Box>
-        <Box className={classes.bubble}>
-          <Box className={classes.pointer}></Box>
-          <Typography variant={'body1'} className={classes.msg}>
-            {msg}
-          </Typography>
-        </Box>
+        <RootRef rootRef={bubble}>
+          <Box className={classes.bubble} ref={bubble}>
+            <Box className={classes.pointer} style={{ top: (bubbleHeight - 30) / 2 }}></Box>
+            <Typography variant={'body1'} className={classes.msg}>
+              {msg}
+            </Typography>
+          </Box>
+        </RootRef>
       </Box>
 
       <Box className={classes.buttons}>
