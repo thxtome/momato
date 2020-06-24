@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(1.2),
     display: 'flex',
     justifyContent: 'center',
-    flexWrap: 'wrap',
+    alignItems: 'center',
   },
 
   buttons: {
@@ -87,7 +87,6 @@ const useStyles = makeStyles(theme => ({
   },
 
   bubble: {
-    marginTop: 20,
     position: 'relative',
     width: 250,
     height: 'max-content',
@@ -99,16 +98,16 @@ const useStyles = makeStyles(theme => ({
   },
 
   pointer: {
+    left: '-15px',
+    top: '-30',
     content: '',
     position: 'absolute',
     borderStyle: 'solid',
-    borderWidth: '15px 15px 0',
-    borderColor: 'rgb(255, 42, 64,0.65) transparent',
+    borderWidth: '15px 15px 15px 0',
+    borderColor: 'transparent rgb(255, 42, 64,0.65)',
     display: 'block',
     width: 0,
     zIndex: 1,
-    bottom: '-15px',
-    left: '110px',
   },
 
   characterImg: {
@@ -119,7 +118,7 @@ const useStyles = makeStyles(theme => ({
 
   imgBox: {
     display: 'flex',
-    width: '100%',
+    width: theme.spacing(20),
     justifyContent: 'center',
   },
 }));
@@ -137,17 +136,19 @@ const Explain = props => {
           x
         </button>
       </Box>
+
       <Box className={classes.content}>
+        <Box className={classes.imgBox}>
+          <Avatar className={classes.characterImg} src='/images/tomatoChar.png' />
+        </Box>
         <Box className={classes.bubble}>
           <Box className={classes.pointer}></Box>
           <Typography variant={'body1'} className={classes.msg}>
             {msg}
           </Typography>
         </Box>
-        <Box className={classes.imgBox}>
-          <Avatar className={classes.characterImg} src='/images/tomatoChar.png' />
-        </Box>
       </Box>
+
       <Box className={classes.buttons}>
         <StyledButton onClick={prev} disabled={step === 0 ? true : false}>
           이전
