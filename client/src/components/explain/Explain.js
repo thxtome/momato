@@ -3,6 +3,9 @@ import { makeStyles, Box } from '@material-ui/core';
 import ExplainPaper from './ExplainPaper';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'none',
+  },
   drop: {
     position: 'absolute',
     textAlign: 'center',
@@ -110,7 +113,7 @@ const ExplainWrapper = ({ finishExplain }) => {
     isLast: step === position.length - 1,
   };
   return (
-    <Box className={classes.root}>
+    <Box className={navigator.userAgent === 'ReactSnap' ? classes.root : ''}>
       <ExplainPaper {...props} />
       <Box className={classes.drop} style={position[step].top}></Box>
       <Box className={classes.drop} style={position[step].bottom}></Box>

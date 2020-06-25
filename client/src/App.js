@@ -28,8 +28,11 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
-            <Route exact path='/' component={Layout} />
-            <Route exact path={['/tomato', '/calendar', '/template', '/counter', '/member-info']} component={Layout} />
+            <Route
+              exact
+              path={['/', '/tomato', '/calendar', '/template', '/counter', '/member-info']}
+              component={Layout}
+            />
             <Route component={NoMatchPage} />
           </Switch>
         </BrowserRouter>
