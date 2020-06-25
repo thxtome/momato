@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
     color: 'seagreen',
   },
   leftTime: {
+    fontFamily: 'JSDongkang-Regular',
     [theme.breakpoints.down('650')]: {
       fontSize: 8,
     },

@@ -29,19 +29,21 @@ const useStyles = makeStyles(theme => ({
     },
   },
   linkText: {
-    fontSize: 13,
+    fontSize: 15,
     width: theme.spacing(18),
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     height: 20,
-    [theme.breakpoints.down('650')]: {
-      fontSize: 12,
-      width: 90,
-      height: 15,
-    },
+    fontFamily: 'JSDongkang-Regular',
   },
   clieckedItem: {
     backgroundColor: '#ccc',
+  },
+  listText: {
+    '& > *': {
+      fontSize: '18px',
+      fontFamily: 'JSDongkang-Regular',
+    },
   },
 }));
 
@@ -63,13 +65,11 @@ export default function TemplateList({
   onClose = () => {},
   templates,
 }) {
-  console.log('리스트 그리기');
   const classes = useStyles();
   const matches = useMediaQuery('(min-width:800px)');
   const [open, setOpen] = useState(false);
   // 텃밭추가 시 텃밭리스트 불러오기
   useEffect(() => {
-    console.log('여기');
     if (isTemplateAddSucceed) {
       getTemplateList();
       clearAddResult();
@@ -79,7 +79,6 @@ export default function TemplateList({
   // 텃밭수정 시 텃밭리스트 불러오기
   useEffect(() => {
     if (isTemplateEditSucceed) {
-      console.log('수정');
       getTemplateList();
       clearEditResult();
     }
@@ -108,7 +107,7 @@ export default function TemplateList({
         ) : (
           ''
         )}
-        <ListItemText primary='토마토 텃밭' />
+        <ListItemText className={classes.listText} primary='토마토 텃밭' />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout='auto' unmountOnExit>

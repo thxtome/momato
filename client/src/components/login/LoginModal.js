@@ -21,10 +21,12 @@ const useStyles = makeStyles(theme => ({
 
   titleId: {
     marginRight: theme.spacing(5),
+    fontFamily: 'JSDongkang-Regular',
   },
 
   titlePass: {
     marginRight: theme.spacing(3),
+    fontFamily: 'JSDongkang-Regular',
   },
 
   button: {
@@ -40,6 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   tomatoText: {
+    fontFamily: 'JSDongkang-Regular',
     display: 'block',
     width: theme.spacing(15),
     margin: theme.spacing(3, 'auto'),
@@ -53,8 +56,10 @@ const useStyles = makeStyles(theme => ({
   text: {
     width: theme.spacing(22),
     '& > *': {
+      fontFamily: 'JSDongkang-Regular',
+      fontSize: 14,
       [theme.breakpoints.down('650')]: {
-        fontSize: 13,
+        fontSize: 12,
       },
     },
   },

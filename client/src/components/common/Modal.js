@@ -43,21 +43,28 @@ const useStyles = makeStyles(theme => ({
   addBtn: {
     margin: theme.spacing(1, 'auto'),
     textAlign: 'center',
+    fontFamily: 'JSDongkang-Regular',
+    fontSize: '17px',
   },
   infoBtn: {
     textTransform: 'none',
     width: '100%',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: '18px',
+    fontFamily: 'JSDongkang-Regular',
+    [theme.breakpoints.down('800')]: {
+      fontSize: 15,
+    },
   },
   tomatoBtn: {
+    fontFamily: 'JSDongkang-Regular',
     textTransform: 'none',
     [theme.breakpoints.down('650')]: {
       fontSize: 12,
     },
   },
   templateBtn: {
-    fontWeight: 'bold',
+    fontFamily: 'JSDongkang-Bold',
     fontSize: 30,
     textTransform: 'none',
     '& > *': {
@@ -71,12 +78,26 @@ const useStyles = makeStyles(theme => ({
   loadBtn: {
     textAlign: 'right',
     fontWeight: 'bold',
+    fontFamily: 'JSDongkang-Regular',
   },
   inLoginBtn: {
     padding: 0,
     '& > *': {
       fontSize: '11px',
       color: 'grey',
+    },
+  },
+  addTemplateBtn: {
+    '& > *': {
+      fontFamily: 'JSDongkang-Regular',
+      fontSize: '17px',
+    },
+  },
+  sideFont: {
+    fontFamily: 'JSDongkang-Regular',
+    '& > *': {
+      fontFamily: 'JSDongkang-Regular',
+      fontSize: '19px',
     },
   },
 }));
@@ -156,30 +177,30 @@ export default function TransitionsModal({
           <ListItemIcon>
             <GrainIcon />
           </ListItemIcon>
-          <ListItemText primary='토마토 텃밭' />
+          <ListItemText className={classes.sideFont} primary='토마토 텃밭' />
         </ListItem>
       ) : type === 'loginForCalendar' ? (
         <ListItem button onClick={handleOpen}>
           <ListItemIcon>
             <EventNoteIcon />
           </ListItemIcon>
-          <ListItemText primary='토마토 달력' />
+          <ListItemText className={classes.sideFont} primary='토마토 달력' />
         </ListItem>
       ) : type === 'loginForTemplateInMenu' ? (
         <ListItem button onClick={handleOpen}>
-          <ListItemText primary='토마토 텃밭' />
+          <ListItemText className={classes.sideFont} primary='토마토 텃밭' />
         </ListItem>
       ) : type === 'loginForCalendarInMenu' ? (
         <ListItem button onClick={handleOpen}>
-          <ListItemText primary='토마토 달력' />
+          <ListItemText className={classes.sideFont} primary='토마토 달력' />
         </ListItem>
       ) : (
-        <div className={classes.addTemplateBtn}>
-          <Button className={classes.addTemplateBtn} type='button' onClick={handleOpen}>
+        <div>
+          <Button type='button' onClick={handleOpen}>
             <ListItemIcon>
               <AddCircleRoundedIcon />
             </ListItemIcon>
-            <ListItemText onClick={onClose} primary='텃밭 만들기' />
+            <ListItemText className={classes.addTemplateBtn} onClick={onClose} primary='텃밭 만들기' />
           </Button>
         </div>
       )}

@@ -25,6 +25,8 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     alignSelf: 'center',
     color: 'black',
+    fontFamily: 'JSDongkang-Bold',
+    fontSize: '20px',
   },
   login: {
     color: 'black',
@@ -34,6 +36,11 @@ const useStyles = makeStyles(theme => ({
   },
   logout: {
     color: 'black',
+    fontFamily: 'JSDongkang-Regular',
+    fontSize: '20px',
+    [theme.breakpoints.down('800')]: {
+      fontSize: 15,
+    },
   },
 }));
 

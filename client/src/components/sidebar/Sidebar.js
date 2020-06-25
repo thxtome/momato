@@ -48,6 +48,12 @@ const useStyles = makeStyles(theme => ({
     color: 'inherit',
     textDecoration: 'none',
   },
+  linkText: {
+    '& > *': {
+      fontSize: '18px',
+      fontFamily: 'JSDongkang-Regular',
+    },
+  },
   addTemplate: {
     marginLeft: theme.spacing(2),
     width: theme.spacing(25),
@@ -88,7 +94,7 @@ const Sidebar = ({ isLogin }) => {
                   <ListItemIcon>
                     {index === 0 ? <CheckCircleIcon /> : index === 1 ? <EventNoteIcon /> : ''}
                   </ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItemText className={classes.linkText} primary={text} />
                 </ListItem>
               </Link>
             ))
@@ -102,7 +108,7 @@ const Sidebar = ({ isLogin }) => {
                 <ListItemIcon>
                   <CheckCircleIcon />{' '}
                 </ListItemIcon>
-                <ListItemText primary={'오늘의 토마토'} />
+                <ListItemText className={classes.linkText} primary={'오늘의 토마토'} />
               </ListItem>
               <Modals type='loginForCalendar' />
               <Modals type='loginForTemplate' />

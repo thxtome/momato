@@ -10,9 +10,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+/* 미생체 */
 @font-face {
   font-family: 'SDMiSaeng';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/SDMiSaeng.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 정선동강체 Regular */
+@font-face {
+  font-family: 'JSDongkang-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSDongkang-RegularA1.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 정선동강체 Bold*/
+@font-face {
+  font-family: 'JSDongkang-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSDongkang-BoldA1.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
