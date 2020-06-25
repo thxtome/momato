@@ -124,9 +124,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Explain = props => {
-  console.log(1);
-
+const ExplainPaper = props => {
   const bubble = useRef();
   const [bubbleHeight, setBubbleHeight] = useState(null);
   useEffect(() => {
@@ -172,4 +170,4 @@ const Explain = props => {
   );
 };
 
-export default Explain;
+export default ExplainPaper;
