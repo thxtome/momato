@@ -32,9 +32,13 @@ const useStyles = makeStyles(theme => ({
   },
   finishIcon: {
     color: 'seagreen',
+    [theme.breakpoints.up('650')]: {
+      marginLeft: 11,
+      marginRight: 11,
+    },
   },
   leftTime: {
-    fontFamily: 'JSDongkang-Regular',
+    fontFamily: '-Regular',
     [theme.breakpoints.down('650')]: {
       fontSize: 8,
     },

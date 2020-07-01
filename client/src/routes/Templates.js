@@ -11,11 +11,15 @@ const useStyles = makeStyles(theme => ({
 
 const Templates = ({ isLogin, history, location }) => {
   const classes = useStyles();
-  let template = location.state.template;
-  // 텃밭 수정 시 push된 template로 저장
-  if (!template) {
-    template = location;
-  }
+  // 텃밭 수정 시 location에 push된 template로 저장
+  let template = location.state ? location.state.template : location;
+
+  // 주소 직접 입력시 메인 페이지로 이동
+  useEffect(() => {
+    if (!location.state) {
+      history.replace('/');
+    }
+  }, []);
 
   // 로그아웃 시 토마토화면으로 이동
   useEffect(() => {
@@ -25,10 +29,16 @@ const Templates = ({ isLogin, history, location }) => {
   }, [isLogin, history]);
 
   return (
-    <div className={classes.root}>
-      <TemplateContainer history={history} location={location} template={template} key={template.templateIdx} />
-      <TomatoListContainer templateIdx={template.templateIdx} />
-    </div>
+    <>
+      {location.state ? (
+        <div className={classes.root}>
+          <TemplateContainer history={history} location={location} template={template} key={template.templateIdx} />
+          <TomatoListContainer templateIdx={template.templateIdx} />
+        </div>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

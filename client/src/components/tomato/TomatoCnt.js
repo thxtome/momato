@@ -29,7 +29,6 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap',
     fontSize: '0.9rem',
     justifyContent: 'center',
-    fontFamily: 'JSDongkang-Regular',
   },
   tomatoImg: {
     width: theme.spacing(3),
@@ -41,7 +40,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     marginTop: '5px',
     justifyContent: 'center',
-    fontFamily: 'JSDongkang-Regular',
   },
 }));
 

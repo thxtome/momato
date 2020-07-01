@@ -21,12 +21,10 @@ const useStyles = makeStyles(theme => ({
 
   titleId: {
     marginRight: theme.spacing(5),
-    fontFamily: 'JSDongkang-Regular',
   },
 
   titlePass: {
     marginRight: theme.spacing(3),
-    fontFamily: 'JSDongkang-Regular',
   },
 
   button: {
@@ -42,7 +40,6 @@ const useStyles = makeStyles(theme => ({
   },
 
   tomatoText: {
-    fontFamily: 'JSDongkang-Regular',
     display: 'block',
     width: theme.spacing(15),
     margin: theme.spacing(3, 'auto'),
@@ -56,8 +53,17 @@ const useStyles = makeStyles(theme => ({
   text: {
     width: theme.spacing(22),
     '& > *': {
-      fontFamily: 'JSDongkang-Regular',
-      fontSize: 14,
+      fontSize: 13,
+      [theme.breakpoints.down('650')]: {
+        fontSize: 12,
+      },
+    },
+  },
+  pass: {
+    width: theme.spacing(22),
+    '& > *': {
+      fontFamily: 'Roboto',
+      fontSize: 13,
       [theme.breakpoints.down('650')]: {
         fontSize: 12,
       },
@@ -115,7 +121,7 @@ const LoginModal = ({ login, onClose }) => {
         <div className={classes.passDiv}>
           <Typography className={classes.titlePass}>비밀번호</Typography>
           <TextField
-            className={classes.text}
+            className={classes.pass}
             id='pass'
             label=''
             type='password'

@@ -57,8 +57,19 @@ const useStyles = makeStyles(theme => ({
   text: {
     width: theme.spacing(22),
     '& > *': {
+      fontSize: 13,
       [theme.breakpoints.down('650')]: {
-        fontSize: 13,
+        fontSize: 12,
+      },
+    },
+  },
+  passWord: {
+    width: theme.spacing(22),
+    '& > *': {
+      fontFamily: 'Roboto',
+      fontSize: 13,
+      [theme.breakpoints.down('650')]: {
+        fontSize: 12,
       },
     },
   },
@@ -156,7 +167,7 @@ const InfoModal = ({
         <div className={classes.div}>
           <Typography className={classes.pass}>비밀번호</Typography>
           <TextField
-            className={classes.text}
+            className={classes.passWord}
             id='pass'
             label=''
             type='password'
@@ -178,7 +189,7 @@ const InfoModal = ({
         <div className={classes.div}>
           <Typography className={classes.confirm}>비밀번호 확인</Typography>
           <TextField
-            className={classes.text}
+            className={classes.passWord}
             id='passConfirm'
             label=''
             type='password'

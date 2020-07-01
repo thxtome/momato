@@ -5,7 +5,7 @@ import { required } from '../../lib/validation';
 const useStyles = makeStyles(theme => ({
   addTitle: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontFamily: 'JSDongkang-Bold',
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(3),
   },
@@ -74,7 +74,6 @@ const TomatoAddModal = ({
     //로그인이면 서버로 요청을 보냄
     if (required(tomatoName.value, '토마토 이름')) {
       if (isLogin) {
-        console.log('인덱스', templateIdx);
         const data = {
           createType: createType.value,
           tomatoName: tomatoName.value,

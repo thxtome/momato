@@ -34,7 +34,6 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     height: 20,
-    fontFamily: 'JSDongkang-Regular',
   },
   clieckedItem: {
     backgroundColor: '#ccc',
@@ -42,7 +41,9 @@ const useStyles = makeStyles(theme => ({
   listText: {
     '& > *': {
       fontSize: '18px',
-      fontFamily: 'JSDongkang-Regular',
+      [theme.breakpoints.down('800')]: {
+        fontSize: '16px',
+      },
     },
   },
 }));

@@ -5,6 +5,7 @@ import SaveAltIcon from '@material-ui/icons/SaveAlt';
 const useStyles = makeStyles(theme => ({
   title: {
     marginBottom: theme.spacing(4),
+    fontSize: 25,
   },
   name: {
     fontSize: '17px',
@@ -49,7 +50,7 @@ const LoadTemplateModal = ({
   };
   return (
     <>
-      <h2 className={classes.title}>텃밭 불러오기</h2>
+      <Typography className={classes.title}>텃밭 불러오기</Typography>
       <Typography id='transition-modal-description' />
       {templates.map(template => (
         <span key={template.templateIdx} className={classes.nameSpan}>

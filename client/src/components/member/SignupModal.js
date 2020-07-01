@@ -44,8 +44,19 @@ const useStyles = makeStyles(theme => ({
   text: {
     width: theme.spacing(22),
     '& > *': {
+      fontSize: 13,
       [theme.breakpoints.down('650')]: {
-        fontSize: 13,
+        fontSize: 12,
+      },
+    },
+  },
+  pass: {
+    width: theme.spacing(22),
+    '& > *': {
+      fontSize: 13,
+      fontFamily: 'Roboto',
+      [theme.breakpoints.down('650')]: {
+        fontSize: 12,
       },
     },
   },
@@ -66,7 +77,6 @@ const SignupModal = ({ isSignupSucceed, signup, clearSignupResult, onClose }) =>
   const email = useInput('');
   const pass = useInput('');
   const name = useInput('');
-  console.log('회원가입모달 렌더');
   useEffect(() => {
     if (isSignupSucceed) {
       toast.info('회원가입에 성공하였습니다.', {
@@ -142,7 +152,7 @@ const SignupModal = ({ isSignupSucceed, signup, clearSignupResult, onClose }) =>
         <div className={classes.div}>
           <Typography className={classes.titlePass}>비밀번호</Typography>
           <TextField
-            className={classes.text}
+            className={classes.pass}
             id='pass'
             label=''
             type='password'

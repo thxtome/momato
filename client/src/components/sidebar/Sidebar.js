@@ -51,7 +51,6 @@ const useStyles = makeStyles(theme => ({
   linkText: {
     '& > *': {
       fontSize: '18px',
-      fontFamily: 'JSDongkang-Regular',
     },
   },
   addTemplate: {

@@ -36,7 +36,6 @@ const useStyles = makeStyles(theme => ({
   },
   logout: {
     color: 'black',
-    fontFamily: 'JSDongkang-Regular',
     fontSize: '20px',
     [theme.breakpoints.down('800')]: {
       fontSize: 15,

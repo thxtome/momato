@@ -10,7 +10,6 @@ const MemberInfo = ({ isLogin, getMemberInfo, memberInfo, getTemplateList, getTo
   //최초에 한번 로그인이 안되어있는데 jwt가 있으면 정보를 요청한다.
   useEffect(() => {
     if (!isLogin && localStorage.getItem('auth')) {
-      console.log('enter');
       getMemberInfo();
       getTemplateList();
     }
@@ -19,7 +18,6 @@ const MemberInfo = ({ isLogin, getMemberInfo, memberInfo, getTemplateList, getTo
   //로그아웃하고 로그인시 정보를 요청한다
   useEffect(() => {
     if (isLogin && !memberInfo) {
-      console.log('enter');
       getMemberInfo();
       getTemplateList();
     }

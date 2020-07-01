@@ -12,7 +12,6 @@ const useStyles = makeStyles(theme => ({
   gradeComment: {
     color: '#999',
     alignSelf: 'center',
-    fontFamily: 'JSDongkang-Regular',
   },
 }));
 

@@ -29,7 +29,6 @@ const useStyles = makeStyles(theme => ({
     },
   },
   comment: {
-    fontFamily: 'JSDongkang-Regular',
     fontSize: 15,
     marginLeft: theme.spacing(2),
     marginBottom: theme.spacing(4),

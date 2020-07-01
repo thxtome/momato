@@ -27,7 +27,7 @@ const ContentWrapper = () => {
         <Route exact path='/' component={Tomatos} />
         <Route path='/tomato' component={Tomatos} />
         <Route path='/calendar' component={CalenderContainer} />
-        <Route path='/template' component={TemplatesContainer} />
+        <Route exact path='/template' component={TemplatesContainer} />
         <Route path='/counter' component={CounterContainer} />
         <Route path='/member-info' component={MemberInfoContainer} />
       </Switch>

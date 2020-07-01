@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 
   title: {
     fontSize: '1.1rem',
-    fontWeight: 'bold',
+    fontFamily: 'JSDongkang-Bold',
   },
 
   msg: {

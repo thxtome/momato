@@ -43,7 +43,6 @@ const useStyles = makeStyles(theme => ({
   addBtn: {
     margin: theme.spacing(1, 'auto'),
     textAlign: 'center',
-    fontFamily: 'JSDongkang-Regular',
     fontSize: '17px',
   },
   infoBtn: {
@@ -51,15 +50,13 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     textAlign: 'center',
     fontSize: '18px',
-    fontFamily: 'JSDongkang-Regular',
     [theme.breakpoints.down('800')]: {
       fontSize: 15,
     },
   },
   tomatoBtn: {
-    fontFamily: 'JSDongkang-Regular',
     textTransform: 'none',
-    [theme.breakpoints.down('650')]: {
+    [theme.breakpoints.down('800')]: {
       fontSize: 12,
     },
   },
@@ -68,7 +65,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: 30,
     textTransform: 'none',
     '& > *': {
-      [theme.breakpoints.down('650')]: {
+      [theme.breakpoints.down('800')]: {
         fontSize: 18,
         margin: theme.spacing(0),
         padding: theme.spacing(0),
@@ -77,8 +74,7 @@ const useStyles = makeStyles(theme => ({
   },
   loadBtn: {
     textAlign: 'right',
-    fontWeight: 'bold',
-    fontFamily: 'JSDongkang-Regular',
+    fontFamily: 'JSDongkang-Bold',
   },
   inLoginBtn: {
     padding: 0,
@@ -89,15 +85,20 @@ const useStyles = makeStyles(theme => ({
   },
   addTemplateBtn: {
     '& > *': {
-      fontFamily: 'JSDongkang-Regular',
       fontSize: '17px',
+      [theme.breakpoints.down('800')]: {
+        fontSize: '14px',
+      },
     },
   },
   sideFont: {
-    fontFamily: 'JSDongkang-Regular',
     '& > *': {
-      fontFamily: 'JSDongkang-Regular',
       fontSize: '19px',
+    },
+  },
+  menuFont: {
+    '& > *': {
+      fontSize: '17px',
     },
   },
 }));
@@ -188,11 +189,11 @@ export default function TransitionsModal({
         </ListItem>
       ) : type === 'loginForTemplateInMenu' ? (
         <ListItem button onClick={handleOpen}>
-          <ListItemText className={classes.sideFont} primary='토마토 텃밭' />
+          <ListItemText className={classes.menuFont} primary='토마토 텃밭' />
         </ListItem>
       ) : type === 'loginForCalendarInMenu' ? (
         <ListItem button onClick={handleOpen}>
-          <ListItemText className={classes.sideFont} primary='토마토 달력' />
+          <ListItemText className={classes.menuFont} primary='토마토 달력' />
         </ListItem>
       ) : (
         <div>

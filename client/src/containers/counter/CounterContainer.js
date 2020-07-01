@@ -37,7 +37,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     startTimer: isLogin
       ? target => {
-          console.log('start');
           socketApi.request({ target, action: 'start' }, () => {
             dispatch(counterActions.TOMATO_START_FAILD());
           });

@@ -38,8 +38,9 @@ const useStyles = makeStyles(theme => ({
   text: {
     width: theme.spacing(22),
     '& > *': {
+      fontSize: 13,
       [theme.breakpoints.down('650')]: {
-        fontSize: 13,
+        fontSize: 12,
       },
     },
   },
