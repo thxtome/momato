@@ -54,7 +54,6 @@ function* tomatoSaga(action) {
     const response = yield call(api.getTomato, action.payload.data);
     yield put(tomatoActions.TOMATO_SUCCEED({ tomatos: response.data.data.result }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
     yield put({ type: 'TOMATO_FAILED', message: e.message });
   }
@@ -66,7 +65,6 @@ function* templateSaga(action) {
     const response = yield call(api.template, action);
     yield put(templateActions.TEMPLATE_SUCCEED({ templates: response.data.data.result }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
     yield put({ type: 'TEMPLATE_FAILED', message: e.message });
   }
@@ -187,8 +185,8 @@ function* getCalendarSaga(action) {
       }),
     );
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
+    yield put(calendarActions.CALENDAR_FAILED());
   }
 }
 

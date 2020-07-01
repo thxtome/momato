@@ -137,7 +137,7 @@ const Counter = props => {
     finishTempTimer,
     finishTimerOnReconnecting,
   } = props;
-  const state = props.location.state ? props.location.state : { isLogin: false, tomatoIdx: 1 };
+  const state = props.location.state ? props.location.state : { isLogin: false };
   const isLogin = state.isLogin;
   const tomatoIdx = state.tomatoIdx;
 
@@ -246,6 +246,11 @@ const Counter = props => {
 
   //최초마운트시=========================================================================================================================
   useEffect(() => {
+    if (!tomatoIdx) {
+      props.history.replace('/');
+      return;
+    }
+
     //로그인이 되어있으면 소켓을 연다
     if (isLogin) {
       openConnection();
@@ -321,8 +326,8 @@ const Counter = props => {
 
   //토마토로드기능=========================================================================================================================
   useEffect(() => {
-    //토마토를 로드가 됐으면 생략
-    if (isLoaded) {
+    //토마토를 로드가 됐거나 정상접근이 아니면 생략
+    if (isLoaded || !tomatoIdx) {
       return;
     }
 

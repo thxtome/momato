@@ -43,8 +43,9 @@ const Calendar = props => {
       setTomatoOfDates(props.calendarReducer.tomatoOfDates);
       props.clearUpdated();
     }
+
     if (!props.loginReducer.isLogin) {
-      props.history.push('/');
+      props.history.replace('/');
     }
   }, [props]);
 
