@@ -60,7 +60,6 @@ const FindPassModal = ({ isFindPassSucceed, sendTempPass, clearSendPassResult, o
   const memberId = useInput('');
   console.log(isFindPassSucceed);
   useEffect(() => {
-    console.log(isFindPassSucceed);
     if (isFindPassSucceed) {
       toast.info('임시 비밀번호가 전송 되었습니다.', {
         position: toast.POSITION.TOP_CENTER,

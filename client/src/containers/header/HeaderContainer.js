@@ -9,6 +9,7 @@ const mapStateToProps = state => {
   const { isTemplateLoading } = state.templateReducer;
   const { isCalendarLoading } = state.calendarReducer;
   const { isTimerLoading } = state.counterReducer;
+  const { isFindPassLoading } = state.findPassReducer;
   return {
     isLogin,
     isMemberLoading,
@@ -16,6 +17,7 @@ const mapStateToProps = state => {
     isTemplateLoading,
     isCalendarLoading,
     isTimerLoading,
+    isFindPassLoading,
   };
 };
 

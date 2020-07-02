@@ -138,8 +138,8 @@ function* memberInfoSaga(action) {
     const response = yield call(api.getMemberInfo);
     yield put(loginActions.MEMBERINFO_SUCCEED({ memberInfo: response.data.data.result }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
+    yield put(loginActions.MEMBERINFO_FAILED());
   }
 }
 
@@ -160,6 +160,7 @@ function* findPassSaga(action) {
   } catch (e) {
     console.dir(e);
     errorDispacher(e);
+    yield put(findPassActions.FIND_PASS_FAILED());
   }
 }
 
@@ -183,7 +184,6 @@ function* getCalendarSaga(action) {
       }),
     );
   } catch (e) {
-    errorDispacher(e);
     yield put(calendarActions.CALENDAR_FAILED());
   }
 }
