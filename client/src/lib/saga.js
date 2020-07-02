@@ -21,9 +21,8 @@ function* tomatoAddSaga(action) {
     const response = yield call(api.tomatoAdd, action.payload.data);
     yield put(tomatoAddActions.TOMATO_ADD_SUCCEED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
-    yield put({ type: 'TOMATO_ADD_FAILED', message: e.message });
+    yield put(tomatoActions.TOMATO_FAILED());
   }
 }
 
@@ -61,12 +60,11 @@ function* tomatoSaga(action) {
 
 function* templateSaga(action) {
   try {
-    console.log('텃밭요청', action);
     const response = yield call(api.template, action);
     yield put(templateActions.TEMPLATE_SUCCEED({ templates: response.data.data.result }));
   } catch (e) {
     errorDispacher(e);
-    yield put({ type: 'TEMPLATE_FAILED', message: e.message });
+    yield put(templateActions.TEMPLATE_FAILED());
   }
 }
 
