@@ -9,6 +9,7 @@ const LOGOUT_SUCCEEDED = createAction('LOGOUT_SUCCEEDED');
 const LOGOUT_FAILED = createAction('LOGOUT_FAILED');
 const MEMBERINFO_REQUEST = createAction('MEMBERINFO_REQUEST');
 const MEMBERINFO_SUCCEED = createAction('MEMBERINFO_SUCCEED');
+const MEMBERINFO_FAILED = createAction('MEMBERINFO_FAILED');
 
 export const loginActions = {
   LOGIN_REQUEST,
@@ -18,6 +19,7 @@ export const loginActions = {
   LOGIN_FAILED,
   MEMBERINFO_REQUEST,
   MEMBERINFO_SUCCEED,
+  MEMBERINFO_FAILED,
 };
 
 const initialState = {
@@ -61,6 +63,10 @@ const reducer = createReducer(initialState, {
 
   [MEMBERINFO_SUCCEED]: (state, action) => {
     return { ...state, memberInfo: action.payload.memberInfo, isLogin: true, isMemberLoading: false };
+  },
+
+  [MEMBERINFO_FAILED]: (state, action) => {
+    return { ...state, isMemberLoading: false };
   },
 });
 
