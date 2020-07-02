@@ -160,6 +160,7 @@ function* findPassSaga(action) {
   } catch (e) {
     console.dir(e);
     errorDispacher(e);
+    yield put(findPassActions.FIND_PASS_FAILED());
   }
 }
 
