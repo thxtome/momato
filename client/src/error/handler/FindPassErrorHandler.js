@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 
 const FindPassErrorHandler = errorDetail => {
-  console.log(errorDetail);
   switch (errorDetail.errorCode) {
     case '0001':
       toast.error('잘못된 주소입니다.', {

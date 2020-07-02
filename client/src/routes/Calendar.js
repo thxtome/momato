@@ -39,8 +39,8 @@ const Calendar = props => {
   };
 
   useEffect(() => {
-    if (props.calendarReducer.isUpdated) {
-      setTomatoOfDates(props.calendarReducer.tomatoOfDates);
+    if (props.getCalendarReducer.isUpdated) {
+      setTomatoOfDates(props.getCalendarReducer.tomatoOfDates);
       props.clearUpdated();
     }
 

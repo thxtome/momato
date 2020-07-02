@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { templateEditActions } from '../../store/modules/templateEdit.js';
-import { templateActions } from '../../store/modules/template.js';
+import { editTemplateActions } from '../../store/modules/editTemplate.js';
+import { getTemplateActions } from '../../store/modules/getTemplate.js';
 import TemplateEditModal from '../../components/template/TemplateEditModal.js';
 
 const mapStateToProps = state => {
@@ -10,10 +10,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     editTemplate: data => {
-      dispatch(templateEditActions.TEMPLATE_EDIT_REQUEST(data));
+      dispatch(editTemplateActions.EDIT_TEMPLATE_REQUEST(data));
     },
     getTemplateList: () => {
-      dispatch(templateActions.TEMPLATE_REQUEST());
+      dispatch(getTemplateActions.GET_TEMPLATE_REQUEST());
     },
   };
 };

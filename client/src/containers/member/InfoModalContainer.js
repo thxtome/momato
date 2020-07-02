@@ -1,24 +1,24 @@
 import { connect } from 'react-redux';
-import { memberUpdateActions } from '../../store/modules/memberUpdate.js';
+import { editMemberActions } from '../../store/modules/editMember.js';
 import { loginActions } from '../../store/modules/login';
 import InfoModal from '../../components/member/InfoModal.js';
 
 const mapStateToProps = state => {
   const { isLogin, memberInfo } = state.loginReducer;
-  const { isUpdateSucceed } = state.memberUpdateReducer;
+  const { isUpdateSucceed } = state.editMemberReducer;
   return { isLogin, isUpdateSucceed, memberInfo };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    memberUpdateRequest: member => {
-      dispatch(memberUpdateActions.MEMBER_UPDATE_REQUEST({ member }));
+    editMemberRequest: member => {
+      dispatch(editMemberActions.EDIT_MEMBER_REQUEST({ member }));
     },
     getMemberInfo: () => {
-      dispatch(loginActions.MEMBERINFO_REQUEST());
+      dispatch(loginActions.GET_MEMBERINFO_REQUEST());
     },
-    memberUpdateClear: () => {
-      dispatch(memberUpdateActions.MEMBER_UPDATE_SUCCEED_CLEAR());
+    clearEditMemberResult: () => {
+      dispatch(editMemberActions.EDIT_MEMBER_SUCCEED_CLEAR());
     },
   };
 };

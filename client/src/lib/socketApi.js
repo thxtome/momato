@@ -106,7 +106,6 @@ const request = (params, failed) => {
       failed();
     }
   } catch (error) {
-    console.dir(error);
   }
 };
 

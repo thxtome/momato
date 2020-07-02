@@ -1,31 +1,31 @@
 import { connect } from 'react-redux';
-import { templateActions } from '../../store/modules/template.js';
-import { templateAddActions } from '../../store/modules/templateAdd.js';
-import { templateEditActions } from '../../store/modules/templateEdit.js';
-import { templateDeleteActions } from '../../store/modules/templateDelete.js';
+import { getTemplateActions } from '../../store/modules/getTemplate.js';
+import { addTemplateActions } from '../../store/modules/addTemplate.js';
+import { editTemplateActions } from '../../store/modules/editTemplate.js';
+import { deleteTemplateActions } from '../../store/modules/deleteTemplate.js';
 import TemplateList from '../../components/template/TemplateList.js';
 
 const mapStateToProps = state => {
-  const { isTemplateAddSucceed } = state.templateAddReducer;
-  const { isTemplateEditSucceed } = state.templateEditReducer;
-  const { isTemplateDeleteSucceed } = state.templateDeleteReducer;
-  const { templates } = state.templateReducer;
+  const { isTemplateAddSucceed } = state.addTemplateReducer;
+  const { isTemplateEditSucceed } = state.editTemplateReducer;
+  const { isTemplateDeleteSucceed } = state.deleteTemplateReducer;
+  const { templates } = state.getTemplateReducer;
   return { isTemplateAddSucceed, isTemplateEditSucceed, isTemplateDeleteSucceed, templates };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getTemplateList: () => {
-      dispatch(templateActions.TEMPLATE_REQUEST());
+      dispatch(getTemplateActions.GET_TEMPLATE_REQUEST());
     },
-    clearAddResult: () => {
-      dispatch(templateAddActions.TEMPLATE_ADD_CLEAR());
+    clearAddTemplateResult: () => {
+      dispatch(addTemplateActions.ADD_TEMPLATE_CLEAR());
     },
-    clearEditResult: () => {
-      dispatch(templateEditActions.TEMPLATE_EDIT_CLEAR());
+    clearEditTemplateResult: () => {
+      dispatch(editTemplateActions.EDIT_TEMPLATE_CLEAR());
     },
-    clearDeleteResult: () => {
-      dispatch(templateDeleteActions.TEMPLATE_DELETE_CLEAR());
+    clearDeleteTemplateResult: () => {
+      dispatch(deleteTemplateActions.DELETE_TEMPLATE_CLEAR());
     },
   };
 };

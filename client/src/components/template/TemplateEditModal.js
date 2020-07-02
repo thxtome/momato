@@ -49,7 +49,7 @@ const TemplateEditModal = ({ history, editTemplate, getTemplateList, onClose, te
       editTemplate(data);
       onClose();
       // 텃밭 수정시 해당 텃밭으로 이동
-      history.push(template, `template`);
+      history.push({ state: { template } }, `template`);
       // 텃밭목록 다시 그리기
     }
   };

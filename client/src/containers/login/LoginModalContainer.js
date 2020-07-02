@@ -11,7 +11,7 @@ const mapDispatchToProps = dispatch => {
     login: member => {
       dispatch(loginActions.LOGIN_REQUEST({ member }));
     },
-    loginFailedClear: () => {
+    clearLoginFailed: () => {
       dispatch(loginActions.LOGIN_FAILED_CLEAR());
     },
   };

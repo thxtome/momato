@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => {
     withdrawSucceedClear: () => {
       dispatch(withdrawActions.WITHDRAW_SUCCEED_CLEAR());
     },
-    memberInfoClear: () => {
+    clearLogoutResult: () => {
       dispatch(loginActions.LOGOUT_SUCCEEDED());
     },
   };

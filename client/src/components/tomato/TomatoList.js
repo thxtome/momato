@@ -21,7 +21,7 @@ const TomatoList = ({
   addTomatos,
   deleteTomato,
   deleteTempTomato,
-  clearDeleteResult,
+  clearDeleteTomatoResult,
 }) => {
   const date = templateIdx
     ? ''
@@ -47,7 +47,7 @@ const TomatoList = ({
         return;
       }
       getTomatoList(data);
-      clearDeleteResult();
+      clearDeleteTomatoResult();
     }
   }, [isTomatoDeleteSucceed]);
 

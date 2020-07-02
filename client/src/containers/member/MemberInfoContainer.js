@@ -1,21 +1,21 @@
 import MemberInfo from '../../components/member/MemberInfo';
 import { loginActions } from '../../store/modules/login';
-import { memberUpdateActions } from '../../store/modules/memberUpdate';
+import { editMemberActions } from '../../store/modules/editMember';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   const { memberInfo, isLogin } = state.loginReducer;
-  const { isUpdateSucceed } = state.memberUpdateReducer;
+  const { isUpdateSucceed } = state.editMemberReducer;
   return { memberInfo, isLogin, isUpdateSucceed };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getMemberInfo: () => {
-      dispatch(loginActions.MEMBERINFO_REQUEST());
+      dispatch(loginActions.GET_MEMBERINFO_REQUEST());
     },
-    clearUpdateResult: () => {
-      dispatch(memberUpdateActions.MEMBER_UPDATE_CLEAR());
+    clearEditMemberResult: () => {
+      dispatch(editMemberActions.EDIT_MEMBER_CLEAR());
     },
   };
 };

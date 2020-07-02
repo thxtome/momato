@@ -93,9 +93,9 @@ const useInput = initVal => {
 const InfoModal = ({
   isLogin,
   isUpdateSucceed,
-  memberUpdateRequest,
+  editMemberRequest,
   getMemberInfo,
-  memberUpdateClear,
+  clearEditMemberResult,
   onClose,
   memberInfo,
 }) => {
@@ -112,7 +112,7 @@ const InfoModal = ({
       checkPass(inputMemberPass.value, 'edit') &&
       comparePass(inputMemberPass.value, inputMemberPassChk.value)
     ) {
-      memberUpdateRequest({
+      editMemberRequest({
         memberName: inputMemberName.value,
         memberPass: inputMemberPass.value,
       });
@@ -127,7 +127,7 @@ const InfoModal = ({
       });
       //업데이트 성공 여부를 클리어하고
       getMemberInfo();
-      memberUpdateClear();
+      clearEditMemberResult();
       //모달을 닫는다.
       onClose();
     }

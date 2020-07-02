@@ -7,9 +7,9 @@ const LOGIN_FAILED_CLEAR = createAction('LOGIN_FAILED_CLEAR');
 const LOGOUT_REQUEST = createAction('LOGOUT_REQUEST');
 const LOGOUT_SUCCEEDED = createAction('LOGOUT_SUCCEEDED');
 const LOGOUT_FAILED = createAction('LOGOUT_FAILED');
-const MEMBERINFO_REQUEST = createAction('MEMBERINFO_REQUEST');
-const MEMBERINFO_SUCCEED = createAction('MEMBERINFO_SUCCEED');
-const MEMBERINFO_FAILED = createAction('MEMBERINFO_FAILED');
+const GET_MEMBERINFO_REQUEST = createAction('GET_MEMBERINFO_REQUEST');
+const GET_MEMBERINFO_SUCCEED = createAction('GET_MEMBERINFO_SUCCEED');
+const GET_MEMBERINFO_FAILED = createAction('GET_MEMBERINFO_FAILED');
 
 export const loginActions = {
   LOGIN_REQUEST,
@@ -17,9 +17,9 @@ export const loginActions = {
   LOGOUT_REQUEST,
   LOGOUT_SUCCEEDED,
   LOGIN_FAILED,
-  MEMBERINFO_REQUEST,
-  MEMBERINFO_SUCCEED,
-  MEMBERINFO_FAILED,
+  GET_MEMBERINFO_REQUEST,
+  GET_MEMBERINFO_SUCCEED,
+  GET_MEMBERINFO_FAILED,
 };
 
 const initialState = {
@@ -57,15 +57,15 @@ const reducer = createReducer(initialState, {
     return { ...state, isLogin: true };
   },
 
-  [MEMBERINFO_REQUEST]: (state, action) => {
+  [GET_MEMBERINFO_REQUEST]: (state, action) => {
     return { ...state, isMemberLoading: true };
   },
 
-  [MEMBERINFO_SUCCEED]: (state, action) => {
+  [GET_MEMBERINFO_SUCCEED]: (state, action) => {
     return { ...state, memberInfo: action.payload.memberInfo, isLogin: true, isMemberLoading: false };
   },
 
-  [MEMBERINFO_FAILED]: (state, action) => {
+  [GET_MEMBERINFO_FAILED]: (state, action) => {
     return { ...state, isMemberLoading: false };
   },
 });

@@ -39,7 +39,7 @@ const WithdrawModal = props => {
       toast.info('회원탈퇴 되었습니다.', {
         position: toast.POSITION.TOP_CENTER,
       });
-      props.memberInfoClear();
+      props.clearLogoutResult();
       props.withdrawSucceedClear();
       props.onClose();
     }

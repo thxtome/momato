@@ -10,7 +10,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getMemberInfo: () => {
-      dispatch(loginActions.MEMBERINFO_REQUEST());
+      dispatch(loginActions.GET_MEMBERINFO_REQUEST());
     },
   };
 };

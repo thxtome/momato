@@ -1,7 +1,7 @@
 import MemberInfo from '../../components/common/MemberInfo';
 import { loginActions } from '../../store/modules/login';
-import { tomatoActions } from '../../store/modules/tomato.js';
-import { templateActions } from '../../store/modules/template';
+import { getTomatoActions } from '../../store/modules/getTomato.js';
+import { getTemplateActions } from '../../store/modules/getTemplate';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
@@ -12,16 +12,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getMemberInfo: () => {
-      dispatch(loginActions.MEMBERINFO_REQUEST());
+      dispatch(loginActions.GET_MEMBERINFO_REQUEST());
     },
     getTomatoList: data => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ data }));
+      dispatch(getTomatoActions.GET_TOMATO_REQUEST({ data }));
     },
     getTempTomatoList: () => {
-      dispatch(tomatoActions.TOMATO_TEMP_REQUEST());
+      dispatch(getTomatoActions.GET_TEMP_TOMATO_REQUEST());
     },
     getTemplateList: () => {
-      dispatch(templateActions.TEMPLATE_REQUEST());
+      dispatch(getTemplateActions.GET_TEMPLATE_REQUEST());
     },
   };
 };

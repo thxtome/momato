@@ -23,7 +23,7 @@ const LoadTemplateModal = ({
   isTomatoAddSucceed,
   addTomatos,
   getTomatoList,
-  clearAddResult,
+  clearAddTomatoResult,
   onClose,
   templates,
 }) => {
@@ -36,7 +36,7 @@ const LoadTemplateModal = ({
         date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
         templateIdx: null,
       });
-      clearAddResult();
+      clearAddTomatoResult();
     }
   }, [isTomatoAddSucceed]);
   const classes = useStyles();

@@ -1,30 +1,30 @@
 import { connect } from 'react-redux';
-import { tomatoAddActions } from '../../store/modules/tomatoAdd.js';
-import { tomatoActions } from '../../store/modules/tomato.js';
+import { addTomatoActions } from '../../store/modules/addTomato.js';
+import { getTomatoActions } from '../../store/modules/getTomato.js';
 import TomatoAddModal from '../../components/tomato/TomatoAddModal.js';
 
 const mapStateToProps = state => {
   const { isLogin } = state.loginReducer;
-  const { isTomatoAddSucceed } = state.tomatoAddReducer;
+  const { isTomatoAddSucceed } = state.addTomatoReducer;
   return { isLogin, isTomatoAddSucceed };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addTomato: data => {
-      dispatch(tomatoAddActions.TOMATO_ADD_REQUEST({ data }));
+      dispatch(addTomatoActions.ADD_TOMATO_REQUEST({ data }));
     },
     addTempTomato: tempTomato => {
-      dispatch(tomatoAddActions.TOMATO_TEMP_ADD({ tempTomato }));
+      dispatch(addTomatoActions.ADD_TEMP_TOMATO({ tempTomato }));
     },
     getTempTomatoList: () => {
-      dispatch(tomatoActions.TOMATO_TEMP_REQUEST());
+      dispatch(getTomatoActions.GET_TEMP_TOMATO_REQUEST());
     },
     getTomatoList: data => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ data }));
+      dispatch(getTomatoActions.GET_TOMATO_REQUEST({ data }));
     },
-    clearAddResult: () => {
-      dispatch(tomatoAddActions.TOMATO_ADD_CLEAR());
+    clearAddTomatoResult: () => {
+      dispatch(addTomatoActions.ADD_TOMATO_CLEAR());
     },
   };
 };

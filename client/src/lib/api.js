@@ -69,7 +69,7 @@ export const getTomato = data => {
   });
 };
 
-export const tomatoAdd = ({ createType, tomatoName, templateIdx }) =>
+export const addTomato = ({ createType, tomatoName, templateIdx }) =>
   axios({
     method: 'post',
     url: `${url}/tomatos`,
@@ -84,7 +84,7 @@ export const tomatoAdd = ({ createType, tomatoName, templateIdx }) =>
     },
   });
 
-export const tomatoEdit = ({ tomatoIdx, tomatoName, tomatoFullRegular, tomatoFullBreak, tomatoCanStart }) =>
+export const editTomato = ({ tomatoIdx, tomatoName, tomatoFullRegular, tomatoFullBreak, tomatoCanStart }) =>
   axios({
     method: 'put',
     url: `${url}/tomatos`,
@@ -100,7 +100,7 @@ export const tomatoEdit = ({ tomatoIdx, tomatoName, tomatoFullRegular, tomatoFul
     },
   });
 
-export const tomatoDelete = tomatoIdx =>
+export const deleteTomato = tomatoIdx =>
   axios({
     method: 'delete',
     url: `${url}/tomatos/${tomatoIdx}`,
@@ -114,7 +114,7 @@ export const getCalendar = ({ year, month }) =>
     headers: { Authorization: localStorage.getItem('auth') },
   });
 
-export const template = () => {
+export const getTemplate = () => {
   return axios({
     method: 'get',
     url: `${url}/templates`,
@@ -122,7 +122,7 @@ export const template = () => {
   });
 };
 
-export const templateAdd = ({ templateName, templateComment }) =>
+export const addTemplate = ({ templateName, templateComment }) =>
   axios({
     method: 'post',
     url: `${url}/templates`,
@@ -145,7 +145,7 @@ export const updateTemplate = ({ templateIdx, templateName, templateComment }) =
     },
   });
 
-export const removeTemplate = templateIdx =>
+export const deleteTemplate = templateIdx =>
   axios({
     method: 'delete',
     url: `${url}/templates/${templateIdx}`,

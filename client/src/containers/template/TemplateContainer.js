@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { templateDeleteActions } from '../../store/modules/templateDelete.js';
+import { deleteTemplateActions } from '../../store/modules/deleteTemplate.js';
 import Template from '../../components/template/Template.js';
 
 const mapStateToProps = state => {
@@ -9,7 +9,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     deleteTemplate: data => {
-      dispatch(templateDeleteActions.TEMPLATE_DELETE_REQUEST({ data }));
+      dispatch(deleteTemplateActions.DELETE_TEMPLATE_REQUEST({ data }));
     },
   };
 };

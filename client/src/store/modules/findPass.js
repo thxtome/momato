@@ -23,7 +23,6 @@ const reducer = createReducer(initialState, {
   },
 
   [FIND_PASS_SUCCEED]: (state, action) => {
-    console.log(action);
     return { ...state, isFindPassSucceed: true, isFindPassLoading: false };
   },
 

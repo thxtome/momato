@@ -111,8 +111,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     //임시토마토 저장
-    tempTomatoSave: tomatoIdx => {
-      dispatch(counterActions.TEMP_TOMATO_SAVE({ tomatoIdx }));
+    saveTempTomato: tomatoIdx => {
+      dispatch(counterActions.SAVE_TEMP_TOMATO({ tomatoIdx }));
     },
   };
 };

@@ -1,25 +1,25 @@
 import { connect } from 'react-redux';
-import { tomatoAddActions } from '../../store/modules/tomatoAdd.js';
-import { tomatoActions } from '../../store/modules/tomato.js';
+import { addTomatoActions } from '../../store/modules/addTomato.js';
+import { getTomatoActions } from '../../store/modules/getTomato.js';
 import LoadTemplateModal from '../../components/tomato/LoadTemplateModal.js';
 
 const mapStateToProps = state => {
   const { isLogin } = state.loginReducer;
-  const { isTomatoAddSucceed } = state.tomatoAddReducer;
-  const { templates } = state.templateReducer;
+  const { isTomatoAddSucceed } = state.addTomatoReducer;
+  const { templates } = state.getTemplateReducer;
   return { isLogin, isTomatoAddSucceed, templates };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addTomatos: data => {
-      dispatch(tomatoAddActions.TOMATO_ADD_REQUEST({ data }));
+      dispatch(addTomatoActions.ADD_TOMATO_REQUEST({ data }));
     },
     getTomatoList: data => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ data }));
+      dispatch(getTomatoActions.GET_TOMATO_REQUEST({ data }));
     },
-    clearAddResult: () => {
-      dispatch(tomatoAddActions.TOMATO_ADD_CLEAR());
+    clearAddTomatoResult: () => {
+      dispatch(addTomatoActions.ADD_TOMATO_CLEAR());
     },
   };
 };

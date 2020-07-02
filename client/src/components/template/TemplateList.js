@@ -59,9 +59,9 @@ export default function TemplateList({
   isTemplateDeleteSucceed,
   clieckedIndex,
   getTemplateList,
-  clearAddResult,
-  clearEditResult,
-  clearDeleteResult,
+  clearAddTemplateResult,
+  clearEditTemplateResult,
+  clearDeleteTemplateResult,
   setClieckedIndex = () => {},
   onClose = () => {},
   templates,
@@ -73,15 +73,15 @@ export default function TemplateList({
   useEffect(() => {
     if (isTemplateAddSucceed) {
       getTemplateList();
-      clearAddResult();
+      clearAddTemplateResult();
     }
-  }, [isTemplateAddSucceed, getTemplateList, clearAddResult]);
+  }, [isTemplateAddSucceed, getTemplateList, clearAddTemplateResult]);
 
   // 텃밭수정 시 텃밭리스트 불러오기
   useEffect(() => {
     if (isTemplateEditSucceed) {
       getTemplateList();
-      clearEditResult();
+      clearEditTemplateResult();
     }
   }, [isTemplateEditSucceed]);
 
@@ -89,7 +89,7 @@ export default function TemplateList({
   useEffect(() => {
     if (isTemplateDeleteSucceed) {
       getTemplateList();
-      clearDeleteResult();
+      clearDeleteTemplateResult();
       setClieckedIndex(0);
     }
   }, [isTemplateDeleteSucceed]);

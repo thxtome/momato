@@ -133,7 +133,7 @@ const Counter = props => {
     reload,
     unexpectedClose,
     loadTempTomato,
-    tempTomatoSave,
+    saveTempTomato,
     finishTempTimer,
     finishTimerOnReconnecting,
   } = props;
@@ -259,7 +259,7 @@ const Counter = props => {
     //페이지를 새로고침시 유지가 안 되기때문에 비회원은 따로 처리
     const handleRefresh = e => {
       if (e.keyCode === 116 && !isLogin) {
-        tempTomatoSave(tomatoIdx);
+        saveTempTomato(tomatoIdx);
       }
     };
 
@@ -282,7 +282,7 @@ const Counter = props => {
         }
       : () => {
           document.removeEventListener('keydown', handleRefresh);
-          tempTomatoSave(tomatoIdx);
+          saveTempTomato(tomatoIdx);
         };
   }, []);
 

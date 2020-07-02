@@ -28,13 +28,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MemberInfo = ({ memberInfo, isLogin, isUpdateSucceed, history, getMemberInfo, clearUpdateResult }) => {
+const MemberInfo = ({ memberInfo, isLogin, isUpdateSucceed, history, getMemberInfo, clearEditMemberResult }) => {
   useEffect(() => {
     if (!isLogin) {
       history.push('/');
     } else if (isUpdateSucceed) {
       getMemberInfo();
-      clearUpdateResult();
+      clearEditMemberResult();
       history.push('/member-info');
     }
   }, [isLogin, isUpdateSucceed]);

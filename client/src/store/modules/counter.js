@@ -20,7 +20,7 @@ const ADD_TIME = createAction('ADD_TIME');
 //비로그인시 액션
 const TEMP_TOMATO_LOAD = createAction('TEMP_TOMATO_LOAD');
 const TEMP_TOMATO_FINISH = createAction('TEMP_TOMATO_FINISH');
-const TEMP_TOMATO_SAVE = createAction('TEMP_TOMATO_SAVE');
+const SAVE_TEMP_TOMATO = createAction('SAVE_TEMP_TOMATO');
 
 export const counterActions = {
   TOMATO_LOAD_SUCCED,
@@ -39,7 +39,7 @@ export const counterActions = {
   ADD_TIME,
   TEMP_TOMATO_LOAD,
   TEMP_TOMATO_FINISH,
-  TEMP_TOMATO_SAVE,
+  SAVE_TEMP_TOMATO,
 };
 
 const initialState = {
@@ -200,7 +200,7 @@ const reducer = createReducer(initialState, {
   },
 
   //인덱스를 가지고 토마토를 가져와서 타겟에 따라 남은 시간을 수정하고 다시 세션에 넣어준다.
-  [TEMP_TOMATO_SAVE]: (state, action) => {
+  [SAVE_TEMP_TOMATO]: (state, action) => {
     const tomatoIdx = action.payload.tomatoIdx;
     const tomatos = JSON.parse(sessionStorage.getItem('tomatos')).map(tomato => {
       if (tomato.tomatoIdx === tomatoIdx) {

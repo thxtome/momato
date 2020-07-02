@@ -1,103 +1,98 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import * as api from './api';
-import { signupActions } from '../store/modules/signup.js';
-import { tomatoAddActions } from '../store/modules/tomatoAdd';
-import { tomatoEditActions } from '../store/modules/tomatoEdit';
-import { tomatoDeleteActions } from '../store/modules/tomatoDelete';
-import { tomatoActions } from '../store/modules/tomato.js';
 import { loginActions } from '../store/modules/login.js';
-import { calendarActions } from '../store/modules/calendar';
-import { memberUpdateActions } from '../store/modules/memberUpdate';
-import { templateActions } from '../store/modules/template';
-import { templateAddActions } from '../store/modules/templateAdd';
-import { templateEditActions } from '../store/modules/templateEdit';
-import { templateDeleteActions } from '../store/modules/templateDelete';
+import { signupActions } from '../store/modules/signup.js';
 import { findPassActions } from '../store/modules/findPass';
 import { withdrawActions } from '../store/modules/withdraw';
+import { getTomatoActions } from '../store/modules/getTomato.js';
+import { addTomatoActions } from '../store/modules/addTomato';
+import { editTomatoActions } from '../store/modules/editTomato';
+import { deleteTomatoActions } from '../store/modules/deleteTomato';
+import { editMemberActions } from '../store/modules/editMember';
+import { getTemplateActions } from '../store/modules/getTemplate';
+import { addTemplateActions } from '../store/modules/addTemplate';
+import { editTemplateActions } from '../store/modules/editTemplate';
+import { deleteTemplateActions } from '../store/modules/deleteTemplate';
+import { getCalendarActions } from '../store/modules/getCalendar';
 import errorDispacher from '../error/errorDispacher';
 
-function* tomatoAddSaga(action) {
+function* addTomatoSaga(action) {
   try {
-    const response = yield call(api.tomatoAdd, action.payload.data);
-    yield put(tomatoAddActions.TOMATO_ADD_SUCCEED({ response }));
+    const response = yield call(api.addTomato, action.payload.data);
+    yield put(addTomatoActions.ADD_TOMATO_SUCCEED({ response }));
   } catch (e) {
     errorDispacher(e);
-    yield put(tomatoActions.TOMATO_FAILED());
+    yield put(addTomatoActions.TOMATO_FAILED());
   }
 }
 
-function* tomatoEditSaga(action) {
+function* editTomatoSaga(action) {
   try {
-    const response = yield call(api.tomatoEdit, action.payload.data);
-    yield put(tomatoEditActions.TOMATO_EDIT_SUCCEED({ response }));
+    const response = yield call(api.editTomato, action.payload.data);
+    yield put(editTomatoActions.EDIT_TOMATO_SUCCEED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
-    yield put({ type: 'TOMATO_EDIT_FAILED', message: e.message });
+    yield put(editTomatoActions.EDIT_TOMATO_FAILED({ message: e.message }));
   }
 }
 
-function* tomatoDeleteSaga(action) {
+function* deleteTomatoSaga(action) {
   try {
-    const response = yield call(api.tomatoDelete, action.payload.data);
-    yield put(tomatoDeleteActions.TOMATO_DELETE_SUCCEED({ response }));
+    const response = yield call(api.deleteTomato, action.payload.data);
+    yield put(deleteTomatoActions.DELETE_TOMATO_SUCCEED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
-    yield put({ type: 'TOMATO_DELETE_FAILED', message: e.message });
+    yield put(deleteTomatoActions.DELETE_TOMATO_FAILED({ message: e.message }));
   }
 }
 
-function* tomatoSaga(action) {
+function* getTomatoSaga(action) {
   try {
     const response = yield call(api.getTomato, action.payload.data);
-    yield put(tomatoActions.TOMATO_SUCCEED({ tomatos: response.data.data.result }));
+    yield put(getTomatoActions.GET_TOMATO_SUCCEED({ tomatos: response.data.data.result }));
   } catch (e) {
     errorDispacher(e);
-    yield put({ type: 'TOMATO_FAILED', message: e.message });
+    yield put(getTomatoActions.GET_TOMATO_FAILED({ message: e.message }));
   }
 }
 
-function* templateSaga(action) {
+function* getTemplateSaga(action) {
   try {
-    const response = yield call(api.template, action);
-    yield put(templateActions.TEMPLATE_SUCCEED({ templates: response.data.data.result }));
+    const response = yield call(api.getTemplate, action);
+    yield put(getTemplateActions.GET_TEMPLATE_SUCCEED({ templates: response.data.data.result }));
   } catch (e) {
     errorDispacher(e);
-    yield put(templateActions.TEMPLATE_FAILED());
+    yield put(getTemplateActions.GET_TEMPLATE_FAILED());
   }
 }
 
-function* templateAddSaga(action) {
+function* addTemplateSaga(action) {
   try {
-    const response = yield call(api.templateAdd, action.payload.data);
-    yield put(templateAddActions.TEMPLATE_ADD_SUCCEED({ response }));
+    const response = yield call(api.addTemplate, action.payload.data);
+    yield put(addTemplateActions.ADD_TEMPLATE_SUCCEED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
-    yield put({ type: 'TEMPLATE_ADD_FAILED', message: e.message });
+    yield put({ message: e.message });
   }
 }
 
-function* templateEditSaga(action) {
+function* editTemplateSaga(action) {
   try {
     const response = yield call(api.updateTemplate, action.payload);
-    yield put(templateEditActions.TEMPLATE_EDIT_SUCCEED({ response }));
+    yield put(editTemplateActions.EDIT_TEMPLATE_SUCCEED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
-    yield put({ type: 'TEMPLATE_EDIT_FAILED', message: e.message });
+    yield put(editTemplateActions.EDIT_TEMPLATE_FAILD({ message: e.message }));
   }
 }
 
-function* templateDeleteSaga(action) {
+function* deleteTemplateSaga(action) {
   try {
-    const response = yield call(api.removeTemplate, action.payload.data);
-    yield put(templateDeleteActions.TEMPLATE_DELETE_SUCCEED({ response }));
+    const response = yield call(api.deleteTemplate, action.payload.data);
+    yield put(deleteTemplateActions.DELETE_TEMPLATE_SUCCEED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
-    yield put({ type: 'TEMPLATE_DELETE_FAILED', message: e.message });
+    yield put(deleteTemplateActions.DELETE_TEMPLATE_SUCCEED({ message: e.message }));
   }
 }
 
@@ -106,7 +101,6 @@ function* loginSaga(action) {
     const response = yield call(api.login, action.payload.member);
     yield put(loginActions.LOGIN_SUCCEEDED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
   }
 }
@@ -116,7 +110,6 @@ function* logoutSaga(action) {
     const response = yield call(api.logout, action.payload.auth);
     yield put(loginActions.LOGOUT_SUCCEEDED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
     yield put(loginActions.LOGOUT_FAILED({ e }));
   }
@@ -127,28 +120,26 @@ function* signupSaga(action) {
     const response = yield call(api.signup, action.payload.member);
     yield put(signupActions.SIGNUP_SUCCEED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
     yield put(signupActions.SIGNUP_FAILED({ message: e.message }));
   }
 }
 
-function* memberInfoSaga(action) {
+function* getMemberInfoSaga() {
   try {
     const response = yield call(api.getMemberInfo);
-    yield put(loginActions.MEMBERINFO_SUCCEED({ memberInfo: response.data.data.result }));
+    yield put(loginActions.GET_MEMBERINFO_SUCCEED({ memberInfo: response.data.data.result }));
   } catch (e) {
     errorDispacher(e);
-    yield put(loginActions.MEMBERINFO_FAILED());
+    yield put(loginActions.GET_MEMBERINFO_FAILED());
   }
 }
 
-function* memberUpdateSaga(action) {
+function* editMemberSaga(action) {
   try {
     const response = yield call(api.updateMember, action.payload.member);
-    yield put(memberUpdateActions.MEMBER_UPDATE_SUCCEED({ response }));
+    yield put(editMemberActions.EDIT_MEMBER_SUCCEED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
   }
 }
@@ -158,7 +149,6 @@ function* findPassSaga(action) {
     const response = yield call(api.findPass, action.payload);
     yield put(findPassActions.FIND_PASS_SUCCEED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
     yield put(findPassActions.FIND_PASS_FAILED());
   }
@@ -167,10 +157,8 @@ function* findPassSaga(action) {
 function* withdrawSaga(action) {
   try {
     const response = yield call(api.withdraw, action.payload);
-    console.log(response);
     yield put(withdrawActions.WITHDRAW_SUCCEED({ response }));
   } catch (e) {
-    console.dir(e);
     errorDispacher(e);
   }
 }
@@ -179,12 +167,12 @@ function* getCalendarSaga(action) {
   try {
     const response = yield call(api.getCalendar, action.payload.yearAndMonth);
     yield put(
-      calendarActions.CALENDAR_SUCCEED({
+      getCalendarActions.GET_CALENDAR_SUCCEED({
         tomatoOfDates: response.data.data.result,
       }),
     );
   } catch (e) {
-    yield put(calendarActions.CALENDAR_FAILED());
+    yield put(getCalendarActions.GET_CALENDAR_FAILED());
   }
 }
 
@@ -192,17 +180,17 @@ function* baseSaga() {
   yield takeEvery(loginActions.LOGIN_REQUEST, loginSaga);
   yield takeEvery(loginActions.LOGOUT_REQUEST, logoutSaga);
   yield takeEvery(signupActions.SIGNUP_REQUEST, signupSaga);
-  yield takeEvery(tomatoAddActions.TOMATO_ADD_REQUEST, tomatoAddSaga);
-  yield takeEvery(tomatoEditActions.TOMATO_EDIT_REQUEST, tomatoEditSaga);
-  yield takeEvery(tomatoDeleteActions.TOMATO_DELETE_REQUEST, tomatoDeleteSaga);
-  yield takeEvery(tomatoActions.TOMATO_REQUEST, tomatoSaga);
-  yield takeEvery(calendarActions.CALENDAR_REQUEST, getCalendarSaga);
-  yield takeEvery(memberUpdateActions.MEMBER_UPDATE_REQUEST, memberUpdateSaga);
-  yield takeEvery(loginActions.MEMBERINFO_REQUEST, memberInfoSaga);
-  yield takeEvery(templateActions.TEMPLATE_REQUEST, templateSaga);
-  yield takeEvery(templateAddActions.TEMPLATE_ADD_REQUEST, templateAddSaga);
-  yield takeEvery(templateEditActions.TEMPLATE_EDIT_REQUEST, templateEditSaga);
-  yield takeEvery(templateDeleteActions.TEMPLATE_DELETE_REQUEST, templateDeleteSaga);
+  yield takeEvery(addTomatoActions.ADD_TOMATO_REQUEST, addTomatoSaga);
+  yield takeEvery(editTomatoActions.EDIT_TOMATO_REQUEST, editTomatoSaga);
+  yield takeEvery(deleteTomatoActions.DELETE_TOMATO_REQUEST, deleteTomatoSaga);
+  yield takeEvery(getTomatoActions.GET_TOMATO_REQUEST, getTomatoSaga);
+  yield takeEvery(getCalendarActions.GET_CALENDAR_REQUEST, getCalendarSaga);
+  yield takeEvery(editMemberActions.EDIT_MEMBER_REQUEST, editMemberSaga);
+  yield takeEvery(loginActions.GET_MEMBERINFO_REQUEST, getMemberInfoSaga);
+  yield takeEvery(getTemplateActions.GET_TEMPLATE_REQUEST, getTemplateSaga);
+  yield takeEvery(addTemplateActions.ADD_TEMPLATE_REQUEST, addTemplateSaga);
+  yield takeEvery(editTemplateActions.EDIT_TEMPLATE_REQUEST, editTemplateSaga);
+  yield takeEvery(deleteTemplateActions.DELETE_TEMPLATE_REQUEST, deleteTemplateSaga);
   yield takeEvery(findPassActions.FIND_PASS_REQUEST, findPassSaga);
   yield takeEvery(withdrawActions.WITHDRAW_REQUEST, withdrawSaga);
 }

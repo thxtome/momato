@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { templateAddActions } from '../../store/modules/templateAdd.js';
+import { addTemplateActions } from '../../store/modules/addTemplate.js';
 import TemplateAddModal from '../../components/template/TemplateAddModal.js';
 
 const mapStateToProps = state => {
@@ -9,7 +9,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addTemplate: data => {
-      dispatch(templateAddActions.TEMPLATE_ADD_REQUEST({ data }));
+      dispatch(addTemplateActions.ADD_TEMPLATE_REQUEST({ data }));
     },
   };
 };

@@ -47,7 +47,7 @@ const TomatoAddModal = ({
   getTempTomatoList,
   onClose,
   getTomatoList,
-  clearAddResult,
+  clearAddTomatoResult,
 }) => {
   const CHARACTER_LIMIT = 15;
 
@@ -65,7 +65,7 @@ const TomatoAddModal = ({
         date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
         templateIdx: templateIdx,
       });
-      clearAddResult();
+      clearAddTomatoResult();
       onClose();
     }
   }, [isTomatoAddSucceed]);

@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
-import { tomatoActions } from '../../store/modules/tomato.js';
-import { tomatoAddActions } from '../../store/modules/tomatoAdd.js';
-import { tomatoDeleteActions } from '../../store/modules/tomatoDelete.js';
+import { getTomatoActions } from '../../store/modules/getTomato.js';
+import { addTomatoActions } from '../../store/modules/addTomato.js';
+import { deleteTomatoActions } from '../../store/modules/deleteTomato.js';
 import TomatoList from '../../components/tomato/TomatoList.js';
 
 const mapStateToProps = state => {
   const isLogin = state.loginReducer.isLogin;
-  const isTomatoDeleteSucceed = state.tomatoDeleteReducer.isTomatoDeleteSucceed;
-  const tomatos = state.tomatoReducer.tomatos;
-  const templates = state.templateReducer.templates;
+  const isTomatoDeleteSucceed = state.deleteTomatoReducer.isTomatoDeleteSucceed;
+  const tomatos = state.getTomatoReducer.tomatos;
+  const templates = state.getTemplateReducer.templates;
   return {
     isLogin,
     isTomatoDeleteSucceed,
@@ -20,22 +20,22 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getTomatoList: data => {
-      dispatch(tomatoActions.TOMATO_REQUEST({ data }));
+      dispatch(getTomatoActions.GET_TOMATO_REQUEST({ data }));
     },
     getTempTomatoList: () => {
-      dispatch(tomatoActions.TOMATO_TEMP_REQUEST());
+      dispatch(getTomatoActions.GET_TEMP_TOMATO_REQUEST());
     },
     addTomatos: data => {
-      dispatch(tomatoAddActions.TOMATO_ADD_REQUEST({ data }));
+      dispatch(addTomatoActions.ADD_TOMATO_REQUEST({ data }));
     },
     deleteTomato: data => {
-      dispatch(tomatoDeleteActions.TOMATO_DELETE_REQUEST({ data }));
+      dispatch(deleteTomatoActions.DELETE_TOMATO_REQUEST({ data }));
     },
     deleteTempTomato: tomatoIdx => {
-      dispatch(tomatoDeleteActions.TOMATO_TEMP_DELETE({ tomatoIdx }));
+      dispatch(deleteTomatoActions.DELETE_TEMP_TOMATO({ tomatoIdx }));
     },
-    clearDeleteResult: () => {
-      dispatch(tomatoDeleteActions.TOMATO_DELETE_CLEAR());
+    clearDeleteTomatoResult: () => {
+      dispatch(deleteTomatoActions.DELETE_TOMATO_CLEAR());
     },
   };
 };

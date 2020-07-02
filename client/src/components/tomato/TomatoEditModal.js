@@ -65,7 +65,7 @@ const TomatoEditModal = ({
   editTempTomato,
   getTempTomatoList,
   getTomatoList,
-  clearEditResult,
+  clearEditTomatoResult,
   onClose,
 }) => {
   templateIdx = templateIdx ? templateIdx : 0;
@@ -87,7 +87,7 @@ const TomatoEditModal = ({
         date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
         templateIdx: templateIdx,
       });
-      clearEditResult();
+      clearEditTomatoResult();
     }
   }, [isTomatoEditSucceed]);
 
