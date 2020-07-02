@@ -32,7 +32,7 @@ const reducer = createReducer(initialState, {
     //토마토 배열에 추가해서 다시 세션에 넣음
     let tomatos = JSON.parse(sessionStorage.getItem('tomatos'));
     tomatos = tomatos ? tomatos : [];
-    tempTomato.tomatoIdx = tomatos.length;
+    tempTomato.tomatoIdx = tomatos.length + 1;
     sessionStorage.setItem('tomatos', JSON.stringify([...tomatos, tempTomato]));
     return { ...state };
   },
