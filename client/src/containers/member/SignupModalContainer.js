@@ -3,7 +3,7 @@ import { signupActions } from '../../store/modules/signup.js';
 import SignupModal from '../../components/member/SignupModal';
 
 const mapStateToProps = state => {
-  const { isSignupSucceed } = state.signupReducer;
+  const isSignupSucceed = state.signupReducer.isSignupSucceed;
   return { isSignupSucceed };
 };
 

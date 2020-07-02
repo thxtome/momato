@@ -77,6 +77,7 @@ const SignupModal = ({ isSignupSucceed, signup, clearSignupResult, onClose }) =>
   const email = useInput('');
   const pass = useInput('');
   const name = useInput('');
+  console.log(isSignupSucceed);
   useEffect(() => {
     if (isSignupSucceed) {
       toast.info('회원가입에 성공하였습니다.', {

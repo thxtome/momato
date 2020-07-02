@@ -2,7 +2,7 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 
 const SIGNUP_REQUEST = createAction('SIGNUP_REQUEST');
 const SIGNUP_SUCCEED = createAction('SIGNUP_SUCCEED');
-const SIGNUP_CLEAR = createAction('SIGNUP_SUCCEED');
+const SIGNUP_CLEAR = createAction('SIGNUP_CLEAR');
 const SIGNUP_FAILED = createAction('SIGNUP_FAILED');
 
 export const signupActions = { SIGNUP_REQUEST, SIGNUP_SUCCEED, SIGNUP_CLEAR, SIGNUP_FAILED };
