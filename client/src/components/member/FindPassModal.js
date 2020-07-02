@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, TextField, Typography, Button, Avatar } from '@material-ui/core';
 import { required } from '../../lib/validation';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles(theme => ({
   div: {
@@ -54,13 +55,24 @@ const useInput = initVal => {
   return { value, onChange };
 };
 
-const FindPassModal = props => {
+const FindPassModal = ({ isFindPassSucceed, onClose, sendTempPass, clearSuccess }) => {
   const classes = useStyles();
   const memberId = useInput('');
+
+  useEffect(() => {
+    console.log(isFindPassSucceed);
+    if (isFindPassSucceed) {
+      toast.info('메일 전송이 완료되었습니다.', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      clearSuccess();
+      onClose();
+    }
+  }, [isFindPassSucceed]);
+
   const findPassRequest = () => {
     if (required(memberId.value, '아이디')) {
-      props.sendTempPass(memberId.value);
-      props.onClose();
+      sendTempPass(memberId.value);
     }
   };
 
