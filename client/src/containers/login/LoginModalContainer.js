@@ -3,7 +3,8 @@ import { loginActions } from '../../store/modules/login';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
-  return state;
+  const isLogin = state.loginReducer.isLogin;
+  return { isLogin };
 };
 
 const mapDispatchToProps = dispatch => {

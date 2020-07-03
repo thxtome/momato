@@ -67,6 +67,14 @@ public class ExceptionController {
     	return rr;
     }
     
+    //회원가입 시 아이디가 존재하는 경우
+    @ExceptionHandler(IdDuplicateException.class)
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST)
+    public ResponseResult IdDuplicateException(HttpServletRequest req, Exception e) {
+    	IdDuplicateException idDuplicateEx = new IdDuplicateException(e.getMessage(),e);
+    	ResponseResult rr = new ResponseResult(idDuplicateEx, "signup", "0001", req.getRequestURI().toString()); 
+    	return rr;
+    }
     
 }
  

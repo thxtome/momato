@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.momato.common.dto.ResponseResult;
+import com.momato.exception.IdDuplicateException;
 import com.momato.exception.IdNotFoundException;
 import com.momato.member.dto.Member;
 import com.momato.member.dto.UserPrincipal;
@@ -56,9 +57,17 @@ public class MemberServiceImpl implements MemberService, UserDetailsService{
 	}
 
 	@Override
-	public ResponseResult createMember(Member member) {
+	public ResponseResult createMember(Member member) throws IdDuplicateException {
 		member.setMemberPass(passwordEncoder.encode(member.getMemberPass()));
-		mapper.insertMember(member);
+		
+		// 아이디가 이미 존재하는 경우
+		if (mapper.selectMemberById(member.getMemberId()) != null) {
+			
+			throw new IdDuplicateException("memeber already exist");
+			
+		} else {
+			mapper.insertMember(member);
+		}
 		return new ResponseResult(HttpStatus.OK);
 	}
 
