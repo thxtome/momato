@@ -34,6 +34,11 @@ public class TomatoServiceImpl implements TomatoService{
 	}
 	
 	@Override
+	public void addCalledTomato(Tomato tomato) {
+		mapper.insertCalledTomato(tomato);
+	}
+	
+	@Override
 	public void addTemplateTomato(Tomato tomato) {
 		mapper.insertTemplateTomato(tomato);
 	}

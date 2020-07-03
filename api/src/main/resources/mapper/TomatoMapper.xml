@@ -37,6 +37,12 @@
 		) values (#{tomatoName}, #{memberId})
 	</insert>
 	
+	<!-- 토마토 추가 -->
+	<insert id="insertCalledTomato" parameterType="Tomato">
+		insert into tomato (tomato_name, member_id, tomato_full_regular, tomato_left_regular, tomato_full_break, tomato_left_break
+		) values (#{tomatoName}, #{memberId}, #{tomatoFullRegular}, #{tomatoFullRegular}, #{tomatoFullBreak}, #{tomatoFullBreak})
+	</insert>
+	
 	<!-- 템플릿 토마토 추가 -->
 	<insert id="insertTemplateTomato" parameterType="Tomato">
 		insert into tomato (tomato_name, member_id, template_idx

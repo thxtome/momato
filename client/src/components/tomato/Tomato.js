@@ -39,6 +39,7 @@ const useStyles = makeStyles(theme => ({
   },
   leftTime: {
     fontFamily: '-Regular',
+    width: 90,
     [theme.breakpoints.down('650')]: {
       fontSize: 8,
     },

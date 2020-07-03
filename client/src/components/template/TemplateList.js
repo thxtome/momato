@@ -46,6 +46,9 @@ const useStyles = makeStyles(theme => ({
       },
     },
   },
+  icon: {
+    marginLeft: 10,
+  },
 }));
 
 const useInput = initVal => {
@@ -133,7 +136,7 @@ export default function TemplateList({
                   onClose();
                 }}
               >
-                <ListItemIcon>
+                <ListItemIcon className={classes.icon}>
                   <LocalFloristIcon />
                 </ListItemIcon>
                 <ListItemText className={classes.title}>

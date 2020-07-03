@@ -9,6 +9,7 @@ public interface TomatoService {
 	public Tomato retrieveOneTomato(int tomatoIdx);
 	public List<Tomato> retrieveTomatoByTemplateIdx(int templateIdx);
 	public void addTomato(Tomato tomato);
+	public void addCalledTomato(Tomato tomato);
 	public void addTemplateTomato(Tomato tomato);
 	public void removeTomato(int tomatoIdx);
 	public void editTomato(Tomato tomato);

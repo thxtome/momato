@@ -59,7 +59,7 @@ public class TomatoController {
 			List<Tomato> list = new ArrayList<>();
 			list = service.retrieveTomato(tomato);
 			for (Tomato t : list) {
-			service.addTomato(t);
+			service.addCalledTomato(t);
 			}
 		}
 		return new ResponseResult(HttpStatus.OK);

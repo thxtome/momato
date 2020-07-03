@@ -12,6 +12,7 @@ public interface TomatoMapper {
 	Tomato selectOneTomato(int tomatoIdx);
 	List<Tomato> selectTomatoByTemplateIdx(int templateIdx);
 	void insertTomato(Tomato tomato);
+	void insertCalledTomato(Tomato tomato);
 	void insertTemplateTomato(Tomato tomato);
 	void deleteTomato(int tomatoIdx);
 	void updateTomato(Tomato tomato);
