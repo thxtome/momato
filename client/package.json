@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "glob-to-regexp": "^0.4.1",
     "jss-preset-default": "^10.3.0",
     "material-ui-password-field": "^2.1.1",
     "react": "^16.13.1",
@@ -47,6 +48,12 @@
   },
   "homepage": "/",
   "reactSnap": {
-    "removeStyleTags": true
+    "removeStyleTags": true,
+    "include": [
+      "/"
+    ],
+    "exclude": [
+      "/counter"
+    ]
   }
 }

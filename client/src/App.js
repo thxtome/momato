@@ -10,35 +10,24 @@ import NoMatchPage from './components/common/NoMatchPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const createGenerateClassName = () => {
-  let counter = 0;
-  return (rule, sheet) =>
-    `c${Math.random().toString(36).substring(2, 4) + Math.random().toString(36).substring(2, 4)}-${
-      rule.key
-    }-${counter++}`;
-};
-
-const jss = create(preset());
-
-jss.options.createGenerateClassName = createGenerateClassName;
-
 function App() {
+  if (!navigator.userAgent === 'ReactSnap') {
+    document.querySelector('#root').style.display = 'block';
+  }
   return (
-    <StylesProvider jss={jss}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Switch>
-            <Route
-              exact
-              path={['/', '/tomato', '/calendar', '/template', '/counter', '/member-info']}
-              component={Layout}
-            />
-            <Route component={NoMatchPage} />
-          </Switch>
-        </BrowserRouter>
-        <ToastContainer />
-      </Provider>
-    </StylesProvider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          <Route
+            exact
+            path={['/', '/tomato', '/calendar', '/template', '/counter', '/member-info']}
+            component={Layout}
+          />
+          <Route component={NoMatchPage} />
+        </Switch>
+      </BrowserRouter>
+      <ToastContainer />
+    </Provider>
   );
 }
 
