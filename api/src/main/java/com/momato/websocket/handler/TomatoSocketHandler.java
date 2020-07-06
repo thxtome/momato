@@ -1,5 +1,6 @@
 package com.momato.websocket.handler;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -80,19 +81,19 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 			// 클라이언트로부터 토마토 정보를 받아와 맵에 추가
 			ReloadData reloadData = socketReq.getReloadData();
 			tomato = service.retrieveOneTomato(socketReq.getReloadData().getTomatoIdx());
-			
-			if(reloadData.isTargetRegular()) {
+
+			if (reloadData.isTargetRegular()) {
 				tomato.setTomatoLeftRegular(reloadData.getLeftTime());
 			} else {
 				tomato.setTomatoLeftBreak(reloadData.getLeftTime());
 			}
-			
-			if(reloadData.isGoing()) {
+
+			if (reloadData.isGoing()) {
 				tomato.startTimer();
 			}
-			
-			if(reloadData.getLeftTime() == 0) {
-				reloadData.setFinished(true);				
+
+			if (reloadData.getLeftTime() == 0) {
+				reloadData.setFinished(true);
 			}
 			tomatoMap.put(session.getId(), tomato);
 
@@ -192,44 +193,80 @@ public class TomatoSocketHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		unexpectedClose(session);
+		closeEvent(session , true);
 	}
 
 	@Scheduled(fixedDelay = 5000)
 	public void sendPingMessage() throws Exception {
-		// 5초동안 응답을 받고 남아있는 키를 비정상 종료로 간주한다. 그리고 종료시킨다
+		// 5초동안 응답을 받고 남아있는 키를 비정상 종료로 간주하고 그리고 종료시킨다
 		for (String key : pingList) {
-			WebSocketSession session = sessionMap.get(key);
-			System.out.println("퐁");
-			unexpectedClose(session);
-
+			try {
+				closeEvent(sessionMap.get(key), false);
+			} catch (NullPointerException e) {
+			}
 		}
 
+		//핑메세지전송리스트를 초기화하고 대기중인 연결은 제외한 
+		//나머지 연결들을 리스트에 추가하고 핑메세지 전송
 		pingList.clear();
-		pingList.addAll(sessionMap.keySet());
-		for (WebSocketSession session : sessionMap.values()) {
+		for (String key : sessionMap.keySet()) {
+			if (isStandbyConnect(sessionMap.get(key))) {
+				continue;
+			}
+			pingList.add(key);
+			WebSocketSession session = sessionMap.get(key);
 			WebsocketResponse socketResp = new WebsocketResponse(true);
 			socketResp.addData("action", "ping");
 			session.sendMessage(new TextMessage(gson.toJson(socketResp)));
 		}
 	}
-
-	public void unexpectedClose(WebSocketSession session) {
+	
+	
+	public void closeEvent(WebSocketSession session, boolean isNomal) throws IOException {
+		//연결대기상태인지 확인
+		boolean isStandbyConnect = isStandbyConnect(session);
+		
+		//정상종료가 아니면서 연결대기상태이면 중단
+		if(isNomal == false && isStandbyConnect) {
+			return;
+		}
+		
+		//정상종료이면 저장여부확인하고 상태에 따라 진행
 		WebsocketReqeust lastSocketReq = requestMap.get(session.getId());
-		// 연결이 종료되면 마지막 요청을 가지고 와서 저장이 안 되어있으면 토마토를 저장하고나서
-		if (lastSocketReq.isRequiredSave()) {
-			Tomato tomato = tomatoMap.get(session.getId());
-			tomato.endTimer();
+		if(!isStandbyConnect && lastSocketReq.isRequiredSave()) {
+			saveClose(session,lastSocketReq.isTargetRegularTime());
+		} else {
+			unsaveClose(session);
+		}
+	}
+	
+	// 둘 다 없으면 재연결 대기를 위한 연결이므로 대기한다. 클라이언트에서 자동으로 연결을 끊어줄것
+	public boolean isStandbyConnect(WebSocketSession session) {
+		return requestMap.get(session.getId()) == null && tomatoMap.get(session.getId()) == null;
+	}
+	
+	//저장이 필요 없을 때 종료
+	public void unsaveClose(WebSocketSession session) throws IOException {
+		allMapsRemoveWhenClose(session);
+	}
+	
+	//저장이 필요할 때 종료
+	public void saveClose(WebSocketSession session, boolean isTargetRegular) throws IOException {
+		Tomato tomato = tomatoMap.get(session.getId());
+		tomato.endTimer();
 
-			if (lastSocketReq.isTargetRegularTime()) {
-				tomato.calRegularTime();
-			} else {
-				tomato.calBreakTime();
-			}
-
-			service.editTomato(tomato);
+		if (isTargetRegular) {
+			tomato.calRegularTime();
+		} else {
+			tomato.calBreakTime();
 		}
 
+		service.editTomato(tomato);		
+		allMapsRemoveWhenClose(session);
+	}
+	
+	//종료시 모든 맵에서 해당 세션의 정보 제거
+	public void allMapsRemoveWhenClose(WebSocketSession session) throws IOException {
 		// 세션에서 제거해준다.
 		sessionMap.remove(session.getId());
 		tomatoMap.remove(session.getId());

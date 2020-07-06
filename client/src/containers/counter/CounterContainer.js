@@ -98,6 +98,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     reConnect: isLogin
       ? () => {
+          socketApi.closeSocket();
           socketApi.openSocket(dispatch);
         }
       : () => {},

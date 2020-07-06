@@ -366,7 +366,7 @@ const Counter = props => {
           return;
         }
         reConnect();
-      }, 2000);
+      }, 4000);
 
       //키값 보관
       setReConnectIntevalKey(key);
