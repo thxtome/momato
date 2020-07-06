@@ -1,7 +1,4 @@
 import React from 'react';
-import { create } from 'jss';
-import preset from 'jss-preset-default';
-import { StylesProvider } from '@material-ui/core/styles';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
@@ -11,9 +8,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  if (!navigator.userAgent === 'ReactSnap') {
-    document.querySelector('#root').style.display = 'block';
-  }
   return (
     <Provider store={store}>
       <BrowserRouter>
