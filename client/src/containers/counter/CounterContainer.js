@@ -115,6 +115,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     saveTempTomato: tomatoIdx => {
       dispatch(counterActions.SAVE_TEMP_TOMATO({ tomatoIdx }));
     },
+
+    timeoutClose: () => {
+      socketApi.closeSocket();
+      dispatch(counterActions.TIMEOUT_SOCKET_CLOSED({}));
+    },
   };
 };
 

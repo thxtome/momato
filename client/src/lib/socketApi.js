@@ -6,6 +6,7 @@ export const WEBSOCKET_CONNECTED_STATE = {
   RECONNECTING: 2,
   UNEXPECTED_CLOSE: 3,
   CLOSE: 4,
+  TIMEOUT_CLOSE: 5,
 };
 
 const url = process.env.NODE_ENV === 'production' ? 'https://www.momato.net:8000' : 'http://localhost:8080';

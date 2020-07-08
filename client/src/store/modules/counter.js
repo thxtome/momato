@@ -13,6 +13,7 @@ const TOMATO_REGULAR_TIME_FINISH_SUCCED = createAction('TOMATO_REGULAR_TIME_FINI
 const TOMATO_FINISH_FAILD = createAction('TOMATO_FINISH_FAILD');
 const OPEN_SOCKET_SUCCEED = createAction('OPEN_SOCKET_SUCCEED');
 const UNEXPECTED_SOCKET_CLOSED = createAction('UNEXPECTED_SOCKET_CLOSED');
+const TIMEOUT_SOCKET_CLOSED = createAction('TIMEOUT_SOCKET_CLOSED');
 const SOCKET_RECONNECTING = createAction('SOCKET_RECONNECTING');
 const CLOSE_SOCKET = createAction('CLOSE_SOCKET');
 const ADD_TIME = createAction('ADD_TIME');
@@ -35,6 +36,7 @@ export const counterActions = {
   OPEN_SOCKET_SUCCEED,
   SOCKET_RECONNECTING,
   UNEXPECTED_SOCKET_CLOSED,
+  TIMEOUT_SOCKET_CLOSED,
   CLOSE_SOCKET,
   ADD_TIME,
   TEMP_TOMATO_LOAD,
@@ -173,6 +175,14 @@ const reducer = createReducer(initialState, {
       isFinished: false,
       connectState: WEBSOCKET_CONNECTED_STATE.UNEXPECTED_CLOSE,
       isTimerLoading: false,
+    };
+  },
+
+  [TIMEOUT_SOCKET_CLOSED]: (state, action) => {
+    return {
+      ...state,
+      isGoing: false,
+      connectState: WEBSOCKET_CONNECTED_STATE.TIMEOUT_CLOSE,
     };
   },
 

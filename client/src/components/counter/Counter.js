@@ -15,6 +15,8 @@ import errorDispacher from '../../error/errorDispacher';
 import { WEBSOCKET_CONNECTED_STATE } from '../../lib/socketApi';
 import bell from '../../sounds/bell.mp3';
 import { toast } from 'react-toastify';
+import { isMobile } from 'react-device-detect';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   Container: {
@@ -132,6 +134,7 @@ const Counter = props => {
     reConnect,
     reload,
     unexpectedClose,
+    timeoutClose,
     loadTempTomato,
     saveTempTomato,
     finishTempTimer,
@@ -147,6 +150,47 @@ const Counter = props => {
 
   //재연결 인터벌 키
   const [reConnectIntevalKey, setReConnectIntevalKey] = useState(null);
+
+  //백그라운드 연결 키
+  let hiddenKey;
+
+  //화면상태 반환
+  const isVisibility = () => {
+    if (document.visibilityState === 'hidden') {
+      return false;
+    }
+    return true;
+  };
+
+  const onHidden = () => {
+    if (!isVisibility()) {
+      hiddenKey = setTimeout(() => {
+        timeoutNotification();
+        stopTimer(target);
+        timeoutClose();
+      }, 280000);
+    }
+  };
+
+  const onVisible = () => {
+    if (isVisibility()) {
+      //연결이 끊어졌으면 재연결시도
+      if (connectState === WEBSOCKET_CONNECTED_STATE.TIMEOUT_CLOSE) {
+        openConnection();
+        return;
+      }
+      //연결이 끊어지지 않았으면 이벤트 취소
+      clearTimeout(hiddenKey);
+    }
+  };
+
+  const timeoutNotification = () => {
+    if (isNotificationSupport) {
+      showNotification('비활성화 후 5분이 경과하면 타이머가 정지됩니다.');
+    } else {
+      showToast('비활성화 후 5분이 경과하면 타이머가 정지됩니다.');
+    }
+  };
 
   //알림 허용 및 띄우기=====================================================================================================
   const showNotification = msg => {
@@ -350,6 +394,22 @@ const Counter = props => {
       return;
     }
 
+    //알림을 지원하면서 모바일이면 안드로이드 기기를 뜻함
+    if (isNotificationSupport && isMobile) {
+      //비활성화 시키면 5분후에 타이머 정지 및 연결종료
+      document.addEventListener('visibilitychange', onHidden);
+      //활성화 시키면 연결이 종료되지 않았으면 처리할 거 없고 연결이 종료되었으면 그대로 reload
+      document.addEventListener('visibilitychange', onVisible);
+    }
+
+    //이벤트 개수 1개로 유지
+    const removeVisibilitychangeEvenet = () => {
+      if (isNotificationSupport && isMobile) {
+        document.removeEventListener('visibilitychange', onHidden);
+        document.removeEventListener('visibilitychange', onVisible);
+      }
+    };
+
     //재연결시도중일때
     if (connectState === WEBSOCKET_CONNECTED_STATE.RECONNECTING) {
       let cnt = 0;
@@ -374,6 +434,7 @@ const Counter = props => {
       //언마운트시 인터벌 제거
       return () => {
         clearInterval(key);
+        removeVisibilitychangeEvenet();
       };
     }
 
@@ -389,6 +450,10 @@ const Counter = props => {
       };
       reload(reloadData);
     }
+
+    return () => {
+      removeVisibilitychangeEvenet();
+    };
   }, [connectState]);
 
   //뒤로가기
