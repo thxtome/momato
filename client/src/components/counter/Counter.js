@@ -174,13 +174,12 @@ const Counter = props => {
       timeoutClose();
     }, 280000);
     setHiddenKey(key);
-    console.log('hide', key);
   };
 
   const onVisible = () => {
-    console.log('visible', hiddenKey);
     //연결이 끊어졌으면 재연결시도
     if (connectState === WEBSOCKET_CONNECTED_STATE.TIMEOUT_CLOSE) {
+      console.log('재연결시도');
       openConnection();
       return;
     }
@@ -343,7 +342,7 @@ const Counter = props => {
   //타이머기능=========================================================================================================================
   useEffect(() => {
     //타이머가 작동상태가 아니면 리턴
-    if (isGoing !== true) {
+    if (!isGoing) {
       return;
     }
 
@@ -371,9 +370,9 @@ const Counter = props => {
     //로그인이 되어있으면서 연결상태면 정상처리
     if (connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED) {
       finishTimer(target);
-
-      //로그인이 되어있으면서 연결이 안되어있을 때 처리
     } else {
+      //로그인이 되어있으면서 연결이 안되어있을 때 처리
+      console.log('재연결시도');
       finishTimerOnReconnecting();
     }
   }, [isGoing, timePassed]);
@@ -405,7 +404,37 @@ const Counter = props => {
     }
     //재연결시도중일때
     if (connectState === WEBSOCKET_CONNECTED_STATE.RECONNECTING) {
+      function getTimeStamp() {
+        var d = new Date();
+        var s =
+          leadingZeros(d.getFullYear(), 4) +
+          '-' +
+          leadingZeros(d.getMonth() + 1, 2) +
+          '-' +
+          leadingZeros(d.getDate(), 2) +
+          ' ' +
+          leadingZeros(d.getHours(), 2) +
+          ':' +
+          leadingZeros(d.getMinutes(), 2) +
+          ':' +
+          leadingZeros(d.getSeconds(), 2);
+
+        return s;
+      }
+
+      function leadingZeros(n, digits) {
+        var zero = '';
+        n = n.toString();
+
+        if (n.length < digits) {
+          for (let i = 0; i < digits - n.length; i++) zero += '0';
+        }
+        return zero + n;
+      }
+
       let cnt = 0;
+
+      console.log('연결시도', getTimeStamp());
 
       //재연결 시도
       let key = setInterval(() => {
