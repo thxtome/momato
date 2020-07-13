@@ -161,6 +161,7 @@ const Counter = props => {
 
   //화면상태 반환
   const isVisibility = () => {
+    console.log(document.visibilityState);
     if (document.visibilityState === 'hidden') {
       return false;
     }
