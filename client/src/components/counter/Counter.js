@@ -147,14 +147,9 @@ const Counter = props => {
   //알림지원여부
   const [isNotificationSupport, setIsNotificationSupport] = useState(true);
   const [isNotificationAllow, setIsNotificationAllow] = useState(false);
-  const [visibilityState, setVisibilityState] = useState(null);
 
   //재연결 인터벌 키
   const [reConnectIntevalKey, setReConnectIntevalKey] = useState(null);
-
-  const updateVisibility = state => {
-    setVisibilityState(state);
-  };
 
   const onFreeze = () => {
     timeoutNotification();
@@ -167,6 +162,17 @@ const Counter = props => {
     if (connectState === WEBSOCKET_CONNECTED_STATE.TIMEOUT_CLOSE) {
       openConnection();
       return;
+    }
+  };
+
+  const onPageStateChange = state => {
+    if (!(isNotificationSupport && isMobile)) {
+      return;
+    }
+    if (state === 'freeze') {
+      onFreeze();
+    } else {
+      onResume();
     }
   };
 
@@ -286,15 +292,17 @@ const Counter = props => {
     //로그인이 되어있으면 백그라운드관련 로직 처리 후 소켓을 연다
     if (isLogin) {
       document.addEventListener('freeze', event => {
-        updateVisibility('freeze');
+        onPageStateChange('freeze');
       });
       document.addEventListener('resume', event => {
-        updateVisibility('resume');
+        onPageStateChange('resume');
       });
+
       openConnection();
+
       whenComponentUnmount = () => {
-        document.removeEventListener('freeze', updateVisibility);
-        document.removeEventListener('resume', updateVisibility);
+        document.removeEventListener('freeze', onPageStateChange);
+        document.removeEventListener('resume', onPageStateChange);
         closeConnection();
       };
     } else {
@@ -460,19 +468,6 @@ const Counter = props => {
       reload(reloadData);
     }
   }, [connectState]);
-
-  useEffect(() => {
-    //알림을 지원하면서 모바일이면 안드로이드 기기를 뜻함
-    if (!(isNotificationSupport && isMobile) || visibilityState === null) {
-      return;
-    }
-
-    if (visibilityState === 'resume') {
-      onResume();
-    } else {
-      onFreeze();
-    }
-  }, [visibilityState]);
 
   //뒤로가기
   const goBack = () => {
