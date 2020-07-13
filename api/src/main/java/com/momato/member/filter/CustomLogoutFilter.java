@@ -1,10 +1,10 @@
-package com.momato.filter;
+package com.momato.member.filter;
 
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
-import com.momato.handler.CustomLogoutSuccessHandler;
 import com.momato.member.MemberService;
+import com.momato.member.handler.CustomLogoutSuccessHandler;
 
 public class CustomLogoutFilter extends LogoutFilter{
 
