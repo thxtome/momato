@@ -463,7 +463,7 @@ const Counter = props => {
 
   useEffect(() => {
     //알림을 지원하면서 모바일이면 안드로이드 기기를 뜻함
-    if (!(isNotificationSupport && isMobile)) {
+    if (!(isNotificationSupport && isMobile) || visibilityState === null) {
       return;
     }
 
