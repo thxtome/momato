@@ -303,6 +303,13 @@ const Counter = props => {
 
     //로그인이 되어있으면 소켓을 연다
     if (isLogin) {
+      document.addEventListener('freeze', event => {
+        console.log('얼음');
+      });
+
+      document.addEventListener('resume', event => {
+        console.log('땡');
+      });
       openConnection();
       document.addEventListener('visibilitychange', updateVisibility);
 
