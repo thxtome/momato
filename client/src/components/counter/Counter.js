@@ -172,7 +172,7 @@ const Counter = props => {
       timeoutNotification();
       stopTimer(target);
       timeoutClose();
-    }, 280);
+    }, 280000);
     setHiddenKey(key);
     console.log('hide', key);
   };
