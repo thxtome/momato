@@ -303,9 +303,10 @@ const Counter = props => {
     if (isLogin) {
       openConnection();
       document.addEventListener('visibilitychange', updateVisibility);
-
+      document.addEventListener('resume', updateVisibility);
       whenComponentUnmount = () => {
         document.removeEventListener('visibilitychange', updateVisibility);
+        document.removeEventListener('resume', updateVisibility);
         closeConnection();
       };
     } else {
