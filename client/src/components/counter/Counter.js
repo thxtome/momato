@@ -147,52 +147,34 @@ const Counter = props => {
   //알림지원여부
   const [isNotificationSupport, setIsNotificationSupport] = useState(true);
   const [isNotificationAllow, setIsNotificationAllow] = useState(false);
-  const [visibilityState, setVisibilityState] = useState(true);
+  const [visibilityState, setVisibilityState] = useState(null);
 
   //재연결 인터벌 키
   const [reConnectIntevalKey, setReConnectIntevalKey] = useState(null);
 
-  //자동연결종료키
-  const [hiddenKey, setHiddenKey] = useState(null);
-
-  const updateVisibility = () => {
-    setVisibilityState(isVisibility());
+  const updateVisibility = state => {
+    setVisibilityState(state);
   };
 
-  //화면상태 반환
-  const isVisibility = () => {
-    console.log(document.visibilityState);
-    if (document.visibilityState === 'hidden') {
-      return false;
-    }
-    return true;
+  const onFreeze = () => {
+    timeoutNotification();
+    stopTimer(target);
+    timeoutClose();
   };
 
-  const onHidden = () => {
-    let key = setTimeout(() => {
-      timeoutNotification();
-      stopTimer(target);
-      timeoutClose();
-    }, 280000);
-    setHiddenKey(key);
-  };
-
-  const onVisible = () => {
+  const onResume = () => {
     //연결이 끊어졌으면 재연결시도
     if (connectState === WEBSOCKET_CONNECTED_STATE.TIMEOUT_CLOSE) {
-      console.log('재연결시도');
       openConnection();
       return;
     }
-    //연결이 끊어지지 않았으면 이벤트 취소
-    clearTimeout(hiddenKey);
   };
 
   const timeoutNotification = () => {
     if (isNotificationSupport) {
-      showNotification('비활성화 후 5분이 경과하면 타이머가 정지됩니다.');
+      showNotification('비활성화 후 일정시간이 경과하면 타이머가 정지됩니다.');
     } else {
-      showToast('비활성화 후 5분이 경과하면 타이머가 정지됩니다.');
+      showToast('비활성화 후 일정시간이 경과하면 타이머가 정지됩니다.');
     }
   };
 
@@ -301,20 +283,18 @@ const Counter = props => {
 
     let whenComponentUnmount;
 
-    //로그인이 되어있으면 소켓을 연다
+    //로그인이 되어있으면 백그라운드관련 로직 처리 후 소켓을 연다
     if (isLogin) {
       document.addEventListener('freeze', event => {
-        console.log('얼음');
+        updateVisibility('freeze');
       });
-
       document.addEventListener('resume', event => {
-        console.log('땡');
+        updateVisibility('resume');
       });
       openConnection();
-      document.addEventListener('visibilitychange', updateVisibility);
-
       whenComponentUnmount = () => {
-        document.removeEventListener('visibilitychange', updateVisibility);
+        document.removeEventListener('freeze', updateVisibility);
+        document.removeEventListener('resume', updateVisibility);
         closeConnection();
       };
     } else {
@@ -487,10 +467,10 @@ const Counter = props => {
       return;
     }
 
-    if (isVisibility()) {
-      onVisible();
+    if (visibilityState === 'resume') {
+      onResume();
     } else {
-      onHidden();
+      onFreeze();
     }
   }, [visibilityState]);
 
