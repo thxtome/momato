@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   comment: {
+    fontFamily: 'JSDongkang-Regular',
     fontSize: 15,
     marginLeft: theme.spacing(2),
     marginBottom: theme.spacing(4),
@@ -49,6 +50,9 @@ const useStyles = makeStyles(theme => ({
   },
   btnDiv: {
     width: 10,
+  },
+  templateName: {
+    width: '90%',
   },
 }));
 
