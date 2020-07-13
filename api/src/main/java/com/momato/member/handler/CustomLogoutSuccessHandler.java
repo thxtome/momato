@@ -1,4 +1,4 @@
-package com.momato.handler;
+package com.momato.member.handler;
 
 import java.io.IOException;
 import java.io.OutputStream;

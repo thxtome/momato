@@ -1,4 +1,4 @@
-package com.momato.filter;
+package com.momato.member.filter;
 
 import java.io.IOException;
 

@@ -19,12 +19,12 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.momato.exception.handler.RestAuthenticationEntryPoint;
-import com.momato.filter.CustomLogoutFilter;
-import com.momato.filter.JwtAuthenticationFilter;
-import com.momato.filter.JwtAuthorizationFilter;
-import com.momato.filter.JwtExceptionFilter;
 import com.momato.member.MemberService;
 import com.momato.member.MemberServiceImpl;
+import com.momato.member.filter.CustomLogoutFilter;
+import com.momato.member.filter.JwtAuthenticationFilter;
+import com.momato.member.filter.JwtAuthorizationFilter;
+import com.momato.member.filter.JwtExceptionFilter;
 
 
 @Configuration
