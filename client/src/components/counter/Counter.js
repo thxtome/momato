@@ -147,12 +147,17 @@ const Counter = props => {
   //알림지원여부
   const [isNotificationSupport, setIsNotificationSupport] = useState(true);
   const [isNotificationAllow, setIsNotificationAllow] = useState(false);
+  const [visibilityState, setVisibilityState] = useState(true);
 
   //재연결 인터벌 키
   const [reConnectIntevalKey, setReConnectIntevalKey] = useState(null);
 
-  //백그라운드 연결 키
-  let hiddenKey;
+  //자동연결종료키
+  const [hiddenKey, setHiddenKey] = useState(null);
+
+  const updateVisibility = () => {
+    setVisibilityState(isVisibility());
+  };
 
   //화면상태 반환
   const isVisibility = () => {
@@ -163,25 +168,24 @@ const Counter = props => {
   };
 
   const onHidden = () => {
-    if (!isVisibility()) {
-      hiddenKey = setTimeout(() => {
-        timeoutNotification();
-        stopTimer(target);
-        timeoutClose();
-      }, 280000);
-    }
+    let key = setTimeout(() => {
+      timeoutNotification();
+      stopTimer(target);
+      timeoutClose();
+    }, 280);
+    setHiddenKey(key);
+    console.log('hide', key);
   };
 
   const onVisible = () => {
-    if (isVisibility()) {
-      //연결이 끊어졌으면 재연결시도
-      if (connectState === WEBSOCKET_CONNECTED_STATE.TIMEOUT_CLOSE) {
-        openConnection();
-        return;
-      }
-      //연결이 끊어지지 않았으면 이벤트 취소
-      clearTimeout(hiddenKey);
+    console.log('visible', hiddenKey);
+    //연결이 끊어졌으면 재연결시도
+    if (connectState === WEBSOCKET_CONNECTED_STATE.TIMEOUT_CLOSE) {
+      openConnection();
+      return;
     }
+    //연결이 끊어지지 않았으면 이벤트 취소
+    clearTimeout(hiddenKey);
   };
 
   const timeoutNotification = () => {
@@ -295,19 +299,31 @@ const Counter = props => {
       return;
     }
 
+    let whenComponentUnmount;
+
     //로그인이 되어있으면 소켓을 연다
     if (isLogin) {
       openConnection();
-    }
+      document.addEventListener('visibilitychange', updateVisibility);
 
-    //페이지를 새로고침시 유지가 안 되기때문에 비회원은 따로 처리
-    const handleRefresh = e => {
-      if (e.keyCode === 116 && !isLogin) {
+      whenComponentUnmount = () => {
+        document.removeEventListener('visibilitychange', updateVisibility);
+        closeConnection();
+      };
+    } else {
+      //비로그인시 새로고침 이벤트 추기
+      const handleRefresh = e => {
+        if (e.keyCode === 116 && !isLogin) {
+          saveTempTomato(tomatoIdx);
+        }
+      };
+      document.addEventListener('keydown', handleRefresh);
+
+      whenComponentUnmount = () => {
+        document.removeEventListener('keydown', handleRefresh);
         saveTempTomato(tomatoIdx);
-      }
-    };
-
-    document.addEventListener('keydown', handleRefresh);
+      };
+    }
 
     //알림을 지원하는 브라우저가 아니면 알림지원을 false로 놓는다.
     if (!('Notification' in window)) {
@@ -319,15 +335,9 @@ const Counter = props => {
 
     //페이지를 나가거나 이동시 처리
     //로그인이 되어있으면 연결을 종료하고 로그인이 안되어있으면 임시토마토에 저장
-    return isLogin
-      ? () => {
-          document.removeEventListener('keydown', handleRefresh);
-          closeConnection();
-        }
-      : () => {
-          document.removeEventListener('keydown', handleRefresh);
-          saveTempTomato(tomatoIdx);
-        };
+    return () => {
+      whenComponentUnmount();
+    };
   }, []);
 
   //타이머기능=========================================================================================================================
@@ -393,23 +403,6 @@ const Counter = props => {
     if (!isLogin) {
       return;
     }
-
-    //알림을 지원하면서 모바일이면 안드로이드 기기를 뜻함
-    if (isNotificationSupport && isMobile) {
-      //비활성화 시키면 5분후에 타이머 정지 및 연결종료
-      document.addEventListener('visibilitychange', onHidden);
-      //활성화 시키면 연결이 종료되지 않았으면 처리할 거 없고 연결이 종료되었으면 그대로 reload
-      document.addEventListener('visibilitychange', onVisible);
-    }
-
-    //이벤트 개수 1개로 유지
-    const removeVisibilitychangeEvenet = () => {
-      if (isNotificationSupport && isMobile) {
-        document.removeEventListener('visibilitychange', onHidden);
-        document.removeEventListener('visibilitychange', onVisible);
-      }
-    };
-
     //재연결시도중일때
     if (connectState === WEBSOCKET_CONNECTED_STATE.RECONNECTING) {
       let cnt = 0;
@@ -434,7 +427,6 @@ const Counter = props => {
       //언마운트시 인터벌 제거
       return () => {
         clearInterval(key);
-        removeVisibilitychangeEvenet();
       };
     }
 
@@ -450,11 +442,20 @@ const Counter = props => {
       };
       reload(reloadData);
     }
-
-    return () => {
-      removeVisibilitychangeEvenet();
-    };
   }, [connectState]);
+
+  useEffect(() => {
+    //알림을 지원하면서 모바일이면 안드로이드 기기를 뜻함
+    if (!(isNotificationSupport && isMobile)) {
+      return;
+    }
+
+    if (isVisibility()) {
+      onVisible();
+    } else {
+      onHidden();
+    }
+  }, [visibilityState]);
 
   //뒤로가기
   const goBack = () => {
