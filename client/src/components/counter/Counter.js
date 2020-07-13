@@ -147,33 +147,43 @@ const Counter = props => {
   //알림지원여부
   const [isNotificationSupport, setIsNotificationSupport] = useState(true);
   const [isNotificationAllow, setIsNotificationAllow] = useState(false);
+  const [visibilityState, setVisibilityState] = useState(true);
 
   //재연결 인터벌 키
   const [reConnectIntevalKey, setReConnectIntevalKey] = useState(null);
 
-  const onFreeze = () => {
-    timeoutNotification();
-    stopTimer(target);
-    timeoutClose();
+  //자동연결종료키
+  const [hiddenKey, setHiddenKey] = useState(null);
+
+  const updateVisibility = () => {
+    setVisibilityState(isVisibility());
   };
 
-  const onResume = () => {
+  //화면상태 반환
+  const isVisibility = () => {
+    if (document.visibilityState === 'hidden') {
+      return false;
+    }
+    return true;
+  };
+
+  const onHidden = () => {
+    let key = setTimeout(() => {
+      timeoutNotification();
+      stopTimer(target);
+      timeoutClose();
+    }, 280000);
+    setHiddenKey(key);
+  };
+
+  const onVisible = () => {
     //연결이 끊어졌으면 재연결시도
     if (connectState === WEBSOCKET_CONNECTED_STATE.TIMEOUT_CLOSE) {
       openConnection();
       return;
     }
-  };
-
-  const onPageStateChange = state => {
-    if (!(isNotificationSupport && isMobile)) {
-      return;
-    }
-    if (state === 'freeze') {
-      onFreeze();
-    } else {
-      onResume();
-    }
+    //연결이 끊어지지 않았으면 이벤트 취소
+    clearTimeout(hiddenKey);
   };
 
   const timeoutNotification = () => {
@@ -289,20 +299,13 @@ const Counter = props => {
 
     let whenComponentUnmount;
 
-    //로그인이 되어있으면 백그라운드관련 로직 처리 후 소켓을 연다
+    //로그인이 되어있으면 소켓을 연다
     if (isLogin) {
-      document.addEventListener('freeze', event => {
-        onPageStateChange('freeze');
-      });
-      document.addEventListener('resume', event => {
-        onPageStateChange('resume');
-      });
-
       openConnection();
+      document.addEventListener('visibilitychange', updateVisibility);
 
       whenComponentUnmount = () => {
-        document.removeEventListener('freeze', onPageStateChange);
-        document.removeEventListener('resume', onPageStateChange);
+        document.removeEventListener('visibilitychange', updateVisibility);
         closeConnection();
       };
     } else {
@@ -338,7 +341,7 @@ const Counter = props => {
   //타이머기능=========================================================================================================================
   useEffect(() => {
     //타이머가 작동상태가 아니면 리턴
-    if (!isGoing) {
+    if (isGoing !== true) {
       return;
     }
 
@@ -366,9 +369,9 @@ const Counter = props => {
     //로그인이 되어있으면서 연결상태면 정상처리
     if (connectState === WEBSOCKET_CONNECTED_STATE.CONNECTED) {
       finishTimer(target);
-    } else {
+
       //로그인이 되어있으면서 연결이 안되어있을 때 처리
-      console.log('재연결시도');
+    } else {
       finishTimerOnReconnecting();
     }
   }, [isGoing, timePassed]);
@@ -400,37 +403,7 @@ const Counter = props => {
     }
     //재연결시도중일때
     if (connectState === WEBSOCKET_CONNECTED_STATE.RECONNECTING) {
-      function getTimeStamp() {
-        var d = new Date();
-        var s =
-          leadingZeros(d.getFullYear(), 4) +
-          '-' +
-          leadingZeros(d.getMonth() + 1, 2) +
-          '-' +
-          leadingZeros(d.getDate(), 2) +
-          ' ' +
-          leadingZeros(d.getHours(), 2) +
-          ':' +
-          leadingZeros(d.getMinutes(), 2) +
-          ':' +
-          leadingZeros(d.getSeconds(), 2);
-
-        return s;
-      }
-
-      function leadingZeros(n, digits) {
-        var zero = '';
-        n = n.toString();
-
-        if (n.length < digits) {
-          for (let i = 0; i < digits - n.length; i++) zero += '0';
-        }
-        return zero + n;
-      }
-
       let cnt = 0;
-
-      console.log('연결시도', getTimeStamp());
 
       //재연결 시도
       let key = setInterval(() => {
@@ -468,6 +441,19 @@ const Counter = props => {
       reload(reloadData);
     }
   }, [connectState]);
+
+  useEffect(() => {
+    //알림을 지원하면서 모바일이면 안드로이드 기기를 뜻함
+    if (!(isNotificationSupport && isMobile)) {
+      return;
+    }
+
+    if (isVisibility()) {
+      onVisible();
+    } else {
+      onHidden();
+    }
+  }, [visibilityState]);
 
   //뒤로가기
   const goBack = () => {
