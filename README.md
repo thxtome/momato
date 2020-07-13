@@ -8,7 +8,9 @@
 
 ## 프로젝트 일정
 + 프로젝트 기획 및 설계 2020-03-30 ~ 2020-04-03  
-+ 프로젝트 구현 2020-04-03 ~
++ 프로젝트 구현 2020-04-03 ~  
+ <br/>  
+ <br/>
 
 ------------------------------
 ## 프로젝트 설명
@@ -22,7 +24,9 @@
   
 + ### 토마토 텃밭
   + 반복적인 일정을 저장해 놓는 템플릿을 토마토 텃밭이라고 표현한다.
-  + 오늘의 토마토에서 토마토 텃밭을 불러와 반복적인 작업을 재활용 할 수 있다.
+  + 오늘의 토마토에서 토마토 텃밭을 불러와 반복적인 작업을 재활용 할 수 있다.  
+ <br/>
+ <br/>
 
 ------------------------------
 ## 프로젝트 설계
@@ -34,14 +38,19 @@
 ![DB_diagram](https://user-images.githubusercontent.com/52450448/86915227-95a51f00-c15c-11ea-8fb1-f4c383ddbf33.PNG)
 
 + ### api 설계
-![api](https://user-images.githubusercontent.com/53218264/79750478-fd14b500-834b-11ea-9830-ec52dc9994b0.gif)
+![api](https://user-images.githubusercontent.com/53218264/79750478-fd14b500-834b-11ea-9830-ec52dc9994b0.gif)  
+ <br/>  
+ <br/>  
 
 ------------------------------
 ## 화면
 
-+ ### 오늘의 토마토
-![daily_tomato_mobile](https://user-images.githubusercontent.com/52450448/86939781-f8a6ae00-c17c-11ea-805d-2b1142886c24.PNG)
-
++ ### 오늘의 토마토 / 토마토 달력 / 토마토 텃밭
+![daily_tomato_mobile](https://user-images.githubusercontent.com/52450448/87302833-0e392080-c54d-11ea-8587-5fb1ce6b9bb8.png)
+![calendar_mobile](https://user-images.githubusercontent.com/52450448/87303092-843d8780-c54d-11ea-973f-b96084892cd4.png)
+![template_mobile](https://user-images.githubusercontent.com/52450448/87303200-ba7b0700-c54d-11ea-9dba-abb962880835.png)  
+ <br/>
+ <br/> 
 
 ------------------------------
 ## 추가할 기능
