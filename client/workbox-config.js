@@ -2,6 +2,7 @@ module.exports = {
   globDirectory: 'build/',
   globPatterns: ['**/*.{json,html,js,css,txt}'],
   swDest: 'build/service-worker.js',
+  skipWaiting: true,
   runtimeCaching: [
     {
       // Match any request that ends with .png, .jpg, .jpeg or .svg.
