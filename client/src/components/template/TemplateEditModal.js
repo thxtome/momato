@@ -31,20 +31,29 @@ const useInput = initVal => {
   return { value, onChange };
 };
 
-const TemplateEditModal = ({ isTemplateEditSucceed, history, editTemplate, getTemplateList, onClose, template }) => {
+const TemplateEditModal = ({
+  isTemplateEditSucceed,
+  clearEditTemplateSuccess,
+  history,
+  editTemplate,
+  getTemplateList,
+  onClose,
+  template,
+}) => {
   const NAME_CHARACTER_LIMIT = 15;
   const COMMENT_CHARACTER_LIMIT = 25;
   const classes = useStyles();
   const name = useInput(template.templateName);
   const comment = useInput(template.templateComment);
   console.log(isTemplateEditSucceed);
-
+  const [updatedTemplate, setUpdatedTemplate] = useState(null);
   useEffect(() => {
     // 텃밭 수정이 성공했는디 확인 후
     if (isTemplateEditSucceed) {
       // 수정한 텃밭으로 이동
-      history.push({ state: { template } }, `template`);
       onClose();
+      clearEditTemplateSuccess();
+      history.push({ state: { template: updatedTemplate } }, `template`);
     }
   }, [isTemplateEditSucceed]);
 
@@ -55,7 +64,7 @@ const TemplateEditModal = ({ isTemplateEditSucceed, history, editTemplate, getTe
         templateName: name.value,
         templateComment: comment.value,
       };
-      template = data;
+      setUpdatedTemplate(data);
       editTemplate(data);
     }
   };
