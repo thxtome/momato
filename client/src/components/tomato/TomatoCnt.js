@@ -24,11 +24,11 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'start',
     boxShadow: 'none',
     border: 'none',
-    fontWeight: 600,
     alignItems: 'center',
     flexWrap: 'wrap',
     fontSize: '0.9rem',
     justifyContent: 'center',
+    fontFamily: 'JSDongkang-Bold',
   },
   tomatoImg: {
     width: theme.spacing(3),

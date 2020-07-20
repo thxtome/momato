@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, makeStyles, TextField } from '@material-ui/core';
 import { required } from '../../lib/validation';
 
@@ -31,12 +31,22 @@ const useInput = initVal => {
   return { value, onChange };
 };
 
-const TemplateEditModal = ({ history, editTemplate,  onClose, template }) => {
+const TemplateEditModal = ({ isTemplateEditSucceed, history, editTemplate, getTemplateList, onClose, template }) => {
   const NAME_CHARACTER_LIMIT = 15;
   const COMMENT_CHARACTER_LIMIT = 25;
   const classes = useStyles();
   const name = useInput(template.templateName);
   const comment = useInput(template.templateComment);
+  console.log(isTemplateEditSucceed);
+
+  useEffect(() => {
+    // 텃밭 수정이 성공했는디 확인 후
+    if (isTemplateEditSucceed) {
+      // 수정한 텃밭으로 이동
+      history.push({ state: { template } }, `template`);
+      onClose();
+    }
+  }, [isTemplateEditSucceed]);
 
   const templateEditRequest = () => {
     if (required(name.value, '텃밭 이름')) {
@@ -47,10 +57,6 @@ const TemplateEditModal = ({ history, editTemplate,  onClose, template }) => {
       };
       template = data;
       editTemplate(data);
-      onClose();
-      // 텃밭 수정시 해당 텃밭으로 이동
-      history.push({ state: { template } }, `template`);
-      // 텃밭목록 다시 그리기
     }
   };
   return (
