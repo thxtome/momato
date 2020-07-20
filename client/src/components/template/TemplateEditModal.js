@@ -31,7 +31,7 @@ const useInput = initVal => {
   return { value, onChange };
 };
 
-const TemplateEditModal = ({ history, editTemplate, getTemplateList, onClose, template }) => {
+const TemplateEditModal = ({ history, editTemplate,  onClose, template }) => {
   const NAME_CHARACTER_LIMIT = 15;
   const COMMENT_CHARACTER_LIMIT = 25;
   const classes = useStyles();

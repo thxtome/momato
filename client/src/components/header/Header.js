@@ -50,9 +50,12 @@ const Header = ({
   isTemplateLoading,
   isCalendarLoading,
   isTimerLoading,
-  isFindPassLoading,
   logout,
   getTempTomatoList,
+  isGetLoading,
+  isPostLoading,
+  isPutLoading,
+  isDeleteLoading,
 }) => {
   const classes = useStyles();
   const matches = useMediaQuery('(min-width:800px)');
@@ -71,7 +74,10 @@ const Header = ({
     isTemplateLoading ||
     isCalendarLoading ||
     isTimerLoading ||
-    isFindPassLoading
+    isGetLoading ||
+    isPostLoading ||
+    isDeleteLoading ||
+    isPutLoading
   ) {
     isLoading = true;
   } else if (
@@ -80,7 +86,10 @@ const Header = ({
     !isTemplateLoading &&
     !isCalendarLoading &&
     !isTimerLoading &&
-    !isFindPassLoading
+    !isGetLoading &&
+    !isPostLoading &&
+    !isDeleteLoading &&
+    !isPutLoading
   ) {
     isLoading = false;
   }

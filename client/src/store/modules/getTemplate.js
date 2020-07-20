@@ -20,16 +20,16 @@ const initialState = {
 
 const reducer = createReducer(initialState, {
   [GET_TEMPLATE_REQUEST]: (state, action) => {
-    return { ...state, action, isTemplateLoading: true };
+    return { ...state, action };
   },
 
   [GET_TEMPLATE_SUCCEED]: (state, action) => {
     const templates = action.payload.templates;
-    return { ...state, templates: templates, isTemplateLoading: false };
+    return { ...state, templates: templates };
   },
 
   [GET_TEMPLATE_FAILED]: (state, action) => {
-    return { ...state, isTemplateSucceed: false, isTemplateLoading: false };
+    return { ...state, isTemplateSucceed: false };
   },
 
   [GET_TEMPLATE_CLEAR]: (state, action) => {

@@ -88,6 +88,7 @@ const TomatoEditModal = ({
         templateIdx: templateIdx,
       });
       clearEditTomatoResult();
+      onClose();
     }
   }, [isTomatoEditSucceed]);
 
@@ -124,7 +125,6 @@ const TomatoEditModal = ({
         //리스트 렌더 요청
         getTempTomatoList();
       }
-      onClose();
     }
   };
   return (

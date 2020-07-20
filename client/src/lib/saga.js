@@ -14,9 +14,11 @@ import { addTemplateActions } from '../store/modules/addTemplate';
 import { editTemplateActions } from '../store/modules/editTemplate';
 import { deleteTemplateActions } from '../store/modules/deleteTemplate';
 import { getCalendarActions } from '../store/modules/getCalendar';
+import { loadingActions } from '../store/modules/loading';
 import errorDispacher from '../error/errorDispacher';
 
 function* addTomatoSaga(action) {
+  yield put(loadingActions.START_POST_LOADING());
   try {
     const response = yield call(api.addTomato, action.payload.data);
     yield put(addTomatoActions.ADD_TOMATO_SUCCEED({ response }));
@@ -24,9 +26,11 @@ function* addTomatoSaga(action) {
     errorDispacher(e);
     yield put(addTomatoActions.TOMATO_FAILED());
   }
+  yield put(loadingActions.FINISH_POST_LOADING());
 }
 
 function* editTomatoSaga(action) {
+  yield put(loadingActions.START_PUT_LOADING());
   try {
     const response = yield call(api.editTomato, action.payload.data);
     yield put(editTomatoActions.EDIT_TOMATO_SUCCEED({ response }));
@@ -34,9 +38,11 @@ function* editTomatoSaga(action) {
     errorDispacher(e);
     yield put(editTomatoActions.EDIT_TOMATO_FAILED({ message: e.message }));
   }
+  yield put(loadingActions.FINISH_PUT_LOADING());
 }
 
 function* deleteTomatoSaga(action) {
+  yield put(loadingActions.START_DELETE_LOADING());
   try {
     const response = yield call(api.deleteTomato, action.payload.data);
     yield put(deleteTomatoActions.DELETE_TOMATO_SUCCEED({ response }));
@@ -44,9 +50,11 @@ function* deleteTomatoSaga(action) {
     errorDispacher(e);
     yield put(deleteTomatoActions.DELETE_TOMATO_FAILED({ message: e.message }));
   }
+  yield put(loadingActions.FINISH_DELETE_LOADING());
 }
 
 function* getTomatoSaga(action) {
+  yield put(loadingActions.START_GET_LOADING());
   try {
     const response = yield call(api.getTomato, action.payload.data);
     yield put(getTomatoActions.GET_TOMATO_SUCCEED({ tomatos: response.data.data.result }));
@@ -54,9 +62,11 @@ function* getTomatoSaga(action) {
     errorDispacher(e);
     yield put(getTomatoActions.GET_TOMATO_FAILED({ message: e.message }));
   }
+  yield put(loadingActions.FINISH_GET_LOADING());
 }
 
 function* getTemplateSaga(action) {
+  yield put(loadingActions.START_GET_LOADING());
   try {
     const response = yield call(api.getTemplate, action);
     yield put(getTemplateActions.GET_TEMPLATE_SUCCEED({ templates: response.data.data.result }));
@@ -64,9 +74,11 @@ function* getTemplateSaga(action) {
     errorDispacher(e);
     yield put(getTemplateActions.GET_TEMPLATE_FAILED());
   }
+  yield put(loadingActions.FINISH_GET_LOADING());
 }
 
 function* addTemplateSaga(action) {
+  yield put(loadingActions.START_POST_LOADING());
   try {
     const response = yield call(api.addTemplate, action.payload.data);
     yield put(addTemplateActions.ADD_TEMPLATE_SUCCEED({ response }));
@@ -74,9 +86,11 @@ function* addTemplateSaga(action) {
     errorDispacher(e);
     yield put({ message: e.message });
   }
+  yield put(loadingActions.FINISH_POST_LOADING());
 }
 
 function* editTemplateSaga(action) {
+  yield put(loadingActions.START_PUT_LOADING());
   try {
     const response = yield call(api.updateTemplate, action.payload);
     yield put(editTemplateActions.EDIT_TEMPLATE_SUCCEED({ response }));
@@ -84,9 +98,11 @@ function* editTemplateSaga(action) {
     errorDispacher(e);
     yield put(editTemplateActions.EDIT_TEMPLATE_FAILD({ message: e.message }));
   }
+  yield put(loadingActions.FINISH_PUT_LOADING());
 }
 
 function* deleteTemplateSaga(action) {
+  yield put(loadingActions.START_DELETE_LOADING());
   try {
     const response = yield call(api.deleteTemplate, action.payload.data);
     yield put(deleteTemplateActions.DELETE_TEMPLATE_SUCCEED({ response }));
@@ -94,18 +110,22 @@ function* deleteTemplateSaga(action) {
     errorDispacher(e);
     yield put(deleteTemplateActions.DELETE_TEMPLATE_SUCCEED({ message: e.message }));
   }
+  yield put(loadingActions.FINISH_DELETE_LOADING());
 }
 
 function* loginSaga(action) {
+  yield put(loadingActions.START_POST_LOADING());
   try {
     const response = yield call(api.login, action.payload.member);
     yield put(loginActions.LOGIN_SUCCEEDED({ response }));
   } catch (e) {
     errorDispacher(e);
   }
+  yield put(loadingActions.FINISH_POST_LOADING());
 }
 
 function* logoutSaga(action) {
+  yield put(loadingActions.START_GET_LOADING());
   try {
     const response = yield call(api.logout, action.payload.auth);
     yield put(loginActions.LOGOUT_SUCCEEDED({ response }));
@@ -113,9 +133,11 @@ function* logoutSaga(action) {
     errorDispacher(e);
     yield put(loginActions.LOGOUT_FAILED({ e }));
   }
+  yield put(loadingActions.FINISH_GET_LOADING());
 }
 
 function* signupSaga(action) {
+  yield put(loadingActions.START_POST_LOADING());
   try {
     const response = yield call(api.signup, action.payload.member);
     yield put(signupActions.SIGNUP_SUCCEED({ response }));
@@ -123,9 +145,11 @@ function* signupSaga(action) {
     errorDispacher(e);
     yield put(signupActions.SIGNUP_FAILED({ message: e.message }));
   }
+  yield put(loadingActions.FINISH_POST_LOADING());
 }
 
 function* getMemberInfoSaga() {
+  yield put(loadingActions.START_MEMBER_LOADING());
   try {
     const response = yield call(api.getMemberInfo);
     yield put(loginActions.GET_MEMBERINFO_SUCCEED({ memberInfo: response.data.data.result }));
@@ -133,18 +157,22 @@ function* getMemberInfoSaga() {
     errorDispacher(e);
     yield put(loginActions.GET_MEMBERINFO_FAILED());
   }
+  yield put(loadingActions.FINISH_MEMBER_LOADING());
 }
 
 function* editMemberSaga(action) {
+  yield put(loadingActions.START_PUT_LOADING());
   try {
     const response = yield call(api.updateMember, action.payload.member);
     yield put(editMemberActions.EDIT_MEMBER_SUCCEED({ response }));
   } catch (e) {
     errorDispacher(e);
   }
+  yield put(loadingActions.FINISH_PUT_LOADING());
 }
 
 function* findPassSaga(action) {
+  yield put(loadingActions.START_GET_LOADING());
   try {
     const response = yield call(api.findPass, action.payload);
     yield put(findPassActions.FIND_PASS_SUCCEED({ response }));
@@ -152,18 +180,22 @@ function* findPassSaga(action) {
     errorDispacher(e);
     yield put(findPassActions.FIND_PASS_FAILED());
   }
+  yield put(loadingActions.FINISH_GET_LOADING());
 }
 
 function* withdrawSaga(action) {
+  yield put(loadingActions.START_DELETE_LOADING());
   try {
     const response = yield call(api.withdraw, action.payload);
     yield put(withdrawActions.WITHDRAW_SUCCEED({ response }));
   } catch (e) {
     errorDispacher(e);
   }
+  yield put(loadingActions.FINISH_DELETE_LOADING());
 }
 
 function* getCalendarSaga(action) {
+  yield put(loadingActions.START_GET_LOADING());
   try {
     const response = yield call(api.getCalendar, action.payload.yearAndMonth);
     yield put(
@@ -174,6 +206,7 @@ function* getCalendarSaga(action) {
   } catch (e) {
     yield put(getCalendarActions.GET_CALENDAR_FAILED());
   }
+  yield put(loadingActions.FINISH_GET_LOADING());
 }
 
 function* baseSaga() {

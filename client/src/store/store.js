@@ -1,4 +1,5 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
+import loadingReducer from './modules/loading';
 import loginReducer from './modules/login';
 import signupReducer from './modules/signup';
 import counterReducer from './modules/counter';
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   counterReducer,
   findPassReducer,
   withdrawReducer,
+  loadingReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));

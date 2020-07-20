@@ -20,11 +20,11 @@ const initialState = {
 
 const reducer = createReducer(initialState, {
   [GET_CALENDAR_REQUEST]: (state, action) => {
-    return { ...state, tomatoOfDates: [], isCalendarLoading: true };
+    return { ...state, tomatoOfDates: [] };
   },
 
   [GET_CALENDAR_FAILED]: (state, action) => {
-    return { ...state, tomatoOfDates: [], isCalendarLoading: false };
+    return { ...state, tomatoOfDates: [] };
   },
 
   [GET_CALENDAR_SUCCEED]: (state, action) => {
@@ -32,7 +32,6 @@ const reducer = createReducer(initialState, {
       ...state,
       tomatoOfDates: action.payload.tomatoOfDates,
       isUpdated: true,
-      isCalendarLoading: false,
     };
   },
 

@@ -4,20 +4,17 @@ import { connect } from 'react-redux';
 import { getTomatoActions } from '../../store/modules/getTomato.js';
 
 const mapStateToProps = state => {
-  const { isLogin, isMemberLoading } = state.loginReducer;
-  const { isTomatoLoading } = state.getTomatoReducer;
-  const { isTemplateLoading } = state.getTemplateReducer;
-  const { isCalendarLoading } = state.getCalendarReducer;
+  const { isLogin } = state.loginReducer;
   const { isTimerLoading } = state.counterReducer;
-  const { isFindPassLoading } = state.findPassReducer;
+  const { isGetLoading, isPostLoading, isPutLoading, isDeleteLoading, isMemberLoading } = state.loadingReducer;
   return {
     isLogin,
     isMemberLoading,
-    isTomatoLoading,
-    isTemplateLoading,
-    isCalendarLoading,
     isTimerLoading,
-    isFindPassLoading,
+    isGetLoading,
+    isPostLoading,
+    isPutLoading,
+    isDeleteLoading,
   };
 };
 

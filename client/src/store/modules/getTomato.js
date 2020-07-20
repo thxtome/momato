@@ -14,14 +14,13 @@ export const getTomatoActions = {
 
 const initialState = {
   isTomatoSucceed: false,
-  isTomatoLoading: false,
   tomatos: [],
   date: null,
 };
 
 const reducer = createReducer(initialState, {
   [GET_TOMATO_REQUEST]: (state, action) => {
-    return { ...state, data: action.payload.data, isTomatoLoading: true };
+    return { ...state, data: action.payload.data };
   },
 
   [GET_TEMP_TOMATO_REQUEST]: (state, action) => {
@@ -36,12 +35,11 @@ const reducer = createReducer(initialState, {
       ...state,
       tomatos: tomatos,
       isTomatoSucceed: true,
-      isTomatoLoading: false,
     };
   },
 
   [GET_TOMATO_FAILED]: (state, action) => {
-    return { ...state, isTomatoSucceed: false, isTomatoLoading: false };
+    return { ...state, isTomatoSucceed: false };
   },
 });
 

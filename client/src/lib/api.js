@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = process.env.NODE_ENV === 'production' ? 'https://www.momato.net:8000' : 'http://localhost:8080';
+const url = process.env.NODE_ENV === 'production' ? 'https://www.momato.net:8000' : 'https://www.momato.net:8000';
 
 export const login = ({ memberId, memberPass }) =>
   axios({

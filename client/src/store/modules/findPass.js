@@ -19,15 +19,15 @@ const initialState = {
 
 const reducer = createReducer(initialState, {
   [FIND_PASS_REQUEST]: (state, action) => {
-    return { ...state, action, isFindPassLoading: true };
+    return { ...state, action };
   },
 
   [FIND_PASS_SUCCEED]: (state, action) => {
-    return { ...state, isFindPassSucceed: true, isFindPassLoading: false };
+    return { ...state, isFindPassSucceed: true };
   },
 
   [FIND_PASS_SUCCEED_CLEAR]: (state, action) => {
-    return { ...state, isFindPassSucceed: false, isFindPassLoading: false };
+    return { ...state, isFindPassSucceed: false };
   },
 
   [FIND_PASS_FAILED]: (state, action) => {
