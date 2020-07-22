@@ -4,12 +4,14 @@ const GET_TOMATO_REQUEST = createAction('GET_TOMATO_REQUEST');
 const GET_TEMP_TOMATO_REQUEST = createAction('GET_TEMP_TOMATO_REQUEST');
 const GET_TOMATO_SUCCEED = createAction('GET_TOMATO_SUCCEED');
 const GET_TOMATO_FAILED = createAction('GET_TOMATO_FAILED');
+const CLEAR_TOMATO_REQUEST = createAction('CLEAR_TOMATO_REQUEST');
 
 export const getTomatoActions = {
   GET_TOMATO_REQUEST,
   GET_TEMP_TOMATO_REQUEST,
   GET_TOMATO_SUCCEED,
   GET_TOMATO_FAILED,
+  CLEAR_TOMATO_REQUEST,
 };
 
 const initialState = {
@@ -40,6 +42,10 @@ const reducer = createReducer(initialState, {
 
   [GET_TOMATO_FAILED]: (state, action) => {
     return { ...state, isTomatoSucceed: false };
+  },
+  
+  [CLEAR_TOMATO_REQUEST]: (state, action) => {
+    return { ...state, tomatos: [] };
   },
 });
 

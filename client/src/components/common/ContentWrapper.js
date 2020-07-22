@@ -6,7 +6,7 @@ import CalenderContainer from '../../containers/calendar/CalenderContainer';
 import Tomatos from '../../routes/Tomatos';
 import TemplatesContainer from '../../containers/template/TemplatesContainer';
 import CounterContainer from '../../containers/counter/CounterContainer';
-import MemberInfoContainer from '../../containers/member/MemberInfoContainer';
+import MobileMemberInfoContainer from '../../containers/member/MobileMemberInfoContainer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +29,7 @@ const ContentWrapper = () => {
         <Route path='/calendar' component={CalenderContainer} />
         <Route exact path='/template' component={TemplatesContainer} />
         <Route path='/counter' component={CounterContainer} />
-        <Route path='/member-info' component={MemberInfoContainer} />
+        <Route path='/member-info' component={MobileMemberInfoContainer} />
       </Switch>
     </main>
   );

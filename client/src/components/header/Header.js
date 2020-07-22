@@ -45,10 +45,6 @@ const useStyles = makeStyles(theme => ({
 
 const Header = ({
   isLogin,
-  isMemberLoading,
-  isTomatoLoading,
-  isTemplateLoading,
-  isCalendarLoading,
   isTimerLoading,
   logout,
   getTempTomatoList,
@@ -68,29 +64,9 @@ const Header = ({
 
   // 멤버정보, 토마토, 템플릿, 달력, 타이머의 로딩이 모드 끝나는지 확인 후 로딩창 지우기
   let isLoading = false;
-  if (
-    isMemberLoading ||
-    isTomatoLoading ||
-    isTemplateLoading ||
-    isCalendarLoading ||
-    isTimerLoading ||
-    isGetLoading ||
-    isPostLoading ||
-    isDeleteLoading ||
-    isPutLoading
-  ) {
+  if (isTimerLoading || isGetLoading || isPostLoading || isDeleteLoading || isPutLoading) {
     isLoading = true;
-  } else if (
-    !isMemberLoading &&
-    !isTomatoLoading &&
-    !isTemplateLoading &&
-    !isCalendarLoading &&
-    !isTimerLoading &&
-    !isGetLoading &&
-    !isPostLoading &&
-    !isDeleteLoading &&
-    !isPutLoading
-  ) {
+  } else if (!isTimerLoading && !isGetLoading && !isPostLoading && !isDeleteLoading && !isPutLoading) {
     isLoading = false;
   }
   return (

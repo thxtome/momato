@@ -1,4 +1,4 @@
-import MemberInfo from '../../components/member/MemberInfo';
+import MobileMemberInfo from '../../components/member/MobileMemberInfo';
 import { loginActions } from '../../store/modules/login';
 import { editMemberActions } from '../../store/modules/editMember';
 import { connect } from 'react-redux';
@@ -20,4 +20,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MemberInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(MobileMemberInfo);

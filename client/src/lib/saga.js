@@ -24,7 +24,7 @@ function* addTomatoSaga(action) {
     yield put(addTomatoActions.ADD_TOMATO_SUCCEED({ response }));
   } catch (e) {
     errorDispacher(e);
-    yield put(addTomatoActions.TOMATO_FAILED());
+    yield put(addTomatoActions.ADD_TOMATO_FAILED());
   }
   yield put(loadingActions.FINISH_POST_LOADING());
 }

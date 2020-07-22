@@ -22,6 +22,10 @@ const mapDispatchToProps = dispatch => {
     getTomatoList: data => {
       dispatch(getTomatoActions.GET_TOMATO_REQUEST({ data }));
     },
+    clearTomatoList: data => {
+      dispatch(getTomatoActions.CLEAR_TOMATO_REQUEST({ data }));
+    },
+
     getTempTomatoList: () => {
       dispatch(getTomatoActions.GET_TEMP_TOMATO_REQUEST());
     },

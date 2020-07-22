@@ -20,7 +20,7 @@ function App() {
           <Route component={NoMatchPage} />
         </Switch>
       </BrowserRouter>
-      <ToastContainer />
+      <ToastContainer limit={3} containerId='momato' />
     </Provider>
   );
 }

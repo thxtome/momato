@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const MemberInfo = ({ isLogin, getMemberInfo, memberInfo, getTemplateList, getTomatoList, getTempTomatoList }) => {
+const MemberInfo = ({ isLogin, getMemberInfo, memberInfo, getTemplateList}) => {
   const templateIdx = 0;
   const data = {
     date: templateIdx ? '' : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),

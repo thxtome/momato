@@ -23,20 +23,21 @@ const socketSubscribe = dispatch => {
         break;
 
       case 'load':
-        let target;
-        let fullTime;
-        let leftTime;
+        let param = {
+          target: 'regularTime',
+          fullTime: response.data.tomato.tomatoFullRegular,
+          leftTime: response.data.tomato.tomatoLeftRegular,
+        };
 
-        if (response.data.tomato.tomatoCanStart) {
-          target = 'regularTime';
-          fullTime = response.data.tomato.tomatoFullRegular;
-          leftTime = response.data.tomato.tomatoLeftRegular;
-        } else {
-          target = 'breakTime';
-          fullTime = response.data.tomato.tomatoFullBreak;
-          leftTime = response.data.tomato.tomatoLeftBreak;
+        if (!response.data.tomato.tomatoCanStart) {
+          param = {
+            target: 'breakTime',
+            fullTime: response.data.tomato.tomatoFullBreak,
+            leftTime: response.data.tomato.tomatoLeftBreak,
+          };
         }
-        dispatch(counterActions.TOMATO_LOAD_SUCCED({ target, leftTime, fullTime }));
+
+        dispatch(counterActions.TOMATO_LOAD_SUCCED(param));
         break;
 
       case 'reload':
@@ -106,8 +107,7 @@ const request = (params, failed) => {
     } else {
       failed();
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 };
 
 export default { openSocket, closeSocket, request };

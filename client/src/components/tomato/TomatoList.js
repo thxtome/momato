@@ -14,11 +14,10 @@ const TomatoList = ({
   isLogin,
   isTomatoDeleteSucceed,
   tomatos,
-  templates,
   templateIdx = null,
   getTomatoList,
+  clearTomatoList,
   getTempTomatoList,
-  addTomatos,
   deleteTomato,
   deleteTempTomato,
   clearDeleteTomatoResult,
@@ -34,6 +33,7 @@ const TomatoList = ({
   // 텃밭이 바뀌고 텃밭이 활성화일 때 토마토 목록 불러오기
   useEffect(() => {
     if (isLogin) {
+      clearTomatoList();
       getTomatoList(data);
     } else {
       getTempTomatoList();
